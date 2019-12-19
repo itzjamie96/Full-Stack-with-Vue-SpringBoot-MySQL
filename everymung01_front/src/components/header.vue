@@ -15,7 +15,21 @@
           <v-list-item-title>{{item.title}}</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
-
+      <v-list-item >
+        <v-list-item-content>
+          <v-list-item-title>회원가입</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      <v-list-item >
+        <v-list-item-content>
+          <v-list-item-title>로그인</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      <v-list-item >
+        <v-list-item-content>
+          <v-list-item-title>로그아웃</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
       </v-navigation-drawer>
 
     <v-toolbar dark color="red lighten-1">
@@ -44,6 +58,9 @@
         :key="item.title"
         router :to="item.link"
         >{{item.title}}</v-btn>
+        <v-btn text v-if="isLogin===false"  router :to="{name:'signin'}" exact>로그인</v-btn>
+        <v-btn text v-if="isLogin===false"  router :to="{name:'signup'}" exact>회원가입</v-btn>
+        <v-btn text v-if="isLogin===true" @click="$store.dispatch('logout')" exact>로그아웃</v-btn>
       </v-toolbar-items>
 
     </v-toolbar>
@@ -52,6 +69,8 @@
 </template>
 
 <script>
+import {mapState/*,mapActions*/} from 'vuex'
+
 export default {
   data () {
     return {
@@ -62,11 +81,14 @@ export default {
         {title: '예약(테스트)', link: '/sitters/new'},
         {title: '마이페이지', link: '/meetups/new'},
         {title: '문의하기', link: '/board'},
-        {title: '회원가입', link: '/signup'},
-        {title: '로그인', link: '/signin'}
+        //{title: '회원가입', link: '/signup'},
+        //{title: '로그인', link: '/signin'}
       ]
     }
-  }
+  },
+  computed:{
+      ...mapState(['isLogin'])
+    },
 }
 </script>
 

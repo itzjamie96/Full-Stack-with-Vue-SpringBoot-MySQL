@@ -1,12 +1,23 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import router from '../router/index'
 // import * as firebase from 'firebase'
-
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    
+    //로그인 
+    userInfo:null,
+    AllUsers:[
+      {id:1,name:'test',email:'test@gmail.com',password:"1234"},
+      {id:2,name:'hoza1',email:'hoza1@gmail.com',password:"123456"},
+      {id:3,name:'lsm',email:'임상민짱짱123@naver.com',password:"1234"}
+  ],
+  isLogin : false,
+  isLoginError: false,
+  isSignUp : false,
+  isSignUpError:false,
+    //로그인 끝
     loadedMeetups: [  
         {
           imageUrl: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60', 
@@ -36,11 +47,63 @@ export default new Vuex.Store({
     
   },
   mutations: {
+    //로그인이 성공했을때
+    loginSuccess(state,payload){
+      state.isLogin=true
+      state.isLoginError=false
+      state.userInfo=payload
+    },
+    //로그인이 실패했을때
+    loginError(state){
+      state.isLogin=false
+      state.isLoginError=true
+    },
+    //회원가입이 성공했을때
+    SignUpSuccess(state,payload){
+      state.isSignUp=true
+      state.isLoginError=false
+    },
+    //회원가입이 실패했을때
+    SignUpSuccess(state,payload){
+      state.isSignUp=false
+      state.isLoginError=true
+    },
+    logout(state){ //$store.commit('logout')으로 접근할 수 있음
+      state.isLogin=false
+      state.isLoginError=false
+      state.userInfo=null
+    },
+    //로그인끝
+
     createMeetup(state, payload) {
       state.loadedMeetups.push(payload)
     }
   },
   actions: {  //reach out to firebase and store it
+//로그인 시도
+login({state,commit},loginobj){
+  let selectedUser=null
+       //전체 유저에서 해당 이메일로 유저를 찾는다.
+       //그 유저의 비밀번호와 입력된 비빌번호를 비교한다.
+       state.AllUsers.forEach(user => {
+           if(user.email ===loginobj.email){
+               selectedUser=user
+           }
+       })
+       if(selectedUser===null ||  selectedUser.password !==loginobj.password)
+       commit('loginError')
+       else{
+         commit('loginSuccess',selectedUser)
+         router.push({name:'uMyPage'}) //로그인 성공 시 마이페이지로 이동시켜 줌
+       }
+       
+},
+logout({commit}){//$store.dispatch('logout')으로 접근할 수 있음
+ commit('logout')
+ router.push({name:'home'})
+}
+
+    ,
     createMeetup({commit}, payload) {
       const meetup = {    //mapping to an object: payload might have properties that i may not need
         title: payload.title,
