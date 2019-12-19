@@ -63,6 +63,9 @@ const routes = [
     name: 'SitterList',
     component: SitterList
     /*,
+    
+    app.vue가 아니라 상위 페이지에서 router-view를 해야 자식 페이지로 넘어감
+
     children: [
       {
         path: '/new',
@@ -79,16 +82,20 @@ const routes = [
   },
   
   {
+    //신규 예약
     path: '/sitters/new',
     name: 'NewReservation',
     component: NewReservation
   },
+  
   {
+    //시터 프로필
     path: '/sitters/:sitterNo',
     name: 'SitterDetail',
     component: SitterDetail,
     props: true
   },
+  
   
   {
     path: '/board',

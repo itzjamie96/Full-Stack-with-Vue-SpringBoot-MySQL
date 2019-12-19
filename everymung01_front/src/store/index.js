@@ -77,6 +77,9 @@ export default new Vuex.Store({
 
     createMeetup(state, payload) {
       state.loadedMeetups.push(payload)
+    },
+    createReservation(state, payload) {
+      
     }
   },
   actions: {  //reach out to firebase and store it
@@ -115,17 +118,6 @@ logout({commit}){//$store.dispatch('logout')으로 접근할 수 있음
         id: '111'
       }
       commit('createMeetup', meetup)
-      //reaching to firebase server
-      //.ref : allows to pass arguments that you want to store
-      //.push: list of meeetups
-      // firebase.database().ref('meetups').push(meetup)
-      //   .then((data) => {
-      //     console.log(data)
-      //     commit('createMeetup', meetup)
-      //   })
-      //   .catch((error) => {
-      //     console.log(error)
-      //   })
       
     }
   },

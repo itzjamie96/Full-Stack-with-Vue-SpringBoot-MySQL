@@ -28,4 +28,5 @@ public class SitterVO {
 	private String qualificationCheck;
 	private boolean approvalStatus;
 	private Date approvalDate;
+	private String profileTitle;
 }
