@@ -79,7 +79,7 @@ export default {
         {title: '하루 시터', link: '/sitters'},
         // {title: '위탁 시터', link: '/meetups'},
         {title: '예약(테스트)', link: '/sitters/new'},
-        {title: '마이페이지', link: '/meetups/new'},
+        {title: '마이페이지', link: '/mypage'},
         {title: '문의하기', link: '/board'},
         //{title: '회원가입', link: '/signup'},
         //{title: '로그인', link: '/signin'}

@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import store from '../store/index'
+import MypagePetInfo from '../views/Mypage/User/MyPagePetInfo'
+
 Vue.use(VueRouter)
 
 const rejectAuthUser = (to,from,next) =>{ //라우터 가드 선언
@@ -107,6 +109,13 @@ const routes = [
     name: 'Signup',
     component: Signup
   },
+  {
+    //마이페이지
+    path:'/mypage/:userNo',
+    name:'myPagePetInfo',
+    component:MypagePetInfo
+
+  }
 
 ]
 
