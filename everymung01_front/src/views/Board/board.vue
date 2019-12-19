@@ -12,7 +12,7 @@
     enabled: true,
     }"
 >  </vue-good-table>
-<v-btn @click="$router.push({path: '/write'})">글쓰기</v-btn>
+<v-btn @click="$router.push({path: '/write'})">글쓰기_12.20(새벽1시)</v-btn>
 <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on }">
       </template>
