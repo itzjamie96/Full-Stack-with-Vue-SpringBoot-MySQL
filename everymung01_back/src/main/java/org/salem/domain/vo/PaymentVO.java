@@ -10,16 +10,20 @@ public class PaymentVO {
 	
 	int paymentNo;
 	int sitterNo;
-	String sitterType;
+	String sittingType;
 	String sitterName;
-	int sitterPhone;
+	String sitterPhone;
 	String sitterAddress;
 	Date startTime;
 	Date endTime;
 	String request;
 	String paymentMethod;
 	int amount;
+	int petNo;
 	String userName;
 	String userAddress;
+	String petName;
+	String dogBreed;
+	String size;
 	List<PetInfoVO> petDetailList;
 }
