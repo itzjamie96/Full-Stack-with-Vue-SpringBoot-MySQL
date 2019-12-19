@@ -6,6 +6,7 @@ import vuetify from './plugins/vuetify';
 import '@babel/polyfill'
 import '@fortawesome/fontawesome-free/css/all.css'
 
+
 Vue.config.productionTip = false
 
 new Vue({

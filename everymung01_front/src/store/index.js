@@ -38,6 +38,9 @@ export default new Vuex.Store({
   mutations: {
     createMeetup(state, payload) {
       state.loadedMeetups.push(payload)
+    },
+    createReservation(state, payload) {
+      
     }
   },
   actions: {  //reach out to firebase and store it
@@ -52,17 +55,6 @@ export default new Vuex.Store({
         id: '111'
       }
       commit('createMeetup', meetup)
-      //reaching to firebase server
-      //.ref : allows to pass arguments that you want to store
-      //.push: list of meeetups
-      // firebase.database().ref('meetups').push(meetup)
-      //   .then((data) => {
-      //     console.log(data)
-      //     commit('createMeetup', meetup)
-      //   })
-      //   .catch((error) => {
-      //     console.log(error)
-      //   })
       
     }
   },
