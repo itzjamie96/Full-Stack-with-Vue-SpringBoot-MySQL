@@ -27,6 +27,19 @@ public class UsersController {
 		return (List<UsersVO>) mapper.showAllUsers();
 	}
 	
+	@PostMapping("/update") 
+	public UsersVO updateUser(@RequestBody UsersVO usersVo){
+		System.out.println(usersVo);
+		return mapper.updateUser(usersVo);
+		
+		
+	}
+	@PostMapping("/delete/{userNo}")
+	public int deleteUser(@PathVariable int userNo) {
+		System.out.println(userNo);
+		return mapper.deleteUser(userNo);
+	}
+	
 //	@PostMapping("/add") public void addException(@RequestBody Users user){
 //		System.out.println(mapper.test0(user));
 //		System.out.println(mapper.test());

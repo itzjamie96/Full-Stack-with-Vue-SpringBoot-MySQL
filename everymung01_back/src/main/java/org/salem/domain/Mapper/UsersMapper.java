@@ -15,6 +15,13 @@ public interface UsersMapper {
 	@Select("select * from users")
 	public List<UsersVO> showAllUsers();
 	
+	@Delete("delete from users where userNo=#{userNo}")
+	public int deleteUser(int userNo);
+
+
+	@Update("Update users set userName=#{userName},userEmail=#{userEmail},userPw=#{userPw},userPhone=#{userPhone},userAddress=#{userAddress},userProfile=#{userProfile} where userNo=#{userNo}")
+	public UsersVO updateUser(UsersVO usersVo);
+	
 //	@Insert("insert into users values (#{id},#{address},#{email},#{name},#{pw})")
 //	public int test0(Users users);
 //	
