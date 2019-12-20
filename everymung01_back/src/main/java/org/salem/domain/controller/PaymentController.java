@@ -26,9 +26,13 @@ public class PaymentController {
 	
 	@PostMapping("/addPayment")
 	public int addPayment(@RequestBody PaymentVO paymentVO) {
-		System.out.println("cont_addPayment()");
+		////////////////////////////////////////////
+		// pet 여러마리 insert 할 경우 여러번 insert 해야됨
+		//
+		System.out.println("controller_addPayment()");
 		int result = paymentMapper.addPayment(paymentVO);
 		System.out.println(result);
+//		return paymentMapper.addPayment(paymentVO);
 		return paymentMapper.addPayment(paymentVO);
 	}
 	
