@@ -3,6 +3,24 @@
     <v-container fill-height style="max-width:450px;">
         <v-layout align-center row wrap>
             <v-flex xs12>
+              <v-btn-toggle
+              v-model="$store.state.role"
+          tile
+          color="deep-purple accent-3"
+          group
+        >
+          <v-btn @click="_roles('User')" value="User">
+            일반
+          </v-btn>
+
+          <v-btn @click="_roles('Sitter')" value="Sitter">
+            시터
+          </v-btn>
+
+          <v-btn @click="_roles('Admin')" value="Admin">
+            운영자
+          </v-btn>
+        </v-btn-toggle>
                 <v-alert
                 :value="isLoginError"
                 type="error"
@@ -148,10 +166,11 @@ export default {
         }
     },
     computed: {
-        ...mapState(["isLogin","userInfo","isLoginError"])
+        ...mapState(["isLogin","userInfo","isLoginError","role"]),
+    
     },
     methods:{
-        ...mapActions(['login']),
+        ...mapActions(['login','_roles']),
         id(){
            this.dialogId=true
         },

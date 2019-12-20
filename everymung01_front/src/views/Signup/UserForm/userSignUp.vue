@@ -89,7 +89,7 @@
 
 <script>
 import axios from "axios"
-
+import router from '../../../router/index'
 const baseURL = 'http://localhost:1234'
 export default {
     data() {
@@ -134,6 +134,7 @@ export default {
        .then(res => { 
          console.log(res.data)
          if(res.data == "회원가입 완료"){
+             this.isSignUpError=false
              this.isSignUp=true
              this.userName=''
              this.userEmail=''
@@ -141,6 +142,7 @@ export default {
              this.userAddress=''
              this.userPhone=''
              this.userPwRepeat=''
+             router.push({name:'signin'})
          }else
             this.isSignUp=false
             this.isSignUpError=true
