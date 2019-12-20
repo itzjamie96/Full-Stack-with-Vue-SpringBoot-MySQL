@@ -1,5 +1,8 @@
 <template>
     <div>
+        {{this.sitterInfo}}
+
+        {{this.sitterInfo.sitterNo}}
         <v-card 
                 color="green"
                 height="100%"
@@ -9,7 +12,7 @@
                 <v-row justify="center">
                     <v-col cols="12" sm="10">
                         <v-select
-                            v-model="value"
+                            v-model="reservation.pets"
                             :items="pets"
                             attach
                             chips
@@ -46,12 +49,14 @@
                         <v-select
                             :items="time"
                             label="체크인 시간"
+                            v-model="reservation.startTime"
                         ></v-select>
                     </v-col>
                     <v-col cols="5">
                         <v-select
                             :items="time"
                             label="체크아웃 시간"
+                            v-model="reservation.endTime"
                         ></v-select>
                     </v-col>
                 </v-row>
@@ -62,7 +67,7 @@
                         name="description"
                         label="Description"
                         id="description"
-                        v-model="description"
+                        v-model="reservation.description"
                         >   
                         </v-textarea>
                     </v-col>
@@ -71,7 +76,7 @@
                 
                 <v-row justify="center" class="mb-5">
                     <v-btn 
-                    :disabled="!formIsValid"
+                    
                     type="submit"
                     >예약하기</v-btn>
                 </v-row>
@@ -107,12 +112,14 @@
 
 <script>
 import axios from "axios"
+import {eventBus} from '@/main.js'
 
 const dt = new Date();
 
 export default {
   data() {
     return {
+        sitterInfo: [],
         date: dt.toISOString().substr(0, 10), 
         value: '',
         description: '',
@@ -136,8 +143,42 @@ export default {
                 size: '대형견',
                 cost: '7,000'
             }
-        ]
+        ],
+        reservation: {
+            pets: '',
+            date: '',
+            startTime: '',
+            endTime: '',
+            description: ''
+        },
+        paymentVO: {
+            //pets: '',
+            startTime: '',
+            endTime: '',
+            request: '',
+            sitterNo: '',
+            sittingType: '',
+            sitterName: '',
+            sitterPhone: '',
+            sitterAddress: '',
+            paymentMethod: '',
+            amount: '',
+            petNo: '',
+            userName: '',
+            userAddress: '',
+            petName: '',
+            dogBreed: '',
+            size: ''
+
+        }
+
     }
+  },
+  created() {
+      eventBus.$on('sitterObj', (sitterObj) => {
+        //   console.log(sitterObj)
+          this.sitterInfo = sitterObj
+      }) 
   },
   computed: {
     formIsValid() {
@@ -146,24 +187,41 @@ export default {
     },
     minutesToZero(dt) {
         return (dt.getMinutes() < 10 ? '0 ' : '') + (dt.getMinutes() < 10 ? '0 ' : '')
-    }
+    },
+   
 
   },
   methods: {
     onNewReservation() {
-      if (!this.formIsValid) {
-        return
-      }
-      const meetupData = {
-        title: this.title,
-        location: this.location,
-        imageUrl: this.imageUrl,
-        description: this.description,
-        date: this.date,
-        time: this.time
-      }
-      this.$store.dispatch('createMeetup', meetupData)
-      this.$router.push('/meetups')
+    //   if (!this.formIsValid) {
+    //     return
+    //   }
+
+        //넘길 객체에 펫 정보 추가
+        this.reservation.date = this.date
+        this.paymentVO.startTime = this.reservation.date + " " + this.reservation.startTime
+        this.paymentVO.endTime = this.reservation.date + " " + this.reservation.endTime
+        this.paymentVO.request = this.reservation.description
+        this.paymentVO.sitterNo = this.sitterInfo.sitterNo,
+        this.paymentVO.sittingType = this.sitterInfo.sittingType,
+        this.paymentVO.sitterName = this.sitterInfo.sitterName,
+        this.paymentVO.sitterPhone = this.sitterInfo.sitterPhone,
+        this.paymentVO.sitterAddress = this.sitterInfo.sitterAddress,
+
+        // console.log(this.reservation)
+        // console.log(this.paymentVO)
+
+        //  axios
+        //     .post('http://localhost:1234/addPayment', this.paymentVO)
+        //     .then(res => {
+        //         console.log(res)
+        //     })
+        //     .catch(err => {
+        //         console.log(err)
+        //     })
+
+        this.$router.push('/paymentinfo/2') //예약확인 페이지로 수정 필요
+
     },
 
     allowedStep: m => m % 0 === 0

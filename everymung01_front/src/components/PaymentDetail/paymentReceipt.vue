@@ -72,13 +72,11 @@ export default {
    data() {
        return {
            paymentObj: [],
-           
        }
    },
 
    created() {
-       this.initialize()
-       
+        this.initialize()
    },
    computed: {
        paymentNo() {
@@ -90,22 +88,21 @@ export default {
    methods: {
        initialize() {
             const paymentNo = this.$route.params.paymentNo;
-           
-           Axios
-            .get(`http://localhost:1234/showDetailPayment/${paymentNo}`)
-            .then(res => {
-                this.paymentObj = res.data
-                console.log(res);
-            })
-            .catch(err => {
-                console.log(err);
-            })
+
+
+        //    Axios
+        //     .get(`http://localhost:1234/showDetailPayment/${paymentNo}`)
+        //     .then(res => {
+        //         this.paymentObj = res.data
+        //         console.log(res);
+        //     })
+        //     .catch(err => {
+        //         console.log(err);
+        //     })
 
        },
        parseDate() {
            const date = paymentObj.startTime
-            
-
        }
 
 

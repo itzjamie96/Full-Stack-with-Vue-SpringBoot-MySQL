@@ -14,8 +14,8 @@ public class PaymentVO {
 	String sitterName;
 	String sitterPhone;
 	String sitterAddress;
-	Date startTime;
-	Date endTime;
+	String startTime;
+	String endTime;
 	String request;
 	String paymentMethod;
 	int amount;

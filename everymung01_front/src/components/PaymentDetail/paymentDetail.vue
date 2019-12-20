@@ -6,6 +6,8 @@
         >
         
             <v-card-text>
+                {{this.paymentObj}}
+                {{this.paymentVO}}
             <p class="headline text--primary">예약 정보 확인</p>
 
             <v-row justify="center">
@@ -59,7 +61,7 @@
 
                 </v-col>
                 <v-col>
-                    <p>{{paymentObj.request}}</p>
+                    <p>{{this.paymentObj.request}}</p>
                 </v-col>
             </v-row>
 
@@ -76,15 +78,51 @@ export default {
 
    data() {
        return {
-           paymentObj: [],
-           
+           paymentVO: {
+            //pets: '',
+            startTime: '',
+            endTime: '',
+            request: '',
+            sitterNo: '',
+            sittingType: '',
+            sitterName: '',
+            sitterPhone: '',
+            sitterAddress: '',
+            paymentMethod: '',
+            amount: '',
+            petNo: '',
+            userName: '',
+            userAddress: '',
+            petName: '',
+            dogBreed: '',
+            size: ''
+        },
+           paymentObj: {
+            //pets: '',
+            startTime: '',
+            endTime: '',
+            request: '',
+            sitterNo: '',
+            sittingType: '',
+            sitterName: '',
+            sitterPhone: '',
+            sitterAddress: '',
+            paymentMethod: '',
+            amount: '',
+            petNo: '',
+            userName: '',
+            userAddress: '',
+            petName: '',
+            dogBreed: '',
+            size: ''
+        }
        }
    },
 
    created() {
        this.initialize()
-       
    },
+
    computed: {
        paymentNo() {
            return this.$route.params.paymentNo
@@ -94,18 +132,23 @@ export default {
    },
    methods: {
        initialize() {
-            const paymentNo = this.$route.params.paymentNo;
            
-           Axios
-            .get(`http://localhost:1234/showDetailPayment/${paymentNo}`)
-            .then(res => {
-                this.paymentObj = res.data
-                console.log(res);
-            })
-            .catch(err => {
-                console.log(err);
-            })
+            // const paymentNo = this.$route.params.paymentNo;
 
+            this.paymentObj.request = this.paymentVO.request
+            console.log('request')
+            console.log(this.paymentObj.request)
+           
+        //    Axios
+        //     .get(`http://localhost:1234/showDetailPayment/${paymentNo}`)
+        //     .then(res => {
+        //         this.paymentObj = res.data
+        //         console.log(res);
+        //     })
+        //     .catch(err => {
+        //         console.log(err);
+        //     })
+     
        },
        parseDate() {
            const date = paymentObj.startTime

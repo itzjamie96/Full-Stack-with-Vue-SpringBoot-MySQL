@@ -10,6 +10,7 @@ import moment from 'moment'
 
 Vue.config.productionTip = false
 
+export const eventBus = new Vue()
 
 Vue.filter('formatDate', function(value) {
   if (value) {
