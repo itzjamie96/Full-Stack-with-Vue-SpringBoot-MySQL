@@ -12,7 +12,7 @@
     enabled: true,
     }"
 >  </vue-good-table>
-<v-btn @click="$router.push({path: '/write'})">글쓰기_12.20(새벽1시)</v-btn>
+<v-btn @click="$router.push({path: '/write'})">글쓰기</v-btn>
 <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on }">
       </template>
@@ -75,7 +75,7 @@ export default {
            title: 'lsm',
            user: 'lsm',
            content:'',
-           boardDate: '',
+           regDate: '',
            hits: '',
        },
 
@@ -113,7 +113,7 @@ export default {
            title: 'lsm',
            user: 'lsm',
            content:'',
-           boardDate: '',
+           regDate: '',
            hits: '',
         },
        // {
@@ -137,7 +137,7 @@ export default {
     },
   methods: {
     initialize(){//DB와 연동해서 게시판 목록을 전부 가져옴
-           axios.get('http://localhost:1234/showAllBoard')
+           axios.get('http://localhost:1234/showAllBoards')
           .then( response =>(
           //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@//
            this.rows=response.data //table row로 보여질 객체에 DB에서 받은 데이터를 넣어줌   

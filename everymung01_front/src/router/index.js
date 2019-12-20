@@ -28,6 +28,7 @@ const onlyAuthUser = (to,from,next) =>{ //라우터 가드 선언
 const SitterList = () => import('../views/Sitters/sitterList.vue')
 const NewReservation = () => import('../views/Reservation/newReservation.vue')
 const Board = () => import('../views/Board/board.vue')
+const Write = () => import('../views/Board/write.vue')
 const Signup = () => import('../views/Signup/UserForm/userSignUp.vue')
 const SitterDetail = () => import('../views/Sitters/sitterDetail.vue')
 
@@ -96,12 +97,19 @@ const routes = [
     props: true
   },
   
-  
+  // 문의 게시판
   {
     path: '/board',
     name: 'Board',
     component: Board
   },
+  {
+    path: '/write',
+    name: 'Write',
+    component: Write
+  },
+  
+
   {
     path: '/signup',
     name: 'Signup',
