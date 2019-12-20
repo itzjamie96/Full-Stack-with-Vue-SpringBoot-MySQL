@@ -16,6 +16,7 @@
           v-model="detail.content"
         ></v-textarea><br>
       <v-btn @click="add()">제출</v-btn>
+      
   </div>
 
 </template>
@@ -32,24 +33,35 @@ export default {
             //### 에러해결_ v-model=""에 입력해주는 값을 detail.title이라고 쳐야지, data에서 입력한 detail:{title,}이 인식되늰거였는데, v-model="title"로 쓰니까 인식을 못하지.
             
             detail: { // 여기에 v-model값이 담기는구나. 신기하다!
+                boardNo:'',
                 title:'', 
-                content:''
-            }
-           
-   
-
-
+                content:'',
+                userNo:'',
+                boardDate:'',
+                depth:'',
+                groupNo:'',
+                hits:''
+            },
+            
+            default:[]
+          
         }
     },
     methods:{
         add(){
+            console.log("test")
+            console.log(this.detail)
             axios.post ('http://localhost:1234/add',this.detail) 
-           .then( response =>(
+           .then( res =>(
+             console.log(res),
                console.log(detail.title + detail.content),
                console.log("insert 성공")
-            // table row로 보여질 객체에 DB에서 받은 데이터를 넣어줌   
           ))  
-          //console.log(response.data)
+          // 입력칸 제출후 깨끗하게 만드는 기능코드 
+          this.detail = this.default 
+
+          window.location.href="http://localhost:8081/board"
+
         },
     }
 

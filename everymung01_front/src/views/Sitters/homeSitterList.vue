@@ -29,7 +29,7 @@
         <v-btn 
           x-large 
           color
-          @click="$router.push({path: '/sitters/' + sitter.sitterNo})"
+          @click="$router.push({path: '/homesitters/' + sitter.sitterNo})"
           >시터 상세 보기</v-btn>
       </v-card-actions>
     </v-list-item>
@@ -67,7 +67,7 @@ export default {
         const sitterNo = item.sitterNo
         console.log('detail : ' + sitterNo);
 
-        this.$router.push({path: '/sitters/' + sitterNo})
+        this.$router.push({path: '/homesitters/' + sitterNo})
       }
 
     }

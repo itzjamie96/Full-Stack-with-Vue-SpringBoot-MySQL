@@ -91,7 +91,7 @@ export default {
        },
        {
            label: '작성자',
-           field: 'writer'
+           field: 'userName'
        },       
        {
            label: '조회수',
@@ -100,7 +100,7 @@ export default {
        },
        {
            label: '작성일',
-           field: 'regDate',
+           field: 'boardDate',
           //  type: 'date',
           //  dateInputFormat: 'yyyy-MM-dd',
           //  dateOutputFormat: 'yy-MM-dd',
@@ -111,9 +111,9 @@ export default {
            boardNo: '',
            userNo:'',
            title: 'lsm',
-           user: 'lsm',
+           userName: 'lsm',
            content:'',
-           regDate: '',
+           boardDate: '',
            hits: '',
         },
        // {
@@ -139,10 +139,11 @@ export default {
     initialize(){//DB와 연동해서 게시판 목록을 전부 가져옴
            axios.get('http://localhost:1234/showAllBoards')
           .then( response =>(
-          //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@//
-           this.rows=response.data //table row로 보여질 객체에 DB에서 받은 데이터를 넣어줌   
-          ))  
+          //@@@@@@@@@@@@@@@@@@@@@@@
+           this.rows=response.data, //table row로 보여질 객체에 DB에서 받은 데이터를 넣어줌   
+          //@@@@@@@@@@@@@@@@@@@@@@@
           console.log(response.data)
+          ))  
   // ??? 
     },
     onRowClick(params) {

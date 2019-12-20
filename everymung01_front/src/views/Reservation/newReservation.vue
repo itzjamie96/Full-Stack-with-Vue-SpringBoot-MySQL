@@ -89,6 +89,7 @@ export default {
   methods: {
     onCreateMeetup() {
       if (!this.formIsValid) {
+        console.log('test')
         return
       }
       const meetupData = {
@@ -100,6 +101,8 @@ export default {
         time: this.time
       }
       this.$store.dispatch('createMeetup', meetupData)
+      console.log('reserve')
+      console.log(meetupData)
       this.$router.push('/meetups')
     }
   }
