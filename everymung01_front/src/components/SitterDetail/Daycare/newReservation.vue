@@ -220,7 +220,7 @@ export default {
         //         console.log(err)
         //     })
 
-        this.$router.push('/paymentinfo/2') //예약확인 페이지로 수정 필요
+        this.$router.push('/paymentinfo/${userNo}') //예약확인 페이지로 수정 필요
 
     },
 

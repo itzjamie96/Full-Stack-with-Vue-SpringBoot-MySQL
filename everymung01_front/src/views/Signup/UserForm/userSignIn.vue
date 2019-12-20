@@ -38,8 +38,8 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click.native="dialogId = false">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="dialogId = false">Save</v-btn>
+          <v-btn color="blue darken-1" text @click.native="dialogId = false">Close</v-btn>
+          <v-btn color="blue darken-1" text @click.native="dialogId = false">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -69,8 +69,8 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click.native="dialogPw = false">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="dialogPw = false">Save</v-btn>
+          <v-btn color="blue darken-1" text @click.native="dialogPw = false">Close</v-btn>
+          <v-btn color="blue darken-1" text @click.native="dialogPw = false">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -81,7 +81,7 @@
 <!-- -->
     <v-toolbar flat>
         
-    <v-toolbar-title primary-title class="layout justify-center"><i class="fas fa-paw"></i><b>도그멍</b></v-toolbar-title>
+    <v-toolbar-title primary-title class="layout justify-center"><i class="fas fa-paw"></i><b>에브리멍</b></v-toolbar-title>
     </v-toolbar>
     
     <div class="pa-3">
@@ -123,7 +123,7 @@
     <v-divider vertical class="my-2"></v-divider>
     <v-btn color="white" @click="bm" depressed>비밀번호 찾기</v-btn>
     <v-divider vertical class="my-2"></v-divider>
-    <v-btn color="white" @click="$router.push({name : 'signUp'})" depressed>회원가입</v-btn>
+    <v-btn color="white" @click="$router.push({name : 'signup'})" depressed>회원가입</v-btn>
 </div>
 
           </v-card>
@@ -140,15 +140,15 @@ import axios from "axios"
 export default {
     data() {
         return {
-            email :null,
-            password : null,
-            dialogId: false,
-            dialogPw: false,
+          email:'',
+          password:'',
+          dialogId:false,
+          dialogPw:false,
 
         }
     },
     computed: {
-        ...mapState(["isLogin","isLoginError"])
+        ...mapState(["isLogin","userInfo","isLoginError"])
     },
     methods:{
         ...mapActions(['login']),
