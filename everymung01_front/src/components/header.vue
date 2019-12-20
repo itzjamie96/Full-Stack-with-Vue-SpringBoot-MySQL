@@ -51,16 +51,35 @@
       <v-spacer></v-spacer>
 
       <v-toolbar-items class="hidden-sm-and-down">
-        
-        <v-btn 
-        text
-        v-for="item in menuItems" 
-        :key="item.title"
-        router :to="item.link"
-        >{{item.title}}</v-btn>
-        <v-btn text v-if="isLogin===false"  router :to="{name:'signin'}" exact>로그인</v-btn>
-        <v-btn text v-if="isLogin===false"  router :to="{name:'signup'}" exact>회원가입</v-btn>
-        <v-btn text v-if="isLogin===true" @click="$store.dispatch('logout')" exact>로그아웃</v-btn>
+            <v-btn 
+              text
+              v-for="item in menuItems" 
+              :key="item.title"
+              router :to="item.link"
+              >{{item.title}}</v-btn>
+
+            <v-btn 
+              text 
+              v-if="isLogin===false"  
+              router :to="{name:'signin'}" 
+              exact
+            >로그인</v-btn>
+            <v-divider
+              class="mx-0"
+              vertical
+              inset
+            ></v-divider>
+            <v-btn 
+              text 
+              v-if="isLogin===false"  
+              router :to="{name:'signup'}" 
+              exact>회원가입</v-btn>
+            <v-btn 
+              text 
+              v-if="isLogin===true" 
+              @click="$store.dispatch('logout')" 
+              exact>로그아웃</v-btn>
+    
       </v-toolbar-items>
 
     </v-toolbar>
@@ -77,12 +96,9 @@ export default {
       drawer: false,
       menuItems: [
         {title: '하루 시터', link: '/sitters'},
-        // {title: '위탁 시터', link: '/meetups'},
-        {title: '예약(테스트)', link: '/sitters/new'},
-        {title: '마이페이지', link: '/meetups/new'},
+        {title: '위탁 시터', link: '/sitters/'},
         {title: '문의하기', link: '/board'},
-        //{title: '회원가입', link: '/signup'},
-        //{title: '로그인', link: '/signin'}
+        {title: '마이페이지', link: '/uMyPage'},
       ]
     }
   },
@@ -92,12 +108,4 @@ export default {
 }
 </script>
 
-<style>
-@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
 
-#app {
-  font-family: 'Noto Sans KR', sans-serif;
-}
-
-
-</style>

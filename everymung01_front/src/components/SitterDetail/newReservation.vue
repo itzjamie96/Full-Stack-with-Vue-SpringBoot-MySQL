@@ -161,14 +161,14 @@ export default {
             sitterName: '',
             sitterPhone: '',
             sitterAddress: '',
-            paymentMethod: 'kakao',
-            amount: 56555,
-            petNo: 1,
-            userName: 'sss',
-            userAddress: 'zzzz',
-            petName: 'tttt',
-            dogBreed: 'mal',
-            size: 'small'
+            paymentMethod: '',
+            amount: '',
+            petNo: '',
+            userName: '',
+            userAddress: '',
+            petName: '',
+            dogBreed: '',
+            size: ''
 
         }
 
@@ -176,7 +176,7 @@ export default {
   },
   created() {
       eventBus.$on('sitterObj', (sitterObj) => {
-          console.log(sitterObj)
+        //   console.log(sitterObj)
           this.sitterInfo = sitterObj
       }) 
   },
@@ -196,16 +196,7 @@ export default {
     //   if (!this.formIsValid) {
     //     return
     //   }
-    //   const meetupData = {
-        
-    //     date: this.date,
-    //     startTime: this.startTime,
-    //     endTime: this.endTime,
-    //     description: this.description,   
-    //   }
-    //   this.$store.dispatch('createMeetup', meetupData)
 
-        console.log(this.date)
         //넘길 객체에 펫 정보 추가
         this.reservation.date = this.date
         this.paymentVO.startTime = this.reservation.date + " " + this.reservation.startTime
@@ -215,20 +206,21 @@ export default {
         this.paymentVO.sittingType = this.sitterInfo.sittingType,
         this.paymentVO.sitterName = this.sitterInfo.sitterName,
         this.paymentVO.sitterPhone = this.sitterInfo.sitterPhone,
-        this.paymentVO.sitterAddress = this.sitterInfo.sitterPhone,
+        this.paymentVO.sitterAddress = this.sitterInfo.sitterAddress,
 
-        console.log(this.reservation)
-        console.log(this.paymentVO)
-        
-         axios
-            .post('http://localhost:1234/addPayment', this.paymentVO)
-            .then(res => {
-                console.log(res)
-            })
-            .catch(err => {
-                console.log(err)
-            })
-        this.$router.push('/meetups') //예약확인 페이지로 수정 필요
+        // console.log(this.reservation)
+        // console.log(this.paymentVO)
+
+        //  axios
+        //     .post('http://localhost:1234/addPayment', this.paymentVO)
+        //     .then(res => {
+        //         console.log(res)
+        //     })
+        //     .catch(err => {
+        //         console.log(err)
+        //     })
+
+        this.$router.push('/paymentinfo/2') //예약확인 페이지로 수정 필요
 
     },
 

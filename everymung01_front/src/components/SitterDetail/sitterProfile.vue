@@ -85,10 +85,7 @@ export default {
        sitterNo() {
            return this.$route.params.sitterNo
        },
-      
-        meetups() {
-            return this.$store.getters.featuredMeetups
-    }
+    
    },
    methods: {
        initialize() {
