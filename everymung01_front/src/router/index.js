@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import store from '../store/index'
 import MypagePetInfo from '../views/Mypage/User/MyPagePetInfo'
+import MyPagePetInfoNew from '../views/Mypage/User/MyPagePetInfoNew'
 
 Vue.use(VueRouter)
 
@@ -32,6 +33,7 @@ const NewReservation = () => import('../views/Reservation/newReservation.vue')
 const Board = () => import('../views/Board/board.vue')
 const Signup = () => import('../views/Signup/UserForm/userSignUp.vue')
 const SitterDetail = () => import('../views/Sitters/sitterDetail.vue')
+
 
 const routes = [
   {
@@ -114,7 +116,11 @@ const routes = [
     path:'/mypage/:userNo',
     name:'myPagePetInfo',
     component:MypagePetInfo
-
+  },
+  {
+    path:'/myPetDetail',
+    name:'myPetDetail',
+    component:MyPagePetInfoNew
   }
 
 ]
