@@ -27,6 +27,11 @@
       </v-list-item>
       <v-list-item >
         <v-list-item-content>
+          <v-list-item-title>마이페이지</v-list-item-title>
+        </v-list-item-content>
+      </v-list-item>
+      <v-list-item >
+        <v-list-item-content>
           <v-list-item-title>로그아웃</v-list-item-title>
         </v-list-item-content>
       </v-list-item>
@@ -58,9 +63,14 @@
         :key="item.title"
         router :to="item.link"
         >{{item.title}}</v-btn>
-        <v-btn text v-if="isLogin===false"  router :to="{name:'signin'}" exact>로그인</v-btn>
-        <v-btn text v-if="isLogin===false"  router :to="{name:'signup'}" exact>회원가입</v-btn>
-        <v-btn text v-if="isLogin===true" @click="$store.dispatch('logout')" exact>로그아웃</v-btn>
+        <div v-if="isLogin===false" class="mt-3">
+        <v-btn text router :to="{name:'signup'}" exact>회원가입</v-btn>
+        <v-btn text router :to="{name:'signin'}" exact>로그인</v-btn>
+        </div>
+        <div class="mt-3" v-else>
+        <v-btn text  router :to="{name:'uMyPage'}" exact>마이페이지</v-btn>
+        <v-btn text  @click="$store.dispatch('logout')">로그아웃</v-btn>
+        </div>
       </v-toolbar-items>
 
     </v-toolbar>
@@ -69,7 +79,7 @@
 </template>
 
 <script>
-import {mapState/*,mapActions*/} from 'vuex'
+import {mapState,/* mapActions */} from 'vuex'
 
 export default {
   data () {
@@ -79,15 +89,16 @@ export default {
         {title: '하루 시터', link: '/sitters'},
         // {title: '위탁 시터', link: '/meetups'},
         {title: '예약(테스트)', link: '/sitters/new'},
-        {title: '마이페이지', link: '/meetups/new'},
         {title: '문의하기', link: '/board'},
+        //{title: '마이페이지', link: '/meetups/new'},
         //{title: '회원가입', link: '/signup'},
         //{title: '로그인', link: '/signin'}
       ]
     }
   },
   computed:{
-      ...mapState(['isLogin'])
+      ...mapState(['isLogin']),...mapState(['userInfo'])
+      /* ...mapActions(['logout']) */
     },
 }
 </script>
