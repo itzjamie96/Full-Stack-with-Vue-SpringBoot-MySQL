@@ -7,13 +7,14 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.salem.domain.vo.UsersVO;
 
 @Mapper
-public interface LsmMapper {
+public interface UsersMapper {
 
-//	@Select("select * from users")
-//	public List<Users> test();
-//	
+	@Select("select * from users")
+	public List<UsersVO> showAllUsers();
+	
 //	@Insert("insert into users values (#{id},#{address},#{email},#{name},#{pw})")
 //	public int test0(Users users);
 //	

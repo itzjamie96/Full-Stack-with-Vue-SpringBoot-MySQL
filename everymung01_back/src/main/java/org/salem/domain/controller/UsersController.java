@@ -2,7 +2,8 @@ package org.salem.domain.controller;
 
 import java.util.List;
 
-import org.salem.domain.Mapper.LsmMapper;
+import org.salem.domain.Mapper.UsersMapper;
+import org.salem.domain.vo.UsersVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,18 +15,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class LsmController {
-//	@Autowired
-//	UsersRepository rep;
-//	
-//	@Autowired
-//	LsmMapper mapper;
-//	
-//	//@CrossOrigin(origins = "http://localhost:8080")
-//	@RequestMapping("test")
-//	public List<Users> getAllUsers(){
-//		return (List<Users>) rep.findAll();
-//	}
+public class UsersController {
+
+	
+	@Autowired
+	UsersMapper mapper;
+	
+	//@CrossOrigin(origins = "http://localhost:8080")
+	@RequestMapping("/userlist")
+	public List<UsersVO> showAllUsers(){
+		return (List<UsersVO>) mapper.showAllUsers();
+	}
+	
 //	@PostMapping("/add") public void addException(@RequestBody Users user){
 //		System.out.println(mapper.test0(user));
 //		System.out.println(mapper.test());
