@@ -26,9 +26,9 @@
 
 <script>
 
-import SitterProfile from '@/components/SitterDetail/sitterProfile.vue'
-import SitterImg from '@/components/SitterDetail/sitterImg'
-import NewReservation from '@/components/SitterDetail/newReservation.vue'
+import SitterProfile from '@/components/SitterDetail/Homecare/sitterProfile.vue'
+import SitterImg from '@/components/SitterDetail/Homecare/sitterImg'
+import NewReservation from '@/components/SitterDetail/Homecare/newReservation.vue'
 
 
 export default {

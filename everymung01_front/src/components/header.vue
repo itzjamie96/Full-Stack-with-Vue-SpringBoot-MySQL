@@ -95,8 +95,9 @@ export default {
     return {
       drawer: false,
       menuItems: [
-        {title: '하루 시터', link: '/sitters'},
-        {title: '위탁 시터', link: '/sitters/'},
+        {title: '하루 시터', link: '/daysitters'},
+        {title: '위탁 시터', link: '/homesitters/'},
+        {title: '펫시터 지원', link: '/sitters/'},
         {title: '문의하기', link: '/board'},
         {title: '마이페이지', link: '/uMyPage'},
       ]
