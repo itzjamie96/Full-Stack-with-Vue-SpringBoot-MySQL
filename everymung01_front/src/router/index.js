@@ -25,11 +25,11 @@ const onlyAuthUser = (to,from,next) =>{ //라우터 가드 선언
 }
 
 
-const SitterList = () => import('../views/Sitters/sitterList.vue')
-const NewReservation = () => import('../views/Reservation/newReservation.vue')
-const Board = () => import('../views/Board/board.vue')
-const Signup = () => import('../views/Signup/UserForm/userSignUp.vue')
-const SitterDetail = () => import('../views/Sitters/sitterDetail.vue')
+const SitterList = () => import('../views/Sitters/sitterList.vue')      //시터 목록보기
+const Board = () => import('../views/Board/board.vue')                  //문의게시판 목록
+const Signup = () => import('../views/Signup/UserForm/userSignUp.vue')    
+const SitterDetail = () => import('../views/Sitters/sitterDetail.vue')  //시터 상세보기 - 예약
+const PaymentInfo = () => import('../views/Payment/paymentInfo.vue')    //결제 정보 (결제 전)
 
 const routes = [
   {
@@ -59,53 +59,31 @@ const routes = [
   },
 
   {
+    //시터 목록 보기
     path: '/sitters',
     name: 'SitterList',
     component: SitterList
-    /*,
-    
-    app.vue가 아니라 상위 페이지에서 router-view를 해야 자식 페이지로 넘어감
+  },
 
-    children: [
-      {
-        path: '/new',
-        name: 'CreateMeetup',
-        component: CreateMeetup
-      },
-      {
-        path: ':id',
-        name: 'Meetup',
-        component: Meetup
-      }
-    ]
-    */
-  },
-  
   {
-    //신규 예약
-    path: '/sitters/new',
-    name: 'NewReservation',
-    component: NewReservation
-  },
-  
-  {
-    //시터 프로필
+    //시터 프로필 -> 스케줄 예약 포함
     path: '/sitters/:sitterNo',
     name: 'SitterDetail',
     component: SitterDetail,
     props: true
   },
-  
+  {
+    //결제 전 정보 보기
+    path: '/paymentinfo/:paymentNo',
+    name: 'PaymentInfo',
+    component: PaymentInfo
+  },
   
   {
+    //문의게시판
     path: '/board',
     name: 'Board',
     component: Board
-  },
-  {
-    path: '/signup',
-    name: 'Signup',
-    component: Signup
   },
 
 ]
