@@ -25,10 +25,14 @@ const onlyAuthUser = (to,from,next) =>{ //라우터 가드 선언
 }
 
 
-const SitterList = () => import('../views/Sitters/sitterList.vue')      //시터 목록보기
+const DaySitterList = () => import('../views/Sitters/daySitterList.vue')      //하루 시터 목록보기
+const DaySitterDetail = () => import('../views/Sitters/daySitterDetail.vue')  //하루 시터 상세보기 - 예약
+
+const HomeSitterList = () => import('../views/Sitters/homeSitterList.vue')      //위탁 시터 목록보기
+const HomeSitterDetail = () => import('../views/Sitters/homeSitterDetail.vue')  //위탁 시터 상세보기 - 예약
+
 const Board = () => import('../views/Board/board.vue')                  //문의게시판 목록
 const Signup = () => import('../views/Signup/UserForm/userSignUp.vue')    
-const SitterDetail = () => import('../views/Sitters/sitterDetail.vue')  //시터 상세보기 - 예약
 const PaymentInfo = () => import('../views/Payment/paymentInfo.vue')    //결제 정보 (결제 전)
 
 const routes = [
@@ -59,17 +63,31 @@ const routes = [
   },
 
   {
-    //시터 목록 보기
-    path: '/sitters',
-    name: 'SitterList',
-    component: SitterList
+    //하루 시터 목록 보기
+    path: '/daysitters',
+    name: 'DaySitterList',
+    component: DaySitterList
   },
 
   {
-    //시터 프로필 -> 스케줄 예약 포함
-    path: '/sitters/:sitterNo',
-    name: 'SitterDetail',
-    component: SitterDetail,
+    //하루 시터 프로필 -> 스케줄 예약 포함
+    path: '/daysitters/:sitterNo',
+    name: 'DaySitterDetail',
+    component: DaySitterDetail,
+    props: true
+  },
+  {
+    //위탁 시터 목록 보기
+    path: '/homesitters',
+    name: 'HomeSitterList',
+    component: HomeSitterList
+  },
+
+  {
+    //위탁 시터 프로필 -> 스케줄 예약 포함
+    path: '/homesitters/:sitterNo',
+    name: 'HomeSitterDetail',
+    component: HomeSitterDetail,
     props: true
   },
   {
