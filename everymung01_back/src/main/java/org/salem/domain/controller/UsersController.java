@@ -28,7 +28,7 @@ public class UsersController {
 	}
 	
 	@PostMapping("/update") 
-	public UsersVO updateUser(@RequestBody UsersVO usersVo){
+	public int updateUser(@RequestBody UsersVO usersVo){
 		System.out.println(usersVo);
 		return mapper.updateUser(usersVo);
 		

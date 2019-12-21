@@ -20,7 +20,7 @@ public interface UsersMapper {
 
 
 	@Update("Update users set userName=#{userName},userEmail=#{userEmail},userPw=#{userPw},userPhone=#{userPhone},userAddress=#{userAddress},userProfile=#{userProfile} where userNo=#{userNo}")
-	public UsersVO updateUser(UsersVO usersVo);
+	public int updateUser(UsersVO usersVo);
 	
 //	@Insert("insert into users values (#{id},#{address},#{email},#{name},#{pw})")
 //	public int test0(Users users);
