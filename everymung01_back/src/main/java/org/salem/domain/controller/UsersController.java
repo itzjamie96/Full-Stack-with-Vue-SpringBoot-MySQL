@@ -27,6 +27,7 @@ public class UsersController {
 		return (List<UsersVO>) mapper.showAllUsers();
 	}
 	
+<<<<<<< HEAD
 	@PostMapping("/update") 
 	public int updateUser(@RequestBody UsersVO usersVo){
 		System.out.println(usersVo);
@@ -40,6 +41,8 @@ public class UsersController {
 		return mapper.deleteUser(userNo);
 	}
 	
+=======
+>>>>>>> parent of 3abad90... [회원관리 진행중]
 //	@PostMapping("/add") public void addException(@RequestBody Users user){
 //		System.out.println(mapper.test0(user));
 //		System.out.println(mapper.test());
