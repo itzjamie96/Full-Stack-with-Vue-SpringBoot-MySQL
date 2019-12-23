@@ -24,8 +24,10 @@ const onlyAuthUser = (to, from, next) => { //라우터 가드 선언
     }
 }
 
+// const Update = () =>
+//     import ('../views/Board/update.vue') // 문의게시판 - 수정
 const Write = () =>
-    import ('../views/Board/write.vue')
+    import ('../views/Board/write.vue') // 문의게시판 - 글 생성/저장 
 const DaySitterList = () =>
     import ('../views/Sitters/daySitterList.vue') //하루 시터 목록보기
 const DaySitterDetail = () =>
@@ -119,7 +121,11 @@ const routes = [{
         name: 'Write',
         component: Write
     },
-
+    // {
+    //     path: '/update',
+    //     name: 'Update',
+    //     component: Update
+    // },
 
     {
         path: '/signup',

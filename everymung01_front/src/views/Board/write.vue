@@ -48,6 +48,7 @@ export default {
         }
     },
     methods:{
+        // 저장하기(DB_INSERT)(C)
         add(){
             console.log("test")
             console.log(this.detail)

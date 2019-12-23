@@ -25,7 +25,8 @@ public class BoardController {
 		return mapper.showAllBoards();
 //		return (List<Users>) rep.findAll();
 	}
-	@PostMapping("/add") public void addException(@RequestBody BoardVO boardVo){
+	@PostMapping("/add") 
+	public void addException(@RequestBody BoardVO boardVo){
 		System.out.println("-----");
 		System.out.println(boardVo);
 		System.out.println(mapper.insertBoard(boardVo));
@@ -39,9 +40,9 @@ public class BoardController {
 		System.out.println(mapper.showAllBoards());
 		
 	}
-	@GetMapping("/delete/{id}")
-	public void deleteLsm(@PathVariable int boardNo) { // URI의 일부를 변수로 전달할 수 있다 //String id = "id"
-		System.out.println(boardNo);
+	@GetMapping("/delete/{boardNo}") // {id}
+	public void deleteLsm(@PathVariable int boardNo) { // URI의 일부를 변수로 전달할 수 있다 //String id = "id" // @PathVariable int boardNo
+		System.out.println("delete()_"+boardNo+"번");
 		System.out.println(mapper.deleteBoard(boardNo));
 		System.out.println(mapper.showAllBoards());
 	}
