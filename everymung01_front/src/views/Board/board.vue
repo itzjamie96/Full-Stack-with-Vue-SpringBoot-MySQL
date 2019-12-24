@@ -29,7 +29,7 @@
   }"
 >  </vue-good-table>
 
-    <!--  v-on="greet()"  이렇게 하면 새로고침만 해도 greet()가 실행되고, 클릭만 해도 실행되고, 뭘 해도 다 실행되는 느낌?;;  -->
+    <!--  v-on="greet()" 이렇게 하면 새로고침만 해도 greet()가 실행되고, 클릭만 해도 실행되고, 뭘 해도 다 실행되는 느낌?;;  -->
 
 <v-btn @click="$router.push({path: '/write'})">글쓰기 {{editidItemIndex}}</v-btn>
 <v-dialog v-model="dialog" persistent max-width="600px">
@@ -43,9 +43,9 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-                <v-text-field class="attrRemove" label="제목" v-model="editedItem.title" required readonly="readonly"></v-text-field>
-                <v-text-field class="attrRemove" label="작성자" v-model="editedItem.userName" required readonly="readonly"></v-text-field>
-                <v-text-field class="attrRemove" label="작성일" v-model="editedItem.boardDate" required readonly="readonly"></v-text-field>
+                <v-text-field  label="제목" v-model="editedItem.title" required ></v-text-field>
+                <v-text-field  label="작성자" v-model="editedItem.userName" required ></v-text-field>
+                <v-text-field  label="작성일" v-model="editedItem.boardDate" required ></v-text-field>
               </v-col>
                         
               <v-textarea
@@ -55,7 +55,7 @@
                 v-model="editedItem.content"
                 required
                 class="attrRemove"
-                readonly="readonly"
+            
               ></v-textarea>
             </v-row>
           </v-container>
@@ -100,8 +100,18 @@ export default {
            
        },
 
-     editidItemIndex: '',
-
+     editidItemIndex: '', // 테이블 행마다의 index번호
+  
+     updatedItem:{
+          boardNo: '',
+          userNo:'',
+          title: 'lsm',
+          user: 'lsm',
+          content:'',
+          boardDate: '',
+          hits: '',
+     },
+     // 전체조회 테이블의 컬럼
      columns: [
        {
            label: '글번호',
@@ -130,22 +140,23 @@ export default {
        }, // MMM Do yy
 
      ],
+     // 전체조회 테이블의 행
      rows: [
         {
            boardNo: '',
            userNo:'',
-           title: 'lsm',
+           title: '',
            userName: '',
            content:'',
            boardDate: '',
            hits: '',
-           depth: '', // column에 없어서 에러 뜰 줄 알았는데, 안뜨네. 
+           depth: '', 
            groupNo: '',
         },
      ],
 
-    }; // return의 } 
-  },//data의 }
+    }; 
+  },
 
   created(){ //현재 컴포넌트가 생성되자 마자 initialize를 수행하라는 의미
         this.initialize()
@@ -158,10 +169,7 @@ export default {
           //@@@@@@@@@@@@@@@@@@@@@@@
           this.rows = response.data //table row로 보여질 객체에 DB에서 받은 데이터를 넣어줌   
           //@@@@@@@@@@@@@@@@@@@@@@@
-          //console.log(response.data)
-          ))  
-          // 이렇게 해주면, 상세보기 화면이 나올줄 알았는데 안나오네;; rows에 있는 데이터를 deiteditem에 집어넣어줬는데 왜 그럴까? 
-          //this.editedItem = this.rows          
+          ))           
 
     },
     //### 상세보기(R) ### 
@@ -194,8 +202,10 @@ export default {
 
   // 수정하기(U)
   update(editedItem){
-      const a = document.getElementsByClassName("attrRemove")
-      console.log(a)
+      this.updatedItem.content = this.editedItem.content
+      console.log(this.boardNo)
+
+      //const a = document.getElementsByClassName("attrRemove")
       //a.readonly=false
       //a.removeAttribute("readonly=readonly")
       
