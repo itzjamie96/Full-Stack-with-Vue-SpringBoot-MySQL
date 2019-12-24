@@ -12,4 +12,6 @@ public interface SitterMapper {
 	
 	public SitterVO showSitterDetail(int sitterNo); //시터 상세보기
 	
+	public List<SitterVO> showDaySitters(); //하루시터 목록 출력
+	
 }

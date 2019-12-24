@@ -35,6 +35,7 @@ const Board = () => import('../views/Board/board.vue')                  //문의
 const Signup = () => import('../views/Signup/UserForm/userSignUp.vue')    
 const PaymentInfo = () => import('../views/Payment/paymentInfo.vue')    //결제 정보 (결제 전)
 
+
 const routes = [
   {
     path: '/',
@@ -103,6 +104,28 @@ const routes = [
     name: 'Board',
     component: Board
   },
+
+  {
+    path: '/userReservationList',
+    name: 'UserReservationList',
+    component: () => import (/* webpackChunkName: "UserReservationList" */ '../views/Mypage/User/userReservationList.vue')
+  },
+
+  {
+    path: '/useReservationDetail/:paymentNo',
+    name: 'UserReservationDetail',
+    component: () => import (/* webpackChunkName: "UserReservationDetail" */ '../views/Mypage/User/userReservationDetail.vue')
+  },
+
+  {
+    //하루 시터 프로필 -> 스케줄 예약 포함 , 리뷰작성위해서 paymentNo 넘기는 path
+    path: '/daysitters/:sitterNo/:paymentNo',
+    name: 'DaySitterDetail',
+    component: DaySitterDetail,
+    props: true
+  },
+
+ 
 
 ]
 

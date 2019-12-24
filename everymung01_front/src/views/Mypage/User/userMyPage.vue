@@ -1,6 +1,7 @@
 <template>
   <v-container>
       <v-card height="512px" elevation="0">
+
         <v-navigation-drawer
           absolute
           permanent
@@ -16,13 +17,11 @@
             </v-list-item-avatar>
 
             <v-list-item-content>
-              <v-list-item-title>유저 이름</v-list-item-title>
+              <v-list-item-title>{{this.userInfo.userName}}</v-list-item-title>
               <v-list-item-subtitle>유저 타입</v-list-item-subtitle>
             </v-list-item-content>
             
-            
           </v-list-item>
-
         </template>
 
         <v-divider></v-divider>
@@ -41,24 +40,32 @@
           </v-list-item>
         </v-list>
       </v-navigation-drawer>
+    
+      
   </v-card>
-
-
 
   </v-container>
 </template>
 
 <script>
+import {mapState,mapActions} from "vuex"
+import Axios from 'axios'
+
   export default {
     data () {
       return {
         items: [
-          { title: '예약내역', icon: 'mdi-home-city', link: '/reservation' },
+          { title: '예약내역', icon: 'mdi-home-city', link: '/userReservationList' },
           { title: '실시간 케어 보기', icon: 'mdi-account' , link: '/reservation'},
           { title: '반려견 정보관리', icon: 'mdi-account' , link: '/reservation'},
           { title: '계정관리', icon: 'mdi-account-group-outline' , link: '/reservation'},
         ],
       }
     },
+
+    computed: {
+       ...mapState(["isLogin","userInfo"]),
+    },
+
   }
 </script>

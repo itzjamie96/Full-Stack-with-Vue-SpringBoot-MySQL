@@ -1,8 +1,6 @@
 <template>
     <div>
-        {{this.sitterInfo}}
-
-        {{this.sitterInfo.sitterNo}}
+        
         <v-card 
                 color="green"
                 height="100%"
@@ -113,6 +111,7 @@
 <script>
 import axios from "axios"
 import {eventBus} from '@/main.js'
+import {mapState,mapActions} from "vuex"
 
 const dt = new Date();
 
@@ -188,6 +187,8 @@ export default {
     minutesToZero(dt) {
         return (dt.getMinutes() < 10 ? '0 ' : '') + (dt.getMinutes() < 10 ? '0 ' : '')
     },
+
+    ...mapState(["isLogin","userInfo"])
    
 
   },
@@ -199,6 +200,8 @@ export default {
 
         //넘길 객체에 펫 정보 추가
         this.reservation.date = this.date
+        this.paymentVO.userName = this.userInfo.userName
+        this.paymentVO.userAddress = this.userInfo.userAddress
         this.paymentVO.startTime = this.reservation.date + " " + this.reservation.startTime
         this.paymentVO.endTime = this.reservation.date + " " + this.reservation.endTime
         this.paymentVO.request = this.reservation.description
@@ -208,17 +211,6 @@ export default {
         this.paymentVO.sitterPhone = this.sitterInfo.sitterPhone,
         this.paymentVO.sitterAddress = this.sitterInfo.sitterAddress,
 
-        // console.log(this.reservation)
-        // console.log(this.paymentVO)
-
-        //  axios
-        //     .post('http://localhost:1234/addPayment', this.paymentVO)
-        //     .then(res => {
-        //         console.log(res)
-        //     })
-        //     .catch(err => {
-        //         console.log(err)
-        //     })
 
         this.$router.push('/paymentinfo/${userNo}') //예약확인 페이지로 수정 필요
 
