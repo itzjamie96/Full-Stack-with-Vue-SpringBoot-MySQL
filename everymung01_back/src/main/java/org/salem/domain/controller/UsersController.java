@@ -23,7 +23,7 @@ public class UsersController {
 	@Autowired
 	UsersMapper mapper;
 	
-	@PostMapping("signin") //일반유저 로그인
+	@PostMapping("signinUser") //일반유저 로그인
 	public UsersVO signin(@RequestBody LoginVO vo) {
 		UsersVO user =mapper.showUserDetail(vo.getEmail());
 		System.out.println(user);
@@ -33,7 +33,8 @@ public class UsersController {
 		return new UsersVO();}
 		
 	}
-	@PostMapping("refresh")//새로고침
+	
+	@PostMapping("refreshUser")//새로고침
 	public UsersVO refreshE(@RequestBody LoginVO vo) {
 		
 		System.out.println(vo);
@@ -41,6 +42,7 @@ public class UsersController {
 		
 		
 	}
+	
 	@PostMapping("signup")//일반 유저 회원가입
 	public String signup(@RequestBody UsersVO vo) {
 		String msg="";

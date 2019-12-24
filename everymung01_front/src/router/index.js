@@ -51,6 +51,18 @@ const routes = [{
         component: Home
     },
     {
+        path: '/sitterSignUp',
+        name: 'sitterSignUp',
+        component: () =>
+            import ( /* webpackChunkName: "sitterSignin" */ '../views/Signup/SitterForm/sitterSignUp.vue')
+    },
+    {
+        path: '/sitterSignUpFinish',
+        name: 'sitterSignUpFinish',
+        component: () =>
+            import ( /* webpackChunkName: "sitterSignin" */ '../views/Signup/SitterForm/sitterSignUpFinish.vue')
+    },
+    {
         path: '/signin',
         name: 'signin',
         component: () =>
@@ -62,9 +74,27 @@ const routes = [{
         component: () =>
             import ( /* webpackChunkName: "Login" */ '../views/Signup/UserForm/userSignUp.vue')
     },
-    {
+    { //유저 마이페이지
         path: '/uMyPage',
         name: 'uMyPage',
+        component: () =>
+            import ( /* webpackChunkName: "Login" */ '../views/Mypage/User/userMyPage.vue')
+    },
+    { //유저 예약내역
+        path: '/uMyPage/userReservationList',
+        name: 'UserReservationList',
+        component: () =>
+            import ( /* webpackChunkName: "UserReservationList" */ '../views/Mypage/User/userReservationList.vue')
+    },
+    { //유저 예약 - 상세 페이지
+        path: '/uMyPage/userReservationDetail/:paymentNo',
+        name: 'UserReservationDetail',
+        component: () =>
+            import ( /* webpackChunkName: "UserReservationDetail" */ '../views/Mypage/User/userReservationDetail.vue')
+    },
+    { //반려견 정보관리
+        path: '/uMyPage/petInfo/:userNo',
+        name: 'myPagePetInfo',
         component: () =>
             import ( /* webpackChunkName: "Login" */ '../views/Mypage/User/userMyPage.vue')
     },
@@ -76,19 +106,19 @@ const routes = [{
     },
 
     {
-        //하루 시터 목록 보기
-        path: '/daysitters',
-        name: 'DaySitterList',
-        component: DaySitterList
-    },
-
-    {
         //하루 시터 프로필 -> 스케줄 예약 포함
         path: '/daysitters/:sitterNo',
         name: 'DaySitterDetail',
         component: DaySitterDetail,
         props: true
     },
+    {
+        //하루 시터 목록 보기
+        path: '/daysitters',
+        name: 'DaySitterList',
+        component: DaySitterList
+    },
+
     {
         //위탁 시터 목록 보기
         path: '/homesitters',
@@ -127,11 +157,30 @@ const routes = [{
     //     component: Update
     // },
 
+
     {
-        path: '/signup',
-        name: 'Signup',
-        component: Signup
+        path: '/userReservationList',
+        name: 'UserReservationList',
+        component: () =>
+            import ( /* webpackChunkName: "UserReservationList" */ '../views/Mypage/User/userReservationList.vue')
     },
+
+    {
+        path: '/useReservationDetail/:paymentNo',
+        name: 'UserReservationDetail',
+        component: () =>
+            import ( /* webpackChunkName: "UserReservationDetail" */ '../views/Mypage/User/userReservationDetail.vue')
+    },
+
+    {
+        //하루 시터 프로필 -> 스케줄 예약 포함 , 리뷰작성위해서 paymentNo 넘기는 path
+        path: '/daysitters/:sitterNo/:paymentNo',
+        name: 'DaySitterDetail',
+        component: DaySitterDetail,
+        props: true
+    },
+
+
 
 ]
 
