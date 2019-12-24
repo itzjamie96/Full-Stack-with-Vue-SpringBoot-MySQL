@@ -105,12 +105,16 @@
     <div class="pa-3">
                 <v-text-field
                 v-model="email"
+                :rules="emailRules"
             label="이메일 입력"
+            required
           ></v-text-field>
                 <v-text-field
                 v-model="password"
                 type="password"
+                :rules="passwordRules"
             label="패스워드 입력"
+            required
           ></v-text-field>
           <v-btn
           depressed 
@@ -158,6 +162,13 @@ import axios from "axios"
 export default {
     data() {
         return {
+          passwordRules: [
+        v => !!v || 'E-mail is required'
+      ],
+          emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+/.test(v) || 'E-mail must be valid',
+      ],
           email:'',
           password:'',
           dialogId:false,

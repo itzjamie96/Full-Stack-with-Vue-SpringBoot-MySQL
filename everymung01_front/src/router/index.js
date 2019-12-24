@@ -38,6 +38,16 @@ const routes = [
     component: Home
   },
   {
+    path: '/sitterSignUp',
+    name: 'sitterSignUp',
+    component: () => import (/* webpackChunkName: "sitterSignin" */ '../views/Signup/SitterForm/sitterSignUp.vue')
+  },
+  {
+    path: '/sitterSignUpFinish',
+    name: 'sitterSignUpFinish',
+    component: () => import (/* webpackChunkName: "sitterSignin" */ '../views/Signup/SitterForm/sitterSignUpFinish.vue')
+  },
+  {
     path: '/signin',
     name: 'signin',
     component: () => import (/* webpackChunkName: "Login" */ '../views/Signup/UserForm/userSignIn.vue')
