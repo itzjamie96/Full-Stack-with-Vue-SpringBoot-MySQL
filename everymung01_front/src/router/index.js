@@ -25,11 +25,16 @@ const onlyAuthUser = (to,from,next) =>{ //라우터 가드 선언
 }
 
 
-const SitterList = () => import('../views/Sitters/sitterList.vue')
-const NewReservation = () => import('../views/Reservation/newReservation.vue')
-const Board = () => import('../views/Board/board.vue')
-const Signup = () => import('../views/Signup/UserForm/userSignUp.vue')
-const SitterDetail = () => import('../views/Sitters/sitterDetail.vue')
+const DaySitterList = () => import('../views/Sitters/daySitterList.vue')      //하루 시터 목록보기
+const DaySitterDetail = () => import('../views/Sitters/daySitterDetail.vue')  //하루 시터 상세보기 - 예약
+
+const HomeSitterList = () => import('../views/Sitters/homeSitterList.vue')      //위탁 시터 목록보기
+const HomeSitterDetail = () => import('../views/Sitters/homeSitterDetail.vue')  //위탁 시터 상세보기 - 예약
+
+const Board = () => import('../views/Board/board.vue')                  //문의게시판 목록
+const Signup = () => import('../views/Signup/UserForm/userSignUp.vue')    
+const PaymentInfo = () => import('../views/Payment/paymentInfo.vue')    //결제 정보 (결제 전)
+
 
 const routes = [
   {
@@ -57,9 +62,24 @@ const routes = [
     name: 'signup',
     component: () => import (/* webpackChunkName: "Login" */ '../views/Signup/UserForm/userSignUp.vue')
   },
-  {
+  {//유저 마이페이지
     path: '/uMyPage',
     name: 'uMyPage',
+    component: () => import (/* webpackChunkName: "Login" */ '../views/Mypage/User/userMyPage.vue')
+  },
+  {//유저 예약내역
+    path: '/uMyPage/userReservationList',
+    name: 'UserReservationList',
+    component: () => import (/* webpackChunkName: "UserReservationList" */ '../views/Mypage/User/userReservationList.vue')
+  },
+  {//유저 예약 - 상세 페이지
+    path: '/uMyPage/userReservationDetail/:paymentNo',
+    name: 'UserReservationDetail',
+    component: () => import (/* webpackChunkName: "UserReservationDetail" */ '../views/Mypage/User/userReservationDetail.vue')
+  },
+  {//반려견 정보관리
+    path: '/uMyPage/petInfo/:userNo',
+    name: 'myPagePetInfo',
     component: () => import (/* webpackChunkName: "Login" */ '../views/Mypage/User/userMyPage.vue')
   },
   {
@@ -69,54 +89,68 @@ const routes = [
   },
 
   {
-    path: '/sitters',
-    name: 'SitterList',
-    component: SitterList
-    /*,
-    
-    app.vue가 아니라 상위 페이지에서 router-view를 해야 자식 페이지로 넘어감
+    //하루 시터 목록 보기
+    path: '/daysitters',
+    name: 'DaySitterList',
+    component: DaySitterList
+  },
 
-    children: [
-      {
-        path: '/new',
-        name: 'CreateMeetup',
-        component: CreateMeetup
-      },
-      {
-        path: ':id',
-        name: 'Meetup',
-        component: Meetup
-      }
-    ]
-    */
-  },
-  
   {
-    //신규 예약
-    path: '/sitters/new',
-    name: 'NewReservation',
-    component: NewReservation
-  },
-  
-  {
-    //시터 프로필
-    path: '/sitters/:sitterNo',
-    name: 'SitterDetail',
-    component: SitterDetail,
+    //하루 시터 프로필 -> 스케줄 예약 포함
+    path: '/daysitters/:sitterNo',
+    name: 'DaySitterDetail',
+    component: DaySitterDetail,
     props: true
   },
-  
+  {
+    //위탁 시터 목록 보기
+    path: '/homesitters',
+    name: 'HomeSitterList',
+    component: HomeSitterList
+  },
+
+  {
+    //위탁 시터 프로필 -> 스케줄 예약 포함
+    path: '/homesitters/:sitterNo',
+    name: 'HomeSitterDetail',
+    component: HomeSitterDetail,
+    props: true
+  },
+  {
+    //결제 전 정보 보기
+    path: '/paymentinfo/:paymentNo',
+    name: 'PaymentInfo',
+    component: PaymentInfo
+  },
   
   {
+    //문의게시판
     path: '/board',
     name: 'Board',
     component: Board
   },
+
   {
-    path: '/signup',
-    name: 'Signup',
-    component: Signup
+    path: '/userReservationList',
+    name: 'UserReservationList',
+    component: () => import (/* webpackChunkName: "UserReservationList" */ '../views/Mypage/User/userReservationList.vue')
   },
+
+  {
+    path: '/useReservationDetail/:paymentNo',
+    name: 'UserReservationDetail',
+    component: () => import (/* webpackChunkName: "UserReservationDetail" */ '../views/Mypage/User/userReservationDetail.vue')
+  },
+
+  {
+    //하루 시터 프로필 -> 스케줄 예약 포함 , 리뷰작성위해서 paymentNo 넘기는 path
+    path: '/daysitters/:sitterNo/:paymentNo',
+    name: 'DaySitterDetail',
+    component: DaySitterDetail,
+    props: true
+  },
+
+ 
 
 ]
 

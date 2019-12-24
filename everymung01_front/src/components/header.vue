@@ -86,13 +86,10 @@ export default {
     return {
       drawer: false,
       menuItems: [
-        {title: '하루 시터', link: '/sitters'},
-        // {title: '위탁 시터', link: '/meetups'},
-        {title: '예약(테스트)', link: '/sitters/new'},
+        {title: '하루 시터', link: '/daysitters'},
+        {title: '위탁 시터', link: '/homesitters/'},
+        {title: '펫시터 지원', link: '/sitterSignUp'},
         {title: '문의하기', link: '/board'},
-        //{title: '마이페이지', link: '/meetups/new'},
-        //{title: '회원가입', link: '/signup'},
-        //{title: '로그인', link: '/signin'}
       ]
     }
   },
@@ -103,12 +100,4 @@ export default {
 }
 </script>
 
-<style>
-@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
 
-#app {
-  font-family: 'Noto Sans KR', sans-serif;
-}
-
-
-</style>

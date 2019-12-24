@@ -1,7 +1,6 @@
 <template>
  <v-app>
     <every-header/>
-    <v-btn color="white" @click="$router.push({name : 'sitterSignUp'})" depressed>시터지원폼</v-btn>
     <router-view></router-view>
  </v-app>
 </template>
@@ -22,3 +21,13 @@ export default {
   }
 }
 </script>
+
+<style>
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
+
+#app {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+
+</style>

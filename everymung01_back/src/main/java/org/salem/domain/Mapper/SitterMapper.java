@@ -15,6 +15,7 @@ public interface SitterMapper {
 	
 	public SitterVO showSitterDetail(int sitterNo); //시터 상세보기
 	
+
 	@Select("select * from sitter where sitterEmail=#{sitterEmail}") //시터 로긴 & 새로고침 관련
 	public SitterVO showUserDetailLogin(@Param("sitterEmail") String sitterEmail);
 	
@@ -25,4 +26,8 @@ public interface SitterMapper {
 	
 	@Update("update sitter set identityCheck=#{identityCheck},qualificationCheck=#{qualificationCheck} where sitterEmail=#{sitterEmail}")
 	public void sitterCheck(SitterVO vo);
+	
+	
+	public List<SitterVO> showDaySitters(); //하루시터 목록 출력
+
 }
