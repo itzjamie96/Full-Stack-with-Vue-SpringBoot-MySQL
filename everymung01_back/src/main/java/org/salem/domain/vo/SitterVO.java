@@ -9,7 +9,7 @@ import lombok.Data;
 public class SitterVO {
 	
 	private int sitterNo;
-	private String sittingType;
+	private int sittingNo;
 	private String sitterEmail;
 	private String sitterName;
 	private String sitterPw;

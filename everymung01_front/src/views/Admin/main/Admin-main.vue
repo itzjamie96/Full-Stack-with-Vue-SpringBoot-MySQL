@@ -7,7 +7,7 @@
     >
     
       <v-list dense>
-        <v-list-item link class="ma-5" router :to="{name: 'home'}" exact>
+        <v-list-item link class="ma-5" router :to="{name: 'adminhome'}" exact>
           <v-list-item-action>
             <v-icon>mdi-home</v-icon>
           </v-list-item-action>
@@ -18,7 +18,7 @@
          
           <v-divider ></v-divider>
         
-        <v-list-item link class="ma-5" router :to="{name: 'reservation'}" exact>
+        <v-list-item link class="ma-5" router :to="{name: 'adminreservation'}" exact>
           <v-list-item-action>
             <v-icon>mdi-home</v-icon>
           </v-list-item-action>
@@ -29,7 +29,7 @@
         
         <v-divider ></v-divider>
         
-        <v-list-item link class="ma-5" router :to="{name: 'member'}">
+        <v-list-item link class="ma-5" router :to="{name: 'adminmember'}" exact>
           <v-list-item-action>
             <v-icon>mdi-contact-mail</v-icon>
           </v-list-item-action>
@@ -40,7 +40,7 @@
         
         <v-divider ></v-divider>
         
-        <v-list-item link class="ma-5" router :to="{name: 'employee'}">
+        <v-list-item link class="ma-5" router :to="{name: 'adminemployee'}" exact>
           <v-list-item-action>
             <v-icon>mdi-contact-mail</v-icon>
           </v-list-item-action>
@@ -51,7 +51,7 @@
         
         <v-divider ></v-divider>
         
-        <v-list-item link class="ma-5" router :to="{name: 'approval'}"> 
+        <v-list-item link class="ma-5" router :to="{name: 'adminapproval'}" exact> 
           <v-list-item-action>
             <v-icon>mdi-contact-mail</v-icon>
           </v-list-item-action>
@@ -62,7 +62,7 @@
         
         <v-divider ></v-divider>
         
-        <v-list-item link class="ma-5" router :to="{name: 'board'}">
+        <v-list-item link class="ma-5" router :to="{name: 'adminboard'}" exact>
           <v-list-item-action>
             <v-icon>mdi-contact-mail</v-icon>
           </v-list-item-action>
@@ -73,7 +73,7 @@
         
         <v-divider ></v-divider>
         
-        <v-list-item link class="ma-5" router :to="{name: 'payment'}">
+        <v-list-item link class="ma-5" router :to="{name: 'adminpayment'}" exact>
           <v-list-item-action>
             <v-icon>mdi-contact-mail</v-icon>
           </v-list-item-action>

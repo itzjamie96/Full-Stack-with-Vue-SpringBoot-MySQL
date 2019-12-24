@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTDMapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	
+<mapper namespace="org.salem.domain.Mapper.PetMapper"   >
+
+  <select id="showAllPets" resultType="org.salem.domain.vo.PetVO" parameterType="int" >
+  
+    SELECT p.petno, p.userNo, p.breedNo, p.petName, p.petGender,
+       p.petWeight,p.petAge, p.neutralization, p.petAnswer, p.petImg,
+       b.dogBreed, b.breedInfo,u.userName
+       FROM PET p JOIN USERS u
+       ON p.userNo = u.userNo
+       JOIN BREED b on p.breedNo = b.breedNo
+       WHERE p.userNo = #{userNo};
+      
+  </select>
+  
+  <insert id="addPet"  parameterType="org.salem.domain.vo.PetVO" >
+    
+    INSERT INTO PET(userNo, breedNo, petName, petGender, petWeight, petAge,
+                neutralization, petAnswer, petImg) VALUES
+(#{userNo}, #{breedNo}, #{petName}, #{petGender}, #{petWeight}, #{petAge}, #{neutralization}, #{petAnswer}, #{petImg});
+  
+  </insert>
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
+	
+	

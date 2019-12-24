@@ -17,6 +17,7 @@ public class PaymentServiceImpl implements PaymentService{
 
 	@Override
 	public int addPayment(PaymentVO paymentVO) {
+		
 		return paymentMapper.addPayment(paymentVO);
 	}
 

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTDMapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.salem.domain.Mapper.SitterMapper">
+	
+	<!-- <select id="showAllSitters" resultType="SitterVO">
+		SELECT 
+			sitterNo, sittingType, sitterEmail, sitterName,  
+			sitterAddress, sitterImg1, sitterImg2, sitterImg3, sitterImg4, 
+			sitterImg5, possibleDay, sitterGender, sitterAge, profileTitle, profile, petProfile, 
+			approvalStatus
+		FROM sitter
+		JOIN sitting_type AS type
+		WHERE sitter.sittingNo = type.sittingNo;
+	</select> -->
+	
+	<select id="showSitterDetail" resultType="SitterVO" parameterType="int">
+		SELECT 
+			sitterNo, sittingType, sitterEmail, sitterName, sitterPw, sitterPhone, 
+			sitterAddress, sitterImg1, sitterImg2, sitterImg3, sitterImg4, 
+			sitterImg5, possibleDay, sitterGender, sitterAge, profileTitle, profile, petProfile, 
+			identityCheck, qualificationCheck, approvalStatus, approvalDate
+		FROM sitter
+		JOIN sitting_type AS type
+		ON (sitter.sittingNo = type.sittingNo)
+		WHERE sitterNo=#{sitterNo}
+	</select>
+	
+	<select id="showDaySitters" resultType="SitterVO">
+		SELECT 
+			sitterNo, sittingType, sitterEmail, sitterName,  
+			sitterAddress, sitterImg1, sitterImg2, sitterImg3, sitterImg4, 
+			sitterImg5, possibleDay, sitterGender, sitterAge, profileTitle, profile, petProfile, 
+			approvalStatus
+		FROM sitter
+		JOIN sitting_type AS type
+		ON (sitter.sittingNo = type.sittingNo)
+		WHERE sittingType = 'daycare'; 
+	</select>
+	
+</mapper>

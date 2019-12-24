@@ -6,8 +6,8 @@
     outlined
     v-for="sitter in sitterList"
     :key="sitter.id"
-    
   >
+    
     <v-list-item three-line>
       <v-list-item-avatar
         tile
@@ -29,7 +29,7 @@
         <v-btn 
           x-large 
           color
-          @click="$router.push({path: '/sitters/' + sitter.sitterNo})"
+          @click="$router.push({path: '/daysitters/' + sitter.sitterNo})"
           >시터 상세 보기</v-btn>
       </v-card-actions>
     </v-list-item>
@@ -53,10 +53,10 @@ export default {
 
     methods:{
       initialize(){//DB와 연동
-        axios.get('http://localhost:1234/showAllSitters')
+        axios.get('http://localhost:1234/showDaySitters')
           .then(res => {
             this.sitterList=res.data //객체에 DB에서 받은 데이터를 넣어줌
-            console.log(res);
+            //console.log(res);
           })
           .catch(err => {
             // handle error
@@ -67,7 +67,7 @@ export default {
         const sitterNo = item.sitterNo
         console.log('detail : ' + sitterNo);
 
-        this.$router.push({path: '/sitters/' + sitterNo})
+        this.$router.push({path: '/daysitters/' + sitterNo})
       }
 
     }
