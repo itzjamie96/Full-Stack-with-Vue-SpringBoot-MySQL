@@ -3,6 +3,24 @@
     <v-container fill-height style="max-width:450px;">
         <v-layout align-center row wrap>
             <v-flex xs12>
+              <v-btn-toggle
+              v-model="$store.state.role"
+          tile
+          color="deep-purple accent-3"
+          group
+        >
+          <v-btn @click="_roles('User')" value="User">
+            일반
+          </v-btn>
+
+          <v-btn @click="_roles('Sitter')" value="Sitter">
+            시터
+          </v-btn>
+
+          <v-btn @click="_roles('Admin')" value="Admin">
+            운영자
+          </v-btn>
+        </v-btn-toggle>
                 <v-alert
                 :value="isLoginError"
                 type="error"
@@ -38,8 +56,8 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click.native="dialogId = false">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="dialogId = false">Save</v-btn>
+          <v-btn color="blue darken-1" text @click.native="dialogId = false">Close</v-btn>
+          <v-btn color="blue darken-1" text @click.native="dialogId = false">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -69,8 +87,8 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" flat @click.native="dialogPw = false">Close</v-btn>
-          <v-btn color="blue darken-1" flat @click.native="dialogPw = false">Save</v-btn>
+          <v-btn color="blue darken-1" text @click.native="dialogPw = false">Close</v-btn>
+          <v-btn color="blue darken-1" text @click.native="dialogPw = false">Save</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -81,18 +99,22 @@
 <!-- -->
     <v-toolbar flat>
         
-    <v-toolbar-title primary-title class="layout justify-center"><i class="fas fa-paw"></i><b>도그멍</b></v-toolbar-title>
+    <v-toolbar-title primary-title class="layout justify-center"><i class="fas fa-paw"></i><b>에브리멍</b></v-toolbar-title>
     </v-toolbar>
     
     <div class="pa-3">
                 <v-text-field
                 v-model="email"
+                :rules="emailRules"
             label="이메일 입력"
+            required
           ></v-text-field>
                 <v-text-field
                 v-model="password"
                 type="password"
+                :rules="passwordRules"
             label="패스워드 입력"
+            required
           ></v-text-field>
           <v-btn
           depressed 
@@ -123,7 +145,7 @@
     <v-divider vertical class="my-2"></v-divider>
     <v-btn color="white" @click="bm" depressed>비밀번호 찾기</v-btn>
     <v-divider vertical class="my-2"></v-divider>
-    <v-btn color="white" @click="$router.push({name : 'signUp'})" depressed>회원가입</v-btn>
+    <v-btn color="white" @click="$router.push({name : 'signup'})" depressed>회원가입</v-btn>
 </div>
 
           </v-card>
@@ -135,23 +157,32 @@
 </template>
 
 <script>
+// 이걸 가져다 써야 로그인 연동이 된다 
 import {mapState,mapActions} from "vuex"
 import axios from "axios"
 export default {
     data() {
         return {
-            email :null,
-            password : null,
-            dialogId: false,
-            dialogPw: false,
+          passwordRules: [
+        v => !!v || 'E-mail is required'
+      ],
+          emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+/.test(v) || 'E-mail must be valid',
+      ],
+          email:'',
+          password:'',
+          dialogId:false,
+          dialogPw:false,
 
         }
     },
     computed: {
-        ...mapState(["isLogin","isLoginError"])
+        ...mapState(["isLogin","userInfo","isLoginError","role"]),
+    
     },
     methods:{
-        ...mapActions(['login']),
+        ...mapActions(['login','_roles']),
         id(){
            this.dialogId=true
         },

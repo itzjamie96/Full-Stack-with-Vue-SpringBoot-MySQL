@@ -18,35 +18,45 @@
             <v-card>
 
     <v-toolbar flat>
-    <v-toolbar-title primary-title class="layout justify-center"><i class="fas fa-paw"></i><b>도그멍 회원가입</b></v-toolbar-title>
+    <v-toolbar-title primary-title class="layout justify-center"><i class="fas fa-paw"></i><b>에브리멍 회원가입</b></v-toolbar-title>
     </v-toolbar>
     
     <div class="pa-3">
         <v-text-field
-                v-model="email"
+                v-model="userName"
             label="이름"
           ></v-text-field>
+        <v-text-field
+                v-model="userAddress"
+            label="주소"
+          ></v-text-field>
+        <v-text-field
+                v-model="userPhone"
+            label="핸드폰"
+          ></v-text-field>
                 <v-text-field
-                v-model="email"
+                v-model="userEmail"
+                type="email"
             label="이메일"
           ></v-text-field>
                 <v-text-field
-                v-model="password"
+                v-model="userPw"
                 type="password"
             label="패스워드"
           ></v-text-field>
                 <v-text-field
-                v-model="password"
+                v-model="userPwRepeat"
                 type="password"
             label="패스워드 확인"
           ></v-text-field>
+          <b>{{checkP}}</b>
           <v-btn
+          
           depressed 
           large
           block
           color="primary"
-          @click="login({email:email,
-          password:password})"
+          @click="signup()"
           >회원가입</v-btn>
           
     </div>
@@ -79,31 +89,69 @@
 
 
 <script>
-import {mapState,mapActions} from "vuex"
 import axios from "axios"
+import router from '../../../router/index'
+const baseURL = 'http://localhost:1234'
 export default {
     data() {
         return {
-            name : null,
-            email :null,
-            password : null,
-            passwordRepeat : null,
+            userAddress:null,
+            userPhone:null,
+            userName : null,
+            userEmail :null,
+            userPw : null,
+            userPwRepeat : null,
+            isSignUp : false,
+            isSignUpError: false,
+            message:"",
+            
             
         }
     },
     computed: {
-        ...mapState(["isSignUp","isSignUpError"])
+      checkP(){
+          if(this.userPw !==null&&this.userPwRepeat !==null&&this.userPw===this.userPwRepeat)
+            this.message="비밀번호가 같습니다."
+        else if(this.userPw !== this.userPwRepeat)
+            this.message="비밀번호가 다릅니다"
+            else
+            this.message=""
+        return this.message
+      }
+        
 
     },
     methods:{
-        ...mapActions(['login']),
-        id(){
-           this.dialogId=true
-        },
-        bm(){
-            this.dialogPw=true
-        },
-
+        
+        signup(){
+            let UsersVO = {userName:'',userEmail:'',userPw:'',userAddress:'',userPhone:''}
+            UsersVO.userName=this.userName
+            UsersVO.userEmail=this.userEmail
+            UsersVO.userPw=this.userPw
+            UsersVO.userAddress=this.userAddress
+            UsersVO.userPhone=this.userPhone
+            console.log(UsersVO)
+          axios.post(`${baseURL}/signup`,UsersVO) 
+       .then(res => { 
+         console.log(res.data)
+         if(res.data == "회원가입 완료"){
+             this.isSignUpError=false
+             this.isSignUp=true
+             this.userName=''
+             this.userEmail=''
+             this.userPw=''
+             this.userAddress=''
+             this.userPhone=''
+             this.userPwRepeat=''
+             router.push({name:'signin'})
+         }else
+            this.isSignUp=false
+            this.isSignUpError=true
+       }) 
+       .catch(error => { 
+         console.log(error)
+       })
+      }
 
     }
 }

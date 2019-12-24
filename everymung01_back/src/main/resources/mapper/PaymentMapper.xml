@@ -6,7 +6,7 @@
 	<select id="showDetailPayment" resultType="PaymentVO" parameterType="int">
 		SELECT pay.paymentNo, s.sitterNo, t.sittingType, s.sitterName, s.sitterPhone, s.sitterAddress, 
 				u.userName, u.userAddress, p.petNo, p.petName, b.dogBreed, b.size, pay.startTime, 
-				pay.endTime, pay.request, pay.paymentMethod, pay.amount  
+				pay.endTime, pay.request, pay.paymentMethod, pay.amount, pay.paymentDate  
 		FROM USERS u
 		INNER JOIN PET p ON p.userNo = u.userNo
 		INNER JOIN BREED b ON b.breedNo = p.breedNo
@@ -23,5 +23,19 @@
 		VALUES (#{sitterNo}, #{startTime}, #{endTime}, #{request}, 1, #{amount},
 				sysdate(), #{paymentMethod}, 0, 0)
 	</insert>
+	
+	<select id="showUserPayment" resultType="PaymentVO" parameterType="int">
+		SELECT pay.paymentNo, s.sitterNo, t.sittingType, s.sitterName, s.sitterPhone, s.sitterAddress, 
+				u.userNo, u.userName, u.userAddress, p.petNo, p.petName, b.dogBreed, b.size, pay.startTime, pay.endTime, pay.request, 
+				pay.paymentMethod, pay.amount, pay.paymentStatus , pay.refundStatus, pay.reviewStatus, pay.paymentDate
+		FROM USERS u
+		INNER JOIN PET p ON p.userNo = u.userNo
+		INNER JOIN BREED b ON b.breedNo = p.breedNo
+		INNER JOIN reservation r ON p.petNo = r.petNo
+		INNER JOIN payment pay ON pay.paymentNo = r.paymentNo
+		INNER JOIN SITTER s ON s.sitterNo = pay.sitterNo
+		INNER JOIN SITTING_TYPE t ON t.sittingNo = s.sittingNo
+		WHERE u.userNo = #{userNo};
+	</select>
 	
 </mapper>
