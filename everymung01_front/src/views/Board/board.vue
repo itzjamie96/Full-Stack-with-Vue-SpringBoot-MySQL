@@ -11,7 +11,22 @@
     :line-numbers="false"
     :search-options="{
          enabled: true,
-    }"
+     }"
+    :pagination-options="{
+        enabled: true,
+        mode: 'records',
+        perPage: 9,
+        position: 'bottom',
+        perPageDropdown: [3, 7, 9],
+        dropdownAllowAll: false,
+        setCurrentPage: 2,
+        nextLabel: 'next',
+        prevLabel: 'prev',
+        rowsPerPageLabel: 'Rows per page',
+        ofLabel: 'of',
+        pageLabel: 'page', // for 'pages' mode
+        allLabel: 'All',
+  }"
 >  </vue-good-table>
 
     <!--  v-on="greet()"  이렇게 하면 새로고침만 해도 greet()가 실행되고, 클릭만 해도 실행되고, 뭘 해도 다 실행되는 느낌?;;  -->
@@ -120,25 +135,13 @@ export default {
            boardNo: '',
            userNo:'',
            title: 'lsm',
-           userName: 'lsm',
+           userName: '',
            content:'',
            boardDate: '',
            hits: '',
            depth: '', // column에 없어서 에러 뜰 줄 알았는데, 안뜨네. 
            groupNo: '',
         },
-       // {
-       //   id:1, name:"John",
-       //   age: 20,
-       //   createdAt: '',
-       //   score: 0.03343
-       // },
-       // { id:2, name:"Jane", age: 24, createdAt: '2011-10-31', score: 0.03343 },
-       // { id:3, name:"Susan", age: 16, createdAt: '2011-10-30', score: 0.03343 },
-       // { id:4, name:"Chris", age: 55, createdAt: '2011-10-11', score: 0.03343 },
-       // { id:5, name:"Dan", age: 40, createdAt: '2011-10-21', score: 0.03343 },
-       // { id:6, name:"John", age: 20, createdAt: '2011-10-31', score: 0.03343 },
- 
      ],
 
     }; // return의 } 
@@ -173,18 +176,7 @@ export default {
         this.editedItem.content = params.row.content
         this.editedItem.depth = params.row.depth
         this.editedItem.groupNo = params.row.groupNo // 여기까진 상세보기 기능.
-                      // params.row객체의 값을 테이블의 범위 밖에서는 사용 못한다는 잘못된 생각 때문에 아래와 같은 삽질을 함..
-                        //console.log(this.editedItem.boardNo+"_onRowClick")
 
-                        // this.dele(this.editedItem)  // 이 함수는 온클릭시에 작동하도록 설계된 함수니까, 삭제버튼 누르면 작동하지 않을까? row클릭했다고 바로 작동은 안하고?
-                        // 실패.. 그냥 바로 삭제되버린다.  
-
-
-                        // if(this.editedItem.boardNo===1){ // delete버튼을 누르면<을 표현하고 싶은데 
-                        //   console.log("greet()되나?")
-                        //   this.greet()  // this를 넣어주니까 greet is not defined가 안뜨네!! 오호~ this의 역할~
-                        // }
-       
       // params.row - row object 
       // params.pageIndex - index of this row on the current page.
       // params.selected - if selection is enabled this argument 
@@ -206,43 +198,17 @@ export default {
       //a.readonly=false
       //a.removeAttribute("readonly=readonly")
       
-      
-
-      // for(let i=0 ; i<this.rows.length;i++){
-      //    if(this.rows[i].id==Id){
-      //    this.rows[i].name=editedItem.name
-      //    this.rows[i].age=editedItem.age
-      //    this.rows[i].city=editedItem.city
-      //    break;
-      //    }
-      // }
   },
   // 수정하기_저장(U)
   save(editedItem){
      this.dialog=false
-      //  const Id = editedItem.id;
 
-      // for(let i=0 ; i<this.rows.length;i++){
-      //    if(this.rows[i].id==Id){
-      //    this.rows[i].name=editedItem.name
-      //    this.rows[i].age=editedItem.age
-      //    this.rows[i].city=editedItem.city
-      //    break;
-      //    }
-      // }
   },
 
   // 삭제하기(D)
   dele(){
      this.dialog=false
-                            // 인덱스로 정확한 삭제를 하기 위해 거쳤던 뻘짓..(boardNo로 삭제하려고 했으나, splice함수는 index로 삭제하는 방식이라서 아주 헤맴..)
-                                  //console.log(this.rows.boardNo) => 에러> undefined   
-                                  // console.log(this.editedItem.boardNo+"_dele(editedItem)")
-                                  //const reverseIndex = this.rows[this.rows.length - this.editedItem.boardNo -1].boardNo
-                                  //console.log(reverseIndex)
-                                  //console.log(this.rows[this.rows.length - this.editedItem.boardNo -1].boardNo) // 맨위에서부터 row[0] (boardNo=5일 때)
-                                  //console.log(reverseIndex+"___reverseIndex_dele소속")
-                                  //3번일땐 게시글2번이 삭제되네. 2번일때 게시글3번이 삭제되고, 1번일 때 게시글 4번이 삭제되네?;
+
      console.log(this.editidItemIndex + "=== dele()")
      console.log(this.editedItem.boardNo + "=== boardNo")
      

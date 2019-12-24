@@ -135,6 +135,7 @@
 </template>
 
 <script>
+// 이걸 가져다 써야 로그인 연동이 된다 
 import {mapState,mapActions} from "vuex"
 import axios from "axios"
 export default {

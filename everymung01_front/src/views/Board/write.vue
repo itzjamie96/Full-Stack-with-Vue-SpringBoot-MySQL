@@ -23,6 +23,8 @@
 
 <script>
 import axios from "axios"
+// ?? 이걸 가져다 써야 로그인 연동이 된다 
+// import {mapState,mapActions} from "vuex"
 
 export default {
     data(){
@@ -32,7 +34,7 @@ export default {
                      //BUT 그냥 깡으로 'title'이란 고정값이 입력된거였음... 
             //### 에러해결_ v-model=""에 입력해주는 값을 detail.title이라고 쳐야지, data에서 입력한 detail:{title,}이 인식되늰거였는데, v-model="title"로 쓰니까 인식을 못하지.
             
-            detail: { // 여기에 v-model값이 담기는구나. 신기하다!
+            detail: { // 여기에 v-model값이 담기는구나.
                 boardNo:'',
                 title:'', 
                 content:'',
@@ -47,12 +49,13 @@ export default {
           
         }
     },
+
     methods:{
         // 저장하기(DB_INSERT)(C)
         add(){
             console.log("test")
             console.log(this.detail)
-            axios.post ('http://localhost:1234/add',this.detail) 
+            axios.post ('http://localhost:1234/add',this.detail) // 여기선 객체 던져주는 식이네 
            .then( res =>(
              console.log(res),
                console.log(detail.title + detail.content),
@@ -61,7 +64,7 @@ export default {
           // 입력칸 제출후 깨끗하게 만드는 기능코드 
           this.detail = this.default 
 
-          window.location.href="http://localhost:8081/board"
+          window.location.href="http://localhost:8080/board"
 
         },
     }
