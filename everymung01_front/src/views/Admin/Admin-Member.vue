@@ -23,23 +23,48 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-                <v-text-field label="name" v-model="rows.userEmail" required></v-text-field>
+                <v-text-field label="Name"  v-model="user.userName" ></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="age"  v-model="rows.Name" required></v-text-field>
+                <v-text-field label="Email" v-model="user.userEmail" ></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="city" v-model="rows.Pw" required></v-text-field>
+                <v-text-field label="Password" v-model="user.userPw"></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field label="Phone" v-model="user.userPhone" ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field label="Address" v-model="user.userAddress" ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field label="Date" v-model="user.userDate" disabled></v-text-field>
               </v-col>
             </v-row>
           </v-container>
         </v-card-text>
+        <v-card-text v-if="deleteAlert">
+            <v-alert v-model="deleteAlert" type="warning">
+              <h4>정말 삭제 하시겠습니까?</h4>
+              <v-btn class="mr-4"  color="error" @click="dele(user.userNo)">확인</v-btn>
+              <v-btn color="secondary" @click="deleteAlert=false">취소</v-btn>
+            </v-alert>
+        </v-card-text>
+        <v-card-text v-if="updateAlert">
+            <v-alert v-model="updateAlert" type="warning">
+              <h4>정말 수정 하시겠습니까?</h4>
+              <v-btn class="mr-4"  color="error" @click="update()">확인</v-btn>
+              <v-btn color="secondary" @click="updateAlert=false">취소</v-btn>
+            </v-alert>
+        </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="dialog = false">확인</v-btn>
-          <v-btn color="blue darken-1" text @click="dele(binG)">삭제</v-btn>
-          <v-btn color="blue darken-1" text @click="save(binG) ">저장</v-btn>
+          <v-btn color="blue darken-1" text @click.native="deleteAlert=true">삭제</v-btn>
+          <v-btn color="blue darken-1" text @click.native="updateAlert=true">수정</v-btn>
         </v-card-actions>
+        
+        
       </v-card>
     </v-dialog>
 
@@ -49,7 +74,6 @@
 <script>
 import 'vue-good-table/dist/vue-good-table.css'
 import { VueGoodTable } from 'vue-good-table'
-import axios from "axios"
 
 export default {
     components: {
@@ -57,80 +81,98 @@ export default {
 },data(){
     return {
        dialog: false,
-       binG:{
-       id :'',
-       name:'',
-       age:'',
-       city:''},
+       deleteAlert: false,
+       updateAlert: false,
+       user:{
+       userNo :'',
+       userEmail:'',
+       userName:'',
+       userPw:'',
+       userPhone:'',
+       userAddress:'',
+       userProfile:'',
+       userDate:''
+       },
       columns: [
         {
           label: 'Name',
-          field: 'name',
+          field: 'userName',
         },
         {
-          label: 'Age',
-          field: 'age',
-          type: 'number',
+          label: 'Email',
+          field: 'userEmail',
+        },
+        {
+          label: 'Phone',
+          field: 'userPhone',
+        },
+        {
+          label: 'Address',
+          field: 'userAddress',
+        },
+        {
+          label: 'Date',
+          field: 'userDate',
         },
         
       ],
-      rows: [],
+      rows:[],
     };
+  },
+  created() {
+    this.selectAll();
   },
   methods: {
   onRowClick(params) {
      this.dialog=true
-     this.binG.id = params.row.id
-     this.binG.name = params.row.name
-     this.binG.age = params.row.age
-     this.binG.city = params.row.city
-     // console.log(this.binG)
-      
-    // params.row - row object 
-    // params.pageIndex - index of this row on the current page.
-    // params.selected - if selection is enabled this argument 
-    // indicates selected or not
-    // params.event - click event
+     this.user.userNo = params.row.userNo
+     this.user.userName = params.row.userName
+     this.user.userEmail = params.row.userEmail
+     this.user.userPw = params.row.userPw
+     this.user.userPhone = params.row.userPhone
+     this.user.userAddress = params.row.userAddress
+     this.user.userProfile = params.row.userProfile
+     this.user.userDate = params.row.userDate
   },
-  save(binG){
-     this.dialog=false
-     const Id = binG.id;
-
-      for(let i=0 ; i<this.rows.length;i++){
-         if(this.rows[i].id==Id){
-         this.rows[i].name=binG.name
-         this.rows[i].age=binG.age
-         this.rows[i].city=binG.city
-         break;
-         }
-      }
+  selectAll(){
+      this.$axios.get(`http://localhost:1234/userlist`)
+          .then( res =>{
+            this.rows = res.data
+          })
+          .catch(err => {
+            alert("backand(showAllUsers) 에러 확인")
+          })
      
   },
-  dele(binG){
+  dele(userNo){
      this.dialog=false
-     this.rows.splice(binG.id , 1)
-/* for(let i=0 ; i<this.rows.length;i++){
-         if(this.rows[i].id==Id){
-         break;
-         }
-      } */
+     this.deleteAlert=false
+     const No = userNo
+     
+      this.$axios.post(`http://localhost:1234/deleteUser/${No}`).then(res =>{
+        const idx = this.rows.findIndex(x => x.userNo === userNo)
+        console.log(idx)
+              this.dialog=false
+              this.rows.splice(idx, 1)
+      }).catch(err =>{
+        alert("backend(delete) 에러 확인!")
+      })
 
   },
-  userlist(){
-      axios.get(`http://localhost:1234/userlist`) 
+  update(){
+     this.dialog=false
+     this.updateAlert=false
+     this.$axios.post('http://localhost:1234/updateUser',this.user) 
               .then(res => { 
-                console.log(res)
-                this.rows = res.data
+                this.selectAll();
               }) 
-              .catch(error => { 
-                console.log(error)
-              }
-            },
+              .catch(err => { 
+                alert("backend(update) 에러 확인!")
 
+              });
+  },
     },
-    created: (){
-        this.userlist();
-    },
+
  
 }
 </script>

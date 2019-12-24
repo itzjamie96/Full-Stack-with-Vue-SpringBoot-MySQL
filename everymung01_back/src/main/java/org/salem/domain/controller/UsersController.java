@@ -27,22 +27,19 @@ public class UsersController {
 		return (List<UsersVO>) mapper.showAllUsers();
 	}
 	
-<<<<<<< HEAD
-	@PostMapping("/update") 
+
+	@PostMapping("/updateUser") 
 	public int updateUser(@RequestBody UsersVO usersVo){
-		System.out.println(usersVo);
 		return mapper.updateUser(usersVo);
 		
 		
 	}
-	@PostMapping("/delete/{userNo}")
+	@PostMapping("/deleteUser/{userNo}")
 	public int deleteUser(@PathVariable int userNo) {
-		System.out.println(userNo);
 		return mapper.deleteUser(userNo);
 	}
 	
-=======
->>>>>>> parent of 3abad90... [회원관리 진행중]
+
 //	@PostMapping("/add") public void addException(@RequestBody Users user){
 //		System.out.println(mapper.test0(user));
 //		System.out.println(mapper.test());

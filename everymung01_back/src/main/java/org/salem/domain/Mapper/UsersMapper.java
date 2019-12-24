@@ -15,7 +15,7 @@ public interface UsersMapper {
 	@Select("select * from users")
 	public List<UsersVO> showAllUsers();
 	
-<<<<<<< HEAD
+
 	@Delete("delete from users where userNo=#{userNo}")
 	public int deleteUser(int userNo);
 
@@ -23,8 +23,6 @@ public interface UsersMapper {
 	@Update("Update users set userName=#{userName},userEmail=#{userEmail},userPw=#{userPw},userPhone=#{userPhone},userAddress=#{userAddress},userProfile=#{userProfile} where userNo=#{userNo}")
 	public int updateUser(UsersVO usersVo);
 	
-=======
->>>>>>> parent of 3abad90... [회원관리 진행중]
 //	@Insert("insert into users values (#{id},#{address},#{email},#{name},#{pw})")
 //	public int test0(Users users);
 //	
