@@ -1,13 +1,13 @@
- <template>
+<template>
   <v-app id="inspire">
-    <!-- <v-navigation-drawer
+    <v-navigation-drawer
     v-model="drawer"
       app
       clipped
     >
     
       <v-list dense>
-        <v-list-item link class="ma-5" router :to="{name: 'adminhome'}" exact>
+        <v-list-item link class="ma-5" router :to="{name: 'adminHome'}" exact>
           <v-list-item-action>
             <v-icon>mdi-home</v-icon>
           </v-list-item-action>
@@ -102,7 +102,7 @@
         </v-btn>
         
         <v-divider vertical></v-divider>
-        <v-btn text>로그아웃</v-btn>
+        <v-btn @click="$store.dispatch('logout')" text>로그아웃</v-btn>
       </v-toolbar-items>
     </v-app-bar>
 
@@ -116,17 +116,26 @@
       app
     >
       <span class="white--text">&copy; 2019</span>
-    </v-footer> -->
+    </v-footer>
   </v-app>
 </template>
 
 <script>
- /*  export default {
+import {mapState,mapActions} from "vuex"
+import router from '../router/index'
+  export default {
     props: {
       source: String,
     },
     data: () => ({
       drawer: null,
     }),
-  } */
-</script> 
+    computed:{
+      ...mapState(["trigger"]),
+    },
+    methods:{
+      ...mapActions(['TriggerTO']),
+      
+    }
+  }
+</script>

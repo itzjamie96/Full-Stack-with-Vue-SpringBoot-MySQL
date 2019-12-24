@@ -10,6 +10,7 @@ const baseURL = 'http://localhost:1234'
 export default new Vuex.Store({
   state: {
     //로그인 
+    trigger:true,
   role:'User',
   userInfo:null,
   isLogin : false,
@@ -46,6 +47,10 @@ export default new Vuex.Store({
     
   },
   mutations: {
+    //트리거 관리자 페이지 / main페이지 헤더 구별
+    triggerToggle(state,payload){
+      state.trigger=payload
+    },
     //role 결정하기
     roles(state,payload){
       state.role=payload
@@ -80,7 +85,12 @@ export default new Vuex.Store({
     }
   },
   actions: {  //reach out to firebase and store it
-//롤 바꾸기
+//헤더 바꾸기
+ TriggerTO({commit},toggleDate){
+commit('triggerToggle',toggleDate)
+}, 
+
+    //롤 바꾸기
 _roles({commit},login_role){
 commit('roles',login_role)
 
@@ -95,6 +105,7 @@ login({state,commit},loginobj){
   //그 유저의 비밀번호와 입력된 비빌번호를 비교한다.
   Axios.post(`${baseURL}/signin`+role,loginobj) 
   .then(res => { 
+    console.log(res.config.data)
     if(res.data.userEmail != null){
       console.log(res.data.userEmail)
       localStorage.setItem("email",loginobj.email)
@@ -104,10 +115,16 @@ login({state,commit},loginobj){
          router.push({name:'uMyPage'})
           //로그인 성공 시 마이페이지로 이동시켜 줌
          }
-         else if(res.data.sitterEmail=!null){
+         else if(res.data.sitterEmail != null){
           localStorage.setItem("email",loginobj.email)
           commit('loginSuccess',res.data)
           router.push({name:'sMyPage'})
+         }
+         else if(res.config.data[0] != null){
+          localStorage.setItem("email",loginobj.email)
+          commit('loginSuccess',res.config.data)
+          commit('triggerToggle',false)
+          router.push({name:'adminMain'})
          }
          else{
           commit('loginError')
@@ -124,6 +141,9 @@ lsm({state,commit}){
   let password = '1234'
   let email =localStorage.getItem("email")
   let role = localStorage.getItem("role")
+    if(role === 'Admin'){
+     commit('triggerToggle',false)
+    }
   console.log(email)
   if(email != null){
   Axios.post(`${baseURL}/refresh`+role,{email,password}) 
@@ -141,6 +161,7 @@ lsm({state,commit}){
 },
 logout({commit}){//$store.dispatch('logout')으로 접근할 수 있음
  commit('logout')
+ commit('triggerToggle',true)
  router.push({name:'home'})
 }
 

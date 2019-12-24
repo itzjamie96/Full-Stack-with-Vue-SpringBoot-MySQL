@@ -306,7 +306,7 @@ export default {
      this.sitter.profile = params.row.profile
   },
   selectAll(){
-      this.$axios.get(`http://localhost:1234/falseAllSitters`)
+      this.$http.get(`http://localhost:1234/falseAllSitters`)
           .then( res =>{
             this.rows = res.data
             console.log(res.data)
@@ -321,7 +321,7 @@ export default {
      this.deleteAlert=false
      const No = sitterNo
      
-      this.$axios.post(`http://localhost:1234/deleteSitter/${No}`).then(res =>{
+      this.$http.post(`http://localhost:1234/deleteSitter/${No}`).then(res =>{
         const idx = this.rows.findIndex(x => x.sitterNo === sitterNo)
               this.dialog=false
               this.rows.splice(idx, 1)
@@ -333,7 +333,7 @@ export default {
   update(){
      this.dialog=false
      this.updateAlert=false
-     this.$axios.post('http://localhost:1234/updateSitter',this.sitter) 
+     this.$http.post('http://localhost:1234/updateSitter',this.sitter) 
               .then(res => { 
                 this.selectAll();
               }) 

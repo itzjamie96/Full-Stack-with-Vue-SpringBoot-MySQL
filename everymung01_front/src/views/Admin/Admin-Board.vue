@@ -122,7 +122,7 @@ export default {
      this.board.boardDate = params.row.boardDate
   },
   selectAll(){
-      this.$axios.get(`http://localhost:1234/boardlist`)
+      this.$http.get(`http://localhost:1234/boardlist`)
           .then( res =>{
             this.rows = res.data
             console.log(this.rows)
@@ -137,7 +137,7 @@ export default {
      this.deleteAlert=false
      const No = userNo
      
-      this.$axios.post(`http://localhost:1234/deleteUser/${No}`).then(res =>{
+      this.$http.post(`http://localhost:1234/deleteUser/${No}`).then(res =>{
         const idx = this.rows.findIndex(x => x.userNo === userNo)
         console.log(idx)
               this.dialog=false
@@ -150,7 +150,7 @@ export default {
   update(){
      this.dialog=false
      this.updateAlert=false
-     this.$axios.post('http://localhost:1234/updateUser',this.user) 
+     this.$http.post('http://localhost:1234/updateUser',this.user) 
               .then(res => { 
                 this.selectAll();
               }) 

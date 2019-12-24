@@ -146,7 +146,7 @@ export default {
      this.sitter.approvalDate = params.row.approvalDate
   },
   selectAll(){
-      this.$axios.get(`http://localhost:1234/showAllSitters`)
+      this.$http.get(`http://localhost:1234/showAllSitters`)
           .then( res =>{
             this.rows = res.data
           })
@@ -160,7 +160,7 @@ export default {
      this.deleteAlert=false
      const No = sitterNo
      
-      this.$axios.post(`http://localhost:1234/deleteSitter/${No}`).then(res =>{
+      this.$http.post(`http://localhost:1234/deleteSitter/${No}`).then(res =>{
         const idx = this.rows.findIndex(x => x.sitterNo === sitterNo)
         console.log(idx)
               this.dialog=false
@@ -173,7 +173,7 @@ export default {
   update(){
      this.dialog=false
      this.updateAlert=false
-     this.$axios.post('http://localhost:1234/updateSitter',this.sitter) 
+     this.$http.post('http://localhost:1234/updateSitter',this.sitter) 
               .then(res => { 
                 this.selectAll();
               }) 
