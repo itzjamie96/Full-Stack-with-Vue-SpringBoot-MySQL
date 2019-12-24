@@ -1,8 +1,6 @@
 package org.salem.domain.vo;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +16,7 @@ public class BoardVO {
 	private String userName;
 	private String title;
 	private String content;
-	private String boardDate;
+	private Date boardDate;
 	private int hits;
 	private int depth;
 	private int groupNo;

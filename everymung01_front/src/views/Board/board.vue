@@ -172,6 +172,7 @@ export default {
         this.editedItem.userNo = params.row.userNo
         this.editedItem.title = params.row.title
         this.editedItem.userName = params.row.userName
+        console.log(this.editedItem.userName)
         this.editedItem.boardDate = params.row.boardDate
         this.editedItem.content = params.row.content
         this.editedItem.depth = params.row.depth

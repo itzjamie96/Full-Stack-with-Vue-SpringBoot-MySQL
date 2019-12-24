@@ -21,7 +21,7 @@ public class BoardController {
 	//@CrossOrigin(origins = "http://localhost:8080")
 	@GetMapping("showAllBoards")
 	public List<BoardVO> showAllBoards(){
-		System.out.println(mapper.showAllBoards());
+//		System.out.println(mapper.showAllBoards());
 		return mapper.showAllBoards();
 //		return (List<Users>) rep.findAll();
 	}
@@ -30,7 +30,7 @@ public class BoardController {
 		System.out.println("-----");
 		System.out.println(boardVo);
 		System.out.println(mapper.insertBoard(boardVo));
-		System.out.println(mapper.showAllBoards());
+//		System.out.println(mapper.showAllBoards());
 		
 	}
 	@PostMapping("/update") 

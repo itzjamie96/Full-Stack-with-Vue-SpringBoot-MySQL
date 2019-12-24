@@ -37,7 +37,7 @@ public class UsersController {
 	@PostMapping("refreshUser")//새로고침
 	public UsersVO refreshE(@RequestBody LoginVO vo) {
 		
-		System.out.println(vo);
+		//System.out.println(vo);
 		return mapper.showUserDetail(vo.getEmail());
 		
 		
