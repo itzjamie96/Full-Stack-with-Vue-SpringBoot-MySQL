@@ -35,6 +35,7 @@ const Board = () => import('../views/Board/board.vue')                  //문의
 const Signup = () => import('../views/Signup/UserForm/userSignUp.vue')    
 const PaymentInfo = () => import('../views/Payment/paymentInfo.vue')    //결제 정보 (결제 전)
 
+
 const routes = [
   {
     path: '/',
@@ -51,9 +52,24 @@ const routes = [
     name: 'signup',
     component: () => import (/* webpackChunkName: "Login" */ '../views/Signup/UserForm/userSignUp.vue')
   },
-  {
+  {//유저 마이페이지
     path: '/uMyPage',
     name: 'uMyPage',
+    component: () => import (/* webpackChunkName: "Login" */ '../views/Mypage/User/userMyPage.vue')
+  },
+  {//유저 예약내역
+    path: '/uMyPage/userReservationList',
+    name: 'UserReservationList',
+    component: () => import (/* webpackChunkName: "UserReservationList" */ '../views/Mypage/User/userReservationList.vue')
+  },
+  {//유저 예약 - 상세 페이지
+    path: '/uMyPage/userReservationDetail/:paymentNo',
+    name: 'UserReservationDetail',
+    component: () => import (/* webpackChunkName: "UserReservationDetail" */ '../views/Mypage/User/userReservationDetail.vue')
+  },
+  {//반려견 정보관리
+    path: '/uMyPage/petInfo/:userNo',
+    name: 'myPagePetInfo',
     component: () => import (/* webpackChunkName: "Login" */ '../views/Mypage/User/userMyPage.vue')
   },
   {
@@ -103,6 +119,28 @@ const routes = [
     name: 'Board',
     component: Board
   },
+
+  {
+    path: '/userReservationList',
+    name: 'UserReservationList',
+    component: () => import (/* webpackChunkName: "UserReservationList" */ '../views/Mypage/User/userReservationList.vue')
+  },
+
+  {
+    path: '/useReservationDetail/:paymentNo',
+    name: 'UserReservationDetail',
+    component: () => import (/* webpackChunkName: "UserReservationDetail" */ '../views/Mypage/User/userReservationDetail.vue')
+  },
+
+  {
+    //하루 시터 프로필 -> 스케줄 예약 포함 , 리뷰작성위해서 paymentNo 넘기는 path
+    path: '/daysitters/:sitterNo/:paymentNo',
+    name: 'DaySitterDetail',
+    component: DaySitterDetail,
+    props: true
+  },
+
+ 
 
 ]
 

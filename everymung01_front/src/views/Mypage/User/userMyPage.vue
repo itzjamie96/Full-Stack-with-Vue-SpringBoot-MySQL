@@ -1,8 +1,11 @@
 <template>
-  <v-container fluid class="full-height"> 
+  <v-container fluid="" class="fill-height"> 
       <v-row class="fill-height">
         <v-col cols="3">
+          
           <side-bar/>
+
+          
           
         </v-col>
 

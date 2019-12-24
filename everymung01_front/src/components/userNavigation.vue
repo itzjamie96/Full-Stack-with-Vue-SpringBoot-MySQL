@@ -1,8 +1,6 @@
 <template>
-    <v-card height="100%">
+    <div height="100%">
         <v-navigation-drawer
-          absolute
-          permanent
           left
           width="300px"
       >
@@ -15,7 +13,7 @@
             </v-list-item-avatar>
 
             <v-list-item-content>
-              <v-list-item-title>유저 이름</v-list-item-title>
+              <v-list-item-title>{{this.userInfo.userName}}</v-list-item-title>
               <v-list-item-subtitle>유저 타입</v-list-item-subtitle>
             </v-list-item-content>
             
@@ -40,21 +38,29 @@
           </v-list-item>
         </v-list>
       </v-navigation-drawer>
-  </v-card>
+  </div>
 
 </template>
 
 <script>
+import {mapState,mapActions} from "vuex"
+
   export default {
     data () {
       return {
         items: [
-          { title: '예약내역', icon: 'mdi-home-city', link: '/reservation' },
+          { title: '예약내역', icon: 'mdi-home-city', link: '/uMyPage/userReservationList' },
           { title: '실시간 케어 보기', icon: 'mdi-account' , link: '/reservation'},
           { title: '반려견 정보관리', icon: 'mdi-account' , link: '/reservation'},
           { title: '계정관리', icon: 'mdi-account-group-outline' , link: '/reservation'},
         ],
       }
     },
+
+    computed: {
+        ...mapState(["isLogin","userInfo","isLoginError"])
+    },
+
+
   }
 </script>

@@ -25,5 +25,10 @@ public class SitterController {
 	public SitterVO showSitterDetail(@PathVariable int sitterNo) {
 		return (SitterVO) sitterMapper.showSitterDetail(sitterNo);
 	}
+	
+	@RequestMapping("/showDaySitters")
+	public List<SitterVO> showDaySitters() {
+		return (List<SitterVO>) sitterMapper.showDaySitters();
+	}
 
 }

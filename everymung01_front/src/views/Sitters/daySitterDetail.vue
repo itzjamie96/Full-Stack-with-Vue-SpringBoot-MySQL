@@ -17,7 +17,9 @@
             </v-row>
             
             <v-row>
-                <div>REVIEWS</div>
+                <v-col cols="6">
+                    <review/>
+                </v-col>
             </v-row>
         </v-card>
     
@@ -29,6 +31,7 @@
 import SitterProfile from '@/components/SitterDetail/Daycare/sitterProfile.vue'
 import SitterImg from '@/components/SitterDetail/Daycare/sitterImg'
 import NewReservation from '@/components/SitterDetail/Daycare/newReservation.vue'
+import Review from '@/components/SitterDetail/Daycare/review.vue'
 
 
 export default {
@@ -36,7 +39,8 @@ export default {
    components: {
        'sitter-profile': SitterProfile,
        'sitter-img' : SitterImg,
-       'new-reservation' : NewReservation
+       'new-reservation' : NewReservation,
+       'review' : Review
    }
 }
 
