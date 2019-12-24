@@ -93,9 +93,10 @@ const routes = [
   },
   {
     //결제 전 정보 보기
-    path: '/paymentinfo/:paymentNo',
+    path: '/paymentinfo/:paymentVO',
     name: 'PaymentInfo',
-    component: PaymentInfo
+    component: PaymentInfo,
+    
   },
   
   {
