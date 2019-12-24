@@ -16,6 +16,16 @@
        WHERE p.userNo = #{userNo};
       
   </select>
+  
+  <insert id="addPet"  parameterType="org.salem.domain.vo.PetVO" >
+    
+    INSERT INTO PET(userNo, breedNo, petName, petGender, petWeight, petAge,
+                neutralization, petAnswer, petImg) VALUES
+(#{userNo}, #{breedNo}, #{petName}, #{petGender}, #{petWeight}, #{petAge}, #{neutralization}, #{petAnswer}, #{petImg});
+  
+  </insert>
+  
+  
 
 
 

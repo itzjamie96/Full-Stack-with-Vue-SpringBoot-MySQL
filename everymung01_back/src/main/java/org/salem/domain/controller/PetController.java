@@ -6,6 +6,8 @@ import org.salem.domain.Mapper.PetMapper;
 import org.salem.domain.vo.PetVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,10 +30,12 @@ public class PetController {
 		
 	}
 	
-	
-	public int addPet(PetVO petVo) {
-		
-		return 0;
+	@PostMapping("/addPet")
+	public int addPet(@RequestBody PetVO petVo) {
+		System.out.println("addPet 메소드 실행 ");
+	    System.out.println(petVo);
+           
+		return petMapper.addPet(petVo);
 	}
 	
 	public int deletePet(int petNo) {

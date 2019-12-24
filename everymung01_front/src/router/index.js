@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import store from '../store/index'
 import MypagePetInfo from '../views/Mypage/User/MyPagePetInfo'
 import MyPagePetInfoNew from '../views/Mypage/User/MyPagePetInfoNew'
+import MyPageSetting from '../views/Mypage/User/MyPageSetting'
 
 Vue.use(VueRouter)
 
@@ -118,9 +119,16 @@ const routes = [
     component:MypagePetInfo
   },
   {
+    //반려견 추가히기
     path:'/myPetDetail',
     name:'myPetDetail',
     component:MyPagePetInfoNew
+  },
+  //마이페이지/계정관리
+  {
+    path:'/myPageSetting',
+    name:'myPgeSetting',
+    component:MyPageSetting
   }
 
 ]

@@ -14,7 +14,7 @@
        >
        <v-img
        :src="userPet.petImg"
-        ></v-img>
+        > {{userPet.petImg}}</v-img>
        </v-list-item-avatar>
 
        <v-list-item-content class="mx-auto">
@@ -27,7 +27,7 @@
        <v-btn> 삭제 </v-btn>
      </v-list-item>
      </v-card>
-    <v-btn> 반려견 추가하기 </v-btn>
+    <v-btn router :to="{name:'myPetDetail'}"> 반려견 추가하기 </v-btn>
 
 
    </v-container>
