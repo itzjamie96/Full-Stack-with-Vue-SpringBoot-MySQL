@@ -211,7 +211,6 @@ export default {
         this.paymentVO.sitterPhone = this.sitterInfo.sitterPhone,
         this.paymentVO.sitterAddress = this.sitterInfo.sitterAddress,
 
-
         this.$router.push('/paymentinfo/${userNo}') //예약확인 페이지로 수정 필요
 
     },

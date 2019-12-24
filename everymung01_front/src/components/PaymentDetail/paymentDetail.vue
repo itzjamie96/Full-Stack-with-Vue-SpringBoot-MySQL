@@ -121,6 +121,7 @@ export default {
 
    created() {
        this.initialize()
+
    },
 
    computed: {
@@ -132,8 +133,8 @@ export default {
    },
    methods: {
        initialize() {
-           
             // const paymentNo = this.$route.params.paymentNo;
+       
 
             this.paymentObj.request = this.paymentVO.request
             console.log('request')
