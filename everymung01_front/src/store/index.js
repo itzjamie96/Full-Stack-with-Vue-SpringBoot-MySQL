@@ -2,10 +2,11 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import router from '../router/index'
 import Axios from 'axios'
-// import * as firebase from 'firebase'
+
 Vue.use(Vuex)
 
 const baseURL = 'http://localhost:1234'
+
 export default new Vuex.Store({
   state: {
     //로그인 
@@ -13,6 +14,8 @@ export default new Vuex.Store({
   isLogin : false,
   isLoginError: false,
     //로그인 끝
+
+    //메인페이지 사진 박아놓은 예시
     loadedMeetups: [  
         {
           imageUrl: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60', 
@@ -70,7 +73,7 @@ export default new Vuex.Store({
       
     }
   },
-  actions: {  //reach out to firebase and store it
+  actions: {  
 //로그인 시도
 login({state,commit},loginobj){
 
