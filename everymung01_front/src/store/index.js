@@ -18,32 +18,25 @@ export default new Vuex.Store({
     //로그인 끝
 
     //메인페이지 사진 박아놓은 예시
-    loadedMeetups: [  
+    mainPics: [  
         {
-          imageUrl: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60', 
-          id: 'aaa', 
-          title: 'Meetup in city',
-          date: '2019-12-17',
-          time: '15:35',
-          location: 'New York',
-          description:'All in NewYork'
+          imageUrl: 'https://images.unsplash.com/photo-1534361960057-19889db9621e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80', 
+          id: '1', 
         },
         {
-          imageUrl: 'https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60', 
-          id: 'bbb', 
-          title: 'Meetup in forest',
-          date: '2019-12-19',
-          time: '14:00',
-          location: 'Forest',
-          description: 'Forest!'
-        }
+          imageUrl: 'https://images.pexels.com/photos/3361692/pexels-photo-3361692.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 
+          id: '2', 
+        },
+        {
+          imageUrl: 'https://images.pexels.com/photos/3397935/pexels-photo-3397935.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 
+          id: '3', 
+        },
+        {
+          imageUrl: 'https://images.pexels.com/photos/2737393/pexels-photo-2737393.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 
+          id: '4', 
+        },
     ],
-    user: {
-      id:'abc',
-      registeredMeetups: [
-        'aaa'
-      ]
-    }
+
     
   },
   mutations: {
@@ -166,35 +159,17 @@ logout({commit}){//$store.dispatch('logout')으로 접근할 수 있음
 }
 
     ,
-    createMeetup({commit}, payload) {
-      const meetup = {    //mapping to an object: payload might have properties that i may not need
-        title: payload.title,
-        location: payload.location,
-        imageUrl: payload.imageUrl,
-        description: payload.description,
-        date: payload.date,
-        time: payload.time,
-        id: '111'
-      }
-      commit('createMeetup', meetup)
-      
-    }
+
   },
   getters: {
-    loadedMeetups (state) { //all meetups
-      return state.loadedMeetups.sort((meetupA, meetupB) => {
-        return meetupA.date > meetupB.date
+    mainPics (state) { //사진 sort하기
+      return state.mainPics.sort((picA, picB) => {
+        return picA.id > picB.id
       }) 
     },
-    loadedMeetup (state) {   // one meetup
-      return (meetupId) => {
-        return state.loadedMeetups.find((meetup) => {
-          return meetup.id === meetupId
-        })
-      }
-    },
-    featuredMeetups(state, getters) {   //fetching some chosen meetups from the loaded Meetups
-      return getters.loadedMeetups.slice(0,5)
+
+    featuredPics(state, getters) {   //메인에 걸 사진들만 
+      return getters.mainPics.slice(0,5)
     }
   }
 })

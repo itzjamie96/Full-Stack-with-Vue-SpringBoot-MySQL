@@ -156,7 +156,7 @@ const routes = [
         path: '/uMyPage/petInfo/:userNo',
         name: 'myPagePetInfo',
         component: () =>
-            import ( /* webpackChunkName: "Login" */ '../views/Mypage/User/userMyPage.vue')
+            import ( /* webpackChunkName: "Login" */ '../views/Mypage/User/MyPagePetInfo.vue')
     },
     {
         path: '/sMyPage',
