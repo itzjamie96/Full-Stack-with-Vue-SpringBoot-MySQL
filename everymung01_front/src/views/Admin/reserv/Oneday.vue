@@ -23,113 +23,157 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-                <v-text-field label="name" v-model="binG.name" required readonly></v-text-field>
+                <v-text-field label="Name"  v-model="user.userName" ></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="age"  v-model="binG.age" required readonly></v-text-field>
+                <v-text-field label="Email" v-model="user.userEmail" ></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="city" v-model="binG.city" required readonly></v-text-field>
+                <v-text-field label="Password" v-model="user.userPw"></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field label="Phone" v-model="user.userPhone" ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field label="Address" v-model="user.userAddress" ></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field label="Date" v-model="user.userDate" disabled></v-text-field>
               </v-col>
             </v-row>
           </v-container>
         </v-card-text>
+        <v-card-text v-if="deleteAlert">
+            <v-alert v-model="deleteAlert" type="warning">
+              <h4>정말 삭제 하시겠습니까?</h4>
+              <v-btn class="mr-4"  color="error" @click="dele(user.userNo)">확인</v-btn>
+              <v-btn color="secondary" @click="deleteAlert=false">취소</v-btn>
+            </v-alert>
+        </v-card-text>
+        <v-card-text v-if="updateAlert">
+            <v-alert v-model="updateAlert" type="warning">
+              <h4>정말 수정 하시겠습니까?</h4>
+              <v-btn class="mr-4"  color="error" @click="update()">확인</v-btn>
+              <v-btn color="secondary" @click="updateAlert=false">취소</v-btn>
+            </v-alert>
+        </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="dialog = false">확인</v-btn>
-          <v-btn color="blue darken-1" text @click="dele(binG.id)">삭제</v-btn>
-          <!-- <v-btn color="blue darken-1" text @click="save(binG) ">저장</v-btn> -->
+          <v-btn color="blue darken-1" text @click.native="deleteAlert=true">삭제</v-btn>
+          <v-btn color="blue darken-1" text @click.native="updateAlert=true">수정</v-btn>
         </v-card-actions>
+        
+        
       </v-card>
     </v-dialog>
 
   </v-col>
   </v-row>
 </template>
-
-
 <script>
 import 'vue-good-table/dist/vue-good-table.css'
 import { VueGoodTable } from 'vue-good-table'
-import { type } from 'os';
 
 export default {
-  components: {
+    components: {
   VueGoodTable,
 },data(){
     return {
        dialog: false,
-       binG:{
-       id :'',
-       name:'',
-       age:'',
-       city:''},
+       deleteAlert: false,
+       updateAlert: false,
+       user:{
+       userNo :'',
+       userEmail:'',
+       userName:'',
+       userPw:'',
+       userPhone:'',
+       userAddress:'',
+       userProfile:'',
+       userDate:''
+       },
       columns: [
         {
           label: 'Name',
-          field: 'name',
+          field: 'userName',
         },
         {
-          label: 'Age',
-          field: 'age',
-          type: 'number',
+          label: 'Email',
+          field: 'userEmail',
+        },
+        {
+          label: 'Phone',
+          field: 'userPhone',
+        },
+        {
+          label: 'Address',
+          field: 'userAddress',
+        },
+        {
+          label: 'Date',
+          field: 'userDate',
         },
         
       ],
-      rows: [
-        { id:1, name:"a", age: 20,  city:"busan" },
-        { id:2, name:"b", age: 24,  city:"busan" },
-        { id:7, name:"c", age: 24,  city:"busan" },
-        { id:3, name:"d", age: 16,  city:"busan" },
-        { id:4, name:"e", age: 55,  city:"busan" },
-        { id:5, name:"f", age: 40,  city:"busan" },
-        { id:6, name:"g", age: 23,  city:"busan" },
-      ],
+      rows:[],
     };
+  },
+  created() {
+    this.selectAll();
   },
   methods: {
   onRowClick(params) {
      this.dialog=true
-     this.binG.id = params.row.id
-     this.binG.name = params.row.name
-     this.binG.age = params.row.age
-     this.binG.city = params.row.city
-     // console.log(this.binG)
-      
-    // params.row - row object 
-    // params.pageIndex - index of this row on the current page.
-    // params.selected - if selection is enabled this argument 
-    // indicates selected or not
-    // params.event - click event
+     this.user.userNo = params.row.userNo
+     this.user.userName = params.row.userName
+     this.user.userEmail = params.row.userEmail
+     this.user.userPw = params.row.userPw
+     this.user.userPhone = params.row.userPhone
+     this.user.userAddress = params.row.userAddress
+     this.user.userProfile = params.row.userProfile
+     this.user.userDate = params.row.userDate
   },
-  /* save(binG){
-     this.dialog=false
-     const Id = binG.id;
-
-      for(let i=0 ; i<this.rows.length;i++){
-         if(this.rows[i].id==Id){
-         this.rows[i].name=binG.name
-         this.rows[i].age=binG.age
-         this.rows[i].city=binG.city
-         break;
-         }
-      }
+  selectAll(){
+      this.$http.get(`http://localhost:1234/userlist`)
+          .then( res =>{
+            console.log(res.data)
+            this.rows = res.data
+          })
+          .catch(err => {
+            alert("backand(showAllUsers) 에러 확인")
+          })
      
-  }, */
-  dele(binG){
-    // console.log(binG)
-    // console.log(this.rows.findIndex(x => x.id === binG))
-    const idx = this.rows.findIndex(x => x.id === binG)
-      this.dialog=false
-      this.rows.splice(idx, 1)
-/* for(let i=0 ; i<this.rows.length;i++){
-         if(this.rows[i].id==Id){
-         break;
-         }
-      } */
+  },
+  dele(userNo){
+     this.dialog=false
+     this.deleteAlert=false
+     const No = userNo
+     
+      this.$http.post(`http://localhost:1234/deleteUser/${No}`).then(res =>{
+        const idx = this.rows.findIndex(x => x.userNo === userNo)
+        console.log(idx)
+              this.dialog=false
+              this.rows.splice(idx, 1)
+      }).catch(err =>{
+        alert("backend(delete) 에러 확인!")
+      })
 
-  }
+  },
+  update(){
+     this.dialog=false
+     this.updateAlert=false
+     this.$http.post('http://localhost:1234/updateUser',this.user) 
+              .then(res => { 
+                this.selectAll();
+              }) 
+              .catch(err => { 
+                alert("backend(update) 에러 확인!")
 
-}
+              });
+  },
+    },
+
+ 
 }
 </script>

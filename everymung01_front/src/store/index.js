@@ -124,7 +124,7 @@ login({state,commit},loginobj){
           localStorage.setItem("email",loginobj.email)
           commit('loginSuccess',res.config.data)
           commit('triggerToggle',false)
-          router.push({name:'adminMain'})
+          router.push({name:'adminHome'})
          }
          else{
           commit('loginError')

@@ -33,7 +33,6 @@ public class BoardController {
 		System.out.println(boardVo);
 		System.out.println(mapper.insertBoard(boardVo));
 		System.out.println(mapper.showAllBoards());
-		
 	}
 	@PostMapping("/update") 
 	public void updateException(@RequestBody BoardVO boardVo){	// ?? 
@@ -48,6 +47,12 @@ public class BoardController {
 		System.out.println(mapper.deleteBoard(boardNo));
 		System.out.println(mapper.showAllBoards());
 	}
+	
+	@PostMapping("/add2")
+	public void add2(@RequestBody BoardVO boardvo) {
+		
+	}
+	
 
 
 }

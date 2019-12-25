@@ -88,6 +88,7 @@ export default {
        updateAlert: false,
        sitter:{
        sitterNo :'',
+       sitterAge:'',
        sittingType:'',
        sitterName:'',
        sitterEmail:'',
@@ -101,6 +102,10 @@ export default {
         {
           label: 'Name',
           field: 'sitterName',
+        },
+        {
+          label: 'Age',
+          field: 'sitterAge',
         },
         {
           label: 'Email',
@@ -117,9 +122,6 @@ export default {
         {
           label: 'Date',
           field: 'approvalDate',
-          type: 'date',
-          dateInputFormat: 'yyyy-mm-dd',
-          dateOutputFormat: 'yyyy-mm-dd',
         },
         {
           label: 'Type',
@@ -139,6 +141,7 @@ export default {
      this.sitter.sitterNo = params.row.sitterNo
      this.sitter.sittingType = params.row.sittingType
      this.sitter.sitterName = params.row.sitterName
+     this.sitter.sitterAge = params.row.sitterAge
      this.sitter.sitterEmail = params.row.sitterEmail
      this.sitter.sitterPw = params.row.sitterPw
      this.sitter.sitterPhone = params.row.sitterPhone
@@ -149,6 +152,7 @@ export default {
       this.$http.get(`http://localhost:1234/showAllSitters`)
           .then( res =>{
             this.rows = res.data
+            console.log(this.rows)
           })
           .catch(err => {
             alert("backand(showAllSitters) 에러 확인")

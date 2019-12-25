@@ -80,12 +80,18 @@
           <v-spacer></v-spacer>
           <v-toolbar-items>
             <!-- <v-btn dark text @click="dialog2 = false">Save</v-btn> -->
-            <v-btn dark text @click.native="updateAlert=true">거절</v-btn>
+            <v-btn dark text @click.native="deleteAlert=true">거절</v-btn>
             <v-btn dark text @click.native="updateAlert=true">승인</v-btn>
-            <v-btn dark text @click="test">test</v-btn>
             
           </v-toolbar-items>
         </v-toolbar>
+        <v-card-text v-if="deleteAlert">
+            <v-alert v-model="deleteAlert" type="warning">
+              <h4>정말 거절 하시겠습니까?</h4>
+              <v-btn class="mr-4"  color="error" @click="dele(sitter.sitterNo)">확인</v-btn>
+              <v-btn color="secondary" @click="deleteAlert=false">취소</v-btn>
+            </v-alert>
+        </v-card-text>
           <v-card-text v-if="updateAlert">
             <v-alert v-model="updateAlert" type="warning">
               <h4>정말 승인 하시겠습니까?</h4>
@@ -99,24 +105,12 @@
         <v-row justify="center">
         <v-col lg="8">
           <h4>*필수항목을 꼭 입력해주세요</h4><br>
-       <h1>지원자 정보</h1><br>
-          성별 : {{sitter.possibleDay}}
+          <h1>지원자 정보</h1><br>
             <v-radio-group v-model="sitter.sitterGender" row>
+              성별 :
               <v-radio label="남자" :value="true"></v-radio>
               <v-radio label="여자" :value="false"></v-radio>
             </v-radio-group>
-        
-            <v-text-field
-            v-model="sitter.possibleDay"
-            label="질문"
-            required
-          ></v-text-field>
-            
-            <v-text-field
-            v-model="sitter.sitterGender"
-            label="성별"
-            required
-          ></v-text-field>
             
             <v-text-field
             v-model="sitter.sitterEmail"
@@ -179,8 +173,10 @@
         <v-card>
         <p>신원확인은 필수입니다.신분증 사본을 반드시 첨부해주세요</p>
         <p>보내주신 신분증과 저격증은 3개원 보관 후 폐기됩니다.</p>
-        <v-file-input v-model="img1" label="신분증 제출"></v-file-input>
-        <v-file-input v-model="img2" label="자격증 제출"></v-file-input>
+        신분증
+        <v-img :src="sitter.identityCheck"></v-img>
+        자격증
+        <v-img :src="sitter.qualificationCheck"></v-img>
         </v-card><br>
           <br>
             </v-col>
@@ -220,7 +216,6 @@ export default {
   VueGoodTable,
 },data(){
     return {
-
        dialog: false,
        dialog2: false,
        img1:null,
@@ -228,7 +223,7 @@ export default {
        deleteAlert: false,
        updateAlert: false,
        sitter:{
-          possibleDay:'',
+         possibleDay:'',
           sitterNo :'',
           sittingType:'',
           sitterName:'',
@@ -241,12 +236,18 @@ export default {
           sitterAddress:'',
           approvalDate:'',
           approvalStatus:'',
+          identityCheck:'',
+          qualificationCheck:'',
        
        },
       columns: [
         {
           label: 'Name',
           field: 'sitterName',
+        },
+        {
+          label: 'Age',
+          field: 'sitterAge',
         },
         {
           label: 'Email',
@@ -281,9 +282,6 @@ export default {
     this.selectAll();
   },
    methods: {
-    test() {
-      console.log(this.sitter.sitterGender)
-    },
   onRowClick(params) {
     this.dialog=true
      this.sitter.sitterNo = params.row.sitterNo
@@ -297,19 +295,21 @@ export default {
      this.sitter.approvalStatus = params.row.approvalStatus
      this.sitter.sitterAge = params.row.sitterAge
      this.sitter.sitterGender = params.row.sitterGender
+     this.sitter.identityCheck ='http://localhost:1234/download/'+ params.row.identityCheck
+     this.sitter.qualificationCheck = 'http://localhost:1234/download/'+ params.row.qualificationCheck
      
      
      this.sitter.possibleDay = params.row.possibleDay.split(',')
-     console.log(this.sitter.possibleDay[3])
+     /* console.log(this.sitter.possibleDay[3])
      console.log(this.sitter.possibleDay[2])
-     console.log(this.sitter.possibleDay[1])
+     console.log(this.sitter.possibleDay[1]) */
      this.sitter.profile = params.row.profile
   },
   selectAll(){
       this.$http.get(`http://localhost:1234/falseAllSitters`)
           .then( res =>{
             this.rows = res.data
-            console.log(res.data)
+            /* console.log(res.data) */
           })
           .catch(err => {
             alert("backand(falseAllSitters) 에러 확인")

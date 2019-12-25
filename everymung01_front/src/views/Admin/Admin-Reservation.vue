@@ -10,7 +10,7 @@
   >
    <v-card-text class="pt-12">
       <br><br>
-       <v-btn text router :to="{name: 'oneday'}" exact>
+       <v-btn text router :to="{name: 'adminoneday'}" exact>
         <v-icon size="100px">mdi-run</v-icon>  
       </v-btn>
       <b class="display-1 text--primary font-weight-black">하루</b>
@@ -33,7 +33,7 @@
   >
    <v-card-text class="pt-12">
       <br><br>
-       <v-btn text router :to="{name: 'consignment'}" exact >
+       <v-btn text router :to="{name: 'adminconsignment'}" exact >
         <v-icon size="100px">mdi-home</v-icon>  
       </v-btn>
       <b class="display-1 text--primary font-weight-black">위탁</b>
@@ -55,7 +55,7 @@
   >
   <v-card-text class="pt-12">
       <br><br>
-       <v-btn text router :to="{name: 'repeated'}" exact>
+       <v-btn text router :to="{name: 'adminrepeated'}" exact>
         <v-icon size="100px">mdi-calendar-month</v-icon>  
       </v-btn>
       <b class="display-1 text--primary font-weight-black">정기</b>

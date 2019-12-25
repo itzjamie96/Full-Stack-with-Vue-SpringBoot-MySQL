@@ -12,7 +12,7 @@ import org.salem.domain.vo.SitterVO;
 @Mapper
 public interface SitterMapper {
 	
-	@Select("select * from sitter,sitting_type where sitter.sittingNo = sitting_type.sittingNo and approvalStatus=true ")
+	@Select("select * from sitter,sitting_type where sitter.sittingNo = sitting_type.sittingNo and approvalStatus=true")
 	public List<SitterVO> showAllSitters(); //모든 시터 목록 출력
 	
 	@Select("select * from sitter,sitting_type where sitter.sittingNo = sitting_type.sittingNo and approvalStatus=false")

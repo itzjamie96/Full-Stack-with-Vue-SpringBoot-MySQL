@@ -18,7 +18,7 @@ public class UsersVO {
 	private String userPhone;
 	private String userAddress;
 	private String userProfile;
-	private Date userDate;
+	private String userDate;
 
 	public UsersVO(String userEmail, String userName, String userPw, String userPhone, String userAddress) {
 		super();

@@ -21,27 +21,30 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-                <v-text-field label="No"  v-model="board.boardNo" disabled></v-text-field>
-              </v-col>
-              <v-col cols="12">
                 <v-text-field label="Name" v-model="board.userName" disabled></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-text-field label="Title" v-model="board.title" disabled></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="Content" v-model="board.content"></v-text-field>
+                <v-text-field label="Content" v-model="board.content" disabled></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-text-field label="Date" v-model="board.boardDate" disabled ></v-text-field>
               </v-col>
+              <v-textarea
+                outlined
+                name="input-7-4"
+                label="답변작성"
+                value="">
+              </v-textarea>
             </v-row>
           </v-container>
         </v-card-text>
         <v-card-text v-if="deleteAlert">
             <v-alert v-model="deleteAlert" type="warning">
               <h4>정말 삭제 하시겠습니까?</h4>
-              <v-btn class="mr-4"  color="error" @click="dele(user.userNo)">확인</v-btn>
+              <v-btn class="mr-4"  color="error" @click="dele(board.boardNo)">확인</v-btn>
               <v-btn color="secondary" @click="deleteAlert=false">취소</v-btn>
             </v-alert>
         </v-card-text>
@@ -56,7 +59,7 @@
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="dialog = false">확인</v-btn>
           <v-btn color="blue darken-1" text @click.native="deleteAlert=true">삭제</v-btn>
-          <v-btn color="blue darken-1" text @click.native="updateAlert=true">답변달기</v-btn>
+          <v-btn color="blue darken-1" text @click="dialog2 = true">답변달기</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -74,6 +77,7 @@ export default {
 },data(){
     return {
        dialog: false,
+       dialog2: false,
        deleteAlert: false,
        updateAlert: false,
        board:{
@@ -122,7 +126,7 @@ export default {
      this.board.boardDate = params.row.boardDate
   },
   selectAll(){
-      this.$http.get(`http://localhost:1234/boardlist`)
+      this.$http.get(`http://localhost:1234/showAllBoards`)
           .then( res =>{
             this.rows = res.data
             console.log(this.rows)

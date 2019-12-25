@@ -8,10 +8,12 @@ import '@babel/polyfill'
 import '@fortawesome/fontawesome-free/css/all.css'
 import moment from 'moment'
 import VueLocalStorage from 'vue-localstorage'
+import VueGoogleCharts from 'vue-google-charts'
 
 Vue.prototype.$http = axios;
 
 Vue.use(VueLocalStorage)
+Vue.use(VueGoogleCharts)
 Vue.config.productionTip = false
 
 export const eventBus = new Vue()
