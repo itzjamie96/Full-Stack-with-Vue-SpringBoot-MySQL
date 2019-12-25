@@ -6,7 +6,10 @@ import org.salem.domain.Mapper.SitterMapper;
 import org.salem.domain.file.FileResponse;
 import org.salem.domain.file.StorageService;
 import org.salem.domain.vo.LoginVO;
+import org.salem.domain.vo.SearchIdVO;
+import org.salem.domain.vo.SearchPwVO;
 import org.salem.domain.vo.SitterVO;
+import org.salem.domain.vo.UsersVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -32,7 +35,39 @@ public class SitterController {
 	@Autowired
 	private StorageService storageService;
 
-   
+	@PostMapping("/searchIdSitter")
+	public String searchId(@RequestBody SearchIdVO search){
+		String msg="존재하지 않습니다";
+		List<SitterVO> lsm = sitterMapper.showAllSitters();
+		for(SitterVO vo : lsm) {
+			if(vo.getSitterName().equals(search.getName())) {
+				if(vo.getSitterPhone().equals(search.getPhone())) {
+					msg=vo.getSitterEmail();
+				}
+			}
+		}
+		return msg;
+	}
+	@PostMapping("/searchPwSitter")
+	public String searchPw(@RequestBody SearchPwVO search){
+		String msg="정보가 일치하지 않습니다";
+		List<SitterVO> lsm = sitterMapper.showAllSitters();
+		for(SitterVO vo : lsm) {
+			if(vo.getSitterEmail().equals(search.getEmail())) {
+				if(vo.getSitterPhone().equals(search.getPhone())) {
+					int leng = vo.getSitterPw().length();
+					String realPw = vo.getSitterPw().substring(0, Math.round(leng/2));
+					String fakePw = "";
+					for(int i=0 ; i<leng-realPw.length();i++) {
+						fakePw += "*";
+					}
+					msg = realPw+fakePw;
+					//msg=vo.getUserPw();
+				}
+			}
+		}
+		return msg;
+	}
 
 
   ///////////////////////////////////  시터 identityCheck,qualificationCheck 용 이미지 넣기 !! 다른데 쓰지 마시오 ////////////////////////

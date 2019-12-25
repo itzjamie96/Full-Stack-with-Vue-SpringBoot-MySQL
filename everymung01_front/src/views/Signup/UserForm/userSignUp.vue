@@ -24,25 +24,39 @@
     <div class="pa-3">
         <v-text-field
                 v-model="userName"
+                :rules="nameRules"
             label="이름"
+            required
           ></v-text-field>
-        <v-text-field
-                v-model="userAddress"
-            label="주소"
+        
+          <VueDaumPostcode 
+          style="height: 200px; overflow: scroll;"
+          @complete="userAddress = $event.roadAddress"
+          />
+          <v-text-field
+          :disabled="userAddress === null"
+             v-model="userAddress"
+            label="상세주소(건물명,층)"
+            required
           ></v-text-field>
+
         <v-text-field
                 v-model="userPhone"
+                :rules="PhoneRules"
             label="핸드폰"
           ></v-text-field>
                 <v-text-field
                 v-model="userEmail"
-                type="email"
+                :rules="emailRules"
             label="이메일"
+            required
           ></v-text-field>
                 <v-text-field
                 v-model="userPw"
+                :rules="PasswordRules"
                 type="password"
             label="패스워드"
+            required
           ></v-text-field>
                 <v-text-field
                 v-model="userPwRepeat"
@@ -51,7 +65,7 @@
           ></v-text-field>
           <b>{{checkP}}</b>
           <v-btn
-          
+          :disabled="userPw ===null || userPw !== userPwRepeat"
           depressed 
           large
           block
@@ -91,8 +105,12 @@
 <script>
 import axios from "axios"
 import router from '../../../router/index'
+import { VueDaumPostcode } from "vue-daum-postcode"
 const baseURL = 'http://localhost:1234'
 export default {
+  components:{
+   VueDaumPostcode
+  },
     data() {
         return {
             userAddress:null,
@@ -104,8 +122,24 @@ export default {
             isSignUp : false,
             isSignUpError: false,
             message:"",
+            emailRules: [
+                        v => !!v || 'E-mail is required',
+                        v => /.+@.+\..+/.test(v) || '이메일 형식에 맞지 않습니다.',
+                        ],
+            PhoneRules: [
+                        v => !!v || 'Phone is required',
+                        v=>/^(?:(010\d{4})|(01[1|6|7|8|9]\d{3,4}))(\d{4})$/.test(v) || '-빼주세요',
+                        ],
+            nameRules: [
+                        v => !!v || 'Name is required',
+                        v => (v && v.length <= 10) || '이름은 10글자 이하',
+                       ],
+            PasswordRules: [
+                        v => !!v || 'password is required',
+                        v => (v && v.length >= 6) || '비밀번호는 6자리 이상으로 해주세요',
+                       ],
             
-            
+
         }
     },
     computed: {

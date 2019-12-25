@@ -46,18 +46,19 @@
           <v-container grid-list-md>
             <v-layout wrap>
               <v-flex xs12>
-                <v-text-field label="phone-number" required></v-text-field>
+                <v-text-field v-model="searchIdVO.name" label="이름" required></v-text-field>
               </v-flex>
               <v-flex xs12>
-                <v-text-field label="address" required></v-text-field>
+                <v-text-field v-model="searchIdVO.phone" label="phone -빼고 입력해주세요" required></v-text-field>
               </v-flex>
             </v-layout>
           </v-container>
         </v-card-text>
         <v-card-actions>
+        <h3>찾으시는 아이디 : {{searchIdRes}}</h3>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click.native="dialogId = false">Close</v-btn>
-          <v-btn color="blue darken-1" text @click.native="dialogId = false">Save</v-btn>
+          <v-btn color="blue darken-1" text @click.native="dialogId = false,searchIdRes=''">뒤로</v-btn>
+          <v-btn color="blue darken-1" text @click="id">찾기</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -74,21 +75,19 @@
             <v-layout wrap>
              
               <v-flex xs12>
-                <v-text-field label="Email" required></v-text-field>
+                <v-text-field v-model="searchPwVO.email" label="Email" required></v-text-field>
               </v-flex>
               <v-flex xs12>
-                <v-text-field label="phone-number" required></v-text-field>
-              </v-flex>
-              <v-flex xs12>
-                <v-text-field label="address" required></v-text-field>
+                <v-text-field v-model="searchPwVO.phone" label="phone -빼고 입력해주세요" required></v-text-field>
               </v-flex>
             </v-layout>
           </v-container>
         </v-card-text>
         <v-card-actions>
+          <h3>비밀번호 : {{searchPwRes}}</h3>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click.native="dialogPw = false">Close</v-btn>
-          <v-btn color="blue darken-1" text @click.native="dialogPw = false">Save</v-btn>
+          <v-btn color="blue darken-1" text @click.native="dialogPw = false,searchPwRes=''">뒤로</v-btn>
+          <v-btn color="blue darken-1" text @click="bm">찾기</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -127,23 +126,23 @@
           
     </div>
 
-<v-toolbar flat>
+<v-toolbar flat v-if="role !=='Admin'">
     <v-toolbar-title primary-title class="layout justify-center">
         <v-divider class="mt-3"></v-divider>
         <pre>   간편하게 시작하기   </pre>
         <v-divider class="mt-3"></v-divider>
         </v-toolbar-title>
     </v-toolbar>
-    <div class="text-xs-center pl-5 ml-5 pb-5">
+    <div class="text-xs-center pl-5 ml-5 pb-5" v-if="role !=='Admin'">
     <v-btn outlined fab color="success" class="ml-5">naver</v-btn>
     <v-btn outlined fab color="warning" class="mx-12">kakao</v-btn>
     <v-btn outlined fab color="info" >google</v-btn>
     </div>
            <v-divider class="mx-5"></v-divider>
-<div class="layout justify-center">
-    <v-btn color="white" @click="id" depressed>아이디 찾기</v-btn>
+<div class="layout justify-center" v-if="role !=='Admin'">
+    <v-btn color="white" @click="dialogId=true" depressed>아이디 찾기</v-btn>
     <v-divider vertical class="my-2"></v-divider>
-    <v-btn color="white" @click="bm" depressed>비밀번호 찾기</v-btn>
+    <v-btn color="white" @click="dialogPw=true" depressed>비밀번호 찾기</v-btn>
     <v-divider vertical class="my-2"></v-divider>
     <v-btn color="white" @click="$router.push({name : 'signup'})" depressed>회원가입</v-btn>
 </div>
@@ -160,16 +159,31 @@
 // 이걸 가져다 써야 로그인 연동이 된다 
 import {mapState,mapActions} from "vuex"
 import axios from "axios"
+const baseURL = 'http://localhost:1234'
 export default {
     data() {
         return {
           passwordRules: [
-        v => !!v || 'E-mail is required'
+        v => !!v || 'password is required',
+        v => (v && v.length >= 6) || '비밀번호는 6자리 이상입니다',
       ],
           emailRules: [
         v => !!v || 'E-mail is required',
         v => /.+@.+/.test(v) || 'E-mail must be valid',
       ],
+          searchPwRes:''
+          ,
+          searchPwVO:{
+            email:'',
+            phone:''
+          }
+          ,
+          searchIdRes:''
+          ,
+          searchIdVO:{
+            name:'',
+            phone:''
+          },
           email:'',
           password:'',
           dialogId:false,
@@ -184,10 +198,28 @@ export default {
     methods:{
         ...mapActions(['login','_roles']),
         id(){
-           this.dialogId=true
+          
+           axios.post(`${baseURL}/searchId`+this.role,this.searchIdVO) 
+       .then(res => { 
+         this.searchIdRes=res.data
+         this.searchIdVO.name=''
+         this.searchIdVO.phone=''
+       }) 
+       .catch(error => { 
+         console.log(error)
+       })
         },
         bm(){
-            this.dialogPw=true
+          console.log(this.role)
+            axios.post(`${baseURL}/searchPw`+this.role,this.searchPwVO) 
+       .then(res => { 
+         this.searchPwRes=res.data
+         this.searchPwVO.email=''
+         this.searchPwVO.phone=''
+       }) 
+       .catch(error => { 
+         console.log(error)
+       })
         },
 
 
