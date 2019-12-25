@@ -10,6 +10,8 @@ import moment from 'moment'
 import VueLocalStorage from 'vue-localstorage'
 import VueGoogleCharts from 'vue-google-charts'
 
+
+
 Vue.prototype.$http = axios;
 
 Vue.use(VueLocalStorage)
