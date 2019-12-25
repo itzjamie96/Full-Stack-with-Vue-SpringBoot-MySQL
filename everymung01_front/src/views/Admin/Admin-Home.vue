@@ -9,6 +9,7 @@
 
 <script>
 // @ is an alias to /src
+//
 import { GChart } from 'vue-google-charts'
 
 google.charts.load('current', {packages: ['corechart', 'bar']});
