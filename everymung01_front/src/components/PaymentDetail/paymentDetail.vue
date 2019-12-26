@@ -136,10 +136,11 @@ export default {
    },
    methods: {
        initialize() {
-            // const paymentNo = this.$route.params.paymentNo;
+            this.paymentVO = this.$route.params.paymentVO;
+            console.log(this.paymentVO)
+            console.log(this.$route.params.paymentVO)
        
-
-            this.paymentObj.request = this.paymentVO.request
+            // this.paymentObj.request = this.paymentVO.request
             console.log('request')
             console.log(this.paymentObj.request)
            
@@ -154,6 +155,7 @@ export default {
         //     })
      
        },
+       
        parseDate() {
            const date = paymentObj.startTime
             

@@ -174,7 +174,6 @@ export default {
 
     ...mapState(["isLogin","userInfo"]),
    
-
   },
   methods: {
     onNewReservation() {

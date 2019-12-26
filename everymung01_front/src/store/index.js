@@ -39,7 +39,7 @@ export default new Vuex.Store({
 
     //예약 정보 넘기기
     reservationList: [
-      {
+     /*  {
         usersPets: [],
         date: '',
         startTime: '',
@@ -52,7 +52,7 @@ export default new Vuex.Store({
         sitterName: '',
         sitterPhone: '',
         sitterAddress: ''
-      }
+      } */
     ]
 
     
