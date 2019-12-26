@@ -36,10 +36,8 @@ public class KakaoPay {
 
 		RestTemplate restTemplate = new RestTemplate();
 		list = cart;
-//		for(int i=0;i<list.size();i++ ) {
-//			sum+=list.get(i).getTotalPrice();
-//		}
-		String userId = list.get(0).getUserName();   //수정
+
+		String userId = Integer.toString(list.get(0).getPaymentNo());   //수정
 		// 서버로 요청할 Header
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "KakaoAK " + "189cb444d1d0a80af1fb1bcaef868817");
@@ -83,12 +81,10 @@ public class KakaoPay {
 
 	public KakaoPayApprovalVO kakaoPayInfo(String pg_token,int sum) {  //반환값이 주소값
 
-//		log.info("-----------------------------");
-//		log.info("-----------------------------");
 
 		RestTemplate restTemplate = new RestTemplate();
 		String s = Integer.toString(sum);
-		String userId = list.get(0).getUserName();   //수정
+		String userId = Integer.toString(list.get(0).getPaymentNo());   //수정
 		// 서버로 보낼 Header
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "KakaoAK " + "8921a420fe7e75c1306abfe0fc7e5b52");

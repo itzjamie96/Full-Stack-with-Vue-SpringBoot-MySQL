@@ -5,6 +5,7 @@
             max-width="344"
         >
         
+            {{$store.state.reservationList[0].userNo}}
             <v-card-text>
 
             <p class="headline text--primary">예약 정보 확인</p>
