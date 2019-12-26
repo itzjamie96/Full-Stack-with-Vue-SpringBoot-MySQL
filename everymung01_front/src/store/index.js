@@ -89,11 +89,12 @@ export default new Vuex.Store({
     //로그인끝
 
     //예약 정보 넘기기//mutation
-    createReservation(state, payload) {
-      state.reservationList.push(payload)
+    setReservation(state, payload) {
+      state.reservationList = payload
     },
-    createMeetup(state, payload) {
-      state.loadedMeetups.push(payload)
+    createReservation(state, payload) {
+      state.reservationList=[],
+      state.reservationList.push(payload)
     },
 
   },
@@ -209,14 +210,9 @@ export default new Vuex.Store({
       return getters.mainPics.slice(0,5)
     },
 
-    loadedReserve (state) {
-      return (paymentNo) => {
-        return state.reservationList.find((reservation => {
-          return reservation.userNo === paymentNo
-        }))
-      }
+
+
     }
 
     
-  }
-})
+  })

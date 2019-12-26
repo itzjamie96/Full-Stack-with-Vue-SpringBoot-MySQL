@@ -23,7 +23,7 @@
                     <p>{{paymentObj.size}}&nbsp;X </p>
 
                 </v-col>
-                <v-col>
+                <v-col>   
                     <p>{{paymentObj.dogBreed}}</p>
                 </v-col>
             </v-row>

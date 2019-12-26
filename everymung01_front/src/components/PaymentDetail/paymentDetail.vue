@@ -129,10 +129,6 @@ export default {
            return this.$route.params.paymentNo
        },
 
-       loadedReserve() {
-           return this.$store.getters.loadedReserve
-       }
-
 
    },
    methods: {
