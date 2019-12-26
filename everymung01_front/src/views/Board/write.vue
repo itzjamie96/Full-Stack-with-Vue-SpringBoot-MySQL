@@ -31,7 +31,7 @@ export default {
     data(){
         return{
             
-            BoardVO: { 
+            BoardVO: {                
                 title:'', 
                 content:'',
                 userName:'',
@@ -51,21 +51,31 @@ export default {
         // 저장하기(DB_INSERT)(C)
         add(){
           //### 
+          console.log("add()_this.userInfo.userNo="+this.userInfo.userNo)
           this.BoardVO.userNo = this.userInfo.userNo
           this.BoardVO.boardDate = new Date() // DB와 데이터타입을 맞춰줘야돼서 Date() 
-          this.BoardVO.userName = this.userInfo.userName
+          this.BoardVO.userName = this.userInfo.userName                     
+          this.BoardVO.hits=0  
+          //사용자 글쓰기(문의사항)        
           this.BoardVO.depth=0
-          this.BoardVO.groupNo=0
-          this.BoardVO.hits=0
+          this.BoardVO.groupNo=this.BoardVO.bo
+          // if(this.BoardVO.depth==0){
+          //   this.BoardVO.groupNo=0
+          // }
+          /*
+          else {
+            this.BoardVO.groupNo=boardNo가 넘어와야함
+          }
+          */
+            //BoardNo값을 안넣어서 보내면 스프링쪽에선 boardNo=0이라고 찍히더라. 
             
             axios.post ('http://localhost:1234/add',this.BoardVO) // 여기선 객체 던져주는 식이네 
            .then( res =>{
-             console.log(res);
-               
+             this.BoardVO = res.data             
            }),  
           // 입력칸 제출후 깨끗하게 만드는 기능코드 
           this.BoardVO = this.default 
-
+          //### 전체조회하기 
           router.push({name:'Board'})
         },
     },//### userInfo를 받아와서 

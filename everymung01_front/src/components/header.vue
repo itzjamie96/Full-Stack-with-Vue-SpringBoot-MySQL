@@ -56,13 +56,14 @@
       <v-spacer></v-spacer>
 
       <v-toolbar-items class="hidden-sm-and-down">
-        
+
         <v-btn 
         text
         v-for="item in menuItems" 
         :key="item.title"
         router :to="item.link"
         >{{item.title}}</v-btn>
+
         <div v-if="isLogin===false" class="mt-3">
         <v-btn text router :to="{name:'signup'}" exact>회원가입</v-btn>
         <v-btn text router :to="{name:'signin'}" exact>로그인</v-btn>
@@ -88,7 +89,7 @@ export default {
       menuItems: [
         {title: '하루 시터', link: '/daysitters'},
         {title: '위탁 시터', link: '/homesitters/'},
-        {title: '펫시터 지원', link: '/sitterSignUp'},
+        {title: '펫시터 지원', link: '/sitterSignUp',},
         {title: '문의하기', link: '/board'},
       ]
     }
@@ -97,6 +98,7 @@ export default {
       ...mapState(['isLogin']),...mapState(['userInfo'])
       /* ...mapActions(['logout']) */
     },
+
 }
 </script>
 
