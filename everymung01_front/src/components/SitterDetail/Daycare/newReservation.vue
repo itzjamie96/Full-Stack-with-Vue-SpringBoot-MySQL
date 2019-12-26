@@ -6,6 +6,7 @@
                 height="100%"
                 class="mb-5"
         >
+        {{this.sitterInfo}}
             <v-form @submit.prevent="onNewReservation" >
                 <v-row justify="center">
                     <v-col cols="12" sm="10">
@@ -131,7 +132,7 @@ export default {
         time: ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'],
         pets: ['Foo', 'Bar', 'Fizz', 'Buzz'],
         
-        userPets: [],
+        usersPets: [],
         description: '',
         startTime: '',
         endTime: '',
@@ -151,34 +152,7 @@ export default {
             }
         ],
         
-        
-        reservation: {
-            pets: '',
-            date: '',
-            startTime: '',
-            endTime: '',
-            description: ''
-        },
-        paymentVO: {
-            //pets: '',
-            startTime: '',
-            endTime: '',
-            request: '',
-            sitterNo: '',
-            sittingType: '',
-            sitterName: '',
-            sitterPhone: '',
-            sitterAddress: '',
-            paymentMethod: '',
-            amount: '',
-            petNo: '',
-            userName: '',
-            userAddress: '',
-            petName: '',
-            dogBreed: '',
-            size: ''
-
-        }
+              
         
         
     }
@@ -210,29 +184,17 @@ export default {
             startTime: this.date + " "+ this.startTime,
             endTime: this.date + " "+ this.endTime,
             description: this.description,
-            userNo: this.userInfo.userNo
+            userNo: this.userInfo.userNo,
+            userAddress: this.userInfo.userAddress,
+            sitterNo: this.sitterInfo.sitterNo,
+            sittingType: this.sitterInfo.sittingType,
+            sitterName: this.sitterInfo.sitterName,
+            sitterPhone: this.sitterInfo.sitterPhone,
+            sitterAddress: this.sitterInfo.sitterAddress
         }
-        this.$store.dispatch('createReservation', reserveData)
-
-        //넘길 객체에 펫 정보 추가
-
-        this.reservation.date = this.date
-        this.paymentVO.userName = this.userInfo.userName
-        this.paymentVO.userAddress = this.userInfo.userAddress
-        this.paymentVO.startTime = this.reservation.date + " " + this.reservation.startTime
-        this.paymentVO.endTime = this.reservation.date + " " + this.reservation.endTime
-        this.paymentVO.request = this.reservation.description
-        this.paymentVO.sitterNo = this.sitterInfo.sitterNo,
-        this.paymentVO.sittingType = this.sitterInfo.sittingType,
-        this.paymentVO.sitterName = this.sitterInfo.sitterName,
-        this.paymentVO.sitterPhone = this.sitterInfo.sitterPhone,
-        this.paymentVO.sitterAddress = this.sitterInfo.sitterAddress,
-
-        console.log(this.paymentVO)
-
+        console.log(reserveData)
+        this.$store.dispatch('createReservation', reserveData)     //store에 createReservation에 payload로 보내기~
         this.$router.push(`/paymentinfo/${this.userInfo.userNo}`) //예약확인 페이지로 수정 필요
-        
-
     },
 
     

@@ -39,14 +39,20 @@ export default new Vuex.Store({
 
     //예약 정보 넘기기
     reservationList: [
-      {
+     /*  {
         usersPets: [],
         date: '',
         startTime: '',
         endTime: '',
         description: '',
-        userNo: ''
-      }
+        userNo: '',
+        userAddress: '',
+        sitterNo: '',
+        sittingType: '',
+        sitterName: '',
+        sitterPhone: '',
+        sitterAddress: ''
+      } */
     ]
 
     
@@ -82,7 +88,7 @@ export default new Vuex.Store({
     },
     //로그인끝
 
-    //예약 정보 넘기기
+    //예약 정보 넘기기//mutation
     createReservation(state, payload) {
       state.reservationList.push(payload)
     },
@@ -174,15 +180,21 @@ export default new Vuex.Store({
 
     //payload 에서 필요한 부분만 넘기기
     createReservation({commit}, payload) {
-      const reserve = {
-        usersPets: payload.usersPets,
-        date: payload.date,
-        startTime: payload.startTime,
-        endTime: payload.endTime,
-        description: payload.description,
-        userNo: payload.userNo
-      }
-      commit('createReservation', reserve)
+      // const reserve = {
+      //   usersPets: payload.usersPets,
+      //   date: payload.date,
+      //   startTime: payload.startTime,
+      //   endTime: payload.endTime,
+      //   description: payload.description,
+      //   userNo: payload.userNo,
+      //   userAddress: payload.userAddress,
+      //   sitterNo: payload.sitterNo,
+      //   sittingType: payload.sittingType,
+      //   sitterName: payload.sitterName,
+      //   sitterPhone: payload.sitterPhone,
+      //   sitterAddress: payload.sitterAddress
+      // }
+      commit('createReservation', payload)
     }
 
   },
