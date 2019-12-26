@@ -6,17 +6,20 @@
                 height="100%"
                 class="mb-5"
         >
-        {{this.sitterInfo}}
+
+        {{this.petList}}
             <v-form @submit.prevent="onNewReservation" >
                 <v-row justify="center">
                     <v-col cols="12" sm="10">
                         <v-select
                             v-model="usersPets"
-                            :items="pets"
+                            :items="petList"
+                            multiple=""
+                            item-text="petName"
+                            item-value="petList"
                             attach
                             chips
                             label="반려동물 선택"
-                            multiple
                             id="usersPets"
                         ></v-select>
                     </v-col>
@@ -130,7 +133,7 @@ export default {
         menu2: false,
         timeStep: '00:00',
         time: ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'],
-        pets: ['Foo', 'Bar', 'Fizz', 'Buzz'],
+        petList: [],
         
         usersPets: [],
         description: '',
@@ -161,7 +164,8 @@ export default {
       eventBus.$on('sitterObj', (sitterObj) => {
         //   console.log(sitterObj)
           this.sitterInfo = sitterObj
-      })
+      }),
+      this.initialize()
       
   },
   computed: {
@@ -173,13 +177,32 @@ export default {
     },
 
     ...mapState(["isLogin","userInfo"]),
+
+    petNo() {
+        return this.$route.params.petNo
+    }
    
   },
   methods: {
-    onNewReservation() {
+      initialize() {
+           const petNo = this.$route.params.petNo
+           
+           
+           axios
+            .get(`http://localhost:1234/showAllpets/${this.userInfo.userNo}`)
+            .then(res => {
+                this.petList = res.data
+                console.log(res);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+
+       },
+        onNewReservation() {
 
         const reserveData = {
-            userPets: this.usersPets,
+            usersPets: this.usersPets,
             date: this.date,
             startTime: this.date + " "+ this.startTime,
             endTime: this.date + " "+ this.endTime,
@@ -190,7 +213,12 @@ export default {
             sittingType: this.sitterInfo.sittingType,
             sitterName: this.sitterInfo.sitterName,
             sitterPhone: this.sitterInfo.sitterPhone,
-            sitterAddress: this.sitterInfo.sitterAddress
+            sitterAddress: this.sitterInfo.sitterAddress,
+            petNo: this.petList.petNo,
+            petName: this.petList.petName,
+            size: this.petList.size,
+            
+            
         }
         console.log(reserveData)
         this.$store.dispatch('createReservation', reserveData)     //store에 createReservation에 payload로 보내기~

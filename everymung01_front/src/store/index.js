@@ -93,6 +93,7 @@ export default new Vuex.Store({
       state.reservationList = payload
     },
     createReservation(state, payload) {
+      state.reservationList=[],
       state.reservationList.push(payload)
     },
 
