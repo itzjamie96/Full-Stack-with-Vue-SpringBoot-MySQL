@@ -103,7 +103,7 @@ const routes = [
   {
     path: '/adminMain',
     name: 'adminMain',
-    component: () => import('../views/Admin/main/Admin-main.vue')
+    component: () => import('../components/Admin-main.vue')
   },
 {       //일반 홈
         path: '/',

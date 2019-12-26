@@ -14,4 +14,8 @@ public interface PaymentMapper {
 	
 	//유저의 예약내역 보기 (클래스 다이어그램에 없는데 임의로 추가)
 	public List<PaymentVO> showUserPayment(int userNo); 
+
+	public List<PaymentVO> showAllPayment(); 
+
+	public List<PaymentVO> showAllDetailPayment(); 
 }

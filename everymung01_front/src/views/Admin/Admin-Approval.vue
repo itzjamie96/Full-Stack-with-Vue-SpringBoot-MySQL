@@ -173,10 +173,16 @@
         <v-card>
         <p>신원확인은 필수입니다.신분증 사본을 반드시 첨부해주세요</p>
         <p>보내주신 신분증과 저격증은 3개원 보관 후 폐기됩니다.</p>
+        <v-row>
+          <v-col>
         신분증
         <v-img :src="sitter.identityCheck"></v-img>
+        </v-col>
+          <v-col>
         자격증
         <v-img :src="sitter.qualificationCheck"></v-img>
+          </v-col>
+        </v-row>
         </v-card><br>
           <br>
             </v-col>

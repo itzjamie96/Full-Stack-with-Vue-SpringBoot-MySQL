@@ -43,5 +43,15 @@ public class PaymentController {
 		return paymentMapper.showUserPayment(userNo);
 	}
 	
+	@RequestMapping("/showAllPayment")
+	public List<PaymentVO> showAllPayment() { //유저의 예약 내역보기
+		return (List<PaymentVO>)paymentMapper.showAllPayment();
+	}
+
+	@RequestMapping("/showAllDetailPayment")
+	public List<PaymentVO> showAllDetailPayment() { //유저의 예약 내역보기
+		return (List<PaymentVO>)paymentMapper.showAllDetailPayment();
+	}
+	
 	
 }
