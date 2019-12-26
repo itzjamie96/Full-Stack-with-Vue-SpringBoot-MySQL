@@ -1,13 +1,13 @@
 package org.salem.domain.controller;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.salem.domain.Mapper.SitterMapper;
 import org.salem.domain.file.FileResponse;
 import org.salem.domain.file.StorageService;
 import org.salem.domain.vo.LoginVO;
+import org.salem.domain.vo.SearchIdVO;
+import org.salem.domain.vo.SearchPwVO;
 import org.salem.domain.vo.SitterVO;
 import org.salem.domain.vo.UsersVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,7 +36,39 @@ public class SitterController {
 	@Autowired
 	private StorageService storageService;
 
-   
+	@PostMapping("/searchIdSitter")
+	public String searchId(@RequestBody SearchIdVO search){
+		String msg="존재하지 않습니다";
+		List<SitterVO> lsm = sitterMapper.showAllSitters();
+		for(SitterVO vo : lsm) {
+			if(vo.getSitterName().equals(search.getName())) {
+				if(vo.getSitterPhone().equals(search.getPhone())) {
+					msg=vo.getSitterEmail();
+				}
+			}
+		}
+		return msg;
+	}
+	@PostMapping("/searchPwSitter")
+	public String searchPw(@RequestBody SearchPwVO search){
+		String msg="정보가 일치하지 않습니다";
+		List<SitterVO> lsm = sitterMapper.showAllSitters();
+		for(SitterVO vo : lsm) {
+			if(vo.getSitterEmail().equals(search.getEmail())) {
+				if(vo.getSitterPhone().equals(search.getPhone())) {
+					int leng = vo.getSitterPw().length();
+					String realPw = vo.getSitterPw().substring(0, Math.round(leng/2));
+					String fakePw = "";
+					for(int i=0 ; i<leng-realPw.length();i++) {
+						fakePw += "*";
+					}
+					msg = realPw+fakePw;
+					//msg=vo.getUserPw();
+				}
+			}
+		}
+		return msg;
+	}
 
 
   ///////////////////////////////////  시터 identityCheck,qualificationCheck 용 이미지 넣기 !! 다른데 쓰지 마시오 ////////////////////////
@@ -43,7 +76,8 @@ public class SitterController {
 	@RequestMapping("/download/{filename}")
     @ResponseBody
     public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
-    	HttpHeaders headers = new HttpHeaders();
+		System.out.println(filename);
+		HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_JPEG);
         Resource resource = storageService.loadAsResource(filename);
 
@@ -84,7 +118,29 @@ return new FileResponse(name, uri, file.getContentType(), file.getSize());
 	public List<SitterVO> showAllSitters() {
 		return (List<SitterVO>) sitterMapper.showAllSitters();
 	}
+
+	@RequestMapping("/falseAllSitters")
+	public List<SitterVO> falseAllSitters() {
+		return (List<SitterVO>) sitterMapper.falseAllSitters();
+	}
 	
+
+	@PostMapping("/deleteSitter/{sitterNo}")
+	public int deleteSitter(@PathVariable int sitterNo) {
+		return sitterMapper.deleteSitter(sitterNo);
+		
+	}
+	
+	@PostMapping("/updateSitter")
+	public int updateSitter(@RequestBody SitterVO sitterVo) {
+		System.out.println("controller:"+sitterVo);
+		return sitterMapper.updateSitter(sitterVo);
+	}
+	
+//	@RequestMapping("/showSitterDetail/{sitterNo}")
+//	public SitterVO showSitterDetail(@PathVariable int sitterNo) {
+//		return (SitterVO) sitterMapper.showSitterDetail(sitterNo);
+//	}
 	@PostMapping("refreshSitter")//시터 새로고침
 	public SitterVO refreshE(@RequestBody LoginVO vo) {
 		

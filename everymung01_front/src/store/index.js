@@ -10,42 +10,58 @@ const baseURL = 'http://localhost:1234'
 export default new Vuex.Store({
   state: {
     //로그인 
-  role:'User',
-  userInfo:null,
-  isLogin : false,
-  isLoginError: false,
+    trigger:true,
+    role:'User',
+    userInfo:null,
+    isLogin : false,
+    isLoginError: false,
     //로그인 끝
 
     //메인페이지 사진 박아놓은 예시
-    loadedMeetups: [  
+    mainPics: [  
         {
-          imageUrl: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60', 
-          id: 'aaa', 
-          title: 'Meetup in city',
-          date: '2019-12-17',
-          time: '15:35',
-          location: 'New York',
-          description:'All in NewYork'
+          imageUrl: 'https://images.unsplash.com/photo-1534361960057-19889db9621e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80', 
+          id: '1', 
         },
         {
-          imageUrl: 'https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60', 
-          id: 'bbb', 
-          title: 'Meetup in forest',
-          date: '2019-12-19',
-          time: '14:00',
-          location: 'Forest',
-          description: 'Forest!'
-        }
+          imageUrl: 'https://images.pexels.com/photos/3361692/pexels-photo-3361692.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 
+          id: '2', 
+        },
+        {
+          imageUrl: 'https://images.pexels.com/photos/3397935/pexels-photo-3397935.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 
+          id: '3', 
+        },
+        {
+          imageUrl: 'https://images.pexels.com/photos/2737393/pexels-photo-2737393.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260', 
+          id: '4', 
+        },
     ],
-    user: {
-      id:'abc',
-      registeredMeetups: [
-        'aaa'
-      ]
-    }
+
+    //예약 정보 넘기기
+    reservationList: [
+     /*  {
+        usersPets: [],
+        date: '',
+        startTime: '',
+        endTime: '',
+        description: '',
+        userNo: '',
+        userAddress: '',
+        sitterNo: '',
+        sittingType: '',
+        sitterName: '',
+        sitterPhone: '',
+        sitterAddress: ''
+      } */
+    ]
+
     
   },
   mutations: {
+    //트리거 관리자 페이지 / main페이지 헤더 구별
+    triggerToggle(state,payload){
+      state.trigger=payload
+    },
     //role 결정하기
     roles(state,payload){
       state.role=payload
@@ -72,108 +88,131 @@ export default new Vuex.Store({
     },
     //로그인끝
 
-    createMeetup(state, payload) {
-      state.loadedMeetups.push(payload)
+    //예약 정보 넘기기//mutation
+    setReservation(state, payload) {
+      state.reservationList = payload
     },
     createReservation(state, payload) {
-      
-    }
+      state.reservationList=[],
+      state.reservationList.push(payload)
+    },
+
   },
-  actions: {  //reach out to firebase and store it
-//롤 바꾸기
-_roles({commit},login_role){
-commit('roles',login_role)
+  actions: { 
+    //헤더 바꾸기
+    TriggerTO({commit},toggleDate){
+    commit('triggerToggle',toggleDate)
+    }, 
 
-},
+        //롤 바꾸기
+    _roles({commit},login_role){
+    commit('roles',login_role)
 
-//로그인 시도
-login({state,commit},loginobj){
-  localStorage.setItem("role",state.role)
-  let role = localStorage.getItem("role")
-  
-  //전체 유저에서 해당 이메일로 유저를 찾는다.
-  //그 유저의 비밀번호와 입력된 비빌번호를 비교한다.
-  Axios.post(`${baseURL}/signin`+role,loginobj) 
-  .then(res => { 
-    if(res.data.userEmail != null){
-      console.log(res.data.userEmail)
-      localStorage.setItem("email",loginobj.email)
-         
-         
-         commit('loginSuccess',res.data)
-         router.push({name:'uMyPage'})
-          //로그인 성공 시 마이페이지로 이동시켜 줌
-         }
-         else if(res.data.sitterEmail=!null){
-          localStorage.setItem("email",loginobj.email)
-          commit('loginSuccess',res.data)
-          router.push({name:'sMyPage'})
-         }
-         else{
-          commit('loginError')
-         }
-       }) 
-       .catch(error => { 
-         console.log(error)
-         commit('loginError')
-       })
+    },
 
-
-},
-lsm({state,commit}){
-  let password = '1234'
-  let email =localStorage.getItem("email")
-  let role = localStorage.getItem("role")
-  console.log(email)
-  if(email != null){
-  Axios.post(`${baseURL}/refresh`+role,{email,password}) 
-       .then(res => { 
-         console.log(res.data)
-         
-         commit('loginSuccess',res.data)
-         commit('roles',role)
-       }) 
-       .catch(error => { 
-         console.log(error)
-         commit('loginError')
-       })
-      }
-},
-logout({commit}){//$store.dispatch('logout')으로 접근할 수 있음
- commit('logout')
- router.push({name:'home'})
-}
-
-    ,
-    createMeetup({commit}, payload) {
-      const meetup = {    //mapping to an object: payload might have properties that i may not need
-        title: payload.title,
-        location: payload.location,
-        imageUrl: payload.imageUrl,
-        description: payload.description,
-        date: payload.date,
-        time: payload.time,
-        id: '111'
-      }
-      commit('createMeetup', meetup)
+    //로그인 시도
+    login({state,commit},loginobj){
+      localStorage.setItem("role",state.role)
+      let role = localStorage.getItem("role")
       
+      //전체 유저에서 해당 이메일로 유저를 찾는다.
+      //그 유저의 비밀번호와 입력된 비빌번호를 비교한다.
+      Axios.post(`${baseURL}/signin`+role,loginobj) 
+      .then(res => { 
+        console.log(res.config.data)
+        if(res.data.userEmail != null){
+          console.log(res.data.userEmail)
+          localStorage.setItem("email",loginobj.email)
+            
+            
+            commit('loginSuccess',res.data)
+            router.push({name:'uMyPage'})
+              //로그인 성공 시 마이페이지로 이동시켜 줌
+            }
+            else if(res.data.sitterEmail != null){
+              localStorage.setItem("email",loginobj.email)
+              commit('loginSuccess',res.data)
+              router.push({name:'sMyPage'})
+            }
+            else if(res.config.data[0] != null){
+              localStorage.setItem("email",loginobj.email)
+              commit('loginSuccess',res.config.data)
+              commit('triggerToggle',false)
+              router.push({name:'adminHome'})
+            }
+            else{
+              commit('loginError')
+            }
+          }) 
+          .catch(error => { 
+            console.log(error)
+            commit('loginError')
+          })
+
+
+    },
+    lsm({state,commit}){
+      let password = '1234'
+      let email =localStorage.getItem("email")
+      let role = localStorage.getItem("role")
+        if(role === 'Admin'){
+        commit('triggerToggle',false)
+        }
+      console.log(email)
+      if(email != null){
+      Axios.post(`${baseURL}/refresh`+role,{email,password}) 
+          .then(res => { 
+            console.log(res.data)
+            
+            commit('loginSuccess',res.data)
+            commit('roles',role)
+          }) 
+          .catch(error => { 
+            console.log(error)
+            commit('loginError')
+          })
+          }
+    },
+    logout({commit}){//$store.dispatch('logout')으로 접근할 수 있음
+    commit('logout')
+    commit('triggerToggle',true)
+    router.push({name:'home'})
+    },
+
+    //payload 에서 필요한 부분만 넘기기
+    createReservation({commit}, payload) {
+      // const reserve = {
+      //   usersPets: payload.usersPets,
+      //   date: payload.date,
+      //   startTime: payload.startTime,
+      //   endTime: payload.endTime,
+      //   description: payload.description,
+      //   userNo: payload.userNo,
+      //   userAddress: payload.userAddress,
+      //   sitterNo: payload.sitterNo,
+      //   sittingType: payload.sittingType,
+      //   sitterName: payload.sitterName,
+      //   sitterPhone: payload.sitterPhone,
+      //   sitterAddress: payload.sitterAddress
+      // }
+      commit('createReservation', payload)
     }
+
   },
   getters: {
-    loadedMeetups (state) { //all meetups
-      return state.loadedMeetups.sort((meetupA, meetupB) => {
-        return meetupA.date > meetupB.date
+    mainPics (state) { //사진 sort하기
+      return state.mainPics.sort((picA, picB) => {
+        return picA.id > picB.id
       }) 
     },
-    loadedMeetup (state) {   // one meetup
-      return (meetupId) => {
-        return state.loadedMeetups.find((meetup) => {
-          return meetup.id === meetupId
-        })
-      }
+
+    featuredPics(state, getters) {   //메인에 걸 사진들만 
+      return getters.mainPics.slice(0,5)
     },
-    featuredMeetups(state, getters) {   //fetching some chosen meetups from the loaded Meetups
-      return getters.loadedMeetups.slice(0,5)
+
+
+
     }
-  }
-})
+
+    
+  })

@@ -44,13 +44,21 @@
         class="hidden-md-and-up"
         ></v-app-bar-nav-icon>
 
-      <v-toolbar-title>
-        <router-link to="/" tag="span" style="cursor: pointer">
-        <v-btn text router :to="{name: 'home'}" exact>
-          <i class="fas fa-paw fa-2x mr-2"></i>
+      <v-toolbar-title class="mr-0 px-0">
+          <router-link :to="{name: 'home'}" exact
+          class="white--text"
+          id="homebtn"
+          >
+        <div>
+          <div class="d-inline">
+            <i class="fas fa-paw fa-1x"></i>
+          </div>
+          <div class="d-inline ml-1">
             에브리멍
-        </v-btn>
-        </router-link>
+          </div>
+        </div>
+          </router-link>
+
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
@@ -63,14 +71,13 @@
         :key="item.title"
         router :to="item.link"
         >{{item.title}}</v-btn>
-        <div v-if="isLogin===false" class="mt-3">
-        <v-btn text router :to="{name:'signup'}" exact>회원가입</v-btn>
-        <v-btn text router :to="{name:'signin'}" exact>로그인</v-btn>
-        </div>
-        <div class="mt-3" v-else>
-        <v-btn text  router :to="{name:'uMyPage'}" exact>마이페이지</v-btn>
-        <v-btn text  @click="$store.dispatch('logout')">로그아웃</v-btn>
-        </div>
+   
+          <v-btn text router :to="{name:'signup'}" exact v-if="isLogin===false">회원가입</v-btn>
+          <v-btn text  router :to="{name:'uMyPage'}" exact v-else>마이페이지</v-btn>
+
+          <v-btn text router :to="{name:'signin'}" exact v-if="isLogin===false">로그인</v-btn>
+          <v-btn text  @click="$store.dispatch('logout')" v-else>로그아웃</v-btn>
+
       </v-toolbar-items>
 
     </v-toolbar>
@@ -100,4 +107,20 @@ export default {
 }
 </script>
 
+
+<style>
+@import url('https://fonts.googleapis.com/css?family=Gugi|Jua|Single+Day&display=swap');
+
+#homebtn{
+    text-decoration: none;
+    font-size: 17pt;
+    font-family: 'Gugi', cursive;
+
+}
+
+.v-btn__content{
+  font-size: 12pt;
+}
+
+</style>
 
