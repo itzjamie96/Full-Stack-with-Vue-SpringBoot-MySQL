@@ -16,7 +16,7 @@
 
 <script>
 
-import PaymentDetail from '@/components/PaymentDetail/paymentDetail.vue'
+import PaymentDetail from '@/components/PaymentDetail/paymentDetailTry.vue'
 import PaymentReceipt from '@/components/PaymentDetail/paymentReceipt.vue'
 
 export default {

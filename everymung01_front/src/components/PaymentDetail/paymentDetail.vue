@@ -6,8 +6,7 @@
         >
         
             <v-card-text>
-                {{this.paymentObj}}
-                {{this.paymentVO}}
+
             <p class="headline text--primary">예약 정보 확인</p>
 
             <v-row justify="center">
@@ -128,6 +127,10 @@ export default {
        paymentNo() {
            return this.$route.params.paymentNo
        },
+
+       loadedReserve() {
+           return this.$store.getters.loadedReserve
+       }
 
 
    },

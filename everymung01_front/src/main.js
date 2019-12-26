@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import axios from 'axios'
 import App from './App.vue'
 import router from './router'
 import store from './store'
@@ -7,9 +8,14 @@ import '@babel/polyfill'
 import '@fortawesome/fontawesome-free/css/all.css'
 import moment from 'moment'
 import VueLocalStorage from 'vue-localstorage'
+import VueGoogleCharts from 'vue-google-charts'
 
+
+
+Vue.prototype.$http = axios;
 
 Vue.use(VueLocalStorage)
+Vue.use(VueGoogleCharts)
 Vue.config.productionTip = false
 
 export const eventBus = new Vue()
@@ -34,5 +40,4 @@ new Vue({
   },
   render: h => h(App)
 }).$mount('#app')
-
 
