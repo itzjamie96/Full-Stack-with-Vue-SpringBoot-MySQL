@@ -11,10 +11,10 @@ export default new Vuex.Store({
   state: {
     //로그인 
     trigger:true,
-  role:'User',
-  userInfo:null,
-  isLogin : false,
-  isLoginError: false,
+    role:'User',
+    userInfo:null,
+    isLogin : false,
+    isLoginError: false,
     //로그인 끝
 
     //메인페이지 사진 박아놓은 예시
@@ -36,6 +36,18 @@ export default new Vuex.Store({
           id: '4', 
         },
     ],
+
+    //예약 정보 넘기기
+    reservationList: [
+      {
+        usersPets: [],
+        date: '',
+        startTime: '',
+        endTime: '',
+        description: '',
+        userNo: ''
+      }
+    ]
 
     
   },
@@ -70,95 +82,108 @@ export default new Vuex.Store({
     },
     //로그인끝
 
+    //예약 정보 넘기기
+    createReservation(state, payload) {
+      state.reservationList.push(payload)
+    },
     createMeetup(state, payload) {
       state.loadedMeetups.push(payload)
     },
-    createReservation(state, payload) {
-      
-    }
+
   },
-  actions: {  //reach out to firebase and store it
-//헤더 바꾸기
- TriggerTO({commit},toggleDate){
-commit('triggerToggle',toggleDate)
-}, 
+  actions: { 
+    //헤더 바꾸기
+    TriggerTO({commit},toggleDate){
+    commit('triggerToggle',toggleDate)
+    }, 
 
-    //롤 바꾸기
-_roles({commit},login_role){
-commit('roles',login_role)
+        //롤 바꾸기
+    _roles({commit},login_role){
+    commit('roles',login_role)
 
-},
+    },
 
-//로그인 시도
-login({state,commit},loginobj){
-  localStorage.setItem("role",state.role)
-  let role = localStorage.getItem("role")
-  
-  //전체 유저에서 해당 이메일로 유저를 찾는다.
-  //그 유저의 비밀번호와 입력된 비빌번호를 비교한다.
-  Axios.post(`${baseURL}/signin`+role,loginobj) 
-  .then(res => { 
-    console.log(res.config.data)
-    if(res.data.userEmail != null){
-      console.log(res.data.userEmail)
-      localStorage.setItem("email",loginobj.email)
-         
-         
-         commit('loginSuccess',res.data)
-         router.push({name:'uMyPage'})
-          //로그인 성공 시 마이페이지로 이동시켜 줌
-         }
-         else if(res.data.sitterEmail != null){
+    //로그인 시도
+    login({state,commit},loginobj){
+      localStorage.setItem("role",state.role)
+      let role = localStorage.getItem("role")
+      
+      //전체 유저에서 해당 이메일로 유저를 찾는다.
+      //그 유저의 비밀번호와 입력된 비빌번호를 비교한다.
+      Axios.post(`${baseURL}/signin`+role,loginobj) 
+      .then(res => { 
+        console.log(res.config.data)
+        if(res.data.userEmail != null){
+          console.log(res.data.userEmail)
           localStorage.setItem("email",loginobj.email)
-          commit('loginSuccess',res.data)
-          router.push({name:'sMyPage'})
-         }
-         else if(res.config.data[0] != null){
-          localStorage.setItem("email",loginobj.email)
-          commit('loginSuccess',res.config.data)
-          commit('triggerToggle',false)
-          router.push({name:'adminHome'})
-         }
-         else{
-          commit('loginError')
-         }
-       }) 
-       .catch(error => { 
-         console.log(error)
-         commit('loginError')
-       })
+            
+            
+            commit('loginSuccess',res.data)
+            router.push({name:'uMyPage'})
+              //로그인 성공 시 마이페이지로 이동시켜 줌
+            }
+            else if(res.data.sitterEmail != null){
+              localStorage.setItem("email",loginobj.email)
+              commit('loginSuccess',res.data)
+              router.push({name:'sMyPage'})
+            }
+            else if(res.config.data[0] != null){
+              localStorage.setItem("email",loginobj.email)
+              commit('loginSuccess',res.config.data)
+              commit('triggerToggle',false)
+              router.push({name:'adminHome'})
+            }
+            else{
+              commit('loginError')
+            }
+          }) 
+          .catch(error => { 
+            console.log(error)
+            commit('loginError')
+          })
 
 
-},
-lsm({state,commit}){
-  let password = '1234'
-  let email =localStorage.getItem("email")
-  let role = localStorage.getItem("role")
-    if(role === 'Admin'){
-     commit('triggerToggle',false)
-    }
-  console.log(email)
-  if(email != null){
-  Axios.post(`${baseURL}/refresh`+role,{email,password}) 
-       .then(res => { 
-         console.log(res.data)
-         
-         commit('loginSuccess',res.data)
-         commit('roles',role)
-       }) 
-       .catch(error => { 
-         console.log(error)
-         commit('loginError')
-       })
+    },
+    lsm({state,commit}){
+      let password = '1234'
+      let email =localStorage.getItem("email")
+      let role = localStorage.getItem("role")
+        if(role === 'Admin'){
+        commit('triggerToggle',false)
+        }
+      console.log(email)
+      if(email != null){
+      Axios.post(`${baseURL}/refresh`+role,{email,password}) 
+          .then(res => { 
+            console.log(res.data)
+            
+            commit('loginSuccess',res.data)
+            commit('roles',role)
+          }) 
+          .catch(error => { 
+            console.log(error)
+            commit('loginError')
+          })
+          }
+    },
+    logout({commit}){//$store.dispatch('logout')으로 접근할 수 있음
+    commit('logout')
+    commit('triggerToggle',true)
+    router.push({name:'home'})
+    },
+
+    //payload 에서 필요한 부분만 넘기기
+    createReservation({commit}, payload) {
+      const reserve = {
+        usersPets: payload.usersPets,
+        date: payload.date,
+        startTime: payload.startTime,
+        endTime: payload.endTime,
+        description: payload.description,
+        userNo: payload.userNo
       }
-},
-logout({commit}){//$store.dispatch('logout')으로 접근할 수 있음
- commit('logout')
- commit('triggerToggle',true)
- router.push({name:'home'})
-}
-
-    ,
+      commit('createReservation', reserve)
+    }
 
   },
   getters: {
@@ -170,6 +195,16 @@ logout({commit}){//$store.dispatch('logout')으로 접근할 수 있음
 
     featuredPics(state, getters) {   //메인에 걸 사진들만 
       return getters.mainPics.slice(0,5)
+    },
+
+    loadedReserve (state) {
+      return (paymentNo) => {
+        return state.reservationList.find((reservation => {
+          return reservation.userNo === paymentNo
+        }))
+      }
     }
+
+    
   }
 })

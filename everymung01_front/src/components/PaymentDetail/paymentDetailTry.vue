@@ -3,8 +3,9 @@
         <v-card
             class="mx-auto"
             max-width="344"
+            v-for="loadedReserve in loadedReserve"
+            :key="loadedReserve.userNo"
         >
-        
             <v-card-text>
 
             <p class="headline text--primary">예약 정보 확인</p>
@@ -15,7 +16,7 @@
 
                 </v-col>
                 <v-col>
-                    <p>{{paymentObj.petName}}</p>
+                    <p>{{loadedReserve.usersPets}}</p>
                 </v-col>
             </v-row>
             <v-row justify="center">
@@ -24,7 +25,7 @@
 
                 </v-col>
                 <v-col>
-                    <p>{{paymentObj.startTime | formatDate}}</p>
+                    <p>{{loadedReserve.startTime}}</p>
                 </v-col>
             </v-row>
             <v-row justify="center">
@@ -32,27 +33,21 @@
                     <p class="text--primary">예약 시간</p>
 
                 </v-col>
-                <v-col>
-                    <p>{{paymentObj.startTime | formatTime}} - {{paymentObj.endTime | formatTime}}</p>
-                </v-col>
+               
             </v-row>
             <v-row justify="center">
                 <v-col>
                     <p class="text--primary">방문 주소</p>
 
                 </v-col>
-                <v-col>
-                    <p>{{paymentObj.userAddress}}</p>
-                </v-col>
+
             </v-row>
             <v-row justify="center">
                 <v-col>
                     <p class="text--primary">펫시터</p>
 
                 </v-col>
-                <v-col>
-                    <p>{{paymentObj.sitterName}}</p>
-                </v-col>
+
             </v-row>
             <v-row justify="center">
                 <v-col>
@@ -60,7 +55,7 @@
 
                 </v-col>
                 <v-col>
-                    <p>{{this.paymentObj.request}}</p>
+                    <p>{{this.loadedReserve.description}}</p>
                 </v-col>
             </v-row>
 

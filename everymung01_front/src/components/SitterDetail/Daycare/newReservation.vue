@@ -10,13 +10,13 @@
                 <v-row justify="center">
                     <v-col cols="12" sm="10">
                         <v-select
-                            v-model="reservation.pets"
+                            v-model="usersPets"
                             :items="pets"
                             attach
                             chips
                             label="반려동물 선택"
                             multiple
-                            id="choosePet"
+                            id="usersPets"
                         ></v-select>
                     </v-col>
                 </v-row>
@@ -48,14 +48,16 @@
                         <v-select
                             :items="time"
                             label="체크인 시간"
-                            v-model="reservation.startTime"
+                            v-model="startTime"
+                            id="starTime"
                         ></v-select>
                     </v-col>
                     <v-col cols="5">
                         <v-select
                             :items="time"
                             label="체크아웃 시간"
-                            v-model="reservation.endTime"
+                            v-model="endTime"
+                            id="endTime"
                         ></v-select>
                     </v-col>
                 </v-row>
@@ -66,7 +68,7 @@
                         name="description"
                         label="Description"
                         id="description"
-                        v-model="reservation.description"
+                        v-model="description"
                         >   
                         </v-textarea>
                     </v-col>
@@ -75,7 +77,7 @@
                 
                 <v-row justify="center" class="mb-5">
                     <v-btn 
-                    
+                    :disabled="!formIsValid"
                     type="submit"
                     >예약하기</v-btn>
                 </v-row>
@@ -121,15 +123,19 @@ export default {
     return {
         sitterInfo: [],
         date: dt.toISOString().substr(0, 10), 
-        value: '',
-        description: '',
         menu: false,
         modal: false,
         menu1: false,
         menu2: false,
         timeStep: '00:00',
-        pets: ['Foo', 'Bar', 'Fizz', 'Buzz'],
         time: ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'],
+        pets: ['Foo', 'Bar', 'Fizz', 'Buzz'],
+        
+        userPets: [],
+        description: '',
+        startTime: '',
+        endTime: '',
+        
         price: [ 
             {
                 size: '소형견',
@@ -144,6 +150,8 @@ export default {
                 cost: '7,000'
             }
         ],
+        
+        
         reservation: {
             pets: '',
             date: '',
@@ -171,34 +179,44 @@ export default {
             size: ''
 
         }
-
+        
+        
     }
   },
   created() {
       eventBus.$on('sitterObj', (sitterObj) => {
         //   console.log(sitterObj)
           this.sitterInfo = sitterObj
-      }) 
+      })
+      
   },
   computed: {
     formIsValid() {
-      return this.choosePet !== '' && this.description !== ''
+      return this.description !== '' && this.userPets !== '' && this.startTime !== '' && this.endTime !== ''
     },
     minutesToZero(dt) {
         return (dt.getMinutes() < 10 ? '0 ' : '') + (dt.getMinutes() < 10 ? '0 ' : '')
     },
 
-    ...mapState(["isLogin","userInfo"])
+    ...mapState(["isLogin","userInfo"]),
    
 
   },
   methods: {
     onNewReservation() {
-    //   if (!this.formIsValid) {
-    //     return
-    //   }
+
+        const reserveData = {
+            userPets: this.usersPets,
+            date: this.date,
+            startTime: this.date + " "+ this.startTime,
+            endTime: this.date + " "+ this.endTime,
+            description: this.description,
+            userNo: this.userInfo.userNo
+        }
+        this.$store.dispatch('createReservation', reserveData)
 
         //넘길 객체에 펫 정보 추가
+
         this.reservation.date = this.date
         this.paymentVO.userName = this.userInfo.userName
         this.paymentVO.userAddress = this.userInfo.userAddress
@@ -211,9 +229,12 @@ export default {
         this.paymentVO.sitterPhone = this.sitterInfo.sitterPhone,
         this.paymentVO.sitterAddress = this.sitterInfo.sitterAddress,
 
-        this.$router.push('/paymentinfo/${userNo}') //예약확인 페이지로 수정 필요
+        this.$router.push(`/paymentinfo/${this.userInfo.userNo}`) //예약확인 페이지로 수정 필요
+        
 
     },
+
+    
 
     allowedStep: m => m % 0 === 0
 
