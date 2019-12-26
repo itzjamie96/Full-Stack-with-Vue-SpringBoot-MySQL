@@ -1,18 +1,10 @@
 package org.salem.domain.controller;
-
-import java.util.List;
-
 import org.salem.domain.Mapper.UsersMapper;
 import org.salem.domain.vo.LoginVO;
 import org.salem.domain.vo.UsersVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -23,7 +15,7 @@ public class UsersController {
 	@Autowired
 	UsersMapper mapper;
 	
-	@PostMapping("signin") //일반유저 로그인
+	@PostMapping("signinUser") //일반유저 로그인
 	public UsersVO signin(@RequestBody LoginVO vo) {
 		UsersVO user =mapper.showUserDetail(vo.getEmail());
 		System.out.println(user);
@@ -33,7 +25,8 @@ public class UsersController {
 		return new UsersVO();}
 		
 	}
-	@PostMapping("refresh")//새로고침
+	
+	@PostMapping("refreshUser")//새로고침
 	public UsersVO refreshE(@RequestBody LoginVO vo) {
 		
 		System.out.println(vo);
@@ -41,6 +34,7 @@ public class UsersController {
 		
 		
 	}
+	
 	@PostMapping("signup")//일반 유저 회원가입
 	public String signup(@RequestBody UsersVO vo) {
 		String msg="";

@@ -3,6 +3,24 @@
     <v-container fill-height style="max-width:450px;">
         <v-layout align-center row wrap>
             <v-flex xs12>
+              <v-btn-toggle
+              v-model="$store.state.role"
+          tile
+          color="deep-purple accent-3"
+          group
+        >
+          <v-btn @click="_roles('User')" value="User">
+            일반
+          </v-btn>
+
+          <v-btn @click="_roles('Sitter')" value="Sitter">
+            시터
+          </v-btn>
+
+          <v-btn @click="_roles('Admin')" value="Admin">
+            운영자
+          </v-btn>
+        </v-btn-toggle>
                 <v-alert
                 :value="isLoginError"
                 type="error"
@@ -87,12 +105,16 @@
     <div class="pa-3">
                 <v-text-field
                 v-model="email"
+                :rules="emailRules"
             label="이메일 입력"
+            required
           ></v-text-field>
                 <v-text-field
                 v-model="password"
                 type="password"
+                :rules="passwordRules"
             label="패스워드 입력"
+            required
           ></v-text-field>
           <v-btn
           depressed 
@@ -135,11 +157,19 @@
 </template>
 
 <script>
+// 이걸 가져다 써야 로그인 연동이 된다 
 import {mapState,mapActions} from "vuex"
 import axios from "axios"
 export default {
     data() {
         return {
+          passwordRules: [
+        v => !!v || 'E-mail is required'
+      ],
+          emailRules: [
+        v => !!v || 'E-mail is required',
+        v => /.+@.+/.test(v) || 'E-mail must be valid',
+      ],
           email:'',
           password:'',
           dialogId:false,
@@ -148,10 +178,11 @@ export default {
         }
     },
     computed: {
-        ...mapState(["isLogin","userInfo","isLoginError"])
+        ...mapState(["isLogin","userInfo","isLoginError","role"]),
+    
     },
     methods:{
-        ...mapActions(['login']),
+        ...mapActions(['login','_roles']),
         id(){
            this.dialogId=true
         },

@@ -16,6 +16,7 @@
                             chips
                             label="반려동물 선택"
                             multiple
+                            id="choosePet"
                         ></v-select>
                     </v-col>
                 </v-row>
@@ -181,8 +182,7 @@ export default {
   },
   computed: {
     formIsValid() {
-      return this.title !== '' && this.location !== ''
-      && this.imageUrl !=='' && this.description !== ''
+      return this.choosePet !== '' && this.description !== ''
     },
     minutesToZero(dt) {
         return (dt.getMinutes() < 10 ? '0 ' : '') + (dt.getMinutes() < 10 ? '0 ' : '')

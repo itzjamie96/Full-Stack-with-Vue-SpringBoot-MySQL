@@ -88,7 +88,7 @@ export default {
       menuItems: [
         {title: '하루 시터', link: '/daysitters'},
         {title: '위탁 시터', link: '/homesitters/'},
-        {title: '펫시터 지원', link: '/sitters/'},
+        {title: '펫시터 지원', link: '/sitterSignUp'},
         {title: '문의하기', link: '/board'},
       ]
     }

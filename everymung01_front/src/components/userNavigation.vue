@@ -1,8 +1,6 @@
 <template>
-    <v-card height="100%">
+    <div height="100%">
         <v-navigation-drawer
-          absolute
-          permanent
           left
           width="300px"
       >
@@ -40,7 +38,7 @@
           </v-list-item>
         </v-list>
       </v-navigation-drawer>
-  </v-card>
+  </div>
 
 </template>
 
@@ -51,7 +49,7 @@ import {mapState,mapActions} from "vuex"
     data () {
       return {
         items: [
-          { title: '예약내역', icon: 'mdi-home-city', link: '/reservation' },
+          { title: '예약내역', icon: 'mdi-home-city', link: '/uMyPage/userReservationList' },
           { title: '실시간 케어 보기', icon: 'mdi-account' , link: '/reservation'},
           { title: '반려견 정보관리', icon: 'mdi-account' , link: '/reservation'},
           { title: '계정관리', icon: 'mdi-account-group-outline' , link: '/reservation'},
