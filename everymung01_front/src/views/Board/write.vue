@@ -31,7 +31,8 @@ export default {
     data(){
         return{
             
-            BoardVO: {                
+            BoardVO: {   
+                boardNo:'',             
                 title:'', 
                 content:'',
                 userName:'',
@@ -51,6 +52,7 @@ export default {
         // 저장하기(DB_INSERT)(C)
         add(){
           //### 
+          this.BoardVO.boardNo= 
           console.log("add()_this.userInfo.userNo="+this.userInfo.userNo)
           this.BoardVO.userNo = this.userInfo.userNo
           this.BoardVO.boardDate = new Date() // DB와 데이터타입을 맞춰줘야돼서 Date() 
@@ -72,11 +74,13 @@ export default {
             axios.post ('http://localhost:1234/add',this.BoardVO) // 여기선 객체 던져주는 식이네 
            .then( res =>{
              this.BoardVO = res.data             
-           }),  
-          // 입력칸 제출후 깨끗하게 만드는 기능코드 
-          this.BoardVO = this.default 
-          //### 전체조회하기 
-          router.push({name:'Board'})
+           }), 
+
+          // // 입력칸 제출후 깨끗하게 만드는 기능코드 
+          // this.BoardVO = this.default 
+
+          //### 리로딩 
+          router.push({name:'Board'})   
         },
     },//### userInfo를 받아와서 
       computed: {

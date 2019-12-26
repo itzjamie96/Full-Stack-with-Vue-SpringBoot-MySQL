@@ -13,17 +13,17 @@ import org.salem.domain.vo.BoardVO;
 public interface BoardMapper {
 	
 	//답글형으로 전체조회  (BOARD테이블에서 USER테이블의 userName컬럼을 갖다쓰기 위해서 JOIN + 답글형 조회 )  
-	@Select("SELECT * FROM board LEFT JOIN users ON board.userNo=users.userNo ORDER BY boardNo DESC, groupNo DESC, depth ASC")
+	@Select("SELECT * FROM board LEFT JOIN users ON board.userNo=users.userNo ORDER BY groupNo DESC, depth ASC")
 	public List<BoardVO> showAllBoards();
 
 	//원글_Insert
 	@Insert("insert into board(userNo,title,content,boardDate,groupNo,depth,hits)"
-			+ "values(#{userNo},#{title},#{content},CURRENT_TIMESTAMP,#{groupNo},#{depth},#{hits})")
+			+ "values(#{userNo},#{title},#{content},CURRENT_TIMESTAMP,boardSeq,#{depth},#{hits})")
 	public int insertBoard(BoardVO boardVo);
 	
-	//1.답글_Update => 답글 달려는 원글의 groupNo값을 식별값으로 바꿔주는 작업. 
-	@Update("UPDATE board SET groupno = #{boardNo} where boardNo=#{boardNo}")
-	public int updateGroupNo(int boardNo);
+//	//1.원글_Update => 답글 달려는 원글의 groupNo값을 식별값으로 바꿔주는 작업. 
+//	@Update("UPDATE board SET groupno = #{boardNo} where boardNo=#{boardNo}")
+//	public int updateGroupNo(BoardVO boardVo);
 	
 	//2.답글_Insert => 답글을 insert하는 작업으로, groupNo값에 #{boardNo}을 넣어줘서, 원글과 답글의 groupNo값을 갖게 해주기. 
 	@Insert("INSERT INTO board(userNo,title, content, boardDate, groupNo, depth, hits)"
@@ -33,7 +33,7 @@ public interface BoardMapper {
 	
 	//3.답글_Update => insert된 답글의 depth를 1증가시켜서 -> 답글형으로 정렬되도록 세팅  
 	@Update("UPDATE board SET depth=depth+1 WHERE groupNo=#{boardNo}")
-	public int updateReply(int groupNo);
+	public int updateReply(BoardVO boardVo);
 		// WHERE groupNo=#{groupNo} ===> 이해못함 
 	
 	//수정하기

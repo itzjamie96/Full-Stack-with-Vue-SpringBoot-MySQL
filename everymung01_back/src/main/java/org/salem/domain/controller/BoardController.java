@@ -39,7 +39,11 @@ public class BoardController {
 		System.out.println("=============================");
 		System.out.println(boardVo.toString());
 		System.out.println("=============================");		
-		System.out.println(mapper.insertBoard(boardVo));
+		System.out.println("Insert 작업"+mapper.insertBoard(boardVo)); // 성공
+		//groupNo에다가 boardNo값 update해줄 것! 
+		System.out.println("replyBoard.updateGroupNo==="+ mapper.updateGroupNo(boardVo));	// 실패
+		
+
 
 		
 	}
@@ -64,10 +68,10 @@ public class BoardController {
 	@PostMapping("/reply") 
 	public void replyBoard(@RequestBody BoardVO boardVo){
 		System.out.println("BoardController.replyBoard__start================");
-		System.out.println(boardVo);
-		System.out.println(mapper.updateGroupNo(boardVo.getBoardNo()));
-		System.out.println(mapper.insertReply(boardVo));;
-		System.out.println(mapper.updateReply(boardVo.getGroupNo()));
+		System.out.println("replyBoard.boardVo==="+boardVo);
+		
+		System.out.println("replyBoard.insertReply==="+mapper.insertReply(boardVo));
+		System.out.println("replyBoard.updateReply==="+mapper.updateReply(boardVo));
 		
 	}
 }

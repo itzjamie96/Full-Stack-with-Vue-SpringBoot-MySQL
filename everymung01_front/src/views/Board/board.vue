@@ -123,13 +123,13 @@ export default {
 
      // 답글달기
      BoardVO:{
+          boardNo: '',
           title:'',
           content:'',
           userNo: '',
-          boardDate: '',// DB와 데이터타입을 맞춰줘야돼서 Date() 
+          boardDate: '',
           userName: '',                  
-          hits:'',
-          //사용자 글쓰기(문의사항)        
+          hits:'',       
           depth:'',
           groupNo:'',
      },
@@ -190,9 +190,9 @@ export default {
             axios.get('http://localhost:1234/showAllBoards')
             .then( response =>(
             //@@@@@@@@@@@@@@@@@@@@@@@
-            this.rows = response.data,//table row로 보여질 객체에 DB에서 받은 데이터를 넣어줌   
+            this.rows = response.data//table row로 보여질 객체에 DB에서 받은 데이터를 넣어줌   
             //@@@@@@@@@@@@@@@@@@@@@@@
-            console.log("전체조회_"+this.rows)
+            //console.log("전체조회_"+this.rows)
             ))           
 
       },
@@ -201,6 +201,7 @@ export default {
           this.dialog=true
           // 비어있는 editedItem에다가 DB에서 SELECT한 결과값을 넣어줘야!
           this.editedItem.boardNo = params.row.boardNo
+          console.log("this.editedItem.boardNo ==="+this.editedItem.boardNo)
           this.editedItem.userNo = params.row.userNo
           this.editedItem.title = params.row.title
           this.editedItem.userName = params.row.userName
@@ -216,12 +217,12 @@ export default {
         // indicates selected or not
         // params.event - click event
 
-        console.log(params.pageIndex+"=== params.pageIndex")
+        //console.log(params.pageIndex+"=== params.pageIndex")
         //#####################################
         this.editidItemIndex = params.pageIndex  // params.pageIndex를 알아채기 전까지 엄청 뻘짓했음.. ㅂㄷㅂㄷ;
       //#####################################
 
-        console.log(this.editidItemIndex+"=== editidItemIndex")
+        //console.log(this.editidItemIndex+"=== editidItemIndex")
       },
 
       // 수정하기(U)
@@ -251,24 +252,24 @@ export default {
           alert("수정이 완료되었습니다.")
           this.dialog=false
           //### 전체조회하기 
-          history.go(0) 
+         // history.go(0) 
       },
 
       // 삭제하기(D)
       dele(){
 
-        if(this.editedItem.userNo !== this.userInfo.userNo){
-            alert("다른 회원의 글은 삭제할 수 없습니다.")
-            this.dialog=false
-            return false //밑으로 안내려가고 여기서 함수 종료시켜버림.
+        // if(this.editedItem.userNo !== this.userInfo.userNo){
+        //     alert("다른 회원의 글은 삭제할 수 없습니다.")
+        //     this.dialog=false
+        //     return false //밑으로 안내려가고 여기서 함수 종료시켜버림.
 
-            /* 이런 방법도 있네~        
-            <div v-if="isLogin===false" class="mt-3">
-              <v-btn text router :to="{name:'signup'}" exact>회원가입</v-btn>
-              <v-btn text router :to="{name:'signin'}" exact>로그인</v-btn>
-            </div>
-            */
-        }
+        //     /* 이런 방법도 있네~        
+        //     <div v-if="isLogin===false" class="mt-3">
+        //       <v-btn text router :to="{name:'signup'}" exact>회원가입</v-btn>
+        //       <v-btn text router :to="{name:'signin'}" exact>로그인</v-btn>
+        //     </div>
+        //     */
+        // }
 
         console.log("삭제_this.editidItemIndex ="+this.editidItemIndex  )
         console.log("삭제_this.editedItem.boardNo ="+this.editedItem.boardNo)
@@ -277,20 +278,24 @@ export default {
         
         this.dialog=false
       },
-       reply(){
+       reply(BoardVO,editedItem){
           //### 
-          console.log("reply()_this.editedItem.title="+this.editedItem.title)
-          console.log("reply()_this.BoardVO.title="+this.BoardVO.title)
-
+          console.log("this.editedItem.boardNo ==="+this.editedItem.boardNo)
+          this.BoardVO.boardNo=this.editedItem.boardNo
+          console.log("boardNo 확인:"+this.BoardVO.boardNo)
           this.BoardVO.title=this.editedItem.title
           this.BoardVO.content=this.editedItem.content
           this.BoardVO.userNo = this.userInfo.userNo
           this.BoardVO.boardDate = new Date() // DB와 데이터타입을 맞춰줘야돼서 Date() 
           this.BoardVO.userName = this.userInfo.userName                     
-          this.BoardVO.hits=0  
-          //사용자 글쓰기(문의사항)        
+          this.BoardVO.hits=0        
           this.BoardVO.depth=0
-          this.BoardVO.groupNo=this.BoardVO.boardNo
+          this.BoardVO.groupNo=this.editedItem.boardNo//back단에서 하려고했는데, front단에서 처리했음. 
+
+          console.log("reply()_this.editedItem.title="+this.editedItem.title)
+          console.log("reply()_this.BoardVO.title="+this.BoardVO.title)
+          console.log("reply()_this.BoardVO.boardNO="+this.BoardVO.boardNo)
+
           // if(this.BoardVO.depth==0){
           //   this.BoardVO.groupNo=0
           // }
@@ -299,11 +304,12 @@ export default {
             this.BoardVO.groupNo=boardNo가 넘어와야함
           }
           */
-            //BoardNo값을 안넣어서 보내면 스프링쪽에선 boardNo=0이라고 찍히더라. 
+          //BoardNo값을 안넣어서 보내면 스프링쪽에선 boardNo=0이라고 찍히더라. 
             
             axios.post ('http://localhost:1234/reply',this.BoardVO) // 여기선 객체 던져주는 식이네 
            .then( res =>{
-            
+            this.initialize
+
            })
   }
 }
