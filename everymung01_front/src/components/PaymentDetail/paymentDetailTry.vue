@@ -4,9 +4,12 @@
             class="mx-auto"
             max-width="344"
         >
-        
-            {{$store.state.reservationList[0].userNo}}
             <v-card-text>
+<!-- 
+                {{
+                   paymentVO.petDetailList.length     
+                }} -->
+                {{paymentVO}}
 
             <p class="headline text--primary">예약 정보 확인</p>
 
@@ -16,7 +19,7 @@
 
                 </v-col>
                 <v-col>
-                    <p>{{paymentObj.petName}}</p>
+                    <p>{{String(paymentVO.petDetailList)}}</p>
                 </v-col>
             </v-row>
             <v-row justify="center">
@@ -25,17 +28,17 @@
 
                 </v-col>
                 <v-col>
-                    <p>{{paymentObj.startTime | formatDate}}</p>
+                   <p>{{paymentVO.paymentDate}}</p>
                 </v-col>
             </v-row>
             <v-row justify="center">
                 <v-col>
                     <p class="text--primary">예약 시간</p>
-
                 </v-col>
                 <v-col>
-                    <p>{{paymentObj.startTime | formatTime}} - {{paymentObj.endTime | formatTime}}</p>
+                    <p>{{paymentVO.startTime| formatTime}} - {{paymentVO.endTime| formatTime}}</p>
                 </v-col>
+               
             </v-row>
             <v-row justify="center">
                 <v-col>
@@ -43,25 +46,25 @@
 
                 </v-col>
                 <v-col>
-                    <p>{{paymentObj.userAddress}}</p>
+                    <p>{{paymentVO.userAddress}}</p>
                 </v-col>
+
             </v-row>
             <v-row justify="center">
                 <v-col>
                     <p class="text--primary">펫시터</p>
-
                 </v-col>
                 <v-col>
-                    <p>{{paymentObj.sitterName}}</p>
+                    <p>{{paymentVO.sitterName}}</p>
                 </v-col>
+
             </v-row>
             <v-row justify="center">
                 <v-col>
                     <p class="text--primary">요청사항</p>
-
                 </v-col>
                 <v-col>
-                    <p>{{this.paymentObj.request}}</p>
+                   <p>{{paymentVO.request}}</p>
                 </v-col>
             </v-row>
 
@@ -73,44 +76,14 @@
 
 <script>
 import Axios from 'axios'
+import {mapState,mapActions,mapGetters} from "vuex"
 
 export default {
-
-   data() {
-       return {
-       }
-   },
-
-   created() {
-       this.initialize()
-
-   },
-
    computed: {
-       paymentNo() {
-           return this.$route.params.paymentNo
-       },
-
-
-   },
-   methods: {
-       initialize() {
-            this.paymentVO = this.$route.params.paymentVO;
-            console.log(this.paymentVO)
-            console.log(this.$route.params.paymentVO)
        
-            // this.paymentObj.request = this.paymentVO.request
-            console.log('request')
-            console.log(this.paymentObj.request)
-                
+       paymentVO() {
+           return this.$store.state.reservationList[0]
        },
-       
-       parseDate() {
-           const date = paymentObj.startTime
-            
-
-       }
-
 
    }
 }

@@ -15,7 +15,6 @@
                 v-for="meetups in meetups"
                 :src="meetups.imageUrl" 
                 :key="meetups.id"
-                @click="onLoadMeetup(meetups.id)"
             ></v-carousel-item>
         </v-carousel>         
     </div>
@@ -41,7 +40,7 @@ export default {
        },
       
         meetups() {
-            return this.$store.getters.featuredMeetups
+            return this.$store.getters.featuredPics
     }
    },
    methods: {
