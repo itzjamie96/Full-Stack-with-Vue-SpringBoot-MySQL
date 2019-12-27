@@ -1,15 +1,12 @@
 package org.salem.domain.controller;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.salem.domain.Mapper.SitterMapper;
 import org.salem.domain.file.FileResponse;
 import org.salem.domain.file.StorageService;
 import org.salem.domain.vo.LoginVO;
 import org.salem.domain.vo.SitterVO;
-import org.salem.domain.vo.UsersVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;

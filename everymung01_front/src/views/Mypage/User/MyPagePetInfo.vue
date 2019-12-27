@@ -35,6 +35,7 @@
 
 
 <script>
+import{ mapState } from 'vuex'
 import axios from 'axios'
 
 
@@ -53,9 +54,10 @@ export default {
        this.init()
    },
    methods:{
+       ...mapState(['userInfo']),
 
        init(){
-           axios.get('http://localhost:1234/showAllpets/2') // 2=> 로그인 하면서 userNo 가 들어오면 동적으로 변수 바인딩 해줘야 한다. 
+           axios.get(`http://localhost:1234/showAllpets/${this.userInfo.userNo}`) // 2=> 로그인 하면서 userNo 가 들어오면 동적으로 변수 바인딩 해줘야 한다. 
            .then(response => {
                this.userPetList = response.data
                console.log(response.data)
