@@ -18,12 +18,12 @@ public class BoardController {
 
 	@Autowired
 	BoardMapper mapper;
-	
-	//@CrossOrigin(origins = "http://localhost:8080")
+
+	// @CrossOrigin(origins = "http://localhost:8080")
 	@GetMapping("showAllBoards")
-	public List<BoardVO> showAllBoards(){
+	public List<BoardVO> showAllBoards() {
 		System.out.println("BoardController.showAllBoards start================");
-		List<BoardVO> boardList = new ArrayList<BoardVO>();		
+		List<BoardVO> boardList = new ArrayList<BoardVO>();
 		boardList = mapper.showAllBoards();
 //		System.out.println("=============================");
 //		for (BoardVO bVO : boardList) {			
@@ -33,45 +33,48 @@ public class BoardController {
 		return boardList;
 
 	}
-	@PostMapping("/add") 
-	public void insertBoardOne(@RequestBody BoardVO boardVo){
+
+	@PostMapping("/add")
+	public void insertBoardOne(@RequestBody BoardVO boardVo) {
 		System.out.println("BoardController.insertBoardOne start================");
 		System.out.println("=============================");
 		System.out.println(boardVo.toString());
-		System.out.println("=============================");		
-		System.out.println("Insert 작업"+mapper.insertBoard(boardVo)); // 성공
-		//groupNo에다가 boardNo값 update해줄 것! 
-		System.out.println("replyBoard.updateGroupNo==="+ mapper.updateGroupNo(boardVo));	// 실패
-		
+		System.out.println("=============================");
+		System.out.println("Insert 작업" + mapper.insertBoard(boardVo)); // 성공
+		// groupNo에다가 boardNo값 update해줄 것!
+		// System.out.println("replyBoard.updateGroupNo==="+
+		// mapper.updateGroupNo(boardVo)); // 실패
 
-
-		
 	}
-	@PostMapping("/update") 
-	public void updateBoard(@RequestBody BoardVO boardVo){	// ?? 
+
+	@PostMapping("/update")
+	public void updateBoard(@RequestBody BoardVO boardVo) { // ??
 		System.out.println("BoardController.updateBoard_Start==================");
 		System.out.println("=============================");
 		System.out.println(boardVo);
-		System.out.println(mapper.updateBoard(boardVo));	// ?? 
+		System.out.println(mapper.updateBoard(boardVo)); // ??
 		System.out.println("=============================");
 		System.out.println(mapper.showAllBoards());
-		
+
 	}
+
 	@GetMapping("/delete/{boardNo}") // {id}
-	public void deleteBoard(@PathVariable int boardNo) { // URI의 일부를 변수로 전달할 수 있다 //String id = "id" // @PathVariable int boardNo
-		System.out.println("delete()_"+boardNo+"번");
+	public void deleteBoard(@PathVariable int boardNo) { // URI의 일부를 변수로 전달할 수 있다 //String id = "id" // @PathVariable
+															// int boardNo
+		System.out.println("delete()_" + boardNo + "번");
 		System.out.println(mapper.deleteBoard(boardNo));
 		System.out.println(mapper.showAllBoards());
 	}
-	
-	//답글달기 
+
+	// 답글달기
 	@PostMapping("/reply") 
-	public void replyBoard(@RequestBody BoardVO boardVo){
-		System.out.println("BoardController.replyBoard__start================");
+	public void replyBoard1(@RequestBody BoardVO boardVo){
+		System.out.println("BoardController.replyBoard1__start================");
 		System.out.println("replyBoard.boardVo==="+boardVo);
 		
 		System.out.println("replyBoard.insertReply==="+mapper.insertReply(boardVo));
-		System.out.println("replyBoard.updateReply==="+mapper.updateReply(boardVo));
-		
+		System.out.println(mapper.showAllBoards()); // ### depth값 넘겨주기 위함 ###. 앞단에서 if(depth==1){RE] + 제목} 이런식으로 해주기 위해서 
 	}
+
+
 }

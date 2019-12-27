@@ -27,7 +27,17 @@
         pageLabel: 'page', // for 'pages' mode
         allLabel: 'All',
   }"
->  </vue-good-table>
+  
+>  
+  <template slot="table-row" slot-scope="props">
+    <span v-if="props.column.depth == 'age'">
+      <span style="font-weight: bold; color: blue;">{{props.row.age}}</span> 
+    </span>
+    <span v-else>
+      {{props.formattedRow[props.column.field]}}
+    </span>
+  </template>
+</vue-good-table>
 
     <!--  v-on="greet()" 이렇게 하면 새로고침만 해도 greet()가 실행되고, 클릭만 해도 실행되고, 뭘 해도 다 실행되는 느낌?;;  -->
 
@@ -161,6 +171,13 @@ export default {
           //  dateOutputFormat: 'yy-MM-dd',
        }, // MMM Do yy
 
+      //백단에서 select문을 통해 받아온 title값을 자바스크립트로 함수로 답글형 제목으로 변경시키기 위한 첫 단계가 depth값 hidden으로 가져오기!  
+       { 
+          label: 'depth',
+          field: 'depth',
+          hidden: true,
+       },
+
      ],
      // 전체조회 테이블의 행
      rows: [
@@ -181,7 +198,7 @@ export default {
   },
   // 첫 전체 조회 화면_자동으로 뜨게 하기!
   created(){ //현재 컴포넌트가 생성되자 마자 initialize를 수행하라는 의미
-        this.initialize()
+        this.initialize()   
   },
 
   methods: {
@@ -280,9 +297,9 @@ export default {
       },
        reply(BoardVO,editedItem){
           //### 
-          console.log("this.editedItem.boardNo ==="+this.editedItem.boardNo)
+          // console.log("this.editedItem.boardNo ==="+this.editedItem.boardNo)
           this.BoardVO.boardNo=this.editedItem.boardNo
-          console.log("boardNo 확인:"+this.BoardVO.boardNo)
+          // console.log("boardNo 확인:"+this.BoardVO.boardNo)
           this.BoardVO.title=this.editedItem.title
           this.BoardVO.content=this.editedItem.content
           this.BoardVO.userNo = this.userInfo.userNo
@@ -292,9 +309,9 @@ export default {
           this.BoardVO.depth=0
           this.BoardVO.groupNo=this.editedItem.boardNo//back단에서 하려고했는데, front단에서 처리했음. 
 
-          console.log("reply()_this.editedItem.title="+this.editedItem.title)
-          console.log("reply()_this.BoardVO.title="+this.BoardVO.title)
-          console.log("reply()_this.BoardVO.boardNO="+this.BoardVO.boardNo)
+          // console.log("reply()_this.editedItem.title="+this.editedItem.title)
+          // console.log("reply()_this.BoardVO.title="+this.BoardVO.title)
+          // console.log("reply()_this.BoardVO.boardNO="+this.BoardVO.boardNo)
 
           // if(this.BoardVO.depth==0){
           //   this.BoardVO.groupNo=0
@@ -308,10 +325,11 @@ export default {
             
             axios.post ('http://localhost:1234/reply',this.BoardVO) // 여기선 객체 던져주는 식이네 
            .then( res =>{
-            this.initialize
-
+                this.BoardVO = res.data
+                console.log(this.BoardVO)
            })
-  }
+  },
+
 }
 }
 </script>

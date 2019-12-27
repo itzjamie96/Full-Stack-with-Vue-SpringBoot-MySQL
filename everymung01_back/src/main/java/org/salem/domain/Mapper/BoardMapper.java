@@ -18,7 +18,7 @@ public interface BoardMapper {
 
 	//원글_Insert
 	@Insert("insert into board(userNo,title,content,boardDate,groupNo,depth,hits)"
-			+ "values(#{userNo},#{title},#{content},CURRENT_TIMESTAMP,boardSeq,#{depth},#{hits})")
+			+ "values(#{userNo},#{title},#{content},CURRENT_TIMESTAMP, get_seq('groupNoSeq'),0,0)")
 	public int insertBoard(BoardVO boardVo);
 	
 //	//1.원글_Update => 답글 달려는 원글의 groupNo값을 식별값으로 바꿔주는 작업. 
@@ -27,14 +27,15 @@ public interface BoardMapper {
 	
 	//2.답글_Insert => 답글을 insert하는 작업으로, groupNo값에 #{boardNo}을 넣어줘서, 원글과 답글의 groupNo값을 갖게 해주기. 
 	@Insert("INSERT INTO board(userNo,title, content, boardDate, groupNo, depth, hits)"
-			+ "VALUES( #{userNo}, #{title}, #{content}, CURRENT_TIMESTAMP, #{boardNo}, #{depth}, 0)")
+			+ "VALUES( #{userNo}, #{title}, #{content}, CURRENT_TIMESTAMP, get_seq('groupNoSeq')-1, 1, 0)") // depth에 '1'로 하드코딩함. 
 	public int insertReply(BoardVO boardVo);
 		// VALUES()에 #{groupNo}를 넣어놨던데, #{baordNo}를 넣어야할지 말지 매우 헷갈림 
 	
-	//3.답글_Update => insert된 답글의 depth를 1증가시켜서 -> 답글형으로 정렬되도록 세팅  
-	@Update("UPDATE board SET depth=depth+1 WHERE groupNo=#{boardNo}")
-	public int updateReply(BoardVO boardVo);
-		// WHERE groupNo=#{groupNo} ===> 이해못함 
+//	//3.답글_Update => insert된 답글의 depth를 1증가시켜서 -> 답글형으로 정렬되도록 세팅  
+//	//update_계속 실패중 
+//	@Update("UPDATE board SET depth=depth+1 WHERE groupNo=#{groupNo}") //### WHERE groupNo=#{groupNo}  ===> 여기서 막힘.
+//	public int updateReply(BoardVO boardVo);
+//		// WHERE groupNo=#{groupNo} ===> 이해못함 
 	
 	//수정하기
 	@Update("Update board set title=#{title},content=#{content} where boardNo=#{boardNo}")
