@@ -201,7 +201,7 @@ export default {
         onNewReservation() {
 
         const reserveData = {
-            petDetailList: this.usersPets,
+            // petDetailList: this.usersPets,  //List<PetInfo> 형태로 넘어갸아함.
             paymentDate: this.date,
             startTime: this.date + " "+ this.startTime,
             endTime: this.date + " "+ this.endTime,
