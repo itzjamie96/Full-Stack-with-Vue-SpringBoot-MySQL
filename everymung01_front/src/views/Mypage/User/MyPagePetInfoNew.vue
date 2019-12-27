@@ -1,25 +1,32 @@
 <template>
-<div >
- <form enctype="multipart/form-data" method="post"> 
-     
-     <!-- <div>
-        <v-row justify="center" class="file-upload-form">
-           <v-col cols="3">
-               <div  class="image-preview" >
-                <img src="previewImageData"  class="preview"  />
-                </div><br><br>
-                 <input type="file" 
-                  accept="image/*"
-                  @change="previewImage">
-        <button @click="imageUpload" >사진추가</button> 
-            </v-col>
-         </v-row >
-      </div> -->
-      <!-- 반려견 사진 -->
+<v-container fluid="">
+   <v-row class="fill-height">
+      <v-col cols="3">
+          <side-bar/>   
+      </v-col>
+
+      <v-col cols="9">
+         <v-card>
+      <form>
+         
+         <!-- <div>
+            <v-row justify="center" class="file-upload-form">
+               <v-col cols="3">
+                     <div  class="image-preview" >
+                     <img src="previewImageData"  class="preview"  />
+                     </div><br><br>
+                     <input type="file" 
+                        accept="image/*"
+                        @change="previewImage">
+            <button @click="imageUpload" >사진추가</button> 
+                  </v-col>
+               </v-row >
+            </div> -->
+            <!-- 반려견 사진 -->
     <div>
        <v-row justify="center">
-          <v-col cols="3" >
-       <div class="file-upload-form" >
+          <v-col cols="3" > 
+            <div class="file-upload-form" >
                 반려견 사진 추가 :
                 <input 
                 type="file" 
@@ -27,66 +34,69 @@
                 accept="image/*">
             </div>
             <div class="image-preview" v-if="imageData.length > 0">
-                <img  class="preview" :src="imageData" >
+                <img  class="preview" :src="imageData">
             </div>
             </v-col>
          </v-row>   
         </div>
+
     <!-- 반려견 이름 text-field -->
     <v-row justify="center">
-      <v-col cols="3"> 
+      <v-col cols="5"> 
          <v-text-field
          v-model="userPetVo.petName"
          :counter="15"
          :rules="nameRules"
          label="반려견이름"
          required
-    ></v-text-field>
+         ></v-text-field>
       </v-col>
-    </v-row>
 
-    <!-- 반려견 견종 정보  -->
-       <v-row justify="center">
-        <v-col cols="3">
+      <v-col cols="1"></v-col>
+      
+      <!-- 반려견 견종 정보  -->
+      <v-col cols="5">
          <v-select
           v-model="userPetVo.dogBreed"
           :items="tempBreed"
           label="견종"
         >
         </v-select>
-        </v-col>
+        {{userPetVo.dogBreed}}
+      </v-col>
     </v-row>
-    {{userPetVo.dogBreed}}
     
+    <!-- row2  -->
     <!-- 반려견 생일(Age)  -->
     <v-row justify="center">
-       <v-col cols="3">
-      <v-menu
-        v-model="menu2"
-        :close-on-content-click="false"
-        :nudge-right="40"
-        transition="scale-transition"
-        offset-y
-        min-width="290px"
-        requried
-      >
-        <template v-slot:activator="{ on }">
-          <v-text-field
-            v-model="tempAge"
-            label="생년월일"
-            readonly
-            v-on="on"
-          ></v-text-field>
-        </template>
-        <v-date-picker v-model="tempAge" @input="menu2 = false"></v-date-picker>
-      </v-menu>
-    </v-col>
-    </v-row>
+       <v-col cols="5">
+         <v-menu
+         v-model="menu2"
+         :close-on-content-click="false"
+         :nudge-right="40"
+         transition="scale-transition"
+         offset-y
+         min-width="290px"
+         requried
+         >
+         <template v-slot:activator="{ on }">
+            <v-text-field
+               v-model="tempAge"
+               label="생년월일"
+               readonly
+               v-on="on"
+            ></v-text-field>
+         </template>
+         <v-date-picker v-model="tempAge" @input="menu2 = false"></v-date-picker>
+         </v-menu>
     {{tempAge}}
-    
+    </v-col>
+
+   <v-col cols="1"></v-col>
+
     <!-- 반려견 체중  -->
-    <v-row justify="center">
-       <v-col cols="3">
+
+       <v-col cols="5">
           <v-text-field
            v-model="userPetVo.petWeight"
            label="반려견체중"
@@ -95,31 +105,35 @@
           </v-text-field>
        </v-col>
     </v-row>
-        
+    
+  
+    <!-- row3  -->
     <!-- 반려견 성별 라디오버튼  -->
     <v-row justify="center">
-       <v-col cols="3" >
+       <v-col cols="5" >
           <p> 성별 </p> 
           <v-radio-group v-model="userPetVo.petGender" row>
           <v-radio label="수컷" value="1"></v-radio>
           <v-radio label="암컷" value="0"></v-radio>
          </v-radio-group>
        </v-col>
-    </v-row>
+
+       <v-col cols="1"></v-col>
+        
         <!-- 반려견 중성화 여부 라디오버튼 -->
-    <v-row justify="center">
-       <v-col cols="3">
-          <p> 중성화 여부  </p> 
-          <v-radio-group v-model="userPetVo.neutralization" row>
-          <v-radio label="YES" value="true"></v-radio>
-          <v-radio label="NO" value="false"></v-radio>
-          </v-radio-group>
-       </v-col>
+         <v-col cols="5">
+            <p> 중성화 여부  </p> 
+            <v-radio-group v-model="userPetVo.neutralization" row>
+            <v-radio label="YES" value="true"></v-radio>
+            <v-radio label="NO" value="false"></v-radio>
+            </v-radio-group>
+         </v-col>
     </v-row>
 
+
     <!-- 반려견 답변 1 -->
-    <v-row justify="center">
-       <v-col cols="3">
+    <v-row justify="center" class="ml-12">
+       <v-col cols="5">
           <p> Q. 반려동물 등록을 하였습니까?(필수)  </p> 
         <v-radio-group v-model="petAnswerOne" column>
          <v-radio label="내장형 무선식별장치 개체삽입" value="내장형 무선식별장치 개체삽입"></v-radio>
@@ -131,8 +145,8 @@
     </v-row>
      
     <!-- 반려견 답변 2-->
-    <v-row justify="center">
-       <v-col cols="3">
+    <v-row justify="center" class="ml-12">
+       <v-col cols="5">
           <p> Q. 다른 강아지와 친화적인가요?(필수)  </p>
         <v-radio-group v-model="petAnswerTwo" row>
          <v-radio label="YES" value="1"></v-radio>
@@ -142,8 +156,8 @@
     </v-row>
 
      <!-- 반려견 답변 3-->
-    <v-row justify="center">
-       <v-col cols="3">
+    <v-row justify="center" class="ml-12">
+       <v-col cols="5">
         <p> Q. 필수 예방 접종을 완료하셨나요?(필수)  </p>
         <v-radio-group v-model="petAnswerThree" row>
          <v-radio label="YES" value="1"></v-radio>
@@ -153,8 +167,8 @@
     </v-row>
     
      <!-- 반려견 답변 4-->
-    <v-row justify="center">
-       <v-col clos="12" sm="3">
+    <v-row justify="center" class="ml-12">
+       <v-col cols="5">
         <p>Q. 기타 참고사항 및 특이사항(선택)</p>
        <v-textarea
           filled
@@ -167,13 +181,18 @@
        </v-col>
     </v-row>
 
-    <v-row justify="center">
+    <v-row justify="center" class="ml-12">
        <v-col cols="3">
          <v-btn @click="saveUserVo">저장하기</v-btn>
        </v-col>
     </v-row>
+    
  </form>
-</div>
+ </v-card>
+      </v-col>
+   </v-row>
+   
+</v-container>
    
 
     
@@ -197,7 +216,6 @@ export default {
     data(){
         return{
             valild:true,
-            file:'',
             nameRules:[
                v => !!v || '반려견 이름은 필수 입력 사항입니다. ',
                v => (v && v.length <= 15) || ' 15 자 내외로 입력 가능합니다. '
@@ -287,8 +305,6 @@ export default {
            .catch(error =>{
               alert('입력이 잘 되었는지 다시 확인 해 주세요')
            })
-          
-
        },
        previewImageOne(event){   // 반려견 이미지 업로드 
           console.log(event)
@@ -309,12 +325,11 @@ export default {
             }
        },
        previewImage(event){
-           // console.log(event)
+            //console.log(event)
             this.userPetVo.petImg = event.target.files[0].name
             console.log(this.userPetVo.petImg)
-            console.log(test)
             var input = event.target;
-            //console.log(input)  
+            //console.log(input)
             if (input.files && input.files[0]) {
                 var reader = new FileReader();
                 reader.onload = (e) => {
@@ -324,9 +339,7 @@ export default {
                 }
                 reader.readAsDataURL(input.files[0]);
             }
-        },
-      
-        
+        }
        // 이 함수는 사진을 업로드 하고 이것을 axios 를 통해서 백엔드로 보내면서 디비에 저장 할 수 있는 함수이다. 나는 이것을 한번에 보낼것이기 때문에 필요 없다. 
       //  imageUpload(){      
       //     const fd = new FormData();
