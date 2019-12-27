@@ -18,15 +18,12 @@
       <v-btn @click="add()">제출</v-btn>
       
   </div>
-
 </template>
-
 <script>
 import axios from "axios"
 import router from '../../router/index'
 //### ?? 이걸 가져다 써야 로그인 연동이 된다 
 import {mapState,mapActions} from "vuex"
-
 export default {
     data(){
         return{
@@ -47,13 +44,13 @@ export default {
           
         }
     },
-
     methods:{
         // 저장하기(DB_INSERT)(C)
         add(){
           //### 
           this.BoardVO.boardNo= 
           console.log("add()_this.userInfo.userNo="+this.userInfo.userNo)
+         // console.log("add()_this.userInfo.userNo="+this.userInfo.userNo)
           this.BoardVO.userNo = this.userInfo.userNo
           this.BoardVO.boardDate = new Date() // DB와 데이터타입을 맞춰줘야돼서 Date() 
           this.BoardVO.userName = this.userInfo.userName                     
@@ -61,6 +58,7 @@ export default {
           //사용자 글쓰기(문의사항)        
           this.BoardVO.depth=0
           this.BoardVO.groupNo=this.BoardVO.bo
+         
           // if(this.BoardVO.depth==0){
           //   this.BoardVO.groupNo=0
           // }
@@ -75,12 +73,11 @@ export default {
            .then( res =>{
              this.BoardVO = res.data             
            }), 
-
           // // 입력칸 제출후 깨끗하게 만드는 기능코드 
           // this.BoardVO = this.default 
-
           //### 리로딩 
-          router.push({name:'Board'})   
+          router.push({name:'Board'}) //가끔씩 왜 그런진 모르겠는데, 리로딩이 안되는 경우가 있음. 
+          
         },
     },//### userInfo를 받아와서 
       computed: {
@@ -89,10 +86,7 @@ export default {
     },
    
     
-
 }
 </script>
-
 <style>
-
 </style>
