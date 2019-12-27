@@ -17,5 +17,4 @@ public interface PaymentMapper {
 
 	public List<PaymentVO> showAllPayment(); 
 
-	public List<PaymentVO> showAllDetailPayment(); 
 }

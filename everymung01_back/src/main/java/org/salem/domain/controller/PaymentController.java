@@ -23,6 +23,7 @@ public class PaymentController {
 	
 	@RequestMapping("/showDetailPayment/{paymentNo}")
 	public PaymentVO showDetailPayment(@PathVariable int paymentNo) { //예약 상세보기
+		System.out.println("어드민 결제:"+paymentNo);
 		return (PaymentVO) paymentService.showDetailPayment(paymentNo);
 	}
 	
@@ -48,10 +49,6 @@ public class PaymentController {
 		return (List<PaymentVO>)paymentMapper.showAllPayment();
 	}
 
-	@RequestMapping("/showAllDetailPayment")
-	public List<PaymentVO> showAllDetailPayment() { //유저의 예약 내역보기
-		return (List<PaymentVO>)paymentMapper.showAllDetailPayment();
-	}
 	
 	
 }

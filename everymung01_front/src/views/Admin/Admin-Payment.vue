@@ -23,22 +23,22 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-                <v-text-field label="주문일"  v-model="paymenet.paymentDate" ></v-text-field>
+                <v-text-field label="주문일"  v-model="payment.paymentDate" ></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="주문번호" v-model="paymenet.paymentNo" ></v-text-field>
+                <v-text-field label="주문번호" v-model="payment.paymentNo" ></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="주문자명" v-model="paymenet.userName"></v-text-field>
+                <v-text-field label="주문자명" v-model="payment.userName"></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="주문방법" v-model="paymenet.paymentMethod" ></v-text-field>
+                <v-text-field label="주문방법" v-model="payment.paymentMethod" ></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="주문금액" v-model="paymenet.amount" ></v-text-field>
+                <v-text-field label="주문금액" v-model="payment.amount" ></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="주문상태" v-model="paymenet.paymentStatus" disabled></v-text-field>
+                <v-text-field label="주문상태" v-model="payment.paymentStatus" disabled></v-text-field>
               </v-col>
             </v-row>
           </v-container>
@@ -46,7 +46,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="dialog = false">확인</v-btn>
-          <v-btn color="blue darken-1" text @click="dialog2 = true">결제내역 보기</v-btn>
+          <v-btn color="blue darken-1" text @click="paymentDetail(payment.paymentNo),dialog2 = true">결제내역 보기</v-btn>
         </v-card-actions>
 
         <v-dialog v-model="dialog2" fullscreen hide-overlay transition="dialog-bottom-transition">
@@ -75,8 +75,6 @@
         >
         
             <v-card-text>
-                123
-               123
             <p class="headline text--primary">예약 정보 확인</p>
 
             <v-row justify="center">
@@ -94,7 +92,7 @@
 
                 </v-col>
                 <v-col>
-                    <p>123</p>
+                    <p>{{paymentdetail.startTime | formatDate}}</p>
                 </v-col>
             </v-row>
             <v-row justify="center">
@@ -103,7 +101,7 @@
 
                 </v-col>
                 <v-col>
-                    <p>123</p>
+                    <p>{{paymentdetail.startTime | formatTime}} - {{paymentdetail.endTime | formatTime}}</p>
                 </v-col>
             </v-row>
             <v-row justify="center">
@@ -112,7 +110,7 @@
 
                 </v-col>
                 <v-col>
-                    <p>123</p>
+                    <p>{{paymentdetail.userAddress}}</p>
                 </v-col>
             </v-row>
             <v-row justify="center">
@@ -121,7 +119,7 @@
 
                 </v-col>
                 <v-col>
-                    <p>123</p>
+                    <p>{{paymentdetail.sitterName}}</p>
                 </v-col>
             </v-row>
             <v-row justify="center">
@@ -130,7 +128,7 @@
 
                 </v-col>
                 <v-col>
-                    <p>123</p>
+                    <p>{{this.paymentdetail.request}}</p>
                 </v-col>
             </v-row>
 
@@ -166,11 +164,11 @@
             <v-divider></v-divider>
             <v-row justify="center" class="mt-3">
                 <v-col>
-                    <!-- <p>{{paymentObj.size}}&nbsp;X </p> -->
+                   <p>{{paymentdetail.size}}&nbsp;X </p>
 
                 </v-col>
                 <v-col>
-                    <!-- <p>{{paymentObj.dogBreed}}</p> -->
+                    <p>{{paymentdetail.dogBreed}}</p>
                 </v-col>
             </v-row>
             <v-row justify="center">
@@ -179,7 +177,7 @@
 
                 </v-col>
                 <v-col>
-                    <p>456</p>
+                    <p>{{paymentdetail.startTime | formatTime}} - {{paymentdetail.endTime | formatTime}}</p>
                 </v-col>
             </v-row>
             <v-divider></v-divider>
@@ -189,7 +187,7 @@
 
                 </v-col>
                 <v-col>
-                    <p>가격</p>
+                    <p>{{paymentdetail.amount}}</p>
                 </v-col>
             </v-row>
             <v-row justify="center" class="mt-3">
@@ -248,7 +246,7 @@ export default {
     return {
        dialog: false,
        dialog2: false,
-       paymenet:{
+       payment:{
        paymentDate :'',
        paymentNo:'',
        userName:'',
@@ -265,6 +263,7 @@ export default {
         request:'',
         amount:'',
         size:'',
+        dogBreed:'',
        },
       columns: [
         {
@@ -298,22 +297,20 @@ export default {
   },
   created() {
     this.selectAll();
-    this.payment();
   },
   methods: {
   onRowClick(params) {
      this.dialog=true
-     this.paymenet.paymentDate = params.row.paymentDate
-     this.paymenet.paymentNo = params.row.paymentNo
-     this.paymenet.userName = params.row.userName
-     this.paymenet.paymentMethod = params.row.paymentMethod
-     this.paymenet.amount = params.row.amount
-     this.paymenet.paymentStatus = params.row.paymentStatus
+     this.payment.paymentDate = params.row.paymentDate
+     this.payment.paymentNo = params.row.paymentNo
+     this.payment.userName = params.row.userName
+     this.payment.paymentMethod = params.row.paymentMethod
+     this.payment.amount = params.row.amount
+     this.payment.paymentStatus = params.row.paymentStatus
   },
   selectAll(){
       this.$http.get(`http://localhost:1234/showAllPayment`)
           .then( res =>{
-            console.log("seletAll:"+res.data)
             this.rows = res.data
           
           })
@@ -349,11 +346,11 @@ export default {
 
               });
   },
-  payment(){
-    this.$http.get('http://localhost:1234/showAllDetailPayment')
+  paymentDetail(paymentNo){
+    this.$http.get(`http://localhost:1234/showDetailPayment/${paymentNo}`)
               .then(res => { 
-                this.rows=res.data
-                console.log(this.rows)
+                this.paymentdetail = res.data
+                console.log(this.paymentdetail)
               }) 
               .catch(err => { 
                 alert("backend(update) 에러 확인!")
