@@ -3,7 +3,6 @@ package org.salem.domain.controller;
 import org.salem.domain.Mapper.AdminMapper;
 import org.salem.domain.vo.AdminVO;
 import org.salem.domain.vo.LoginVO;
-import org.salem.domain.vo.UsersVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,16 +14,23 @@ public class AdminController {
 	AdminMapper mapper;
 	
 	@PostMapping("signinAdmin")
-	public AdminVO adminLog(@RequestBody AdminVO vo) {
+	public AdminVO adminLog(@RequestBody LoginVO vo) {
 		System.out.println(vo);
-		return mapper.adminLogin(vo);
+		AdminVO lsm = mapper.adminLogin(vo.getEmail());
+		if(lsm == null)
+			return new AdminVO();
+		else {
+			if(lsm.getAdminPw().equals(vo.getPassword()))
+			return lsm;
+		}
+		return new AdminVO();
 	}
 	
 	@PostMapping("refreshAdmin")//새로고침
 	public AdminVO refreshE(@RequestBody LoginVO vo) {
+		AdminVO lsm =mapper.adminLogin(vo.getEmail());
 		
-		System.out.println(vo);
-		return mapper.adminLogin(new AdminVO(vo.getEmail(),vo.getPassword()));
+		return lsm;
 		
 		
 	}

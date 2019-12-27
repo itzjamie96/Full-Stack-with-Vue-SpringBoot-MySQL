@@ -119,7 +119,8 @@ export default new Vuex.Store({
       //그 유저의 비밀번호와 입력된 비빌번호를 비교한다.
       Axios.post(`${baseURL}/signin`+role,loginobj) 
       .then(res => { 
-        console.log(res.config.data)
+        console.log("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq")
+        console.log(res.data)
         if(res.data.userEmail != null){
           console.log(res.data.userEmail)
           localStorage.setItem("email",loginobj.email)
@@ -134,9 +135,9 @@ export default new Vuex.Store({
               commit('loginSuccess',res.data)
               router.push({name:'sMyPage'})
             }
-            else if(res.config.data[0] != null){
+            else if(res.data.adminId !== null){
               localStorage.setItem("email",loginobj.email)
-              commit('loginSuccess',res.config.data)
+              commit('loginSuccess',res.data.adminId)
               commit('triggerToggle',false)
               router.push({name:'adminHome'})
             }
@@ -155,7 +156,7 @@ export default new Vuex.Store({
       let password = '1234'
       let email =localStorage.getItem("email")
       let role = localStorage.getItem("role")
-        if(role === 'Admin'){
+        if(role === 'Admin' && email !== null){
         commit('triggerToggle',false)
         }
       console.log(email)

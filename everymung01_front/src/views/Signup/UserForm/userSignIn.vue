@@ -75,7 +75,9 @@
             <v-layout wrap>
              
               <v-flex xs12>
-                <v-text-field v-model="searchPwVO.email" label="Email" required></v-text-field>
+                <v-text-field v-model="searchPwVO.email"
+                type="english"
+                 label="Email" required></v-text-field>
               </v-flex>
               <v-flex xs12>
                 <v-text-field v-model="searchPwVO.phone" label="phone -빼고 입력해주세요" required></v-text-field>
@@ -115,7 +117,9 @@
             label="패스워드 입력"
             required
           ></v-text-field>
+          
           <v-btn
+          :disabled="email.match(/.+@.+\..+/)===null || String(password).length<6"
           depressed 
           large
           block

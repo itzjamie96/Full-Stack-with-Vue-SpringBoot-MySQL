@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>org.salem.domain</groupId>
-	<artifactId>maria_jpa</artifactId>
+	<artifactId>EveryMung</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>maria_jpa</name>
+	<name>EveryMung</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>

@@ -169,6 +169,7 @@ return new FileResponse(name, uri, file.getContentType(), file.getSize());
 	
 	@PostMapping("signupSitter")
 	public String signup(@RequestBody SitterVO vo) {
+		System.out.println(vo);
 		String msg="";
 		if(sitterMapper.showUserDetailLogin(vo.getSitterEmail())== null) {
 			msg="완료";
