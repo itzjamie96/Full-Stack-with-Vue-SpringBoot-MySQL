@@ -183,7 +183,7 @@
 
 <script>
 import axios from 'axios'
-
+import NavBar from '@/components/userNavigation.vue'
 export default {
    
     // data: () => ({
@@ -233,6 +233,9 @@ export default {
             menu2:false
         }
     },
+         components: {
+    'side-bar' : NavBar
+      },
     created(){
        this.loadBreedInfo()
     },

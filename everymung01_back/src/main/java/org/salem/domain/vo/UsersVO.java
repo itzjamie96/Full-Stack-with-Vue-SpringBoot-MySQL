@@ -2,16 +2,9 @@ package org.salem.domain.vo;
 
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.ValueGenerationType;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,7 +18,8 @@ public class UsersVO {
 	private String userPhone;
 	private String userAddress;
 	private String userProfile;
-	private Date userDate;
+	private String userDate;
+
 	public UsersVO(String userEmail, String userName, String userPw, String userPhone, String userAddress) {
 		super();
 		this.userEmail = userEmail;
@@ -36,4 +30,5 @@ public class UsersVO {
 	}
 	
 	
+
 }

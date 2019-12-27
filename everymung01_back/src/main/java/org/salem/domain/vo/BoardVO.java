@@ -1,8 +1,5 @@
 package org.salem.domain.vo;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class BoardVO {
+
 
 	private int boardNo;
 	private int userNo;
@@ -23,5 +21,4 @@ public class BoardVO {
 	private int depth;
 	private int groupNo;
 
-	
 }

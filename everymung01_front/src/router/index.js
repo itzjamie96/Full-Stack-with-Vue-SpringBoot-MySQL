@@ -49,12 +49,68 @@ const Signup = () =>
 const PaymentInfo = () =>
     import ('../views/Payment/paymentInfo.vue') //결제 정보 (결제 전)
 
-const routes = [{
+const routes = [
+  {
+    path: '/admin',
+    name: 'adminHome',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Admin/Admin-Home.vue')
+  },
+  {
+    path: '/adminReservation',
+    name: 'adminreservation',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Admin/Admin-Reservation.vue'),
+  },
+  {
+    path: '/adminMember',
+    name: 'adminmember',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Admin/Admin-Member.vue')
+  },
+  {
+    path: '/adminEmployee',
+    name: 'adminemployee',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Admin/Admin-Employee.vue')
+  },
+  {
+    path: '/adminApproval',
+    name: 'adminapproval',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Admin/Admin-Approval.vue')
+  },
+  {
+    path: '/adminBoard',
+    name: 'adminboard',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Admin/Admin-Board.vue')
+  },
+  {
+    path: '/adminPayment',
+    name: 'adminpayment',
+    component: () => import(/* webpackChunkName: "about" */ '../views/Admin/Admin-Payment.vue')
+  },
+  {
+    path: '/adminOneday',
+    name: 'adminoneday',
+    component: () => import('../views/Admin/reserv/Oneday.vue')
+  },
+  {
+    path: '/adminConsignment',
+    name: 'adminconsignment',
+    component: () => import('../views/Admin/reserv/Consignment.vue')
+  },
+  {
+    path: '/adminRepeated',
+    name: 'adminrepeated',
+    component: () => import('../views/Admin/reserv/Repeated.vue')
+  },
+  {
+    path: '/adminMain',
+    name: 'adminMain',
+    component: () => import('../views/Admin/main/Admin-main.vue')
+  },
+{       //일반 홈
         path: '/',
         name: 'home',
         component: Home
     },
-    {
+    {   //시터 지원
         path: '/sitterSignUp',
         name: 'sitterSignUp',
         component: () =>
@@ -100,7 +156,7 @@ const routes = [{
         path: '/uMyPage/petInfo/:userNo',
         name: 'myPagePetInfo',
         component: () =>
-            import ( /* webpackChunkName: "Login" */ '../views/Mypage/User/userMyPage.vue')
+            import ( /* webpackChunkName: "Login" */ '../views/Mypage/User/MyPagePetInfo.vue')
     },
     {
         path: '/sMyPage',
@@ -200,7 +256,15 @@ const routes = [{
         path:'/myPageSetting',
         name:'myPgeSetting',
         component:MyPageSetting
-      }
+      },
+      
+      //kakaopay 성공 시 넘어가는 페이지
+      {
+        path: '/kakaoPaySuccess',
+        name: 'KakaoPaySuccess',
+        component: () =>
+            import ( /* webpackChunkName: "UserReservationList" */ '../views/Payment/kakaoPaySuccess.vue')
+    },
 
 ]
 

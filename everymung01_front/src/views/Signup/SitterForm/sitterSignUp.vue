@@ -69,17 +69,20 @@
             <v-text-field
             v-model="SitterVO.sitterEmail"
             label="이메일"
+            :rules="emailRules"
             required
           ></v-text-field>
           
             <v-text-field
             v-model="SitterVO.sitterPw"
             label="사용할 패스워드"
+            :rules="PasswordRules"
             required
           ></v-text-field>
           
             <v-text-field
             v-model="SitterVO.sitterName"
+            :rules="nameRules"
             label="이름"
             required
           ></v-text-field>
@@ -92,13 +95,20 @@
           
             <v-text-field
             v-model="SitterVO.sitterPhone"
+            :rules="PhoneRules"
             label="핸드폰번호"
             required
           ></v-text-field>
-          
+
+          <VueDaumPostcode 
+          style="height: 200px; overflow: scroll;"
+          @complete="SitterVO.sitterAddress = $event.roadAddress"
+          />
+
             <v-text-field
+            :disabled="SitterVO.sitterAddress === null"
             v-model="SitterVO.sitterAddress"
-            label="거주지역"
+            label="상세주소(건물명,층)"
             required
           ></v-text-field>
           <br>
@@ -154,14 +164,31 @@
 import LazyYoutubeVideo from "vue-lazy-youtube-video";
 import axios from 'axios'
 import * as FormData from 'form-data'
-
+import { VueDaumPostcode } from "vue-daum-postcode"
 const baseURL = 'http://localhost:1234'
 export default {
   components: {
-    LazyYoutubeVideo
+    LazyYoutubeVideo, VueDaumPostcode
   },
+  
   data(){
     return{
+      emailRules: [
+                        v => !!v || 'E-mail is required',
+                        v => /.+@.+\..+/.test(v) || '이메일 형식에 맞지 않습니다.',
+                        ],
+            PhoneRules: [
+                        v => !!v || 'Phone is required',
+                        v=>/^(?:(010\d{4})|(01[1|6|7|8|9]\d{3,4}))(\d{4})$/.test(v) || '-빼주세요',
+                        ],
+            nameRules: [
+                        v => !!v || 'Name is required',
+                        v => (v && v.length <= 10) || '이름은 10글자 이하',
+                       ],
+            PasswordRules: [
+                        v => !!v || 'password is required',
+                        v => (v && v.length >= 6) || '비밀번호는 6자리 이상으로 해주세요',
+                       ],
       SitterVO:{
         sittingNo:"1",
         sitterGender:true,
@@ -170,7 +197,7 @@ export default {
         sitterName:'',
         sitterAge:'',
         sitterPhone:'',
-        sitterAddress:'',
+        sitterAddress:null,
         possibleDay:'',
       profile:'',
       },

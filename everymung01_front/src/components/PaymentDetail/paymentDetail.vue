@@ -5,9 +5,9 @@
             max-width="344"
         >
         
+            {{$store.state.reservationList[0].userNo}}
             <v-card-text>
-                {{this.paymentObj}}
-                {{this.paymentVO}}
+
             <p class="headline text--primary">예약 정보 확인</p>
 
             <v-row justify="center">
@@ -78,44 +78,6 @@ export default {
 
    data() {
        return {
-           paymentVO: {
-            //pets: '',
-            startTime: '',
-            endTime: '',
-            request: '',
-            sitterNo: '',
-            sittingType: '',
-            sitterName: '',
-            sitterPhone: '',
-            sitterAddress: '',
-            paymentMethod: '',
-            amount: '',
-            petNo: '',
-            userName: '',
-            userAddress: '',
-            petName: '',
-            dogBreed: '',
-            size: ''
-        },
-           paymentObj: {
-            //pets: '',
-            startTime: '',
-            endTime: '',
-            request: '',
-            sitterNo: '',
-            sittingType: '',
-            sitterName: '',
-            sitterPhone: '',
-            sitterAddress: '',
-            paymentMethod: '',
-            amount: '',
-            petNo: '',
-            userName: '',
-            userAddress: '',
-            petName: '',
-            dogBreed: '',
-            size: ''
-        }
        }
    },
 
@@ -133,24 +95,16 @@ export default {
    },
    methods: {
        initialize() {
-            // const paymentNo = this.$route.params.paymentNo;
+            this.paymentVO = this.$route.params.paymentVO;
+            console.log(this.paymentVO)
+            console.log(this.$route.params.paymentVO)
        
-
-            this.paymentObj.request = this.paymentVO.request
+            // this.paymentObj.request = this.paymentVO.request
             console.log('request')
             console.log(this.paymentObj.request)
-           
-        //    Axios
-        //     .get(`http://localhost:1234/showDetailPayment/${paymentNo}`)
-        //     .then(res => {
-        //         this.paymentObj = res.data
-        //         console.log(res);
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //     })
-     
+                
        },
+       
        parseDate() {
            const date = paymentObj.startTime
             

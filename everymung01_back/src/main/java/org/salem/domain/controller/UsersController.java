@@ -1,19 +1,82 @@
 package org.salem.domain.controller;
+
+import java.util.List;
+
 import org.salem.domain.Mapper.UsersMapper;
 import org.salem.domain.vo.LoginVO;
+import org.salem.domain.vo.SearchIdVO;
+import org.salem.domain.vo.SearchPwVO;
 import org.salem.domain.vo.UsersVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class UsersController {
+
+	
+	@Autowired
+	UsersMapper mapper;
+	
+	@PostMapping("/searchIdUser")
+	public String searchId(@RequestBody SearchIdVO search){
+		String msg="존재하지 않습니다";
+		List<UsersVO> lsm = mapper.showAllUsers();
+		for(UsersVO vo : lsm) {
+			if(vo.getUserName().equals(search.getName())) {
+				if(vo.getUserPhone().equals(search.getPhone())) {
+					msg=vo.getUserEmail();
+				}
+			}
+		}
+		return msg;
+	}
+	@PostMapping("/searchPwUser")
+	public String searchPw(@RequestBody SearchPwVO search){
+		String msg="정보가 일치하지 않습니다";
+		List<UsersVO> lsm = mapper.showAllUsers();
+		for(UsersVO vo : lsm) {
+			if(vo.getUserEmail().equals(search.getEmail())) {
+				if(vo.getUserPhone().equals(search.getPhone())) {
+					int leng = vo.getUserPw().length();
+					String realPw = vo.getUserPw().substring(0, Math.round(leng/2));
+					String fakePw = "";
+					for(int i=0 ; i<leng-realPw.length();i++) {
+						fakePw += "*";
+					}
+					msg = realPw+fakePw;
+					//msg=vo.getUserPw();
+				}
+			}
+		}
+		return msg;
+	}
+	
+	//@CrossOrigin(origins = "http://localhost:8080")
+	@RequestMapping("/userlist")
+	public List<UsersVO> showAllUsers(){
+		return (List<UsersVO>) mapper.showAllUsers();
+	}
+	
+
+	@PostMapping("/updateUser") 
+	public int updateUser(@RequestBody UsersVO usersVo){
+		return mapper.updateUser(usersVo);
+		
+		
+	}
+	@PostMapping("/deleteUser/{userNo}")
+	public int deleteUser(@PathVariable int userNo) {
+		return mapper.deleteUser(userNo);
+	}
+	
+
 //	@Autowired
 //	UsersRepository rep;
 //	
-	@Autowired
-	UsersMapper mapper;
 	
 	@PostMapping("signinUser") //일반유저 로그인
 	public UsersVO signin(@RequestBody LoginVO vo) {

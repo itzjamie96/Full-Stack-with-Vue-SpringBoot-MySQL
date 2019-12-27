@@ -1,6 +1,5 @@
 package org.salem.domain.vo;
 
-import java.util.Date;
 
 import lombok.Data;
 
@@ -9,6 +8,7 @@ public class SitterVO {
 	
 	private int sitterNo;
 	private int sittingNo;
+	private String sittingType;
 	private String sitterEmail;
 	private String sitterName;
 	private String sitterPw;
@@ -27,6 +27,6 @@ public class SitterVO {
 	private String identityCheck;
 	private String qualificationCheck;
 	private boolean approvalStatus;
-	private Date approvalDate;
+	private String approvalDate;
 	private String profileTitle;
 }
