@@ -64,7 +64,7 @@
       <v-spacer></v-spacer>
 
       <v-toolbar-items class="hidden-sm-and-down">
-        
+
         <v-btn 
         text
         v-for="item in menuItems" 
@@ -95,7 +95,7 @@ export default {
       menuItems: [
         {title: '하루 시터', link: '/daysitters'},
         {title: '위탁 시터', link: '/homesitters/'},
-        {title: '펫시터 지원', link: '/sitterSignUp'},
+        {title: '펫시터 지원', link: '/sitterSignUp',},
         {title: '문의하기', link: '/board'},
       ]
     }
@@ -104,6 +104,7 @@ export default {
       ...mapState(['isLogin']),...mapState(['userInfo'])
       /* ...mapActions(['logout']) */
     },
+
 }
 </script>
 

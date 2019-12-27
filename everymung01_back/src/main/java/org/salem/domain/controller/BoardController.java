@@ -1,5 +1,5 @@
 package org.salem.domain.controller;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import org.salem.domain.Mapper.BoardMapper;
@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 @RestController
 public class BoardController {
 
@@ -18,41 +17,53 @@ public class BoardController {
 	@Autowired
 	BoardMapper mapper;
 
-
-	
-	//@CrossOrigin(origins = "http://localhost:8080")
 	@GetMapping("showAllBoards")
-	public List<BoardVO> showAllBoards(){
-		System.out.println(mapper.showAllBoards());
-		return mapper.showAllBoards();
-//		return (List<Users>) rep.findAll();
+	public List<BoardVO> showAllBoards() {
+		List<BoardVO> boardList = new ArrayList<BoardVO>();
+		boardList = mapper.showAllBoards();
+		return boardList;
+
 	}
-	@PostMapping("/add") 
-	public void addException(@RequestBody BoardVO boardVo){
-		System.out.println("-----");
-		System.out.println(boardVo);
-		System.out.println(mapper.insertBoard(boardVo));
-		System.out.println(mapper.showAllBoards());
-	}
-	@PostMapping("/update") 
-	public void updateException(@RequestBody BoardVO boardVo){	// ?? 
-		System.out.println(boardVo);
-		System.out.println(mapper.updateBoard(boardVo));	// ?? 
-		System.out.println(mapper.showAllBoards());
+
+	@GetMapping("FailBoards")
+	public List<BoardVO> FailBoards() {
+		List<BoardVO> boardList = new ArrayList<BoardVO>();
+		return mapper.FailBoards();
 		
 	}
+
+
+	@PostMapping("/add")
+	public void insertBoard(@RequestBody BoardVO boardVo) {
+	
+		mapper.insertBoard(boardVo); // 성공
+		mapper.showAllBoards();
+
+	}
+
+
+	@PostMapping("/update")
+	public void updateBoard(@RequestBody BoardVO boardVo) { // ??
+
+		mapper.updateBoard(boardVo); // ??
+
+		mapper.showAllBoards();
+
+	}
+
 	@GetMapping("/delete/{boardNo}") // {id}
-	public void deleteLsm(@PathVariable int boardNo) { // URI의 일부를 변수로 전달할 수 있다 //String id = "id" // @PathVariable int boardNo
-		System.out.println("delete()_"+boardNo+"번");
-		System.out.println(mapper.deleteBoard(boardNo));
-		System.out.println(mapper.showAllBoards());
-	}
-	
-	@PostMapping("/add2")
-	public void add2(@RequestBody BoardVO boardvo) {
-		
-	}
-	
 
+	public void deleteBoard(@PathVariable int boardNo) {
+		mapper.deleteBoard(boardNo);
+	}
 
+	// 답글달기
+	@PostMapping("/reply") 
+	public void replyBoard(@RequestBody BoardVO boardVo){
+		System.out.println(boardVo);
+		mapper.insertReply(boardVo);
+	}
 }
+
+
+

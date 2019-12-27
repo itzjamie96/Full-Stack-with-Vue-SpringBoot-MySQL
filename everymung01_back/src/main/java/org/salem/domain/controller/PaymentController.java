@@ -38,7 +38,6 @@ public class PaymentController {
 	
 	@RequestMapping("/showDetailPayment/{paymentNo}")
 	public PaymentVO showDetailPayment(@PathVariable int paymentNo) { //예약 상세보기
-		System.out.println("어드민 결제:"+paymentNo);
 		return (PaymentVO) paymentService.showDetailPayment(paymentNo);
 	}
 	

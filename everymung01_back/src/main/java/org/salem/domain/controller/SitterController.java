@@ -118,7 +118,7 @@ return new FileResponse(name, uri, file.getContentType(), file.getSize());
 	public List<SitterVO> showAllSitters() {
 		return (List<SitterVO>) sitterMapper.showAllSitters();
 	}
-
+	//승인 안된 시터 지원자 확인
 	@RequestMapping("/falseAllSitters")
 	public List<SitterVO> falseAllSitters() {
 		return (List<SitterVO>) sitterMapper.falseAllSitters();
@@ -137,10 +137,6 @@ return new FileResponse(name, uri, file.getContentType(), file.getSize());
 		return sitterMapper.updateSitter(sitterVo);
 	}
 	
-//	@RequestMapping("/showSitterDetail/{sitterNo}")
-//	public SitterVO showSitterDetail(@PathVariable int sitterNo) {
-//		return (SitterVO) sitterMapper.showSitterDetail(sitterNo);
-//	}
 	@PostMapping("refreshSitter")//시터 새로고침
 	public SitterVO refreshE(@RequestBody LoginVO vo) {
 		
@@ -191,3 +187,4 @@ return new FileResponse(name, uri, file.getContentType(), file.getSize());
 	}
 
 }
+

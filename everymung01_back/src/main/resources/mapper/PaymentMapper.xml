@@ -16,19 +16,6 @@
 		INNER JOIN SITTING_TYPE t ON t.sittingNo = s.sittingNo
 		WHERE pay.paymentNo=#{paymentNo}
 	</select>
-
-	<!-- <select id="showAllDetailPayment" resultType="PaymentVO">
-		SELECT pay.paymentNo, s.sitterNo, t.sittingType, s.sitterName, s.sitterPhone, s.sitterAddress, 
-				u.userName, u.userAddress, p.petNo, p.petName, b.dogBreed, b.size, pay.startTime, 
-				pay.endTime, pay.request, pay.paymentMethod, pay.amount, pay.paymentDate  
-		FROM USERS u
-		INNER JOIN PET p ON p.userNo = u.userNo
-		INNER JOIN BREED b ON b.breedNo = p.breedNo
-		INNER JOIN reservation r ON p.petNo = r.petNo
-		INNER JOIN payment pay ON pay.paymentNo = r.paymentNo
-		INNER JOIN SITTER s ON s.sitterNo = pay.sitterNo
-		INNER JOIN SITTING_TYPE t ON t.sittingNo = s.sittingNo
-	</select> -->
 	
 	<insert id="addPayment" parameterType="PaymentVO">
 		INSERT INTO payment (sitterNo, startTime, endTime, request,  

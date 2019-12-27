@@ -86,8 +86,6 @@ export default new Vuex.Store({
       localStorage.removeItem("role")
 
     },
-    //로그인끝
-
     //예약 정보 넘기기//mutation
     setReservation(state, payload) {
       state.reservationList = payload
