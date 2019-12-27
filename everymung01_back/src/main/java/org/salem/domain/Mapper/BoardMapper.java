@@ -21,7 +21,7 @@ public interface BoardMapper {
 
 
 	@Insert("insert into board(userNo,title,boardDate,content,depth,groupNo,hits)"
-			+ "values(1,#{title},CURRENT_TIMESTAMP,#{content},1,1,7)")
+			+ "values(#{userNo},#{title},CURRENT_TIMESTAMP,#{content},1,1,7)")
 	// userName도 입력을 해줘야되나? 이미 입력된 값이니까 난 가져오기만 하면 되는 거 아닌가? 
 	// userNo를 1로 하드코딩했다가, #{userNo}로 넘겨받는 값으로 바꾸니까, insert가 안됨. 
 	// #{userNo}값을 넘겨받으려면 어떻게 해야되지? => 도희 "vuex에서 가져올 것?"
