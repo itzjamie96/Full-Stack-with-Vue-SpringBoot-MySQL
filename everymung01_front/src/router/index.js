@@ -153,7 +153,7 @@ const routes = [
             import ( /* webpackChunkName: "UserReservationDetail" */ '../views/Mypage/User/userReservationDetail.vue')
     },
     { //반려견 정보관리
-        path: '/uMyPage/petInfo/:userNo',
+        path: '/uMyPage/petInfo',
         name: 'myPagePetInfo',
         component: () =>
             import ( /* webpackChunkName: "Login" */ '../views/Mypage/User/MyPagePetInfo.vue')
