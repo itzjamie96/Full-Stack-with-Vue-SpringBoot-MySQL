@@ -20,11 +20,11 @@
             <v-divider></v-divider>
             <v-row justify="center" class="mt-3">
                 <v-col>
-                    <p>{{paymentObj.size}}&nbsp;X </p>
+                    <p>{{paymentVO.size}}&nbsp;X </p>
 
                 </v-col>
                 <v-col>   
-                    <p>{{paymentObj.dogBreed}}</p>
+                    <p>{{paymentVO.dogBreed}}</p>
                 </v-col>
             </v-row>
             <v-row justify="center">
@@ -33,7 +33,7 @@
 
                 </v-col>
                 <v-col>
-                    <p>{{paymentObj.startTime | formatTime}} - {{paymentObj.endTime | formatTime}}</p>
+                    <p>{{paymentVO.startTime | formatTime}} - {{paymentVO.endTime | formatTime}}</p>
                 </v-col>
             </v-row>
             <v-divider></v-divider>
@@ -50,9 +50,9 @@
                 <v-card-actions>
                     <v-btn
                         large
-                        @click="$router.push({path: '/payment/' + paymentObj.paymentNo})"
+                        @click="startKakaoPay"
                     >
-                    결제 - 다음 창 안만들었음
+                    결제
                     </v-btn>
                 </v-card-actions>
             </v-row>
@@ -82,6 +82,9 @@ export default {
        paymentNo() {
            return this.$route.params.paymentNo
        },
+       paymentVO() {
+           return this.$store.state.reservationList[0]
+       },
 
 
    },
@@ -89,20 +92,22 @@ export default {
        initialize() {
             const paymentNo = this.$route.params.paymentNo;
 
-
-        //    Axios
-        //     .get(`http://localhost:1234/showDetailPayment/${paymentNo}`)
-        //     .then(res => {
-        //         this.paymentObj = res.data
-        //         console.log(res);
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //     })
-
        },
        parseDate() {
-           const date = paymentObj.startTime
+           const date = paymentVO.startTime
+       },
+
+       startKakaoPay() {
+           console.log(this.paymentVO)
+           Axios
+            .post('http://localhost:1234/kakaoPay',this.paymentVO)
+            .then(res => {
+                console.log(res);
+                window.open(res.data)
+            })
+            .catch(err => {
+                console.log(err);
+            })
        }
 
 

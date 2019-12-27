@@ -5,10 +5,11 @@
             max-width="344"
         >
             <v-card-text>
-
+<!-- 
                 {{
-                   paymentVO.usersPets.length     
-                }}
+                   paymentVO.petDetailList.length     
+                }} -->
+                {{paymentVO}}
 
             <p class="headline text--primary">예약 정보 확인</p>
 
@@ -18,7 +19,7 @@
 
                 </v-col>
                 <v-col>
-                    <p>{{String(paymentVO.usersPets)}}</p>
+                    <p>{{String(paymentVO.petDetailList)}}</p>
                 </v-col>
             </v-row>
             <v-row justify="center">
@@ -27,7 +28,7 @@
 
                 </v-col>
                 <v-col>
-                   <p>{{paymentVO.date}}</p>
+                   <p>{{paymentVO.paymentDate}}</p>
                 </v-col>
             </v-row>
             <v-row justify="center">
@@ -63,7 +64,7 @@
                     <p class="text--primary">요청사항</p>
                 </v-col>
                 <v-col>
-                   <p>{{paymentVO.description}}</p>
+                   <p>{{paymentVO.request}}</p>
                 </v-col>
             </v-row>
 

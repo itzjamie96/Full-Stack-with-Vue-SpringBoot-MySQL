@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.print.DocFlavor.STRING;
 import javax.servlet.http.HttpServletResponse;
 
 import org.salem.domain.Mapper.PaymentMapper;
@@ -57,6 +58,9 @@ public class PaymentController {
 		return paymentMapper.showUserPayment(userNo);
 	}
 	
+	
+	
+	
 	@GetMapping("/kakaoPay")
 	public void kakaoPayGet() {
 		System.out.println("kakaoPay getMapping");
@@ -66,20 +70,22 @@ public class PaymentController {
 	public String kakaoPay(@RequestBody PaymentVO paymentVO) {
 		System.out.println("kakaoPay Post");
 		System.out.println("PaymentVO : " + paymentVO);
-		list = new ArrayList<PaymentVO>();
-		list = (List<PaymentVO>) paymentVO;
+//		list = new ArrayList<PaymentVO>();
+//		list.add(paymentVO);
+//		System.out.println(list);
+//		int sum = paymentVO.getAmount();
+		int sum = 5555;
 		
-		int sum = paymentVO.getAmount();
+		System.out.println(kakaopay.kakaoPayReady(paymentVO, sum));
 		
-		System.out.println(kakaopay.kakaoPayReady(list, sum));
-		
-		return kakaopay.kakaoPayReady(list, sum);
+		return kakaopay.kakaoPayReady(paymentVO, sum);
 	}
 	
 	@GetMapping("/kakaoPaySuccesss")
-	public void kakaoPaySuccess(@RequestParam("pg_token") String pg_token, HttpServletResponse response) throws IOException{
+	public String kakaoPaySuccess(@RequestParam("pg_token") String pg_token, HttpServletResponse response) throws IOException{
 		
-		int sum = list.get(0).getAmount();
+//		int sum = list.get(0).getAmount();
+		int sum = 5555;
 		
 		System.out.println("----kakaoPaySuccess get----");
 		System.out.println("kakaoPaySuccess pg_token : " + pg_token);
@@ -88,7 +94,8 @@ public class PaymentController {
 //		int userId = Integer.parseInt(info.getPartner_user_id());
 		
 		System.out.println("approvalVO : " + info);
-		response.sendRedirect("http://localhost:8080/");
+//		response.sendRedirect("http://localhost:8080/");
+		return "kakaopaySuccess~~";
 		
 	}
 	

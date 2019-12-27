@@ -1,8 +1,6 @@
 package org.salem.domain.vo;
 
 
-import java.sql.Date;
-
 import lombok.Data;
 
 @Data

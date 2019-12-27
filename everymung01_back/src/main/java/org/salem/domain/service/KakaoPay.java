@@ -32,30 +32,33 @@ public class KakaoPay {
 	
 	public int sum=0;
 	
-	public String kakaoPayReady(List<PaymentVO> cart, int sum) {
+	public String kakaoPayReady(PaymentVO paymentVO, int sum) {
 
 		RestTemplate restTemplate = new RestTemplate();
-		list = cart;
-
-		String userId = Integer.toString(list.get(0).getPaymentNo());   //수정
+		
+		System.out.println("kakaoPayReady---");
+		String userId = Integer.toString(paymentVO.getPaymentNo());   //수정
 		// 서버로 요청할 Header
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "KakaoAK " + "189cb444d1d0a80af1fb1bcaef868817");
 		headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
 		headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
+		System.out.println(headers);
 		String s = Integer.toString(sum);
 		// 서버로 요청할 Body
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
 		params.add("cid", "TC0ONETIME");
 		params.add("partner_order_id", "1001");  //가맹점 주문 번호
-		params.add("partner_user_id", userId);  //가맹점 회원 id
+		params.add("partner_user_id", "1111");  //가맹점 회원 id
 		params.add("item_name", "상품명");  //상품명
 		params.add("quantity", "1");
-		params.add("total_amount", s);
+		params.add("total_amount", "5555");
 		params.add("tax_free_amount", "100");
-		params.add("approval_url", "http://localhost:1234/kakaoPaySuccess");
-		params.add("cancel_url", "http://localhost:1234/kakaoPayCancel");
-		params.add("fail_url", "http://localhost:1234/kakaoPaySuccessFail");
+		params.add("approval_url", "http://localhost:8080/kakaoPaySuccess");
+		params.add("cancel_url", "http://localhost:8080/kakaoPayCancel");
+		params.add("fail_url", "http://localhost:8080/kakaoPaySuccessFail");
+		System.out.println(params);
+		System.out.println("=======");
 	
 		HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
 
@@ -75,7 +78,7 @@ public class KakaoPay {
 			e.printStackTrace();
 		}
 
-		return "/pay";
+		return "/pay";  //에러 시 넘어가는 페이지
 
 	}
 
@@ -84,7 +87,7 @@ public class KakaoPay {
 
 		RestTemplate restTemplate = new RestTemplate();
 		String s = Integer.toString(sum);
-		String userId = Integer.toString(list.get(0).getPaymentNo());   //수정
+//		String userId = Integer.toString(paymentVO.getPaymentNo());   //수정
 		// 서버로 보낼 Header
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "KakaoAK " + "8921a420fe7e75c1306abfe0fc7e5b52");
@@ -96,9 +99,9 @@ public class KakaoPay {
 		params.add("cid", "TC0ONETIME");
 		params.add("tid", kakaoPayReadyVO.getTid());
 		params.add("partner_order_id", "1001");
-		params.add("partner_user_id", userId);
+		params.add("partner_user_id", "1111");
 		params.add("pg_token", pg_token);
-		params.add("total_amount", s);
+		params.add("total_amount", "5555");
 		
 		HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
 

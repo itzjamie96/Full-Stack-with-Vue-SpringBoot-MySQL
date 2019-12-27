@@ -256,7 +256,15 @@ const routes = [
         path:'/myPageSetting',
         name:'myPgeSetting',
         component:MyPageSetting
-      }
+      },
+      
+      //kakaopay 성공 시 넘어가는 페이지
+      {
+        path: '/kakaoPaySuccess',
+        name: 'KakaoPaySuccess',
+        component: () =>
+            import ( /* webpackChunkName: "UserReservationList" */ '../views/Payment/kakaoPaySuccess.vue')
+    },
 
 ]
 

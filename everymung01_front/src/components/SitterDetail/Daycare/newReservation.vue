@@ -202,11 +202,11 @@ export default {
         onNewReservation() {
 
         const reserveData = {
-            usersPets: this.usersPets,
-            date: this.date,
+            petDetailList: this.usersPets,
+            paymentDate: this.date,
             startTime: this.date + " "+ this.startTime,
             endTime: this.date + " "+ this.endTime,
-            description: this.description,
+            request: this.description,
             userNo: this.userInfo.userNo,
             userAddress: this.userInfo.userAddress,
             sitterNo: this.sitterInfo.sitterNo,
@@ -214,9 +214,9 @@ export default {
             sitterName: this.sitterInfo.sitterName,
             sitterPhone: this.sitterInfo.sitterPhone,
             sitterAddress: this.sitterInfo.sitterAddress,
-            petNo: this.petList.petNo,
-            petName: this.petList.petName,
-            size: this.petList.size,
+            // petNo: this.petList.petNo,
+            // petName: this.petList.petName,
+            // size: this.petList.size,
             
             
         }
