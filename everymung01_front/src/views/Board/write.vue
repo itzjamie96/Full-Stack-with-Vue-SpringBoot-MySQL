@@ -48,7 +48,7 @@ export default {
         // 저장하기(DB_INSERT)(C)
         add(){
           //### 
-          this.BoardVO.boardNo= 
+
           console.log("add()_this.userInfo.userNo="+this.userInfo.userNo)
          // console.log("add()_this.userInfo.userNo="+this.userInfo.userNo)
           this.BoardVO.userNo = this.userInfo.userNo
