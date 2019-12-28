@@ -6,10 +6,6 @@
         >
             <v-card-text>
 
-                {{
-                   paymentVO.usersPets.length     
-                }}
-
             <p class="headline text--primary">예약 정보 확인</p>
 
             <v-row justify="center">
@@ -18,7 +14,7 @@
 
                 </v-col>
                 <v-col>
-                    <p>{{String(paymentVO.usersPets)}}</p>
+                    <p>{{String(paymentVO.usersPets[0].petName)}}</p>
                 </v-col>
             </v-row>
             <v-row justify="center">
@@ -78,11 +74,16 @@ import Axios from 'axios'
 import {mapState,mapActions,mapGetters} from "vuex"
 
 export default {
+
    computed: {
        
        paymentVO() {
            return this.$store.state.reservationList[0]
        },
+       
+       petVO() {
+           return this.paymentVO
+       }
 
    }
 }
