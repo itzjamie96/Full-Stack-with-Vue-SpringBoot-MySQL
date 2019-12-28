@@ -67,6 +67,7 @@
 
 <script>
 import Axios from 'axios'
+import {eventBus} from '@/main.js'
 
 export default {
    data() {
@@ -77,6 +78,7 @@ export default {
 
    created() {
        this.initialize()
+       
        
    },
    computed: {
@@ -89,11 +91,13 @@ export default {
        initialize() {
            const sitterNo = this.$route.params.sitterNo
            
+           
            Axios
             .get(`http://localhost:1234/showSitterDetail/${sitterNo}`)
             .then(res => {
                 this.sitterObj = res.data
-                console.log(res);
+                eventBus.$emit("sitterObj",this.sitterObj)
+                //console.log(res);
             })
             .catch(err => {
                 console.log(err);

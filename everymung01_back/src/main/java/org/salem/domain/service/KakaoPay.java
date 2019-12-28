@@ -88,6 +88,7 @@ public class KakaoPay {
 		RestTemplate restTemplate = new RestTemplate();
 		String s = Integer.toString(sum);
 //		String userId = Integer.toString(paymentVO.getPaymentNo());   //수정
+		
 		// 서버로 보낼 Header
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Authorization", "KakaoAK " + "8921a420fe7e75c1306abfe0fc7e5b52");

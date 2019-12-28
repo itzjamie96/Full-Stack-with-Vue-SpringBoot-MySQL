@@ -52,7 +52,7 @@
                         large
                         @click="startKakaoPay"
                     >
-                    결제
+                    결제하기
                     </v-btn>
                 </v-card-actions>
             </v-row>
