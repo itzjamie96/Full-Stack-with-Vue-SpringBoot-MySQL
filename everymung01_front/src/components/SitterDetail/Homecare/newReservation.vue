@@ -1,26 +1,33 @@
 <template>
     <div>
+        
         <v-card 
                 color="green"
                 height="100%"
                 class="mb-5"
         >
+
+        {{this.petList}}
             <v-form @submit.prevent="onNewReservation" >
                 <v-row justify="center">
                     <v-col cols="12" sm="10">
                         <v-select
-                            v-model="value"
-                            :items="pets"
+                            v-model="usersPets"
+                            :items="petList"
+                            multiple=""
+                            item-text="petName"
+                            item-value="petList"
                             attach
                             chips
                             label="반려동물 선택"
-                            multiple
+                            id="usersPets"
+                            return-object
                         ></v-select>
                     </v-col>
                 </v-row>
 
                 <v-row class="mb-3" justify="center">
-                    <v-col cols="10">
+                    <v-col cols="5">
                         <v-menu
                             v-model="menu1"
                             :close-on-content-click="false"
@@ -30,13 +37,32 @@
                         >
                             <template v-slot:activator="{ on }">
                                 <v-text-field
-                                v-model="date"
-                                label="날짜를 선택하세요"
+                                v-model="date1"
+                                label="체크인 날짜를 선택하세요"
                                 readonly
                                 v-on="on"
                                 ></v-text-field>
                             </template>
-                            <v-date-picker v-model="date" @input="menu1 = false"></v-date-picker>
+                            <v-date-picker v-model="date1" @input="menu1 = false"></v-date-picker>
+                        </v-menu>
+                    </v-col>
+                    <v-col cols="5">
+                        <v-menu
+                            v-model="menu2"
+                            :close-on-content-click="false"
+                            transition="scale-transition"
+                            offset-y
+                            min-width="290px"
+                        >
+                            <template v-slot:activator="{ on }">
+                                <v-text-field
+                                v-model="date2"
+                                label="체크아웃 날짜를 선택하세요"
+                                readonly
+                                v-on="on"
+                                ></v-text-field>
+                            </template>
+                            <v-date-picker v-model="date2" @input="menu2 = false"></v-date-picker>
                         </v-menu>
                     </v-col>
                 </v-row>
@@ -46,12 +72,16 @@
                         <v-select
                             :items="time"
                             label="체크인 시간"
+                            v-model="startTime"
+                            id="starTime"
                         ></v-select>
                     </v-col>
                     <v-col cols="5">
                         <v-select
                             :items="time"
                             label="체크아웃 시간"
+                            v-model="endTime"
+                            id="endTime"
                         ></v-select>
                     </v-col>
                 </v-row>
@@ -107,22 +137,30 @@
 
 <script>
 import axios from "axios"
+import {eventBus} from '@/main.js'
+import {mapState,mapActions} from "vuex"
 
 const dt = new Date();
 
 export default {
   data() {
     return {
+        sitterInfo: [],
         date: dt.toISOString().substr(0, 10), 
-        value: '',
-        description: '',
+        date1: dt.toISOString().substr(0, 10), 
+        date2: dt.toISOString().substr(0, 10), 
         menu: false,
         modal: false,
         menu1: false,
         menu2: false,
         timeStep: '00:00',
-        pets: ['Foo', 'Bar', 'Fizz', 'Buzz'],
         time: ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'],
+        petList: [],
+        usersPets: [],
+        description: '',
+        startTime: '',
+        endTime: '',
+        
         price: [ 
             {
                 size: '소형견',
@@ -136,35 +174,81 @@ export default {
                 size: '대형견',
                 cost: '7,000'
             }
-        ]
+        ],
+        
+              
+        
+        
     }
+  },
+  created() {
+      eventBus.$on('sitterObj', (sitterObj) => {
+        //   console.log(sitterObj)
+          this.sitterInfo = sitterObj
+      }),
+      this.initialize()
+      
   },
   computed: {
     formIsValid() {
-      return this.title !== '' && this.location !== ''
-      && this.imageUrl !=='' && this.description !== ''
+      return this.description !== '' && this.userPets !== '' && this.startTime !== '' && this.endTime !== ''
     },
     minutesToZero(dt) {
         return (dt.getMinutes() < 10 ? '0 ' : '') + (dt.getMinutes() < 10 ? '0 ' : '')
-    }
+    },
 
+    ...mapState(["isLogin","userInfo"]),
+
+    petNo() {
+        return this.$route.params.petNo
+    }
+   
   },
   methods: {
-    onNewReservation() {
-      if (!this.formIsValid) {
-        return
-      }
-      const meetupData = {
-        title: this.title,
-        location: this.location,
-        imageUrl: this.imageUrl,
-        description: this.description,
-        date: this.date,
-        time: this.time
-      }
-      this.$store.dispatch('createMeetup', meetupData)
-      this.$router.push('/meetups')
+      initialize() {
+           const petNo = this.$route.params.petNo
+           
+           
+           axios
+            .get(`http://localhost:1234/showAllpets/${this.userInfo.userNo}`)
+            .then(res => {
+                this.petList = res.data
+                console.log(res);
+            })
+            .catch(err => {
+                console.log(err);
+            })
+
+       },
+        onNewReservation() {
+
+        const reserveData = {
+            petDetailList: this.usersPets,  //List<PetInfo> 형태로 넘어갸아함.
+            paymentDate: this.date,
+            startDate: this.date1,
+            endDate: this.date2,
+            startTime: this.date1 + " "+ this.startTime,
+            endTime: this.date2 + " "+ this.endTime,
+            request: this.description,
+            userNo: this.userInfo.userNo,
+            userAddress: this.userInfo.userAddress,
+            sitterNo: this.sitterInfo.sitterNo,
+            sittingType: this.sitterInfo.sittingType,
+            sitterName: this.sitterInfo.sitterName,
+            sitterPhone: this.sitterInfo.sitterPhone,
+            sitterAddress: this.sitterInfo.sitterAddress,
+            // petNo: this.petList.petNo,
+            // petName: this.petList.petName,
+            // size: this.petList.size,
+            
+            
+        }
+        console.log(reserveData)
+        this.$store.dispatch('createReservation', reserveData)     //store에 createReservation에 payload로 보내기~
+        this.$router.push(`/paymentinfo/${this.userInfo.userNo}`) //예약확인 페이지로 수정 필요
     },
+
+    
 
     allowedStep: m => m % 0 === 0
 

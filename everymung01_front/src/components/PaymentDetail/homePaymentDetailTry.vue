@@ -2,13 +2,13 @@
     <div>
         <v-card
             class="mx-auto"
-            max-width="344"
+            max-width="500px"
         >
             <v-card-text>
 
             <p class="headline text--primary">예약 정보 확인</p>
 
-            <v-row justify="center">
+            <v-row justify="left">
                 <v-col cols="6">
                     <p class="text--primary">맡기실 반려동물</p>
 
@@ -21,25 +21,34 @@
                     <p>{{pets.petName}}</p>
                 </v-col>
             </v-row>
-            <v-row justify="center">
+            <v-row justify="left">
                 <v-col>
                     <p class="text--primary">예약 날짜</p>
 
                 </v-col>
                 <v-col>
-                   <p>{{paymentVO.paymentDate}}</p>
+                   <p>{{paymentVO.startDate}} ~ {{paymentVO.endDate}}</p>
                 </v-col>
             </v-row>
-            <v-row justify="center">
+            <v-row justify="left">
                 <v-col>
-                    <p class="text--primary">예약 시간</p>
+                    <p class="text--primary">체크인 시간</p>
                 </v-col>
                 <v-col>
-                    <p>{{paymentVO.startTime| formatTime}} - {{paymentVO.endTime| formatTime}}</p>
+                    <p>{{paymentVO.startTime| formatTime}}</p>
                 </v-col>
                
             </v-row>
-            <v-row justify="center">
+            <v-row justify="left">
+                <v-col>
+                    <p class="text--primary">체크아웃 시간</p>
+                </v-col>
+                <v-col>
+                    <p>{{paymentVO.endTime| formatTime}}</p>
+                </v-col>
+               
+            </v-row>
+            <v-row justify="left">
                 <v-col>
                     <p class="text--primary">방문 주소</p>
 
@@ -49,7 +58,7 @@
                 </v-col>
 
             </v-row>
-            <v-row justify="center">
+            <v-row justify="left">
                 <v-col>
                     <p class="text--primary">펫시터</p>
                 </v-col>
@@ -58,7 +67,7 @@
                 </v-col>
 
             </v-row>
-            <v-row justify="center">
+            <v-row justify="left">
                 <v-col>
                     <p class="text--primary">요청사항</p>
                 </v-col>

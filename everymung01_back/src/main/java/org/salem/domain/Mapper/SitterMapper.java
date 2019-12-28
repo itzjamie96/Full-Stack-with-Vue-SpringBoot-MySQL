@@ -39,5 +39,7 @@ public interface SitterMapper {
 	
 	
 	public List<SitterVO> showDaySitters(); //하루시터 목록 출력
+	
+	public List<SitterVO> showHomeSitters(); //위탁시터 목록 출력
 
 }

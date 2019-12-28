@@ -153,7 +153,7 @@ const routes = [
             import ( /* webpackChunkName: "UserReservationDetail" */ '../views/Mypage/User/userReservationDetail.vue')
     },
     { //반려견 정보관리
-        path: '/uMyPage/petInfo/:userNo',
+        path: '/uMyPage/petInfo',
         name: 'myPagePetInfo',
         component: () =>
             import ( /* webpackChunkName: "Login" */ '../views/Mypage/User/MyPagePetInfo.vue')
@@ -256,7 +256,15 @@ const routes = [
         path:'/myPageSetting',
         name:'myPgeSetting',
         component:MyPageSetting
-      }
+      },
+      
+      //kakaopay 성공 시 넘어가는 페이지
+      {
+        path: '/kakaoPaySuccess',
+        name: 'KakaoPaySuccess',
+        component: () =>
+            import ( /* webpackChunkName: "UserReservationList" */ '../views/Payment/kakaoPaySuccess.vue')
+    },
 
 ]
 

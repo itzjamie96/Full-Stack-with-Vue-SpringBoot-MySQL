@@ -5,6 +5,7 @@
             max-width="344"
         >
         
+            {{$store.state.reservationList[0].userNo}}
             <v-card-text>
 
             <p class="headline text--primary">예약 정보 확인</p>
@@ -77,44 +78,6 @@ export default {
 
    data() {
        return {
-           paymentVO: {
-            //pets: '',
-            startTime: '',
-            endTime: '',
-            request: '',
-            sitterNo: '',
-            sittingType: '',
-            sitterName: '',
-            sitterPhone: '',
-            sitterAddress: '',
-            paymentMethod: '',
-            amount: '',
-            petNo: '',
-            userName: '',
-            userAddress: '',
-            petName: '',
-            dogBreed: '',
-            size: ''
-        },
-           paymentObj: {
-            //pets: '',
-            startTime: '',
-            endTime: '',
-            request: '',
-            sitterNo: '',
-            sittingType: '',
-            sitterName: '',
-            sitterPhone: '',
-            sitterAddress: '',
-            paymentMethod: '',
-            amount: '',
-            petNo: '',
-            userName: '',
-            userAddress: '',
-            petName: '',
-            dogBreed: '',
-            size: ''
-        }
        }
    },
 
@@ -139,17 +102,7 @@ export default {
             // this.paymentObj.request = this.paymentVO.request
             console.log('request')
             console.log(this.paymentObj.request)
-           
-        //    Axios
-        //     .get(`http://localhost:1234/showDetailPayment/${paymentNo}`)
-        //     .then(res => {
-        //         this.paymentObj = res.data
-        //         console.log(res);
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //     })
-     
+                
        },
        
        parseDate() {

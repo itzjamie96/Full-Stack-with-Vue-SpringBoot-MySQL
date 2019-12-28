@@ -180,14 +180,19 @@ return new FileResponse(name, uri, file.getContentType(), file.getSize());
 		return msg;
 	}
 	
-	@RequestMapping("/showSitterDetail/{sitterNo}")
+	@RequestMapping("/showSitterDetail/{sitterNo}")  //시터 상세페이지 
 	public SitterVO showSitterDetail(@PathVariable int sitterNo) {
 		return (SitterVO) sitterMapper.showSitterDetail(sitterNo);
 	}
 	
-	@RequestMapping("/showDaySitters")
+	@RequestMapping("/showDaySitters")  //하루시터 리스트 출력
 	public List<SitterVO> showDaySitters() {
 		return (List<SitterVO>) sitterMapper.showDaySitters();
+	}
+	
+	@RequestMapping("/showHomeSitters")  //위탁시터 리스트 출력
+	public List<SitterVO> showHomeSitters() {
+		return (List<SitterVO>) sitterMapper.showHomeSitters();
 	}
 
 }
