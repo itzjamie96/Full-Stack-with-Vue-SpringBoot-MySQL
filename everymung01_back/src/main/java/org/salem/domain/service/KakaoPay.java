@@ -33,7 +33,7 @@ public class KakaoPay {
 	public int sum=0;
 	
 	public String kakaoPayReady(PaymentVO paymentVO, int sum) {
-
+		//**************가격이랑 상품명 수정 예정**************
 		RestTemplate restTemplate = new RestTemplate();
 		
 		System.out.println("kakaoPayReady---");
@@ -65,8 +65,6 @@ public class KakaoPay {
 		try {
 			kakaoPayReadyVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/ready"), body,
 					KakaoPayReadyVO.class);
-
-			// log.info("" + kakaoPayReadyVO);
 
 			return kakaoPayReadyVO.getNext_redirect_pc_url();
 
@@ -109,7 +107,6 @@ public class KakaoPay {
 		try {
 			kakaoPayApprovalVO = restTemplate.postForObject(new URI(HOST + "/v1/payment/approve"), body,
 					KakaoPayApprovalVO.class);
-			// log.info("" + kakaoPayApprovalVO);
 
 			return kakaoPayApprovalVO;
 

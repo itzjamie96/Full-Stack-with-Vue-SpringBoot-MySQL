@@ -12,6 +12,7 @@ import org.salem.domain.service.KakaoPay;
 import org.salem.domain.service.PaymentService;
 import org.salem.domain.vo.KakaoPayApprovalVO;
 import org.salem.domain.vo.PaymentVO;
+import org.salem.domain.vo.PetInfoVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,7 +34,7 @@ public class PaymentController {
 	@Autowired
 	KakaoPay kakaopay;
 	
-	public List<PaymentVO> list;
+	public PaymentVO vo;
 	
 	
 	@RequestMapping("/showDetailPayment/{paymentNo}")
@@ -54,7 +55,8 @@ public class PaymentController {
 	}
 	
 	@RequestMapping("/showUserPayment/{userNo}")
-	public List<PaymentVO> showUserPayment(@PathVariable int userNo) { //유저의 예약 내역보기
+	public List<PaymentVO> showUserPayment(@PathVariable int userNo) { 
+		//유저의 예약 내역보기
 		return paymentMapper.showUserPayment(userNo);
 	}
 	
@@ -70,19 +72,18 @@ public class PaymentController {
 	public String kakaoPay(@RequestBody PaymentVO paymentVO) {
 		System.out.println("kakaoPay Post");
 		System.out.println("PaymentVO : " + paymentVO);
-//		list = new ArrayList<PaymentVO>();
-//		list.add(paymentVO);
-//		System.out.println(list);
+		vo = paymentVO;
+		
 //		int sum = paymentVO.getAmount();
 		int sum = 5555;
-		
-		System.out.println(kakaopay.kakaoPayReady(paymentVO, sum));
 		
 		return kakaopay.kakaoPayReady(paymentVO, sum);
 	}
 	
 	@GetMapping("/kakaoPaySuccesss")
-	public String kakaoPaySuccess(@RequestParam("pg_token") String pg_token, HttpServletResponse response) throws IOException{
+	public String kakaoPaySuccess(@RequestParam("pg_token") String pg_token, 
+							HttpServletResponse response) throws IOException{
+		//kakaoPay 성공 시 payment INSERT
 		
 //		int sum = list.get(0).getAmount();
 		int sum = 5555;
@@ -92,6 +93,27 @@ public class PaymentController {
 		
 		KakaoPayApprovalVO info = kakaopay.kakaoPayInfo(pg_token, sum);
 //		int userId = Integer.parseInt(info.getPartner_user_id());
+		
+		
+		//*********************payment insert*************************
+		int insert = paymentMapper.addPayment(vo);
+		System.out.println("insert : " + insert);
+		
+	
+		PaymentVO paymentNoVO = paymentMapper.showPaymentNo(vo);
+		int paymentNo = paymentNoVO.getPaymentNo();
+		System.out.println("paymentNo : " + paymentNo);
+		
+		
+		List<PetInfoVO> petInfoList = vo.getPetDetailList();
+		petInfoList.forEach(i -> {
+			int petNo = i.getPetNo();
+			System.out.println(petNo);
+			int reservationInsert = paymentMapper.addReservation(petNo, paymentNo);
+			System.out.println(reservationInsert);
+		});
+		
+		
 		
 		System.out.println("approvalVO : " + info);
 //		response.sendRedirect("http://localhost:8080/");

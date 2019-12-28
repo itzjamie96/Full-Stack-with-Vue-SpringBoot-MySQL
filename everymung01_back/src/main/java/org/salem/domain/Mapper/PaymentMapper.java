@@ -14,4 +14,13 @@ public interface PaymentMapper {
 	
 	//유저의 예약내역 보기 (클래스 다이어그램에 없는데 임의로 추가)
 	public List<PaymentVO> showUserPayment(int userNo); 
+	
+	//reservation table INSERT 위한 예약 번호 SELECT  
+	public PaymentVO showPaymentNo(PaymentVO paymentVO); 
+	
+	//payment INSERT 할때, reservation 도 같이 INSERT
+	public int addReservation(int petNo, int paymentNo);
+	
+	//후기 작성 시 reviewStatus UPDATE
+	public int updateReviewStatus(int paymentNo);
 }
