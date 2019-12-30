@@ -73,7 +73,7 @@
         >{{item.title}}</v-btn>
    
           <v-btn text router :to="{name:'signup'}" exact v-if="isLogin===false">회원가입</v-btn>
-          <v-btn text  router :to="{name:'uMyPage'}" exact v-else>마이페이지</v-btn>
+          <v-btn text  router :to="{name:'UserReservationList'}" exact v-else>마이페이지</v-btn>
 
           <v-btn text router :to="{name:'signin'}" exact v-if="isLogin===false">로그인</v-btn>
           <v-btn text  @click="$store.dispatch('logout')" v-else>로그아웃</v-btn>

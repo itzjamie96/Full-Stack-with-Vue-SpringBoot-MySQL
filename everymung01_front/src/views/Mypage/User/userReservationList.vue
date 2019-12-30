@@ -28,14 +28,16 @@
             
             <!-- 예약 날짜가 지난 시점이고, 
                   reviewStatus가 false 일 때만 (review 미작성 상태) 
-                  리뷰쓰러가는 버튼 보임-->
+                  리뷰쓰러가는 버튼 보임
+                  v-if="(canWrite > calEndTime(item.endTime) && item.reviewStatus == false)"
+                  -->
             <v-icon
-              v-if="(canWrite > calEndTime(item.endTime) && item.reviewStatus == false)"
+              
               small
               class="mr-2"
               @click="writeReview(item)"
             >
-              review
+              [후기]
             </v-icon>
             
             <v-icon
@@ -43,13 +45,13 @@
               class="mr-2"
               @click="showDetail(item)"
             >
-              search
+              상세보기
             </v-icon>
             <v-icon
               small
               @click="deleteItem(item)"
             >
-              delete
+              환불
             </v-icon>
           </template>
         </v-data-table>
@@ -79,10 +81,10 @@ import NavBar from '@/components/userNavigation.vue'
           { text: '예약 날짜', value: 'startTime' },
           { text: '예약 날짜', value: 'endTime' },
           { text: '금액', value: 'amount' },
-          { text: '결제 상태', value: 'paymentStatus' },
-          { text: 'reviewStatus', value: 'reviewStatus' },
-          { text: 'refundStatus', value: 'refundStatus' },
-          { text: 'Actions', value: 'action', sortable: false },
+          // { text: '결제 상태', value: 'paymentStatus' },
+          // { text: 'reviewStatus', value: 'reviewStatus' },
+          // { text: 'refundStatus', value: 'refundStatus' },
+          { text: '상태', value: 'action', sortable: false },
         ],
         paylist: [
           //데이터베이스에서 받은 객체들이 들어갈 객체배열
@@ -126,7 +128,7 @@ import NavBar from '@/components/userNavigation.vue'
 
       showDetail(item){
         const paymentNo = item.paymentNo
-        this.$router.push({path: '/useReservationDetail/' + paymentNo})
+        this.$router.push({path: '/userReservationDetail/' + paymentNo})
       },
 
       writeReview(item){

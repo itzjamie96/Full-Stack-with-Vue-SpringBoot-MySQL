@@ -1,12 +1,20 @@
 <template>
 <div>
     <!-- 카카오 페이 성공 시 넘어오는 페이지 -->
-    <h1>kakaoSuccess</h1>
-    <h1>결제 완료</h1>
-    <!-- kakao pay success 컨트롤러에서 넘어오는 리턴 값--> 
-    <h2>{{this.kakao}}</h2>
+    <v-card
+        class="mx-auto"
+        max-width="400px">
 
-    <h3>마이페이지 예약 내역으로 이동 추가 예정</h3>
+    <v-row justify="center">
+        <h1>결제가 완료되었습니다</h1>
+    </v-row>
+
+    <v-row justify="center">
+        <router-link to="{name:'UserReservationList'}" exact>예약 내역에서 확인하기</router-link>
+    </v-row>
+    </v-card>
+        <!-- kakao pay success 컨트롤러에서 넘어오는 리턴 값--> 
+        <!-- <h2>{{this.kakao}}</h2> -->
 </div>
 </template>
 
@@ -16,7 +24,8 @@ import axios from "axios"
 export default {
     data() {
         return{
-            kakao : ''
+            kakao : '',
+            paymentObj: []
         }
     },
 
@@ -24,7 +33,19 @@ export default {
         this.initialize()
     },
 
+    computed: {
+       paymentNo() {
+           return this.$route.params.paymentNo
+       },
+       paymentVO() {
+           return this.$store.state.reservationList[0]
+       },
+        petVO() {
+           return this.paymentVO.petDetailList
+       }
 
+
+   },
     methods: {
 
     initialize(){
@@ -38,6 +59,10 @@ export default {
                 .catch(err => {
                     console.log(err);
                 })
+
+        const paymentNo = this.$route.params.paymentNo;
+
+
         }
     }
 

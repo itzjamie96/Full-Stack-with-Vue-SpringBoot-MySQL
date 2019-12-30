@@ -19,7 +19,7 @@
 
             <v-list-item-content class="mx-auto">
                 <p class="font-weight-bold">{{review.userName}}</p>
-                <p class="font-weight-bold ">{{review.reviewDate}}</p> 
+                <p class="font-weight-bold ">{{review.reviewDate | formatDate}}</p> 
                 <p class="font-weight-bold">{{review.stars}}</p>
                 <p class="font-weight-bold">{{review.reviewContent}}</p>
             </v-list-item-content>

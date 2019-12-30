@@ -9,7 +9,7 @@ import '@fortawesome/fontawesome-free/css/all.css'
 import moment from 'moment'
 import VueLocalStorage from 'vue-localstorage'
 import VueGoogleCharts from 'vue-google-charts'
-
+import '@mdi/js'
 
 
 Vue.prototype.$http = axios;

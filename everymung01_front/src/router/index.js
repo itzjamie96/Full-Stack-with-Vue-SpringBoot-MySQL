@@ -226,7 +226,7 @@ const routes = [
     },
 
     {
-        path: '/useReservationDetail/:paymentNo',
+        path: '/userReservationDetail/:paymentNo',
         name: 'UserReservationDetail',
         component: () =>
             import ( /* webpackChunkName: "UserReservationDetail" */ '../views/Mypage/User/userReservationDetail.vue')
