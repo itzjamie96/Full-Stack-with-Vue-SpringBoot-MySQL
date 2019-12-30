@@ -54,6 +54,7 @@ public class FileSystemStorageService implements StorageService {
             try (InputStream inputStream = file.getInputStream()) {
                 Files.copy(inputStream, this.rootLocation.resolve(filename),//여기 파일 네임을 변경해주어야 함 
                         StandardCopyOption.REPLACE_EXISTING);
+                System.out.println("this.rootLocation==>"+this.rootLocation);
             }
         }
         catch (IOException e) {

@@ -10,19 +10,22 @@
                 <v-card
                 width="100%"
                 outlined
-                v-for="userPet in userPetList"
-                :key="userPet.userNo"
+                v-for="(userPet,index) in userPetList"
+                :key="index"
                 >
                     <v-list-item three-line>
                     <v-list-item-avatar
                         tile
                         size="100"
                     >
-                        <v-img
-                        :src="userPet.petImg"
-                            > {{userPet.petImg}}</v-img>
-                    </v-list-item-avatar>
 
+                        <v-img
+                        :src="tempImg[index]"
+                            > </v-img>
+                         
+                          
+                    </v-list-item-avatar>
+                    <h1>{{userPet.petNo}}</h1>
                     <v-list-item-content>
                         <p class="body-2">{{userPet.petName}}</p>
                         <p class="font-weigth-bold"> {{userPet.dogBreed}},{{userPet.petGender}},{{userPet.petAge}} </p>
@@ -43,10 +46,7 @@
             </v-row>
           
         </v-col>
-
       </v-row>
-
-
    </v-container>
 </template>
 
@@ -59,10 +59,10 @@ import NavBar from '@/components/userNavigation.vue'
 export default {
    data(){
        return{
+           tempImg:[],
         userPetList:[
-
+         
         ],
-        
        }
    },
      components: {
@@ -79,10 +79,19 @@ export default {
    methods:{
 
        init(){
-           axios.get(`http://localhost:1234/showAllpets/${this.userInfo.userNo}`) // 2=> 로그인 하면서 userNo 가 들어오면 동적으로 변수 바인딩 해줘야 한다. 
+           
+           axios.post(`http://localhost:1234/showAllpets/${this.userInfo.userNo}`) // 2=> 로그인 하면서 userNo 가 들어오면 동적으로 변수 바인딩 해줘야 한다. 
            .then(response => {
                this.userPetList = response.data
+               for(let img in this.userPetList){
+                   if(response.data[img].petImg === null){
+                       this.tempImg[img]= "";
+                   }else{
+                   this.tempImg[img]='http://localhost:1234/download/'+response.data[img].petImg
+                   }
+               }
                console.log(response.data)
+                   
            })
            .catch(error =>{
                console.log(error)
