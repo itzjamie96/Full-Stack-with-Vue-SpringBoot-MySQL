@@ -4,7 +4,6 @@
             class="mx-auto"
             max-width="500px"
         >
-        {{test}}
             <v-card-text>
             <p class="headline text--primary">결제 정보 확인</p>
 
