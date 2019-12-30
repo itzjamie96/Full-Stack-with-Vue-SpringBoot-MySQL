@@ -13,4 +13,5 @@ public interface PetMapper {
 	int addPet(PetVO petVo);
 	int deletePet(int petNo);
 	int updatePet(int petNo);
+	
 }
