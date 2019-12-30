@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.salem.domain.vo.PaymentVO;
+import org.salem.domain.vo.TestVO;
 
 @Mapper
 public interface PaymentMapper {
@@ -16,5 +17,8 @@ public interface PaymentMapper {
 	public List<PaymentVO> showUserPayment(int userNo); 
 
 	public List<PaymentVO> showAllPayment(); 
+
+	public List<TestVO> test1(); 
+	
 
 }

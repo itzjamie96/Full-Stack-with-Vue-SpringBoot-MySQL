@@ -106,6 +106,7 @@
         <v-col lg="8">
           <h4>*필수항목을 꼭 입력해주세요</h4><br>
           <h1>지원자 정보</h1><br>
+          {{sitter.possibleDay}}
             <v-radio-group v-model="sitter.sitterGender" row>
               성별 :
               <v-radio label="남자" :value="true"></v-radio>
@@ -229,7 +230,7 @@ export default {
        deleteAlert: false,
        updateAlert: false,
        sitter:{
-         possibleDay:'',
+          possibleDay:'',
           sitterNo :'',
           sittingType:'',
           sitterName:'',
@@ -303,8 +304,6 @@ export default {
      this.sitter.sitterGender = params.row.sitterGender
      this.sitter.identityCheck ='http://localhost:1234/download/'+ params.row.identityCheck
      this.sitter.qualificationCheck = 'http://localhost:1234/download/'+ params.row.qualificationCheck
-     
-     
      this.sitter.possibleDay = params.row.possibleDay.split(',')
      /* console.log(this.sitter.possibleDay[3])
      console.log(this.sitter.possibleDay[2])
@@ -315,7 +314,7 @@ export default {
       this.$http.get(`http://localhost:1234/falseAllSitters`)
           .then( res =>{
             this.rows = res.data
-            /* console.log(res.data) */
+            console.log(res.data)
           })
           .catch(err => {
             alert("backand(falseAllSitters) 에러 확인")
@@ -327,7 +326,7 @@ export default {
      this.deleteAlert=false
      const No = sitterNo
      
-      this.$http.post(`http://localhost:1234/deleteSitter/${No}`).then(res =>{
+      this.$http.post(`http://localhost:1234/deleteSitter/${sitterNo}`).then(res =>{
         const idx = this.rows.findIndex(x => x.sitterNo === sitterNo)
               this.dialog=false
               this.rows.splice(idx, 1)
@@ -339,6 +338,7 @@ export default {
   update(){
      this.dialog=false
      this.updateAlert=false
+     this.sitter.possibleDay=String(this.sitter.possibleDay)
      this.$http.post('http://localhost:1234/updateSitter',this.sitter) 
               .then(res => { 
                 this.selectAll();

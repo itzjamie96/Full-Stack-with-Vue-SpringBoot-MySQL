@@ -9,7 +9,6 @@ import '@fortawesome/fontawesome-free/css/all.css'
 import moment from 'moment'
 import VueLocalStorage from 'vue-localstorage'
 
-
 Vue.prototype.$http = axios;
 
 Vue.use(VueLocalStorage)

@@ -3,7 +3,7 @@
      <v-col>
     <vue-good-table
     :columns="columns"
-    :rows="rows"
+    :rows="oneday"
     @on-row-click="onRowClick"
     max-height="500px"
     :line-numbers="true"
@@ -74,6 +74,7 @@
 <script>
 import 'vue-good-table/dist/vue-good-table.css'
 import { VueGoodTable } from 'vue-good-table'
+import {eventBus} from'@/main.js'
 
 export default {
     components: {
@@ -83,6 +84,7 @@ export default {
        dialog: false,
        deleteAlert: false,
        updateAlert: false,
+       oneday:[],
        user:{
        userNo :'',
        userEmail:'',
@@ -120,7 +122,10 @@ export default {
     };
   },
   created() {
-    this.selectAll();
+    eventBus.$on('onedayData', (home) =>{
+        this.oneday = home
+        console.log(this.oneday);
+    })
   },
   methods: {
   onRowClick(params) {
@@ -135,7 +140,7 @@ export default {
      this.user.userDate = params.row.userDate
   },
   selectAll(){
-      this.$http.get(`http://localhost:1234/userlist`)
+      this.$http.get(`http://localhost:1234/test`)
           .then( res =>{
             console.log(res.data)
             this.rows = res.data

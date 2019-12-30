@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.salem.domain.Mapper.SitterMapper;
 import org.salem.domain.file.FileResponse;
+import org.salem.domain.file.FileSystemStorageService;
 import org.salem.domain.file.StorageService;
 import org.salem.domain.vo.LoginVO;
 import org.salem.domain.vo.SearchIdVO;
@@ -30,6 +31,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class SitterController {
 	
 	//testing
+	
+	@Autowired
+	FileSystemStorageService fileService;
 	
 	@Autowired
 	SitterMapper sitterMapper;
@@ -133,7 +137,7 @@ return new FileResponse(name, uri, file.getContentType(), file.getSize());
 	
 	@PostMapping("/updateSitter")
 	public int updateSitter(@RequestBody SitterVO sitterVo) {
-		System.out.println("controller:"+sitterVo);
+		System.out.println(sitterVo);
 		return sitterMapper.updateSitter(sitterVo);
 	}
 	
