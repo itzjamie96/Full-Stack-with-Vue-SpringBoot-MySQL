@@ -23,10 +23,12 @@
     </template>
     <template v-slot:item.action="{ item }">
 
-      <!-- v-if 확인 필요 -->
-      <!-- 예약 날짜가 지난 시점에서만 리뷰쓰러가는 버튼 보임-->
+      
+      <!-- 예약 날짜가 지난 시점이고, 
+            reviewStatus가 false 일 때만 (review 미작성 상태) 
+            리뷰쓰러가는 버튼 보임-->
       <v-icon
-        v-if="(canWrite > calEndTime(item.endTime))"
+        v-if="(canWrite > calEndTime(item.endTime) && item.reviewStatus == false)"
         small
         class="mr-2"
         @click="writeReview(item)"
@@ -96,15 +98,6 @@ import axios from "axios"
 
        canWrite(){
         let today = new Date();
-
-        // let dd =today.getDate();
-        // let mm =today.getMonth()+1;
-        // let yyyy = today.getFullYear();
-        // let Hours = today.getHours();
-        // let minute = today.getMinutes();
-        // let Second = today.getSeconds();
-
-        // let ttoday = yyyy+"-"+mm+"-"+dd+" "+Hours+":"+minute+":"+Second
         return today
         }
     },

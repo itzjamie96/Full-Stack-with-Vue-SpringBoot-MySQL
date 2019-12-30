@@ -11,10 +11,10 @@
             <v-form @submit.prevent="onNewReservation" >
                 <v-row justify="center">
                     <v-col cols="12" sm="10">
-                        <v-select
+                        <v-select 
                             v-model="usersPets"
-                            :items="petList"
-                            multiple=""
+                            v-bind:items="petList"
+                            multiple
                             item-text="petName"
                             item-value="petList"
                             attach
@@ -205,6 +205,7 @@ export default {
    
   },
   methods: {
+      
       initialize() {
            const petNo = this.$route.params.petNo
            
