@@ -6,7 +6,6 @@
                 height="100%"
                 class="mb-5"
         >
-
         {{this.petList}}
             <v-form @submit.prevent="onNewReservation" >
                 <v-row justify="center">
@@ -43,7 +42,7 @@
                                 v-on="on"
                                 ></v-text-field>
                             </template>
-                            <v-date-picker v-model="date1" @input="menu1 = false"></v-date-picker>
+                            <v-date-picker v-model="date1" @input="menu1 = false" :min="date"></v-date-picker>
                         </v-menu>
                     </v-col>
                     <v-col cols="5">
@@ -62,7 +61,7 @@
                                 v-on="on"
                                 ></v-text-field>
                             </template>
-                            <v-date-picker v-model="date2" @input="menu2 = false"></v-date-picker>
+                            <v-date-picker v-model="date2" @input="menu2 = false" :min="selectableDate"></v-date-picker>
                         </v-menu>
                     </v-col>
                 </v-row>
@@ -78,7 +77,7 @@
                     </v-col>
                     <v-col cols="5">
                         <v-select
-                            :items="time"
+                            :items="selectableTime"
                             label="체크아웃 시간"
                             v-model="endTime"
                             id="endTime"
@@ -148,7 +147,7 @@ export default {
         sitterInfo: [],
         date: dt.toISOString().substr(0, 10), 
         date1: dt.toISOString().substr(0, 10), 
-        date2: dt.toISOString().substr(0, 10), 
+        date2: dt.toISOString().substr(0, 10),
         menu: false,
         modal: false,
         menu1: false,
@@ -201,6 +200,24 @@ export default {
 
     petNo() {
         return this.$route.params.petNo
+    },
+
+    selectableDate() {
+        let date = new Date(this.date1)
+        date.setDate(date.getDate() + 1)
+        return date.toISOString().substr(0, 10)
+    },
+
+    selectableTime() {
+        let times = []
+        let a = 0
+        for(let i = 0, length = this.time.length; i<length; i++){
+            if(this.time[i]>this.startTime){   
+                times[a] = this.time[i];
+                a++;
+            }
+        }
+        return times
     }
    
   },
