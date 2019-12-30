@@ -22,6 +22,12 @@
           </v-btn>
         </v-btn-toggle>
                 <v-alert
+                :value="sitterApp"
+                type="error"
+                >
+                승인 대기 상태입니다
+                </v-alert>
+                <v-alert
                 :value="isLoginError"
                 type="error"
                 >
@@ -117,9 +123,9 @@
             label="패스워드 입력"
             required
           ></v-text-field>
-          
+          <!-- :disabled="email.match(/.+@.+\..+/)===null || String(password).length<6" -->
           <v-btn
-          :disabled="email.match(/.+@.+\..+/)===null || String(password).length<6"
+          
           depressed 
           large
           block
@@ -213,7 +219,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(["isLogin","userInfo","isLoginError","role"]),
+        ...mapState(["isLogin","userInfo","isLoginError","role","sitterApp"]),
     
     },
     methods:{

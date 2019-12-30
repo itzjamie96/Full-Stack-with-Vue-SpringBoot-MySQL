@@ -9,12 +9,8 @@
   
     SELECT p.petno, p.userNo, p.breedNo, p.petName, p.petGender,
        p.petWeight,p.petAge, p.neutralization, p.petAnswer, p.petImg,
-<<<<<<< HEAD
-       b.dogBreed, b.breedInfo,u.userName
-=======
-       b.dogBreed, b.breedInfo,b.size, u.userName, u.userNo
 
->>>>>>> 06ed9777e39a898a9aca286a0485ee169cdcd473
+       b.dogBreed, b.breedInfo,b.size, u.userName, u.userNo
        FROM PET p JOIN USERS u
        ON p.userNo = u.userNo
        JOIN BREED b on p.breedNo = b.breedNo

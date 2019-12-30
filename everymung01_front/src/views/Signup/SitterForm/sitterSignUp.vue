@@ -2,10 +2,9 @@
     <v-container class="text-center">
       <div></div>
       <h1 class="text-center">펫시터 지원서</h1>
-      <v-card class="ml-12" max-width="350" outlined>
+      <v-card class="ml-12 pl-4" max-width="250" outlined>
     <v-radio-group v-model="SitterVO.sittingNo" row>
       <v-radio label="하루 시터" value="1"></v-radio>
-      <v-radio label="정기 시터" value="2"></v-radio>
       <v-radio label="위탁 시터" value="3"></v-radio>
     </v-radio-group>
     </v-card><br><br>
@@ -80,7 +79,7 @@
             @keydown="OpenBtnPassword(SitterVO.sitterPw)"
             v-model="SitterVO.sitterPw"
             label="사용할 패스워드"
-            type="number"
+            type="password"
             :rules="PasswordRules"
             required
           ></v-text-field>
@@ -227,7 +226,7 @@ export default {
       //시터 종류
       //
       //동영상
-       url: "https://www.youtube.com/watch?v=4JS70KB9GS0",
+       url: "https://www.youtube.com/watch?v=ihE8Wpa_Jis",
           previewImageSize: "maxresdefault",
       //
       //모집요강

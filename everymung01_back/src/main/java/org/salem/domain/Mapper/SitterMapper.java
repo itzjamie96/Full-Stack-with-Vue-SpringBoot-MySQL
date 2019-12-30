@@ -32,7 +32,7 @@ public interface SitterMapper {
 	
 	@Insert("INSERT INTO sitter (sittingNo,sitterEmail,sitterName,sitterPw,sitterPhone,sitterAddress,sitterImg1,sitterImg2,sitterImg3,sitterImg4,sitterImg5,possibleDay,sitterGender,sitterAge,profile,petProfile,identityCheck,qualificationCheck,approvalStatus,approvalDate)" + 
 			" VALUES" + 
-			" (#{sittingNo},#{sitterEmail},#{sitterName},#{sitterPw},#{sitterPhone},#{sitterAddress},#{sitterImg1},#{sitterImg2},#{sitterImg3},#{sitterImg4},#{sitterImg5},#{possibleDay},#{sitterGender},#{sitterAge},#{profile},'펫소개',1,1,1,sysdate())")
+			" (#{sittingNo},#{sitterEmail},#{sitterName},#{sitterPw},#{sitterPhone},#{sitterAddress},#{sitterImg1},#{sitterImg2},#{sitterImg3},#{sitterImg4},#{sitterImg5},#{possibleDay},#{sitterGender},#{sitterAge},#{profile},'펫소개',1,1,0,sysdate())")
 	public Integer addSitter(SitterVO vo);
 	
 	@Update("update sitter set identityCheck=#{identityCheck},qualificationCheck=#{qualificationCheck} where sitterEmail=#{sitterEmail}")
