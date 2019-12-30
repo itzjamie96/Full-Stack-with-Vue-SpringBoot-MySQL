@@ -104,39 +104,88 @@ export default new Vuex.Store({
       localStorage.setItem("role",state.role)
       let role = localStorage.getItem("role")
       
-      //전체 유저에서 해당 이메일로 유저를 찾는다.
-      //그 유저의 비밀번호와 입력된 비빌번호를 비교한다.
-      Axios.post(`${baseURL}/signin`+role,loginobj) 
-      .then(res => { 
-        console.log(res.config.data)
-        if(res.data.userEmail != null){
-          console.log(res.data.userEmail)
-          localStorage.setItem("email",loginobj.email)
-            
-            
-            commit('loginSuccess',res.data)
-            router.push({name:'uMyPage'})
-              //로그인 성공 시 마이페이지로 이동시켜 줌
-            }
-            else if(res.data.sitterEmail != null){
-              localStorage.setItem("email",loginobj.email)
-              commit('loginSuccess',res.data)
-              router.push({name:'sMyPage'})
-            }
-            else if(res.config.data[0] != null){
-              localStorage.setItem("email",loginobj.email)
-              commit('loginSuccess',res.config.data)
-              commit('triggerToggle',false)
-              router.push({name:'adminHome'})
-            }
-            else{
-              commit('loginError')
-            }
-          }) 
-          .catch(error => { 
-            console.log(error)
+
+      if(role === 'User'){
+        Axios.post(`${baseURL}/signinUser`,loginobj).then(res=> {
+           if(res.data.userEmail != null){
+            console.log(res.data.userEmail)
+                localStorage.setItem("email",loginobj.email)
+                  commit('loginSuccess',res.data)
+                  router.push({name:'uMyPage'})
+                    //로그인 성공 시 마이페이지로 이동시켜 줌
+           }
+           else{
             commit('loginError')
-          })
+           }
+           
+        }).catch(err => {
+          console.log(err)
+          commit('loginError')
+        })
+      }else if (role === 'Sitter'){
+        Axios.post(`${baseURL}/signinSitter`,loginobj).then(res=> {
+          if(res.data.sitterEmail != null){
+            localStorage.setItem("email",loginobj.email)
+                    commit('loginSuccess',res.data)
+                    router.push({name:'sMyPage'})
+          }
+          else{
+           commit('loginError')
+          }
+       }).catch(err => {
+         console.log(err)
+         commit('loginError')
+       })
+      }else if (role === 'Admin'){
+        Axios.post(`${baseURL}/signinAdmin`,loginobj).then(res=> {
+          if(res.data.adminId != null){
+            localStorage.setItem("email",loginobj.email)
+               commit('loginSuccess',res.data.adminId)
+               commit('triggerToggle',false)
+               router.push({name:'adminHome'})
+          }
+          else{
+           commit('loginError')
+          }
+       }).catch(err => {
+         console.log(err)
+         commit('loginError')
+       })
+      }else {
+        commit('loginError')
+      }
+      // Axios.post(`${baseURL}/signin`+role,loginobj) 
+      // .then(res => { 
+      //   console.log("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq")
+      //   console.log(res.data)
+      //   if(res.data.userEmail != null){
+      //     console.log(res.data.userEmail)
+      //     localStorage.setItem("email",loginobj.email)
+            
+            
+      //       commit('loginSuccess',res.data)
+      //       router.push({name:'uMyPage'})
+      //         //로그인 성공 시 마이페이지로 이동시켜 줌
+      //       }
+      //       else if(res.data.sitterEmail != null){
+      //         localStorage.setItem("email",loginobj.email)
+      //         commit('loginSuccess',res.data)
+      //         router.push({name:'sMyPage'})
+      //       }
+      //       else if(res.data.adminId !== null){
+      //         localStorage.setItem("email",loginobj.email)
+      //         commit('loginSuccess',res.data.adminId)
+      //         commit('triggerToggle',false)
+      //         router.push({name:'adminHome'})
+      //       }
+      //       else{
+      //         commit('loginError')
+      //       }
+      //     }) 
+      //     .catch(error => { 
+      //       console.log(error)
+      //       commit('loginError')
+      //     })
 
 
     },
@@ -144,7 +193,7 @@ export default new Vuex.Store({
       let password = '1234'
       let email =localStorage.getItem("email")
       let role = localStorage.getItem("role")
-        if(role === 'Admin'){
+        if(role === 'Admin' && email !== null){
         commit('triggerToggle',false)
         }
       console.log(email)
