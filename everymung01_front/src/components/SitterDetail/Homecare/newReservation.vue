@@ -208,6 +208,7 @@ export default {
         return date.toISOString().substr(0, 10)
     },
 
+    //git 존나 멍청
     selectableTime() {
         let times = []
         let a = 0
