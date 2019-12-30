@@ -21,7 +21,7 @@
 		INSERT INTO payment (sitterNo, startTime, endTime, request,  
 							paymentStatus, amount, paymentDate, paymentMethod, refundStatus, reviewStatus)
 		VALUES (#{sitterNo}, #{startTime}, #{endTime}, #{request}, 1, #{amount},
-				sysdate(), #{paymentMethod}, 0, 0)
+				sysdate(), 'kakapay', 0, 0)
 	</insert>
 	
 	<select id="showUserPayment" resultType="PaymentVO" parameterType="int">
@@ -35,7 +35,26 @@
 		INNER JOIN payment pay ON pay.paymentNo = r.paymentNo
 		INNER JOIN SITTER s ON s.sitterNo = pay.sitterNo
 		INNER JOIN SITTING_TYPE t ON t.sittingNo = s.sittingNo
-		WHERE u.userNo = #{userNo};
+		WHERE u.userNo = #{userNo}
 	</select>
+	
+	<select id="showPaymentNo" resultType="PaymentVO" parameterType="PaymentVO">
+		SELECT paymentNo
+		FROM payment
+		WHERE sitterNo = #{sitterNo}
+		AND startTime = #{startTime}
+		AND endTime = #{endTime}
+	</select>
+	
+	<insert id="addReservation" parameterType="int">
+		INSERT INTO reservation (petNo, paymentNo)
+		VALUES (#{petNo}, #{paymentNo})
+	</insert>
+	
+	<update id="updateReviewStatus" parameterType="int">
+		UPDATE payment
+		SET reviewStatus = 1
+		WHERE paymentNo = #{paymentNo}
+	</update>
 	
 </mapper>

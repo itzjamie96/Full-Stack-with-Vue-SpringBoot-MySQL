@@ -29,6 +29,7 @@
 import SitterProfile from '@/components/SitterDetail/Homecare/sitterProfile.vue'
 import SitterImg from '@/components/SitterDetail/Homecare/sitterImg'
 import NewReservation from '@/components/SitterDetail/Homecare/newReservation.vue'
+import Review from '@/components/SitterDetail/Homecare/review.vue'
 
 
 export default {

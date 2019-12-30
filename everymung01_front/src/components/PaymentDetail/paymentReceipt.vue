@@ -2,9 +2,9 @@
     <div>
         <v-card
             class="mx-auto"
-            max-width="344"
+            max-width="500px"
         >
-        
+        {{test}}
             <v-card-text>
             <p class="headline text--primary">결제 정보 확인</p>
 
@@ -18,15 +18,29 @@
                 </v-col>
             </v-row>
             <v-divider></v-divider>
-            <v-row justify="center" class="mt-3">
+             <v-row justify="center">
                 <v-col>
-                    <p>{{paymentObj.size}}&nbsp;X </p>
-
-                </v-col>
-                <v-col>   
-                    <p>{{paymentObj.dogBreed}}</p>
+                    <p class="text--primary">기본 금액</p>
                 </v-col>
             </v-row>
+            <v-row justify="left" 
+                v-for="pets in paymentVO.petDetailList"
+                :key="pets.petNo">
+
+                <v-col cols="3">
+                    <p>{{pets.size}}</p>
+                </v-col>
+                <v-col cols="3">
+                    <p>X</p>
+                </v-col>
+                <v-col cols="3">
+                    <p v-if="'{{pets.size}}===small'">3,000</p>
+                    <p v-else-if="'{{pets.size}}===medium'">5,000</p>
+                    <p v-else-if="'{{pets.size}}===large'">6,000</p>
+                </v-col>
+
+            </v-row>
+            <v-divider></v-divider>
             <v-row justify="center">
                 <v-col>
                     <p class="text--primary">예약 시간</p>
@@ -52,7 +66,7 @@
                         large
                         @click="$router.push({path: '/payment/' + paymentObj.paymentNo})"
                     >
-                    결제 - 다음 창 안만들었음
+                    결제하기
                     </v-btn>
                 </v-card-actions>
             </v-row>
@@ -72,16 +86,26 @@ export default {
    data() {
        return {
            paymentObj: [],
+           test: null
        }
+       
    },
 
    created() {
-        this.initialize()
+        this.initialize(), 
+        this.test = paymentVO.petDetailList
+
    },
    computed: {
        paymentNo() {
            return this.$route.params.paymentNo
        },
+       paymentVO() {
+           return this.$store.state.reservationList[0]
+       },
+        petVO() {
+           return this.paymentVO.petDetailList
+       }
 
 
    },

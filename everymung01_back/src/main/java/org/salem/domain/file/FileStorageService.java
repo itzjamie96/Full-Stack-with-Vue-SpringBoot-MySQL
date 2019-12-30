@@ -1,5 +1,17 @@
 package org.salem.domain.file;
 
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
+
 //@Service
 //public class FileStorageService { // 일반유저가 펫 이미지 추가및 자기 집 이미지 추가 관련클래스
 //

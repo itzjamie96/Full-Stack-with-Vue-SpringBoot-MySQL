@@ -5,20 +5,19 @@
             max-width="344"
         >
             <v-card-text>
-
-                {{
-                   paymentVO.usersPets.length     
-                }}
-
             <p class="headline text--primary">예약 정보 확인</p>
 
             <v-row justify="center">
-                <v-col>
+                <v-col cols="6">
                     <p class="text--primary">맡기실 반려동물</p>
 
                 </v-col>
-                <v-col>
-                    <p>{{String(paymentVO.usersPets)}}</p>
+                <v-col
+                    v-for="pets in paymentVO.petDetailList"
+                    :key="pets.petNo"
+                    cols="2"
+                >
+                    <p>{{pets.petName}}</p>
                 </v-col>
             </v-row>
             <v-row justify="center">
@@ -78,11 +77,16 @@ import Axios from 'axios'
 import {mapState,mapActions,mapGetters} from "vuex"
 
 export default {
+
    computed: {
        
        paymentVO() {
            return this.$store.state.reservationList[0]
        },
+       
+       petVO() {
+           return this.paymentVO
+       }
 
    }
 }

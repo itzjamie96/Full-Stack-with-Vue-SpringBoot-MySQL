@@ -51,8 +51,8 @@ import {mapState,mapActions} from "vuex"
         items: [
           { title: '예약내역', icon: 'mdi-home-city', link: '/uMyPage/userReservationList' },
           { title: '실시간 케어 보기', icon: 'mdi-account' , link: '/reservation'},
-          { title: '반려견 정보관리', icon: 'mdi-account' , link: '/uMyPage/petInfo/:userNo'},
-          { title: '계정관리', icon: 'mdi-account-group-outline' , link: '/reservation'},
+          { title: '반려견 정보관리', icon: 'mdi-account' , link: '/uMyPage/petInfo'},
+          { title: '계정관리', icon: 'mdi-account-group-outline' , link: '/uMyPage/uAccount'},
         ],
       }
     },
