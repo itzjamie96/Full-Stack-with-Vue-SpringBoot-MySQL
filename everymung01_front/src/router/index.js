@@ -253,7 +253,7 @@ const routes = [
       },
       //마이페이지/계정관리
       {
-        path:'/myPageSetting',
+        path:'/uMyPage/uAccount',
         name:'myPgeSetting',
         component:MyPageSetting
       },

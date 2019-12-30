@@ -9,7 +9,6 @@ import org.salem.domain.vo.LoginVO;
 import org.salem.domain.vo.SearchIdVO;
 import org.salem.domain.vo.SearchPwVO;
 import org.salem.domain.vo.SitterVO;
-import org.salem.domain.vo.UsersVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;

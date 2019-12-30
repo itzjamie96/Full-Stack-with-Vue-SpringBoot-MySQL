@@ -6,6 +6,7 @@
         >
             <v-card-text>
 
+
             <p class="headline text--primary">예약 정보 확인</p>
 
             <v-row justify="left">
@@ -88,6 +89,12 @@ import {mapState,mapActions,mapGetters} from "vuex"
 
 export default {
 
+    data() {
+        return {
+
+        }
+    },
+
    computed: {
        
        paymentVO() {
@@ -95,7 +102,7 @@ export default {
        },
        
        petVO() {
-           return this.paymentVO
+           return this.paymentVO.petDetailList
        }
 
    }

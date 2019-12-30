@@ -12,5 +12,8 @@ public interface PetMapper {
 	List<PetVO> showPetDetail(int petNo);
 	int addPet(PetVO petVo);
 	int deletePet(int petNo);
-	int updatePet(int petNo);
+	void updatePet(PetVO petvo);
+	PetVO getPetInfo(int petNo);
+	
+	
 }

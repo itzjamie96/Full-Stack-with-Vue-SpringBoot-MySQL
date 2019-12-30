@@ -4,7 +4,7 @@
             class="mx-auto"
             max-width="500px"
         >
-        
+        {{test}}
             <v-card-text>
             <p class="headline text--primary">결제 정보 확인</p>
 
@@ -23,7 +23,7 @@
                     <p class="text--primary">기본 금액</p>
                 </v-col>
             </v-row>
-            <v-row justify="left" class="" 
+            <v-row justify="left" 
                 v-for="pets in paymentVO.petDetailList"
                 :key="pets.petNo">
 
@@ -34,9 +34,9 @@
                     <p>X</p>
                 </v-col>
                 <v-col cols="3">
-                    <p v-if="'{{pets.dogBreed}}===small'">3,000</p>
-                    <p v-else-if="'{{pets.dogBreed}}===medium'">5,000</p>
-                    <p v-else-if="'{{pets.dogBreed}}===large'">6,000</p>
+                    <p v-if="'{{pets.size}}===small'">3,000</p>
+                    <p v-else-if="'{{pets.size}}===medium'">5,000</p>
+                    <p v-else-if="'{{pets.size}}===large'">6,000</p>
                 </v-col>
 
             </v-row>
@@ -86,12 +86,15 @@ export default {
    data() {
        return {
            paymentObj: [],
+           test: null
        }
        
    },
 
    created() {
-        this.initialize()
+        this.initialize(), 
+        this.test = paymentVO.petDetailList
+
    },
    computed: {
        paymentNo() {
@@ -100,6 +103,9 @@ export default {
        paymentVO() {
            return this.$store.state.reservationList[0]
        },
+        petVO() {
+           return this.paymentVO.petDetailList
+       }
 
 
    },

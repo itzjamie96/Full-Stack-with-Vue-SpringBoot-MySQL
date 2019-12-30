@@ -81,6 +81,10 @@ export default new Vuex.Store({
       state.reservationList=[],
       state.reservationList.push(payload)
     },
+    //마이페이지 중 계정관리 정보 받기 
+    userInfoReading(state, payload) {
+      state.userInfo = payload
+    }
 
   },
   actions: { 
@@ -193,8 +197,7 @@ export default new Vuex.Store({
 
     featuredPics(state, getters) {   //메인에 걸 사진들만 
       return getters.mainPics.slice(0,5)
-    },
-
+    }
 
     }
 
