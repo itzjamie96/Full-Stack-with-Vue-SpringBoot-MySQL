@@ -52,9 +52,9 @@
 
 
 <script>
-import{ mapState } from 'vuex'
 import axios from 'axios'
 import NavBar from '@/components/userNavigation.vue'
+import {mapState} from 'vuex'
 
 export default {
    data(){
@@ -73,8 +73,9 @@ export default {
        console.log("created()")
        this.init()
    },
-   computed:{
-        ...mapState(['userInfo'])
+
+   computed: {
+       ...mapState(["userInfo"]),
    },
    methods:{
 

@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class AdminVO {
 
-	private String email;
-	private String password;
+	private String adminId;
+	private String adminPw;
 }

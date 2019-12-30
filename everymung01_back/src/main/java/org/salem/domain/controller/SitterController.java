@@ -9,6 +9,7 @@ import org.salem.domain.vo.LoginVO;
 import org.salem.domain.vo.SearchIdVO;
 import org.salem.domain.vo.SearchPwVO;
 import org.salem.domain.vo.SitterVO;
+import org.salem.domain.vo.UsersVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -168,6 +169,7 @@ return new FileResponse(name, uri, file.getContentType(), file.getSize());
 	
 	@PostMapping("signupSitter")
 	public String signup(@RequestBody SitterVO vo) {
+		System.out.println(vo);
 		String msg="";
 		if(sitterMapper.showUserDetailLogin(vo.getSitterEmail())== null) {
 			msg="완료";
@@ -179,19 +181,14 @@ return new FileResponse(name, uri, file.getContentType(), file.getSize());
 		return msg;
 	}
 	
-	@RequestMapping("/showSitterDetail/{sitterNo}")  //시터 상세페이지 
+	@RequestMapping("/showSitterDetail/{sitterNo}")
 	public SitterVO showSitterDetail(@PathVariable int sitterNo) {
 		return (SitterVO) sitterMapper.showSitterDetail(sitterNo);
 	}
 	
-	@RequestMapping("/showDaySitters")  //하루시터 리스트 출력
+	@RequestMapping("/showDaySitters")
 	public List<SitterVO> showDaySitters() {
 		return (List<SitterVO>) sitterMapper.showDaySitters();
-	}
-	
-	@RequestMapping("/showHomeSitters")  //위탁시터 리스트 출력
-	public List<SitterVO> showHomeSitters() {
-		return (List<SitterVO>) sitterMapper.showHomeSitters();
 	}
 
 }

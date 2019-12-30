@@ -12,10 +12,12 @@ import VueGoogleCharts from 'vue-google-charts'
 import '@mdi/js'
 
 
+
+
 Vue.prototype.$http = axios;
 
 Vue.use(VueLocalStorage)
-Vue.use(VueGoogleCharts)
+
 Vue.config.productionTip = false
 
 export const eventBus = new Vue()

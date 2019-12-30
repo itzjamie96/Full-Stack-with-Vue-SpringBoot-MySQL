@@ -39,7 +39,7 @@
 
                 </v-col>
                 <v-col>
-                    <p>{{paymentVO.startTime | formatTime}} - {{paymentVO.endTime | formatTime}}</p>
+                    <p>{{paymentObj.startTime | formatTime}} - {{paymentObj.endTime | formatTime}}</p>
                 </v-col>
             </v-row>
             <v-divider></v-divider>
@@ -56,7 +56,7 @@
                 <v-card-actions>
                     <v-btn
                         large
-                        @click="startKakaoPay"
+                        @click="$router.push({path: '/payment/' + paymentObj.paymentNo})"
                     >
                     결제하기
                     </v-btn>
@@ -105,22 +105,20 @@ export default {
        initialize() {
             const paymentNo = this.$route.params.paymentNo;
 
+
+        //    Axios
+        //     .get(`http://localhost:1234/showDetailPayment/${paymentNo}`)
+        //     .then(res => {
+        //         this.paymentObj = res.data
+        //         console.log(res);
+        //     })
+        //     .catch(err => {
+        //         console.log(err);
+        //     })
+
        },
        parseDate() {
-           const date = paymentVO.startTime
-       },
-
-       startKakaoPay() {
-           console.log(this.paymentVO)
-           Axios
-            .post('http://localhost:1234/kakaoPay',this.paymentVO)
-            .then(res => {
-                console.log(res);
-                window.open(res.data)
-            })
-            .catch(err => {
-                console.log(err);
-            })
+           const date = paymentObj.startTime
        }
 
 

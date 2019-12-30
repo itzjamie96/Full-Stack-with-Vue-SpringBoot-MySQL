@@ -26,7 +26,7 @@
 
                 </v-col>
                 <v-col>
-                   <p>{{paymentVO.paymentDate}}</p>
+                   <p>{{paymentVO.date}}</p>
                 </v-col>
             </v-row>
             <v-row justify="center">
@@ -62,7 +62,7 @@
                     <p class="text--primary">요청사항</p>
                 </v-col>
                 <v-col>
-                   <p>{{paymentVO.request}}</p>
+                   <p>{{paymentVO.description}}</p>
                 </v-col>
             </v-row>
 

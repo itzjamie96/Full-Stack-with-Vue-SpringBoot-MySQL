@@ -1,10 +1,10 @@
 <template>
     <v-container class="text-center">
+      <div></div>
       <h1 class="text-center">펫시터 지원서</h1>
-      <v-card class="ml-12" max-width="350" outlined>
+      <v-card class="ml-12 pl-4" max-width="250" outlined>
     <v-radio-group v-model="SitterVO.sittingNo" row>
       <v-radio label="하루 시터" value="1"></v-radio>
-      <v-radio label="정기 시터" value="2"></v-radio>
       <v-radio label="위탁 시터" value="3"></v-radio>
     </v-radio-group>
     </v-card><br><br>
@@ -59,14 +59,16 @@
         <v-row justify="center">
         <v-col lg="8">
           <h4>*필수항목을 꼭 입력해주세요</h4><br>
+          {{Trigger}}
        <h1>지원자 정보</h1><br>
           성별 : 
-          <v-radio-group v-model="SitterVO.sittetGender" row>
-      <v-radio label="남자" value=true></v-radio>
-      <v-radio label="여자" value=false></v-radio>
+          <v-radio-group v-model="SitterVO.sitterGender" row>
+      <v-radio label="남자" :value="true"></v-radio>
+      <v-radio label="여자" :value="false"></v-radio>
     </v-radio-group>
         
             <v-text-field
+            @keydown="OpenBtnEmail(SitterVO.sitterEmail)"
             v-model="SitterVO.sitterEmail"
             label="이메일"
             :rules="emailRules"
@@ -74,13 +76,16 @@
           ></v-text-field>
           
             <v-text-field
+            @keydown="OpenBtnPassword(SitterVO.sitterPw)"
             v-model="SitterVO.sitterPw"
             label="사용할 패스워드"
+            type="password"
             :rules="PasswordRules"
             required
           ></v-text-field>
           
             <v-text-field
+            @keydown="OpenBtnName(SitterVO.sitterName)"
             v-model="SitterVO.sitterName"
             :rules="nameRules"
             label="이름"
@@ -90,10 +95,12 @@
             <v-text-field
             v-model="SitterVO.sitterAge"
             label="나이"
+            type="number"
             required
           ></v-text-field>
           
             <v-text-field
+            @keydown="OpenBtnPhone(SitterVO.sitterPhone)"
             v-model="SitterVO.sitterPhone"
             :rules="PhoneRules"
             label="핸드폰번호"
@@ -135,7 +142,6 @@
           row-height="45"
         ></v-textarea>
         <br>
-        <div>{{img1}}<br>{{img2}}</div>
         <v-card>
         <p>신원확인은 필수입니다.신분증 사본을 반드시 첨부해주세요</p>
         <p>보내주신 신분증과 저격증은 3개원 보관 후 폐기됩니다.</p>
@@ -147,8 +153,14 @@
           <br>
         <v-row justify="center">
           <h1>{{msg}}</h1>
-          <h1>{{SitterVO.sitterEmail}}</h1>
-        <v-btn  @click="submit($router)" depressed large>제출</v-btn>
+        <v-btn 
+        :disabled="Trigger.Name===false||Trigger.Phone===false||Trigger.Email===false||Trigger.password===false
+        ||SitterVO.sitterAge===null||SitterVO.sitterAddress===null||img1===null||img2===null"
+        @click="submit($router)"
+        depressed 
+        large
+        >
+         제출</v-btn>
         </v-row>
   </v-col>
   </v-row>
@@ -173,6 +185,12 @@ export default {
   
   data(){
     return{
+      Trigger:{
+        Name:false,
+        Phone:false,
+        Email : false,
+        password : false,
+      },
       emailRules: [
                         v => !!v || 'E-mail is required',
                         v => /.+@.+\..+/.test(v) || '이메일 형식에 맞지 않습니다.',
@@ -208,7 +226,7 @@ export default {
       //시터 종류
       //
       //동영상
-       url: "https://www.youtube.com/watch?v=4JS70KB9GS0",
+       url: "https://www.youtube.com/watch?v=ihE8Wpa_Jis",
           previewImageSize: "maxresdefault",
       //
       //모집요강
@@ -292,18 +310,22 @@ axios.post( `${baseURL}/upload-file/identityCheck/`+sitterEmail,
        }) 
        .catch(error => { 
          console.log(error)
-       })
-    
-
-
- 
-  
-
- 
-  
-
+       })    
     },
-    
+    OpenBtnName(SitterName){
+        let zz =String(SitterName).length
+        zz<=9 ? this.Trigger.Name=true : this.Trigger.Name=false
+      },
+    OpenBtnPhone(SitterPhone){
+        String(SitterPhone).length ===10 ? this.Trigger.Phone=true : this.Trigger.Phone=false
+      },
+      OpenBtnEmail(SitterEmail){
+        let regex =SitterEmail.match(/.+@.+\..+/)
+        regex !==null ? this.Trigger.Email=true : this.Trigger.Email=false
+      },
+      OpenBtnPassword(SitterPassword){
+        String(SitterPassword).length>=5 ? this.Trigger.password=true : this.Trigger.password=false
+      },
   }
   ,
   computed:{

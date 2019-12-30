@@ -20,9 +20,9 @@
     <v-toolbar flat>
     <v-toolbar-title primary-title class="layout justify-center"><i class="fas fa-paw"></i><b>에브리멍 회원가입</b></v-toolbar-title>
     </v-toolbar>
-    
     <div class="pa-3">
         <v-text-field
+        @keydown="OpenBtnName(userName)"
                 v-model="userName"
                 :rules="nameRules"
             label="이름"
@@ -41,11 +41,13 @@
           ></v-text-field>
 
         <v-text-field
+        @keydown="OpenBtnPhone(userPhone)"
                 v-model="userPhone"
                 :rules="PhoneRules"
             label="핸드폰"
           ></v-text-field>
                 <v-text-field
+                @keydown="OpenBtnEmail(userEmail)"
                 v-model="userEmail"
                 :rules="emailRules"
             label="이메일"
@@ -65,7 +67,8 @@
           ></v-text-field>
           <b>{{checkP}}</b>
           <v-btn
-          :disabled="userPw ===null || userPw !== userPwRepeat"
+          :disabled="userPw ===null || userPw !== userPwRepeat || Trigger.Name===false||Trigger.Phone===false||Trigger.Email===false||
+          Trigger.password===false||userAddress===null"
           depressed 
           large
           block
@@ -113,10 +116,16 @@ export default {
   },
     data() {
         return {
+          Trigger:{
+            Name : false,
+            Phone : false,
+            Email : false,
+            password : false,
+          },
             userAddress:null,
-            userPhone:null,
-            userName : null,
-            userEmail :null,
+            userPhone:'',
+            userName : '',
+            userEmail :'',
             userPw : null,
             userPwRepeat : null,
             isSignUp : false,
@@ -145,13 +154,15 @@ export default {
     computed: {
       checkP(){
           if(this.userPw !==null&&this.userPwRepeat !==null&&this.userPw===this.userPwRepeat)
-            this.message="비밀번호가 같습니다."
+            {this.message="비밀번호가 같습니다."
+            this.Trigger.password =true}
         else if(this.userPw !== this.userPwRepeat)
             this.message="비밀번호가 다릅니다"
             else
             this.message=""
         return this.message
-      }
+      },
+      
 
     },
     methods:{
@@ -184,6 +195,17 @@ export default {
        .catch(error => { 
          console.log(error)
        })
+      },
+      OpenBtnName(userName){
+        let zz =String(userName).length
+        zz<=9 ? this.Trigger.Name=true : this.Trigger.Name=false
+      },
+      OpenBtnPhone(userPhone){
+        String(userPhone).length ===10 ? this.Trigger.Phone=true : this.Trigger.Phone=false
+      },
+      OpenBtnEmail(userEmail){
+        let regex =userEmail.match(/.+@.+\..+/)
+        regex !==null ? this.Trigger.Email=true : this.Trigger.Email=false
       }
 
     }

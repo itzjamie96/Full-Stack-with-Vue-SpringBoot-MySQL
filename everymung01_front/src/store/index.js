@@ -15,6 +15,7 @@ export default new Vuex.Store({
     userInfo:null,
     isLogin : false,
     isLoginError: false,
+    sitterApp:false,
     //로그인 끝
 
     //메인페이지 사진 박아놓은 예시
@@ -43,6 +44,11 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    sitterAp(state){
+      state.isLogin =false
+      state.isLoginError=false
+      state.sitterApp=true
+    },
     //트리거 관리자 페이지 / main페이지 헤더 구별
     triggerToggle(state,payload){
       state.trigger=payload
@@ -55,17 +61,20 @@ export default new Vuex.Store({
     loginSuccess(state,payload){
       state.isLogin=true
       state.isLoginError=false
+      state.sitterApp=false
       state.userInfo=payload
       
     },
     //로그인이 실패했을때
     loginError(state){
       state.isLogin=false
+      state.sitterApp=false
       state.isLoginError=true
     },
     logout(state){ //$store.commit('logout')으로 접근할 수 있음
       state.isLogin=false
       state.isLoginError=false
+      state.sitterApp=false
       state.userInfo=null
       localStorage.removeItem("email")
       localStorage.removeItem("role")
@@ -124,13 +133,16 @@ export default new Vuex.Store({
         })
       }else if (role === 'Sitter'){
         Axios.post(`${baseURL}/signinSitter`,loginobj).then(res=> {
-          if(res.data.sitterEmail != null){
+          if(res.data.sitterEmail != null && res.data.approvalStatus === true){
             localStorage.setItem("email",loginobj.email)
                     commit('loginSuccess',res.data)
                     router.push({name:'sMyPage'})
           }
+          else if(res.data.sitterEmail != null && res.data.approvalStatus === false){
+           commit('sitterAp')
+          }
           else{
-           commit('loginError')
+            commit('loginError')
           }
        }).catch(err => {
          console.log(err)

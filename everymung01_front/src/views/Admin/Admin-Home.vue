@@ -1,5 +1,5 @@
 <template>
   <div>
-    Home
+    어드민 홈
   </div>
 </template>

@@ -15,5 +15,4 @@ public interface PetMapper {
 	void updatePet(PetVO petvo);
 	PetVO getPetInfo(int petNo);
 	
-	
 }

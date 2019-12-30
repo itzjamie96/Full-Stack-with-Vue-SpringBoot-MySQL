@@ -135,6 +135,7 @@ export default {
         timeStep: '00:00',
         time: ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'],
         petList: [],
+        
         usersPets: [],
         description: '',
         startTime: '',
@@ -207,7 +208,7 @@ export default {
             paymentDate: this.date,
             startTime: this.date + " "+ this.startTime,
             endTime: this.date + " "+ this.endTime,
-            request: this.description,
+            description: this.description,
             userNo: this.userInfo.userNo,
             userAddress: this.userInfo.userAddress,
             sitterNo: this.sitterInfo.sitterNo,
@@ -215,9 +216,9 @@ export default {
             sitterName: this.sitterInfo.sitterName,
             sitterPhone: this.sitterInfo.sitterPhone,
             sitterAddress: this.sitterInfo.sitterAddress,
-            // petNo: this.petList.petNo,
-            // petName: this.petList.petName,
-            // size: this.petList.size,
+            petNo: this.petList.petNo,
+            petName: this.petList.petName,
+            size: this.petList.size,
             
             
         }

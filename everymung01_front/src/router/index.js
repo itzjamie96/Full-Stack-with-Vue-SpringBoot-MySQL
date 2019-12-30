@@ -22,7 +22,7 @@ const onlyAuthUser = (to, from, next) => { //라우터 가드 선언
     if (store.state.isLogin === false) {
         //로그인이 안된 유저는 마이페이지를 드갈수 없게 해야함
         alert('로그인을 하지 않았습니다.')
-        next('/')
+        next('/signin')
     } else {
         next()
     }
@@ -256,15 +256,7 @@ const routes = [
         path:'/uMyPage/uAccount',
         name:'myPgeSetting',
         component:MyPageSetting
-      },
-      
-      //kakaopay 성공 시 넘어가는 페이지
-      {
-        path: '/kakaoPaySuccess',
-        name: 'KakaoPaySuccess',
-        component: () =>
-            import ( /* webpackChunkName: "UserReservationList" */ '../views/Payment/kakaoPaySuccess.vue')
-    },
+      }
 
 ]
 
