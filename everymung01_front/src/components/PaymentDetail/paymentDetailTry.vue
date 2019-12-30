@@ -15,7 +15,7 @@
                 <v-col
                     v-for="pets in paymentVO.petDetailList"
                     :key="pets.petNo"
-                    cols="2"
+                    cols="1"
                 >
                     <p>{{pets.petName}}</p>
                 </v-col>

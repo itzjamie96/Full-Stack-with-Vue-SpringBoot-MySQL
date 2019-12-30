@@ -26,17 +26,10 @@
                 v-for="pets in paymentVO.petDetailList"
                 :key="pets.petNo">
 
-                <v-col cols="3">
-                    <p>{{pets.size}}</p>
+                <v-col >
+                    <p>{{pets.size}} X </p>
                 </v-col>
-                <v-col cols="3">
-                    <p>X</p>
-                </v-col>
-                <v-col cols="3">
-                    <p v-if="'{{pets.size}}===small'">3,000</p>
-                    <p v-else-if="'{{pets.size}}===medium'">5,000</p>
-                    <p v-else-if="'{{pets.size}}===large'">6,000</p>
-                </v-col>
+
 
             </v-row>
             <v-divider></v-divider>

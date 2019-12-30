@@ -9,7 +9,7 @@
   
     SELECT p.petNo, p.userNo, p.breedNo, p.petName, p.petGender,
        p.petWeight,p.petAge, p.neutralization, p.petAnswer, p.petImg,
-       b.dogBreed, b.breedInfo,b.size, u.userName, u.userNo
+       b.dogBreed, b.size, u.userName, u.userNo
 
        FROM PET p JOIN USERS u
        ON p.userNo = u.userNo
@@ -20,8 +20,7 @@
   
   <insert id="addPet"  parameterType="org.salem.domain.vo.PetVO" >
     
-    INSERT INTO PET(userNo, breedNo, petName, petGender, petWeight, petAge,
-                neutralization, petAnswer ) VALUES
+    INSERT INTO PET(userNo, breedNo, petName, petGender, petWeight, petAge, neutralization, petAnswer ) VALUES
 (#{userNo}, #{breedNo}, #{petName}, #{petGender}, #{petWeight}, #{petAge}, #{neutralization}, #{petAnswer} );
   
   </insert>

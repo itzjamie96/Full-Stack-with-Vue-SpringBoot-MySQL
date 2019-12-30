@@ -14,7 +14,7 @@
 
             <v-list-item-content>
               <v-list-item-title>{{this.userInfo.userName}}</v-list-item-title>
-              <v-list-item-subtitle>유저 타입</v-list-item-subtitle>
+              <v-list-item-subtitle>일반 유저</v-list-item-subtitle>
             </v-list-item-content>
             
             
