@@ -51,4 +51,6 @@
 		INNER JOIN SITTING_TYPE t ON t.sittingNo = s.sittingNo
 	</select>
 	
+	
+	
 </mapper>
