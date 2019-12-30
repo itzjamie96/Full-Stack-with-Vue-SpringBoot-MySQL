@@ -9,7 +9,7 @@
   
     SELECT p.petno, p.userNo, p.breedNo, p.petName, p.petGender,
        p.petWeight,p.petAge, p.neutralization, p.petAnswer, p.petImg,
-       b.dogBreed, b.breedInfo,u.userName
+       b.dogBreed, b.breedInfo,b.size, u.userName
        FROM PET p JOIN USERS u
        ON p.userNo = u.userNo
        JOIN BREED b on p.breedNo = b.breedNo

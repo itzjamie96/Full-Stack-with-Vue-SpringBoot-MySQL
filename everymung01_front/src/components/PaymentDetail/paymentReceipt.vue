@@ -18,15 +18,29 @@
                 </v-col>
             </v-row>
             <v-divider></v-divider>
-            <v-row justify="center" class="mt-3">
+             <v-row justify="center">
                 <v-col>
-                    <p>{{paymentVO.size}}&nbsp;X </p>
-
-                </v-col>
-                <v-col>   
-                    <p>{{paymentVO.dogBreed}}</p>
+                    <p class="text--primary">기본 금액</p>
                 </v-col>
             </v-row>
+            <v-row justify="left" class="" 
+                v-for="pets in paymentVO.petDetailList"
+                :key="pets.petNo">
+
+                <v-col cols="3">
+                    <p>{{pets.size}}</p>
+                </v-col>
+                <v-col cols="3">
+                    <p>X</p>
+                </v-col>
+                <v-col cols="3">
+                    <p v-if="'{{pets.dogBreed}}===small'">3,000</p>
+                    <p v-else-if="'{{pets.dogBreed}}===medium'">5,000</p>
+                    <p v-else-if="'{{pets.dogBreed}}===large'">6,000</p>
+                </v-col>
+
+            </v-row>
+            <v-divider></v-divider>
             <v-row justify="center">
                 <v-col>
                     <p class="text--primary">예약 시간</p>
@@ -73,6 +87,7 @@ export default {
        return {
            paymentObj: [],
        }
+       
    },
 
    created() {
