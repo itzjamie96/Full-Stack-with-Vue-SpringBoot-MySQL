@@ -7,7 +7,6 @@
                 class="mb-5"
         >
 
-        {{this.petList}}
             <v-form @submit.prevent="onNewReservation" >
                 <v-row justify="center">
                     <v-col cols="12" sm="10">
@@ -181,6 +180,22 @@ export default {
 
     petNo() {
         return this.$route.params.petNo
+    },
+    selectableDate() {
+        let date = new Date(this.date1)
+        date.setDate(date.getDate() + 1)
+        return date.toISOString().substr(0, 10)
+    },
+    selectableTime() {
+        let times = []
+        let a = 0
+        for(let i = 0, length = this.time.length; i<length; i++){
+            if(this.time[i]>this.startTime){   
+                times[a] = this.time[i];
+                a++;
+            }
+        }
+        return times
     }
    
   },
@@ -216,9 +231,9 @@ export default {
             sitterName: this.sitterInfo.sitterName,
             sitterPhone: this.sitterInfo.sitterPhone,
             sitterAddress: this.sitterInfo.sitterAddress,
-            petNo: this.petList.petNo,
-            petName: this.petList.petName,
-            size: this.petList.size,
+            // petNo: this.petList.petNo,
+            // petName: this.petList.petName,
+            // size: this.petList.size,
             
             
         }

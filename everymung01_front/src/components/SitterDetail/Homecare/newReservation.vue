@@ -130,7 +130,7 @@
 
 <script>
 import axios from "axios"
-
+import {mapState,mapActions} from "vuex"
 const dt = new Date();
 
 export default {
@@ -164,8 +164,7 @@ export default {
   },
   computed: {
     formIsValid() {
-      return this.title !== '' && this.location !== ''
-      && this.imageUrl !=='' && this.description !== ''
+      return this.description !== '' && this.userPets !== '' && this.startTime !== '' && this.endTime !== ''
     },
     minutesToZero(dt) {
         return (dt.getMinutes() < 10 ? '0 ' : '') + (dt.getMinutes() < 10 ? '0 ' : '')

@@ -16,8 +16,10 @@
                 </v-col>
             </v-row>
             
-            <v-row>
-                <div>REVIEWS</div>
+           <v-row>
+                <v-col cols="6">
+                    <review/>
+                </v-col>
             </v-row>
         </v-card>
     
@@ -37,7 +39,8 @@ export default {
    components: {
        'sitter-profile': SitterProfile,
        'sitter-img' : SitterImg,
-       'new-reservation' : NewReservation
+       'new-reservation' : NewReservation,
+       'review' : Review
    }
 }
 
