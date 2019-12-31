@@ -190,5 +190,11 @@ return new FileResponse(name, uri, file.getContentType(), file.getSize());
 	public List<SitterVO> showDaySitters() {
 		return (List<SitterVO>) sitterMapper.showDaySitters();
 	}
+	
+	@RequestMapping("/showHomeSitters")
+	public List<SitterVO> showHomeSitters() {
+		return (List<SitterVO>) sitterMapper.showHomeSitters();
+	}
+
 
 }

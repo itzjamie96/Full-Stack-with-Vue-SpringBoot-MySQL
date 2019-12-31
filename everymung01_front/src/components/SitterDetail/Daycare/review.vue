@@ -19,9 +19,13 @@
 
             <v-list-item-content class="mx-auto">
                 <p class="font-weight-bold">{{review.userName}}</p>
-                <p class="font-weight-bold ">{{review.reviewDate}}</p> 
-                <p class="font-weight-bold">{{review.stars}}</p>
-                <p class="font-weight-bold">{{review.reviewContent}}</p>
+                <p class="subtitle-1 ">{{review.reviewDate}}</p> 
+                <v-rating
+                      v-model="review.stars"
+                      background-color="orange lighten-3"
+                      color="orange"
+                ></v-rating>
+                <p class="subtitle-1 ">{{review.reviewContent}}</p>
             </v-list-item-content>
 
             </v-list-item>
@@ -38,6 +42,13 @@
             <v-form @submit.prevent="addReview" >
 
                 <v-row justify="center">
+
+                   <v-rating
+                      v-model="reviewVO.stars"
+                      background-color="orange lighten-3"
+                      color="orange"
+                    ></v-rating>
+
                     <v-col cols="10">
                         <v-textarea
                         name="reviewContent"
@@ -75,9 +86,10 @@ export default {
         reviewVO: {
             paymentNo: '',
             reviewContent: '',
-            stars: '',
+            stars: null,
             reviewDate: ''
         },
+        rating: null
       }
     },
     created(){ 

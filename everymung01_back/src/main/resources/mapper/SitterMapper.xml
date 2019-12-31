@@ -38,4 +38,16 @@
 		WHERE sittingType = 'daycare'; 
 	</select>
 	
+	<select id="showHomeSitters" resultType="SitterVO">
+		SELECT 
+			sitterNo, sittingType, sitterEmail, sitterName,  
+			sitterAddress, sitterImg1, sitterImg2, sitterImg3, sitterImg4, 
+			sitterImg5, possibleDay, sitterGender, sitterAge, profileTitle, profile, petProfile, 
+			approvalStatus
+		FROM sitter
+		JOIN sitting_type AS type
+		ON (sitter.sittingNo = type.sittingNo)
+		WHERE sittingType = 'home'; 
+	</select>
+	
 </mapper>

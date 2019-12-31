@@ -53,7 +53,7 @@ export default {
 
     methods:{
       initialize(){//DB와 연동
-        axios.get('http://localhost:1234/showAllSitters')
+        axios.get('http://localhost:1234/showHomeSitters')
           .then(res => {
             this.sitterList=res.data //객체에 DB에서 받은 데이터를 넣어줌
             console.log(res);

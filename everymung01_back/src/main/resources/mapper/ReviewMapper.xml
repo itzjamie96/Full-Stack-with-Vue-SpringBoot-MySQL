@@ -19,4 +19,15 @@
 		VALUES (#{paymentNo}, #{reviewContent}, #{stars}, SYSDATE());
 	</insert>
 	
+	<select id="showFeaturedReview" resultType="ReviewVO">
+		SELECT re.reviewNo, u.userName , re.reviewContent, re.stars, re.reviewDate
+		FROM review re
+		INNER JOIN payment p ON re.paymentNo = p.paymentNo 
+		INNER JOIN reservation r ON r.paymentNo = p.paymentNo
+		INNER JOIN pet ON pet.petNo = r.petNo
+		INNER JOIN users u ON u.userNo = pet.userNo
+		INNER JOIN sitter s ON s.sitterNo = p.sitterNo
+		WHERE stars=5;
+	</select>
+	
 </mapper>

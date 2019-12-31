@@ -1,5 +1,6 @@
 package org.salem.domain.controller;
 
+
 import org.salem.domain.Mapper.AdminMapper;
 import org.salem.domain.vo.AdminVO;
 import org.salem.domain.vo.LoginVO;

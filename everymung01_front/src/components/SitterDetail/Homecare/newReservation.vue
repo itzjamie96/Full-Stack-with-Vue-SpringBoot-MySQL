@@ -1,5 +1,6 @@
 <template>
     <div>
+        
         <v-card 
                 color="green"
                 height="100%"
@@ -69,12 +70,16 @@
                         <v-select
                             :items="time"
                             label="체크인 시간"
+                            v-model="startTime"
+                            id="starTime"
                         ></v-select>
                     </v-col>
                     <v-col cols="5">
                         <v-select
                             :items="selectableTime"
                             label="체크아웃 시간"
+                            v-model="endTime"
+                            id="endTime"
                         ></v-select>
                     </v-col>
                 </v-row>
@@ -130,12 +135,15 @@
 
 <script>
 import axios from "axios"
+import {eventBus} from '@/main.js'
 import {mapState,mapActions} from "vuex"
+
 const dt = new Date();
 
 export default {
   data() {
     return {
+        sitterInfo: [],
         date: dt.toISOString().substr(0, 10), 
         date1: dt.toISOString().substr(0, 10), 
         date2: dt.toISOString().substr(0, 10),
@@ -144,8 +152,13 @@ export default {
         menu1: false,
         menu2: false,
         timeStep: '00:00',
-        pets: ['Foo', 'Bar', 'Fizz', 'Buzz'],
         time: ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'],
+        petList: [],
+        usersPets: [],
+        description: '',
+        startTime: '',
+        endTime: '',
+        
         price: [ 
             {
                 size: '소형견',
@@ -159,12 +172,24 @@ export default {
                 size: '대형견',
                 cost: '7,000'
             }
-        ]
+        ],
+        
+              
+        
+        
     }
+  },
+  created() {
+      eventBus.$on('sitterObj', (sitterObj) => {
+        //   console.log(sitterObj)
+          this.sitterInfo = sitterObj
+      }),
+      this.initialize()
+      
   },
   computed: {
     formIsValid() {
-      return this.description !== '' && this.userPets !== '' && this.startTime !== '' && this.endTime !== ''
+      return this.description !== '' && this.userPets !== null && this.startTime !== '' && this.endTime !== ''
     },
     minutesToZero(dt) {
         return (dt.getMinutes() < 10 ? '0 ' : '') + (dt.getMinutes() < 10 ? '0 ' : '')
@@ -182,8 +207,6 @@ export default {
         return date.toISOString().substr(0, 10)
     },
 
-    //git 존나 멍청
-    
     selectableTime() {
         let times = []
         let a = 0
@@ -195,7 +218,7 @@ export default {
         }
         return times
     }
-
+   
   },
   methods: {
       
@@ -241,6 +264,8 @@ export default {
         this.$store.dispatch('createReservation', reserveData)     //store에 createReservation에 payload로 보내기~
         this.$router.push(`/paymentinfo/${this.userInfo.userNo}`) //예약확인 페이지로 수정 필요
     },
+
+    
 
     allowedStep: m => m % 0 === 0
 

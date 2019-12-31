@@ -13,5 +13,7 @@ public interface ReviewMapper {
 	public int addReview(ReviewVO reviewVO); //리뷰 작성
 	
 	public int deleteReview(int reviewNo); //리뷰 삭제
+	
+	public List<ReviewVO> showFeaturedReview();	//메인 용 리뷰
 
 }

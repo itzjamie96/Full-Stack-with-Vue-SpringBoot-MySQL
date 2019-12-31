@@ -58,7 +58,7 @@
                     </v-col>
                     <v-col cols="5">
                         <v-select
-                            :items="time"
+                            :items="selectableTime"
                             label="체크아웃 시간"
                             v-model="endTime"
                             id="endTime"
@@ -134,7 +134,6 @@ export default {
         timeStep: '00:00',
         time: ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'],
         petList: [],
-        
         usersPets: [],
         description: '',
         startTime: '',
@@ -170,7 +169,7 @@ export default {
   },
   computed: {
     formIsValid() {
-      return this.description !== '' && this.userPets !== '' && this.startTime !== '' && this.endTime !== ''
+      return this.description !== '' && this.userPets !== null && this.startTime !== '' && this.endTime !== ''
     },
     minutesToZero(dt) {
         return (dt.getMinutes() < 10 ? '0 ' : '') + (dt.getMinutes() < 10 ? '0 ' : '')
@@ -180,11 +179,6 @@ export default {
 
     petNo() {
         return this.$route.params.petNo
-    },
-    selectableDate() {
-        let date = new Date(this.date1)
-        date.setDate(date.getDate() + 1)
-        return date.toISOString().substr(0, 10)
     },
     selectableTime() {
         let times = []
@@ -223,7 +217,7 @@ export default {
             paymentDate: this.date,
             startTime: this.date + " "+ this.startTime,
             endTime: this.date + " "+ this.endTime,
-            description: this.description,
+            request: this.description,
             userNo: this.userInfo.userNo,
             userAddress: this.userInfo.userAddress,
             sitterNo: this.sitterInfo.sitterNo,

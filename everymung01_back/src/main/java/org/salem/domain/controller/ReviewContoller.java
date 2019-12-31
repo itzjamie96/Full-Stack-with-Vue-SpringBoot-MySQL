@@ -32,4 +32,11 @@ public class ReviewContoller {
 		paymentMapper.updateReviewStatus(reviewVO.getPaymentNo());
 		return reviewMapper.addReview(reviewVO);
 	}
+	
+	//메인에 띄울 시터 후기
+	@RequestMapping("/showFeaturedReview")
+	public List<ReviewVO> showFeaturedReview(){ //시터의 리뷰 출력
+		System.out.println("reviews");
+		return (List<ReviewVO>) reviewMapper.showFeaturedReview();
+	}
 }
