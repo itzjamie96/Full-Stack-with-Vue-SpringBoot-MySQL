@@ -108,9 +108,29 @@ public class SitterController {
 			sitter.setQualificationCheck(name);
 			System.out.println(sitter.getQualificationCheck());
 			break;
+		case "sitterImg1":
+			sitter.setSitterImg1(name);
+			System.out.println(sitter.getSitterImg1());
+			break;
+		case "sitterImg2":
+			sitter.setSitterImg2(name);
+			System.out.println(sitter.getSitterImg2());
+			break;
+		case "sitterImg3":
+			sitter.setSitterImg3(name);
+			System.out.println(sitter.getSitterImg3());
+			break;
+		case "sitterImg4":
+			sitter.setSitterImg4(name);
+			System.out.println(sitter.getSitterImg4());
+			break;
+		case "sitterImg5":
+			sitter.setSitterImg5(name);
+			System.out.println(sitter.getSitterImg5());
+			break;
 		}
         sitterMapper.sitterCheck(sitter);
-return new FileResponse(name, uri, file.getContentType(), file.getSize());
+        return new FileResponse(name, uri, file.getContentType(), file.getSize());
     }
 /////////////////////////////////////////////////
 	
@@ -194,6 +214,13 @@ return new FileResponse(name, uri, file.getContentType(), file.getSize());
 	@RequestMapping("/showHomeSitters")
 	public List<SitterVO> showHomeSitters() {
 		return (List<SitterVO>) sitterMapper.showHomeSitters();
+	}
+	
+	@PostMapping("/updateSitterProfile")
+	public int updateSitterProfile(@RequestBody SitterVO sitterVO) { //시터 프로필 등록, 수정
+		System.out.println(sitterVO);
+		System.out.println("sitter profile update");
+		return sitterMapper.updateSitterProfile(sitterVO);
 	}
 
 
