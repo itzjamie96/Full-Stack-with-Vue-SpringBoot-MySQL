@@ -14,7 +14,7 @@
         size="150"
       >
         <v-img
-          :src="sitter.imageUrl"
+          :src="'http://localhost:1234/download/' + sitter.sitterImg1"
         ></v-img>
       </v-list-item-avatar>
 

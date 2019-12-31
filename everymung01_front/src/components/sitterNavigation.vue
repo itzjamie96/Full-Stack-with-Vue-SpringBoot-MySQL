@@ -10,6 +10,9 @@
               size="100"
               color="green"
             >
+             <v-img
+              :src="'http://localhost:1234/download/' + this.userInfo.sitterImg1">
+             </v-img>
             </v-list-item-avatar>
 
             <v-list-item-content>
