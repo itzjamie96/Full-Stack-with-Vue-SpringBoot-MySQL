@@ -26,7 +26,7 @@ import Axios from 'axios'
 export default {
    data() {
        return {
-           sitterObj: []
+           sitterObj: [],
        }
    },
 
@@ -51,7 +51,7 @@ export default {
             .get(`http://localhost:1234/showSitterDetail/${sitterNo}`)
             .then(res => {
                 this.sitterObj = res.data
-                //console.log(res);
+                // console.log(res);
             })
             .catch(err => {
                 console.log(err);

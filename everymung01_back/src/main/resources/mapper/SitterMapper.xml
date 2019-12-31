@@ -50,4 +50,10 @@
 		WHERE sittingType = 'home'; 
 	</select>
 	
+	<update id="updateSitterProfile" parameterType="SitterVO">
+		UPDATE sitter 
+		SET profileTitle=#{profileTitle}, profile=#{profile}, petProfile=#{petProfile}
+		WHERE sitterEmail=#{sitterEmail}
+	</update>
+	
 </mapper>

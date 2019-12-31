@@ -265,6 +265,18 @@ const routes = [
         component: () =>
             import ( /* webpackChunkName: "UserReservationList" */ '../views/Payment/kakaoPaySuccess.vue')
     },
+    { //시터 예약내역
+        path: '/sMyPage/sitterReservationList',
+        name: 'SitterReservationList',
+        component: () =>
+            import ( /* webpackChunkName: "UserReservationList" */ '../views/Mypage/Sitter/sitterReservationList.vue')
+    },
+    { //시터 프로필 등록, 수정
+        path: '/sMyPage/sitterProfile',
+        name: 'SitterProfile',
+        component: () =>
+            import ( /* webpackChunkName: "UserReservationList" */ '../views/Mypage/Sitter/sitterProfile.vue')
+    },
 
 ]
 

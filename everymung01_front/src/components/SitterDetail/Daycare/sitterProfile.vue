@@ -10,7 +10,9 @@
                     <v-list-item-avatar
                         size="120"
                         color="grey"
-                    ></v-list-item-avatar>
+                    >
+                     <v-img :src="this.profileImg"> </v-img>
+                    </v-list-item-avatar>
                     <v-list-item-content>
                         <v-list-item-title class="headline mb-1">{{sitterObj.sitterName}}</v-list-item-title>
                         <v-list-item-subtitle>{{sitterObj.sitterAddress}}</v-list-item-subtitle>
@@ -33,7 +35,8 @@
                         size="50"
                         color="grey"
                         tile                       
-                    ></v-list-item-avatar>
+                    >
+                    </v-list-item-avatar>
                     <v-list-item-content>
                         <v-list-item-title>신원 및 환경 검증 완료</v-list-item-title>
                     </v-list-item-content>
@@ -72,7 +75,8 @@ import {eventBus} from '@/main.js'
 export default {
    data() {
        return {
-           sitterObj: []
+           sitterObj: [],
+           profileImg : ''
        }
    },
 
@@ -98,11 +102,14 @@ export default {
                 this.sitterObj = res.data
                 eventBus.$emit("sitterObj",this.sitterObj)
                 //console.log(res);
+                 this.profileImg = 'http://localhost:1234/download/' + this.sitterObj.sitterImg1
+
             })
             .catch(err => {
                 console.log(err);
             })
 
+           
        }
    }
 }

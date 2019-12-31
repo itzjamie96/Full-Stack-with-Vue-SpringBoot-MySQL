@@ -35,12 +35,14 @@ public interface SitterMapper {
          " (#{sittingNo},#{sitterEmail},#{sitterName},#{sitterPw},#{sitterPhone},#{sitterAddress},#{sitterImg1},#{sitterImg2},#{sitterImg3},#{sitterImg4},#{sitterImg5},#{possibleDay},#{sitterGender},#{sitterAge},#{profile},'펫소개',1,1,0,sysdate())")
    public Integer addSitter(SitterVO vo);
    
-   @Update("update sitter set identityCheck=#{identityCheck},qualificationCheck=#{qualificationCheck} where sitterEmail=#{sitterEmail}")
-   public void sitterCheck(SitterVO vo);
+   @Update("update sitter set identityCheck=#{identityCheck},qualificationCheck=#{qualificationCheck}, sitterImg1=#{sitterImg1}, sitterImg2=#{sitterImg2}, sitterImg3=#{sitterImg3}, sitterImg4=#{sitterImg4}, sitterImg5=#{sitterImg5} where sitterEmail=#{sitterEmail}")
+   public void sitterCheck(SitterVO vo); //시터이미지 업데이트도 추가했음.
    
    
    public List<SitterVO> showDaySitters(); //하루시터 목록 출력
    
    public List<SitterVO> showHomeSitters(); //위탁시터 목록 출력
+   
+   public int updateSitterProfile(SitterVO sitterVO); //시터 프로필 등록,수정
 
 }
