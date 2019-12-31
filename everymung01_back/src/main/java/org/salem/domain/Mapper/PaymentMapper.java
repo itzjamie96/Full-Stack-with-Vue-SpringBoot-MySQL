@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.salem.domain.vo.PaymentVO;
+import org.salem.domain.vo.TestVO;
 
 @Mapper
 public interface PaymentMapper {
@@ -23,4 +24,10 @@ public interface PaymentMapper {
 	
 	//후기 작성 시 reviewStatus UPDATE
 	public int updateReviewStatus(int paymentNo);
+
+
+	public List<PaymentVO> showAllPayment(); 
+
+	public List<TestVO> test1(); 
+	
 }

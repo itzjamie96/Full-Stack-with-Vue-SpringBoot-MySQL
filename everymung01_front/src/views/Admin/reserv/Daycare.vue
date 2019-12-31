@@ -139,7 +139,6 @@ export default {
         
       ],
       rows:[],
-      asd:[],
     };
   },
   created() {
@@ -147,8 +146,7 @@ export default {
     this.$http.get(`http://localhost:1234/test`)
         .then(res => {
                 for(let sitterT in res.data){
-                  if(res.data[sitterT].sittingType==="home")
-
+                  if(res.data[sitterT].sittingType==="daycare")
                     this.rows.push(res.data[sitterT])
                     console.log(this.rows)
                   }

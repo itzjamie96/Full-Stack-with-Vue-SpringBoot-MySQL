@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.salem.domain.Mapper.SitterMapper;
 import org.salem.domain.file.FileResponse;
+import org.salem.domain.file.FileSystemStorageService;
 import org.salem.domain.file.StorageService;
 import org.salem.domain.vo.LoginVO;
 import org.salem.domain.vo.SearchIdVO;
@@ -30,6 +31,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 public class SitterController {
 	
 	//testing
+	
+	@Autowired
+	FileSystemStorageService fileService;
 	
 	@Autowired
 	SitterMapper sitterMapper;
@@ -138,7 +142,7 @@ public class SitterController {
 	public List<SitterVO> showAllSitters() {
 		return (List<SitterVO>) sitterMapper.showAllSitters();
 	}
-
+	//승인 안된 시터 지원자 확인
 	@RequestMapping("/falseAllSitters")
 	public List<SitterVO> falseAllSitters() {
 		return (List<SitterVO>) sitterMapper.falseAllSitters();
@@ -153,14 +157,10 @@ public class SitterController {
 	
 	@PostMapping("/updateSitter")
 	public int updateSitter(@RequestBody SitterVO sitterVo) {
-		System.out.println("controller:"+sitterVo);
+		System.out.println(sitterVo);
 		return sitterMapper.updateSitter(sitterVo);
 	}
 	
-//	@RequestMapping("/showSitterDetail/{sitterNo}")
-//	public SitterVO showSitterDetail(@PathVariable int sitterNo) {
-//		return (SitterVO) sitterMapper.showSitterDetail(sitterNo);
-//	}
 	@PostMapping("refreshSitter")//시터 새로고침
 	public SitterVO refreshE(@RequestBody LoginVO vo) {
 		
@@ -225,3 +225,4 @@ public class SitterController {
 
 
 }
+

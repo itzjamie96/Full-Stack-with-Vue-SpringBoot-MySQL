@@ -5,7 +5,7 @@
           <v-text-field
             label="제목을 입력해주세요"
             outlined
-            v-model="detail.title"
+            v-model="BoardVO.title"
           ></v-text-field>
         </v-col>
        
@@ -13,31 +13,26 @@
           label="내용을 입력해주세요"
           outlined
           name="input-7-4"
-          v-model="detail.content"
+          v-model="BoardVO.content"
         ></v-textarea><br>
       <v-btn @click="add()">제출</v-btn>
       
   </div>
-
 </template>
-
 <script>
 import axios from "axios"
-// ?? 이걸 가져다 써야 로그인 연동이 된다 
-// import {mapState,mapActions} from "vuex"
-
+import router from '../../router/index'
+//### ?? 이걸 가져다 써야 로그인 연동이 된다 
+import {mapState,mapActions} from "vuex"
 export default {
     data(){
         return{
-            //에러 해결인줄 알았으나 실패 => v-model값이 안담기는게 문제였는데, 왼쪽에 title은 변수명, 오른쪽 'title'은 v-model로 입력된 값으로 인식이 돼서, 
-                     //DB에도 title컬럼에 'title'에 해당하는 v-model입력값으로 처리되네
-                     //BUT 그냥 깡으로 'title'이란 고정값이 입력된거였음... 
-            //### 에러해결_ v-model=""에 입력해주는 값을 detail.title이라고 쳐야지, data에서 입력한 detail:{title,}이 인식되늰거였는데, v-model="title"로 쓰니까 인식을 못하지.
             
-            detail: { // 여기에 v-model값이 담기는구나.
-                boardNo:'',
+            BoardVO: {   
+                boardNo:'',             
                 title:'', 
                 content:'',
+                userName:'',
                 userNo:'',
                 boardDate:'',
                 depth:'',
@@ -49,29 +44,49 @@ export default {
           
         }
     },
-
     methods:{
         // 저장하기(DB_INSERT)(C)
         add(){
-            console.log("test")
-            console.log(this.detail)
-            axios.post ('http://localhost:1234/add',this.detail) // 여기선 객체 던져주는 식이네 
-           .then( res =>(
-             console.log(res),
-               console.log(detail.title + detail.content),
-               console.log("insert 성공")
-          ))  
-          // 입력칸 제출후 깨끗하게 만드는 기능코드 
-          this.detail = this.default 
+          //### 
 
-          window.location.href="http://localhost:8080/board"
-
+          console.log("add()_this.userInfo.userNo="+this.userInfo.userNo)
+         // console.log("add()_this.userInfo.userNo="+this.userInfo.userNo)
+          this.BoardVO.userNo = this.userInfo.userNo
+          this.BoardVO.boardDate = new Date() // DB와 데이터타입을 맞춰줘야돼서 Date() 
+          this.BoardVO.userName = this.userInfo.userName                     
+          this.BoardVO.hits=0  
+          //사용자 글쓰기(문의사항)        
+          this.BoardVO.depth=0
+          this.BoardVO.groupNo=this.BoardVO.bo
+         
+          // if(this.BoardVO.depth==0){
+          //   this.BoardVO.groupNo=0
+          // }
+          /*
+          else {
+            this.BoardVO.groupNo=boardNo가 넘어와야함
+          }
+          */
+            //BoardNo값을 안넣어서 보내면 스프링쪽에선 boardNo=0이라고 찍히더라. 
+            
+            axios.post ('http://localhost:1234/add',this.BoardVO) // 여기선 객체 던져주는 식이네 
+           .then( res =>{
+             this.BoardVO = res.data             
+           }), 
+          // // 입력칸 제출후 깨끗하게 만드는 기능코드 
+          // this.BoardVO = this.default 
+          //### 리로딩 
+          router.push({name:'Board'}) //가끔씩 왜 그런진 모르겠는데, 리로딩이 안되는 경우가 있음. 
+          
         },
-    }
-
+    },//### userInfo를 받아와서 
+      computed: {
+        ...mapState(["isLogin","userInfo","isLoginError","role"])
+      
+    },
+   
+    
 }
 </script>
-
 <style>
-
 </style>

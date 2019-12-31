@@ -55,5 +55,6 @@
 		SET profileTitle=#{profileTitle}, profile=#{profile}, petProfile=#{petProfile}
 		WHERE sitterEmail=#{sitterEmail}
 	</update>
+
 	
 </mapper>

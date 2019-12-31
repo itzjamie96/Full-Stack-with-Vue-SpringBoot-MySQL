@@ -21,6 +21,9 @@
           <v-container>
             <v-row>
               <v-col cols="12">
+                <v-text-field label="No" v-model="board.boardNo" disabled></v-text-field>
+              </v-col>
+              <v-col cols="12">
                 <v-text-field label="Name" v-model="board.userName" disabled></v-text-field>
               </v-col>
               <v-col cols="12">
@@ -33,6 +36,7 @@
                 <v-text-field label="Date" v-model="board.boardDate" disabled ></v-text-field>
               </v-col>
               <v-textarea
+                v-model="content"
                 outlined
                 name="input-7-4"
                 label="답변작성"
@@ -57,9 +61,9 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="dialog = false">확인</v-btn>
+          <v-btn color="blue darken-1" text @click="dialog = false,content=null">확인</v-btn>
           <v-btn color="blue darken-1" text @click.native="deleteAlert=true">삭제</v-btn>
-          <v-btn color="blue darken-1" text @click="dialog2 = true">답변달기</v-btn>
+          <v-btn color="blue darken-1" text @click="replay(content)">답변달기</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -76,25 +80,26 @@ export default {
   VueGoodTable,
 },data(){
     return {
+       content:'',
        dialog: false,
-       dialog2: false,
        deleteAlert: false,
        updateAlert: false,
        board:{
-       boardNo :'',
-       userName:'',
-       title:'',
-       content:'',
-       depth:'',
-       groupNo:'',
-       HITS:'',
-       boardDate:'',
+          boardNo :'',
+          userName:'',
+          title:'',
+          content:'',
+          depth:'',
+          groupNo:'',
+          hits:'',
+          boardDate:'',
+          userNo:'',
        },
       columns: [
-        {
+        /* {
           label: 'No',
           field: 'boardNo',
-        },
+        }, */
         {
           label: 'Name',
           field: 'userName',
@@ -124,25 +129,29 @@ export default {
      this.board.userName = params.row.userName
      this.board.content = params.row.content
      this.board.boardDate = params.row.boardDate
+     this.board.groupNo = params.row.groupNo
+     this.board.depth = params.row.depth
+     this.board.hits = params.row.hits
+     this.board.userNo = params.row.userNo
   },
   selectAll(){
-      this.$http.get(`http://localhost:1234/showAllBoards`)
+      this.$http.get(`http://localhost:1234/FailBoards`)
           .then( res =>{
             this.rows = res.data
-            console.log(this.rows)
+
           })
           .catch(err => {
-            alert("backand(showAllBoards) 에러 확인")
+            alert("backand(FailBoards) 에러 확인")
           })
      
   },
-  dele(userNo){
+  dele(boardNo){
      this.dialog=false
      this.deleteAlert=false
-     const No = userNo
+     const No = boardNo
      
-      this.$http.post(`http://localhost:1234/deleteUser/${No}`).then(res =>{
-        const idx = this.rows.findIndex(x => x.userNo === userNo)
+      this.$http.get(`http://localhost:1234/delete/${No}`).then(res =>{
+        const idx = this.rows.findIndex(x => x.boardNo === boardNo)
         console.log(idx)
               this.dialog=false
               this.rows.splice(idx, 1)
@@ -151,12 +160,14 @@ export default {
       })
 
   },
-  update(){
+  replay(content){
+     this.board.title += 'RE:'
+     this.board.content = content
      this.dialog=false
-     this.updateAlert=false
-     this.$http.post('http://localhost:1234/updateUser',this.user) 
+     this.$http.post('http://localhost:1234/reply',this.board) 
               .then(res => { 
                 this.selectAll();
+                this.content=null
               }) 
               .catch(err => { 
                 alert("backend(update) 에러 확인!")

@@ -1,3 +1,4 @@
+
 package org.salem.domain;
 
 import org.springframework.boot.SpringApplication;

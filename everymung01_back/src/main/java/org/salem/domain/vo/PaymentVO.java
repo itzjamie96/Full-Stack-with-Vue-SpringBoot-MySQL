@@ -18,7 +18,7 @@ public class PaymentVO {
 	private String endTime;
 	private String request;
 	private String paymentMethod;
-	private Date paymentDate;
+	private String paymentDate;
 	private int amount;
 	private int petNo;
 	private String userName;

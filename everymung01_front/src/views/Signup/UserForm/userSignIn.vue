@@ -209,7 +209,8 @@ export default {
           ,
           searchIdVO:{
             name:'',
-            phone:''
+        
+        
           },
           email:'',
           password:'',
