@@ -91,14 +91,9 @@ const routes = [
     component: () => import('../views/Admin/reserv/Oneday.vue')
   },
   {
-    path: '/adminConsignment',
-    name: 'adminconsignment',
-    component: () => import('../views/Admin/reserv/Consignment.vue')
-  },
-  {
-    path: '/adminRepeated',
-    name: 'adminrepeated',
-    component: () => import('../views/Admin/reserv/Repeated.vue')
+    path: '/adminDaycare',
+    name: 'admindaycare',
+    component: () => import('../views/Admin/reserv/Daycare.vue')
   },
   {
     path: '/adminMain',
