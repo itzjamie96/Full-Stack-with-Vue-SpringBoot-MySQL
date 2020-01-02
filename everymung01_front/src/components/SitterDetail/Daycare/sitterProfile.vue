@@ -15,7 +15,7 @@
                     </v-list-item-avatar>
                     <v-list-item-content>
                         <v-list-item-title class="headline mb-1">{{sitterObj.sitterName}}</v-list-item-title>
-                        <v-list-item-subtitle>{{sitterObj.sitterAddress}}</v-list-item-subtitle>
+                        <v-list-item-subtitle>{{sitterObj.sitterAddress.slice(0,11)}}</v-list-item-subtitle>
                         <v-list-item-subtitle>{{sitterObj.profileTitle}}</v-list-item-subtitle>
                     </v-list-item-content>
                 </v-list-item>
