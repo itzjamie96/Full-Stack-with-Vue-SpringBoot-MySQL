@@ -1,14 +1,6 @@
 <template>
 <v-container>
   <v-col cols="12" sm="6">
-    <v-text-field
-      label="지역을 검색해주세요"
-      prepend-icon="place"
-      v-model="area"
-      placeholder="ex) 강남구"
-      @change="searchAddress"
-      >
-    </v-text-field>
     <v-row justify="center">
       <v-col cols="12" sm="10">
         <v-select 
@@ -21,7 +13,6 @@
             label="지역을 선택해주세요"
             prepend-icon="place"
             id="area"
-            @change="searchAddress"
         ></v-select>
       </v-col>
     </v-row>
@@ -33,6 +24,7 @@
     max-width="85%"
     outlined
     v-for="sitter in sitterList"
+    v-show="sitter.sitterAddress.includes(area)"
     :key="sitter.id"
     
   >

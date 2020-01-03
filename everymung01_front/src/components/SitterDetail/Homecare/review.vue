@@ -19,9 +19,14 @@
 
             <v-list-item-content class="mx-auto">
                 <p class="font-weight-bold">{{review.userName}}</p>
-                <p class="font-weight-bold ">{{review.reviewDate | formatDate}}</p> 
-                <p class="font-weight-bold">{{review.stars}}</p>
-                <p class="font-weight-bold">{{review.reviewContent}}</p>
+                <p class="subtitle-1">{{review.reviewDate | formatDate}}</p> 
+                <v-rating
+                      v-model="review.stars"
+                      background-color="orange lighten-3"
+                      color="orange"
+                      readonly
+                ></v-rating>
+                <p class="subtitle-1">{{review.reviewContent}}</p>
             </v-list-item-content>
 
             </v-list-item>
@@ -38,6 +43,11 @@
             <v-form @submit.prevent="addReview" >
 
                 <v-row justify="center">
+                  <v-rating
+                      v-model="reviewVO.stars"
+                      background-color="orange lighten-3"
+                      color="orange"
+                    ></v-rating>
                     <v-col cols="10">
                         <v-textarea
                         name="reviewContent"
@@ -75,9 +85,11 @@ export default {
         reviewVO: {
             paymentNo: '',
             reviewContent: '',
-            stars: '',
+            stars: null,
             reviewDate: ''
         },
+        rating: null,
+        writeCheck: 1
       }
     },
     created(){ 
@@ -87,7 +99,7 @@ export default {
     computed: {
       canWrite(){  
         //마이페이지 예약내역에서 pamentNo 넘겨받아 후기작성창 출력 조건 체크 
-        return this.paramPaymentNo > 0
+        return this.paramPaymentNo > 0 && this.writeCheck ==1
       }
     },
 
@@ -121,6 +133,8 @@ export default {
           .then(res => {
             console.log(res);
             this.showList();
+            this.writeCheck++;
+            this.$router.push({path:'/daysitters/' + this.sitterInfo.sitterNo})
           })
           .catch(err => {
             console.log(err);

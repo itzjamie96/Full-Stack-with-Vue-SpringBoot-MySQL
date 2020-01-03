@@ -10,7 +10,6 @@
             <v-row justify="center">
                 <v-col>
                     <p class="text--primary">기본 금액</p>
-
                 </v-col>
                 <v-col>
                     <p>30,000 원</p>
@@ -78,7 +77,7 @@ export default {
    data() {
        return {
            paymentObj: [],
-           test: null
+           test: null,
        }
        
    },
@@ -97,7 +96,7 @@ export default {
        },
         petVO() {
            return this.paymentVO.petDetailList
-       }
+       },
 
 
    },

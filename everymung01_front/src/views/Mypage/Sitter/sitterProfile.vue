@@ -263,8 +263,8 @@ export default {
                                 }
                  }).then(res => {
                      console.log(res.data)
-                    //  this.$router.push('/sMyPage/sitterProfile')
-                    location.reload();
+                  //   location.reload();
+                     this.$router.push({path:'/sMyPage/sitterReservationList'})
                  }).catch(err => {
                      console.log(err)
                     })
