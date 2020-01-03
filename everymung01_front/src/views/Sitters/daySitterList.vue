@@ -63,7 +63,7 @@
       <v-list-item-content class="mx-auto">
         <p class="body-2">{{sitter.sittingType}} SITTER / {{sitter.sitterNo}}</p>
         <p class="font-weight-bold ">{{sitter.sitterName}}</p> 
-        <p>{{sitter.sitterAddress}}</p>
+        <p>{{sitter.sitterAddress.slice(0,7)}}</p>
         <p class="headline">{{sitter.profileTitle}}</p>
       </v-list-item-content>
 

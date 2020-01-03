@@ -40,6 +40,9 @@ export default new Vuex.Store({
 
     //예약 정보 넘기기
     reservationList: [  ],
+    
+    //반려견 번호 넘기기
+    forPet: [ ],
 
     areaList: [  //서울 구 리스트 
       {name : '종로구'}, {name : '중구'}, {name : '용산구'}, {name : '성동구'}, {name : '광진구'}, 
@@ -97,6 +100,15 @@ export default new Vuex.Store({
       state.reservationList=[],
       state.reservationList.push(payload)
     },
+    //forPet
+    setPetInfo(state, payload) {
+      state.forPet = payload
+    },
+    createPetInfo(state,payload) {
+      state.forPet=[],
+      state.forPet.push(payload)
+    },
+
     //마이페이지 중 계정관리 정보 받기 
     userInfoReading(state, payload) {
       state.userInfo = payload
@@ -238,21 +250,12 @@ export default new Vuex.Store({
 
     //payload 에서 필요한 부분만 넘기기
     createReservation({commit}, payload) {
-      // const reserve = {
-      //   usersPets: payload.usersPets,
-      //   date: payload.date,
-      //   startTime: payload.startTime,
-      //   endTime: payload.endTime,
-      //   description: payload.description,
-      //   userNo: payload.userNo,
-      //   userAddress: payload.userAddress,
-      //   sitterNo: payload.sitterNo,
-      //   sittingType: payload.sittingType,
-      //   sitterName: payload.sitterName,
-      //   sitterPhone: payload.sitterPhone,
-      //   sitterAddress: payload.sitterAddress
-      // }
+
       commit('createReservation', payload)
+    },
+
+    createPetInfo({commit},payload) {
+      commit('forPet', payload)
     }
 
   },

@@ -8,7 +8,6 @@ import lombok.EqualsAndHashCode;
 public class PetVO  extends PetInfoVO{
 	private String petName;   // 반려견 이름  
 	private String dogBreed;    //견종 
-	//private String breedInfo;     //견종 정보  
 	private String petGender;     // 반려견 성별 
 	private float  petWeight;      // 반려견 체중 
 	private int    petAge;           // 반려견 나이 
@@ -17,8 +16,20 @@ public class PetVO  extends PetInfoVO{
 	private String petImg;             //반려견 이미지 
     private int breedNo;               // 견종 번호 
     private int userNo;             // 회원 번호 
+    private int dayPrice;
+    private int homePrice;
 	
     
 	 
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
 	
 }

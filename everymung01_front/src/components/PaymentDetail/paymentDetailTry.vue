@@ -7,7 +7,7 @@
             <v-card-text>
             <p class="headline text--primary">예약 정보 확인</p>
 
-            <v-row justify="center">
+            <v-row justify="left">
                 <v-col cols="6">
                     <p class="text--primary">맡기실 반려동물</p>
 
@@ -15,7 +15,7 @@
                 <v-col
                     v-for="pets in paymentVO.petDetailList"
                     :key="pets.petNo"
-                    cols="1"
+                    cols="2"
                 >
                     <p>{{pets.petName}}</p>
                 </v-col>
@@ -26,7 +26,7 @@
 
                 </v-col>
                 <v-col>
-                   <p>{{paymentVO.date}}</p>
+                   <p>{{paymentVO.startTime | formatDate}}</p>
                 </v-col>
             </v-row>
             <v-row justify="center">
@@ -62,7 +62,7 @@
                     <p class="text--primary">요청사항</p>
                 </v-col>
                 <v-col>
-                   <p>{{paymentVO.description}}</p>
+                   <p>{{paymentVO.request}}</p>
                 </v-col>
             </v-row>
 

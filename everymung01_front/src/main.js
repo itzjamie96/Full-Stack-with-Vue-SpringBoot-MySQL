@@ -9,7 +9,7 @@ import '@fortawesome/fontawesome-free/css/all.css'
 import moment from 'moment'
 import VueLocalStorage from 'vue-localstorage'
 import '@mdi/js'
-import 'material-design-icons-iconfont/dist/material-design-icons.css'
+
 
 
 
@@ -29,7 +29,7 @@ Vue.filter('formatDate', function(value) {
 }),
 Vue.filter('formatTime', function(value) {
   if (value) {
-    return moment(String(value)).format('hh:mm')
+    return moment(String(value)).format('HH:mm')
   }
 }),
 
