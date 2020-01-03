@@ -5,7 +5,6 @@
             max-width="500px"
         >
 
-        {{forPet}}
             <v-card-text>
             <p class="headline text--primary">결제 정보 확인</p>
 
@@ -15,31 +14,22 @@
 
                 </v-col>
                 <v-col>
-                    <p>30,000 원</p>
+                    <p>15,000 원</p>
                 </v-col>
             </v-row>
             <v-divider></v-divider>
-             <v-row justify="center">
+            
+             <v-row justify="center"
+                v-for="pets in paymentVO.petDetailList"
+                :key="pets.petNo">
                 <v-col>
-                    <p class="text--primary">기본 금액</p>
+                    <p class="text--primary"></p>
+                </v-col>
+                <v-col>
+                    <p>{{pets.size}} X {{pets.dayPrice}} 원</p>
                 </v-col>
             </v-row>
-            <v-row justify="left" 
-                v-for="price in priceObj"
-                :key="price.size">
 
-                <v-col >
-                    <p>{{price.size}} X {{price.homePrice}}</p>
-                </v-col>
-            </v-row>
-            <v-row justify="left" 
-                v-for="forPet in forPet"
-                :key="forPet.num">
-
-                <v-col >
-                    <p>{{forPet}}</p>
-                </v-col>
-            </v-row>
             <v-divider></v-divider>
             <v-row justify="center">
                 <v-col>
@@ -47,17 +37,16 @@
 
                 </v-col>
                 <v-col>
-                    <p>{{paymentObj.startTime | formatTime}} - {{paymentObj.endTime | formatTime}}</p>
+                    <p>{{paymentVO.startTime | formatTime}} - {{paymentVO.endTime | formatTime}} : 총 {{lsm}}시간</p>
                 </v-col>
             </v-row>
             <v-divider></v-divider>
             <v-row justify="center">
                 <v-col>
                     <p class="text--primary">결제 금액</p>
-
                 </v-col>
                 <v-col>
-                    <p>가격</p>
+                    <p>{{total}} 원</p>
                 </v-col>
             </v-row>
             <v-row justify="center" class="mt-3">
@@ -99,6 +88,9 @@ export default {
 
    },
    computed: {
+        lsm(){
+           return Number(this.paymentVO.endTime.split(" ")[1].split(":")[0])-Number(this.paymentVO.startTime.split(" ")[1].split(":")[0])
+       }, 
        paymentNo() {
            return this.$route.params.paymentNo
        },
@@ -109,6 +101,17 @@ export default {
            return this.paymentVO.petDetailList
        },
        ...mapState(["isLogin","userInfo"]),
+        
+        total() {
+            let t = 0
+            for (let no in this.paymentVO.petDetailList) {
+                t += this.paymentVO.petDetailList[no].dayPrice
+            }
+            return t * (Number(this.paymentVO.endTime.split(" ")[1].split(":")[0])-Number(this.paymentVO.startTime.split(" ")[1].split(":")[0]))
+        }
+
+
+       /*
         forPet() {
            return this.paymentVO.petNum
        },
@@ -117,27 +120,15 @@ export default {
            for (let no in this.forPet) {
                pett.push(this.forPet[no])
            }
-       }
+       }*/
 
 
    },
    methods: {
        initialize() {
-            const paymentNo = this.$route.params.paymentNo
-
-            Axios.get(`http://localhost:1234/showAllPrice/${this.forPet}`)
-                .then(res => {
-                this.priceObj=res.data //객체에 DB에서 받은 데이터를 넣어줌
-            })
-                .catch(err => {
-                    // handle error
-                    console.log(err);
-                })
-
+            
        },
-       parseDate() {
-           const date = paymentObj.startTime
-       },
+
        startKakaoPay() {
            console.log(this.paymentVO)
            Axios

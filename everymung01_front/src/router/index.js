@@ -48,8 +48,10 @@ const Board = () =>
     import ('../views/Board/board.vue') //문의게시판 목록
 const Signup = () =>
     import ('../views/Signup/UserForm/userSignUp.vue')
-const PaymentInfo = () =>
-    import ('../views/Payment/paymentInfo.vue') //결제 정보 (결제 전)
+const PaymentInfoDay = () =>
+    import ('../views/Payment/paymentInfoDay.vue') //결제 정보 (결제 전)
+const PaymentInfoHome = () =>
+    import ('../views/Payment/paymentInfoHome.vue') //결제 정보 (결제 전)
 
 const routes = [
   {
@@ -191,10 +193,16 @@ const routes = [
         props: true
     },
     {
-        //결제 전 정보 보기
-        path: '/paymentinfo/:paymentNo',
-        name: 'PaymentInfo',
-        component: PaymentInfo
+        //결제 전 정보 보기 하루
+        path: '/paymentinfoDay/:paymentNo',
+        name: 'PaymentInfoDay',
+        component: PaymentInfoDay
+    },
+    {
+        //결제 전 정보 보기 하루
+        path: '/paymentinfoHome/:paymentNo',
+        name: 'PaymentInfoHome',
+        component: PaymentInfoHome
     },
 
     {
@@ -287,7 +295,13 @@ const routes = [
         name:'UserPetDetail',
         component:UserPetDetail
 
-    }
+    },
+    { //시터 개인정보 등록, 수정
+        path: '/sMyPage/sitterMyPageSetting',
+        name: 'SitterMyPageSetting',
+        component: () =>
+            import ( /* webpackChunkName: "UserReservationList" */ '../views/Mypage/Sitter/sitterMyPageSetting.vue')
+    },
 
 ]
 

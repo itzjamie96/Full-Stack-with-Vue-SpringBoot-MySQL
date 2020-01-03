@@ -1,5 +1,56 @@
 <template>
 <v-container>
+  <v-col cols="12" sm="6">
+    <v-row class="mb-3" justify="center">
+      <v-col cols="10">
+      <v-menu
+       v-model="menu1"
+       :close-on-content-click="false"
+       transition="scale-transition"
+       offset-y
+       min-width="290px"
+      >
+      <template v-slot:activator="{ on }">
+        <v-text-field
+         v-model="date"
+         label="날짜를 선택하세요"
+         readonly
+         v-on="on"
+        ></v-text-field>
+      </template>
+       <v-date-picker v-model="date" @input="menu1 = false" :min="today" @change="searchDate"></v-date-picker>
+      </v-menu>
+      </v-col>
+    </v-row>
+    
+    <v-text-field
+      label="지역을 검색해주세요"
+      prepend-icon="place"
+      placeholder="ex) 강남구"
+      v-model="area"
+      @change="searchAddress"
+      >
+    </v-text-field>
+    <v-row justify="center">
+      <v-col cols="12" sm="10">
+        <v-select 
+            v-model="area"
+            v-bind:items="areaList"
+            item-text="name"
+            item-value="name"
+            attach
+            chips
+            label="지역을 선택해주세요"
+            prepend-icon="place"
+            id="area"
+            @change="searchAddress"
+        ></v-select>
+      </v-col>
+    </v-row>
+
+    
+
+  </v-col>
   <v-card
     class="mb-4 mt-2 mx-auto"
     max-width="85%"
@@ -40,15 +91,28 @@
 
 <script>
 import axios from "axios" 
+import { userInfo } from 'os'
+import {mapState,mapActions} from "vuex"
+
+const dt = new Date();
+
 export default {
     data () {
       return {
         sitterList: [ //데이터베이스에서 받은 객체들이 들어갈 객체배열
         ],
+        area: '',
+        date: dt.toISOString().substr(0, 10),
+        today: dt.toISOString().substr(0, 10),
+        menu1: false,
       }
     },
     created(){ //현재 컴포넌트가 생성되자 마자 initialize를 수행하라는 의미
       this.initialize()
+    },
+
+    computed: {
+      ...mapState(["areaList"])
     },
 
     methods:{
@@ -68,6 +132,27 @@ export default {
         console.log('detail : ' + sitterNo);
 
         this.$router.push({path: '/daysitters/' + sitterNo})
+      },
+      searchAddress(area){
+        console.log(area)
+        axios.get(`http://localhost:1234/showSitterByAddress/daySitter/${area}`)
+          .then(res => {
+            this.sitterList = res.data
+            console.log(res);
+          }).catch(err => {
+            console.log(err);
+          })
+      },
+      searchDate(date){
+        console.log(date);
+        console.log("searchdate")
+        axios.get(`http://localhost:1234/showDaySitterByDate/daySitter/${date}`)
+          .then(res => {
+            this.sitterList = res.data
+            console.log(res);
+          }).catch(err => {
+            console.log(err)
+          })
       }
 
     }

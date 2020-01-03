@@ -6,8 +6,6 @@
         >
             <v-card-text>
             
-            {{forPet}}
-
             <p class="headline text--primary">예약 정보 확인</p>
 
             <v-row justify="left">

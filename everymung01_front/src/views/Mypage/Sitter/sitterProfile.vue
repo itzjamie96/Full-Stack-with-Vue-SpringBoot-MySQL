@@ -12,33 +12,12 @@
                  하나만 수정하려고 하면 중간에 비어있는게 들어가서 에러로 잡혀서 새로고침 안됨
                  수동으로 새로고침하면 db에는 저장된 것 확인 가능
                  수정예정-->
+                  
                   <div>
                      <v-row justify="center">
                         <v-col cols="3" > 
                            <div class="file-upload-form" >
-                            프로필 사진1 :
-                            <v-list-item-avatar
-                             tile
-                             size="100"
-                            >
-                             <v-img :src="this.img1"> </v-img>
-                            </v-list-item-avatar>
-                              <input 
-                              type="file" 
-                              @change="previewImage" 
-                              accept="image/*">
-                           </div>
-                     <div class="image-preview" v-if="imageData.length > 0">
-                        <img class="preview" :src="imageData">
-                     </div>
-                        </v-col>
-                     </v-row>   
-                  </div>
-                  <div>
-                     <v-row justify="center">
-                        <v-col cols="3" > 
-                           <div class="file-upload-form" >
-                           프로필 사진2 :
+                           소개사진 1 :
                            <v-list-item-avatar
                              tile
                              size="100"
@@ -60,7 +39,7 @@
                      <v-row justify="center">
                         <v-col cols="3" > 
                            <div class="file-upload-form" >
-                           프로필 사진3 :
+                           소개사진 2 :
                            <v-list-item-avatar
                              tile
                              size="100"
@@ -82,7 +61,7 @@
                      <v-row justify="center">
                         <v-col cols="3" > 
                            <div class="file-upload-form" >
-                           프로필 사진4 :
+                           소개사진 3 :
                            <v-list-item-avatar
                              tile
                              size="100"
@@ -104,7 +83,7 @@
                      <v-row justify="center">
                         <v-col cols="3" > 
                            <div class="file-upload-form" >
-                           프로필 사진5 :
+                           소개사진 4 :
                            <v-list-item-avatar
                              tile
                              size="100"
@@ -130,6 +109,7 @@
                            :counter="15"
                            :rules="nameRules"
                            label="프로필 제목"
+                           placeholder="프로필 제목을 입력해주세요"
                            required
                            ></v-text-field>
                         </v-col>
@@ -143,6 +123,7 @@
                                  filled
                                  auto-grow
                                  rows="4"
+                                 placeholder="자기소개를 입력해주세요"
                                  value="answer4"
                                  row-height="30" 
                                  v-model="sitterProfile.profile"
@@ -156,6 +137,7 @@
                                  filled
                                  auto-grow
                                  rows="4"
+                                 placeholder="펫소개를 입력해주세요"
                                  value="answer4"
                                  row-height="30" 
                                  v-model="sitterProfile.petProfile"
@@ -183,9 +165,6 @@ import axios from 'axios'
 import NavBar from '@/components/sitterNavigation.vue'
 import { mapState} from 'vuex'
 import { format } from 'path'
-
-
-
 export default {
     data(){
         return{
@@ -218,11 +197,9 @@ export default {
             menu2:false
         }
     },
-
     components: {
         'side-bar' : NavBar
     },
-
     created(){
        this.initialize()
     },
@@ -230,7 +207,6 @@ export default {
     computed:{
       ...mapState(['userInfo']),
     },
-
     methods:{
        initialize(){  
            this.sitterProfile.profileTitle = this.userInfo.profileTitle
@@ -242,7 +218,6 @@ export default {
            this.img4 = 'http://localhost:1234/download/' + this.userInfo.sitterImg4
            this.img5 = 'http://localhost:1234/download/' + this.userInfo.sitterImg5
        },
-
        updateSitterProfile(){  // 저장 후 디비 저장할 수 있도록 axios 
            this.sitterProfile.sitterEmail = this.userInfo.sitterEmail
            let email = this.userInfo.sitterEmail
@@ -256,23 +231,15 @@ export default {
            formData3.append('file', this.sitterImg3)            
            formData4.append('file', this.sitterImg4)            
            formData5.append('file', this.sitterImg5)      
-
            axios.post('http://localhost:1234/updateSitterProfile', this.sitterProfile)   //이미지만 제외 후 저장 
            .then(res =>{
               console.log(res)
                  // 성공 후 바로 또 axios를 통해서 이미지만 저장 
-                 axios.post('http://localhost:1234/upload-file/'+ 'sitterImg1' +'/'+ email, 
-                 formData1,{    
-                        headers:{
-                            'Content-Type' : 'multipart/form-data'
-                                }
-                 }).then(res =>{
-                     console.log(res.data)
-                     axios.post('http://localhost:1234/upload-file/'+ 'sitterImg2' +'/'+ email, 
-                     formData2,{    
-                        headers:{
-                            'Content-Type' : 'multipart/form-data'
-                                }
+                  axios.post('http://localhost:1234/upload-file/'+ 'sitterImg2' +'/'+ email, 
+                  formData2,{    
+                     headers:{
+                         'Content-Type' : 'multipart/form-data'
+                              }
                  }).then(res => {
                     console.log(res.data)
                     axios.post('http://localhost:1234/upload-file/'+ 'sitterImg3' +'/'+ email, 
@@ -310,28 +277,12 @@ export default {
                  }).catch(err => {
                      console.log(err)
                     })
-                 }).catch(err => {
-                     console.log(err)
-                    })
            })
            .catch(err =>{
               alert('입력이 잘 되었는지 다시 확인 해 주세요')
            })
-
        },
-
-       previewImage(event){
-            this.sitterImg1 = event.target.files[0]
-            console.log(this.sitterImg1)
-            var input = event.target;
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = (e) => {
-                    this.imageData= e.target.result;
-                }
-                reader.readAsDataURL(input.files[0]);
-            }
-        },
+      
        previewImage2(event){
             this.sitterImg2 = event.target.files[0]
             console.log(this.sitterImg2)
@@ -397,5 +348,4 @@ export default {
     border: 1px solid #DDD;
     padding: 5px;
 }
-
 </style>

@@ -22,7 +22,6 @@
                             id="usersPets"
                             return-object
                         ></v-select>
-                        {{petNum}}
                     </v-col>
                 </v-row>
 
@@ -148,7 +147,7 @@ export default {
         sitterInfo: [],
         date: dt.toISOString().substr(0, 10), 
         date1: dt.toISOString().substr(0, 10), 
-        date2: dt.toISOString().substr(0, 10),
+        date2: '',
         menu: false,
         modal: false,
         menu1: false,
@@ -275,7 +274,7 @@ export default {
         // console.log(forPet)
         // this.$store.dispatch('createPetInfo', forPet)     //store에 createReservation에 payload로 보내기~
         
-        this.$router.push(`/paymentinfo/${this.userInfo.userNo}`) //예약확인 페이지로 수정 필요
+        this.$router.push(`/paymentinfoHome/${this.userInfo.userNo}`) //예약확인 페이지로 수정 필요
 
     },
 

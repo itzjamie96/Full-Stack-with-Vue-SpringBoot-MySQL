@@ -1,6 +1,8 @@
 package org.salem.domain.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.salem.domain.Mapper.SitterMapper;
 import org.salem.domain.file.FileResponse;
@@ -221,6 +223,26 @@ public class SitterController {
 		System.out.println(sitterVO);
 		System.out.println("sitter profile update");
 		return sitterMapper.updateSitterProfile(sitterVO);
+	}
+	
+	@RequestMapping("/showSitterByAddress/{sittingType}/{area}") //시터 주소로 검색하기
+	public List<SitterVO> showSitterByAddress(@PathVariable String sittingType, @PathVariable String area){
+		if(sittingType.equals("daySitter")) {
+			return (List<SitterVO>)sitterMapper.showDaySitterByAddress(area);
+		}else {
+			return (List<SitterVO>)sitterMapper.showHomeSitterByAddress(area);
+		}
+	}
+	
+	@RequestMapping("/showDaySitterByDate/{sittingType}/{date}")
+	public List<SitterVO> showDaySitterByDate(@PathVariable String sittingType, @PathVariable String date){
+		return (List<SitterVO>)sitterMapper.showDaySitterByDate(date);
+	}
+	
+	@PostMapping("/updateSitterInfo")
+	public int updateSitterInfo(@RequestBody SitterVO sitterVO) {
+		System.out.println("sitterInfo update");
+		return sitterMapper.updateSitterInfo(sitterVO);
 	}
 
 
