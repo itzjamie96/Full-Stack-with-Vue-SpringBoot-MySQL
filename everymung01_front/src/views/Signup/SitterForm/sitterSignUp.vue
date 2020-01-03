@@ -5,7 +5,7 @@
       <v-card class="ml-12 pl-4" max-width="250" outlined>
     <v-radio-group v-model="SitterVO.sittingNo" row>
       <v-radio label="하루 시터" value="1"></v-radio>
-      <v-radio label="위탁 시터" value="3"></v-radio>
+      <v-radio label="위탁 시터" value="2"></v-radio>
     </v-radio-group>
     </v-card><br><br>
     <v-card max-width="800" outlined>

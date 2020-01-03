@@ -103,14 +103,16 @@ public class FileSystemStorageService implements StorageService {
 
     @Override
     public String deleteO(String filename) {
-    	File lsm = new File("C:/git/Full-Stack-with-Vue-SpringBoot-MySQL/everymung01_back/uploads/"+filename);
+    	//File lsm = new File("C:/git/Full-Stack-with-Vue-SpringBoot-MySQL/everymung01_back/uploads/"+filename);
+        File file = new File("/Volumes/DATA/Full-Stack-with-Vue-SpringBoot-MySQL/everymung01_back/uploads/" + filename);
+    	
     	String msg= "";
     	//    	System.out.println(lsm.exists());
 //    	System.out.println(lsm.getPath());
 //    	System.out.println(lsm.delete());
 //    	System.out.println(lsm.exists());
-    	if(lsm.exists()) {
-    		lsm.delete();
+    	if(file.exists()) {
+    		file.delete();
     		msg="삭제";
     	}else
     		msg="없음";

@@ -5,6 +5,8 @@ import store from '../store/index'
 import MypagePetInfo from '../views/Mypage/User/MyPagePetInfo'
 import MyPagePetInfoNew from '../views/Mypage/User/MyPagePetInfoNew'
 import MyPageSetting from '../views/Mypage/User/MyPageSetting'
+import MyPageLiveCare from '../views/Mypage/User/MyPageLiveCare'
+import UserPetDetail from '../views/Mypage/User/UserPetDetail'
 
 Vue.use(VueRouter)
 
@@ -272,6 +274,20 @@ const routes = [
         component: () =>
             import ( /* webpackChunkName: "UserReservationList" */ '../views/Mypage/Sitter/sitterProfile.vue')
     },
+    // 마이페이지 / 실시간 케어보기 
+    {
+        path: '/uMyPage/uLiveCare',
+        name:'MyPageLiveCare',
+        component:MyPageLiveCare
+
+    },
+    // 마이페이지 / 반려견정보관리 / 상세보기 
+    {
+        path:'/uMyPage/uPetDetailView',
+        name:'UserPetDetail',
+        component:UserPetDetail
+
+    }
 
 ]
 
