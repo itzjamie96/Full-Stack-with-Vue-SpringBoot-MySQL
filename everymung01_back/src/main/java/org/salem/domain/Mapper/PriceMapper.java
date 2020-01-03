@@ -1,16 +1,11 @@
 package org.salem.domain.Mapper;
 
 import java.util.List;
-
 import org.apache.ibatis.annotations.Mapper;
-import org.salem.domain.vo.BreedVO;
+import org.salem.domain.vo.PriceVO;
 
 @Mapper
-public interface BreedMapper {
+public interface PriceMapper {
+	public List<PriceVO> showAllPrice(int userNo);
 	
-	 
-	public List<BreedVO> showAllBreed();
-
-	
-
 }

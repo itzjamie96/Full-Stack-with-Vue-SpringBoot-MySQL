@@ -5,7 +5,8 @@
             max-width="500px"
         >
             <v-card-text>
-
+            
+            {{forPet}}
 
             <p class="headline text--primary">예약 정보 확인</p>
 
@@ -103,6 +104,10 @@ export default {
        
        petVO() {
            return this.paymentVO.petDetailList
+       },
+       
+       forPet() {
+           return this.paymentVO.petNum
        }
 
    }

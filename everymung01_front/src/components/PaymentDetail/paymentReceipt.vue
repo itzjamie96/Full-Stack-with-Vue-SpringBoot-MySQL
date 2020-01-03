@@ -4,6 +4,8 @@
             class="mx-auto"
             max-width="500px"
         >
+
+        {{forPet}}
             <v-card-text>
             <p class="headline text--primary">결제 정보 확인</p>
 
@@ -23,14 +25,20 @@
                 </v-col>
             </v-row>
             <v-row justify="left" 
-                v-for="pets in paymentVO.petDetailList"
-                :key="pets.petNo">
+                v-for="price in priceObj"
+                :key="price.size">
 
                 <v-col >
-                    <p>{{pets.size}} X </p>
+                    <p>{{price.size}} X {{price.homePrice}}</p>
                 </v-col>
+            </v-row>
+            <v-row justify="left" 
+                v-for="forPet in forPet"
+                :key="forPet.num">
 
-
+                <v-col >
+                    <p>{{forPet}}</p>
+                </v-col>
             </v-row>
             <v-divider></v-divider>
             <v-row justify="center">
@@ -72,13 +80,15 @@
 
 <script>
 import Axios from 'axios'
+import {mapState,mapActions,mapGetters} from "vuex"
 
 export default {
 
    data() {
        return {
            paymentObj: [],
-           test: null
+           test: null,
+           priceObj: [],
        }
        
    },
@@ -97,13 +107,33 @@ export default {
        },
         petVO() {
            return this.paymentVO.petDetailList
+       },
+       ...mapState(["isLogin","userInfo"]),
+        forPet() {
+           return this.paymentVO.petNum
+       },
+       pett() {
+           let pett = []
+           for (let no in this.forPet) {
+               pett.push(this.forPet[no])
+           }
        }
 
 
    },
    methods: {
        initialize() {
-            const paymentNo = this.$route.params.paymentNo;
+            const paymentNo = this.$route.params.paymentNo
+
+            Axios.get(`http://localhost:1234/showAllPrice/${this.forPet}`)
+                .then(res => {
+                this.priceObj=res.data //객체에 DB에서 받은 데이터를 넣어줌
+            })
+                .catch(err => {
+                    // handle error
+                    console.log(err);
+                })
+
        },
        parseDate() {
            const date = paymentObj.startTime

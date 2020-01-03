@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTDMapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="org.salem.domain.Mapper.PriceMapper"   
+>
+
+  <select id="showAllPrice" resultType="org.salem.domain.vo.PriceVO" parameterType="int">
+    
+    select pr.homePrice, pr.dayPrice, b.size
+	from PRICE pr JOIN BREED b
+	on pr.size = b.size
+	join PET p on p.breedNo = b.breedNo
+	join USERS u on u.userNo = p.userNo
+	where p.petNo = ${petNo};
+  
+  </select>  
+  
+  </mapper>
