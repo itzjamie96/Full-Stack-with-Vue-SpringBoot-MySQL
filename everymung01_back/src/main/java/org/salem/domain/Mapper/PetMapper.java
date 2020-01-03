@@ -9,9 +9,9 @@ import org.salem.domain.vo.PetVO;
 public interface PetMapper {
 
 	List<PetVO> showAllPets(int userNo);
-	List<PetVO> showPetDetail(int petNo);
+	PetVO showPetDetail(int petNo);
 	int addPet(PetVO petVo);
-	int deletePet(int petNo);
+	void deletePet(int petNo);
 	void updatePet(PetVO petvo);
 	PetVO getPetInfo(int petNo);
 	

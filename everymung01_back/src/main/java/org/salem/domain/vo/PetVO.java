@@ -20,5 +20,15 @@ public class PetVO  extends PetInfoVO{
 	
     
 	 
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
 	
 }

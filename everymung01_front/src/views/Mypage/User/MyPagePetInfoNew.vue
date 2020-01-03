@@ -88,8 +88,8 @@
                         <v-col cols="5" >
                            <p> 성별 </p> 
                               <v-radio-group v-model="userPetVo.petGender" row>
-                                 <v-radio label="수컷" value="1"></v-radio>
-                                 <v-radio label="암컷" value="0"></v-radio>
+                                 <v-radio label="수컷" :value="1"></v-radio>
+                                 <v-radio label="암컷" :value="0"></v-radio>
                               </v-radio-group>
                         </v-col>
        <v-col cols="1"></v-col>
@@ -246,7 +246,7 @@ export default {
        
       getUserNo:{
          get(){
-            return this.$$store.state.userInfo.userNo
+            return this.$store.state.userInfo.userNo
 
          }
       } 
