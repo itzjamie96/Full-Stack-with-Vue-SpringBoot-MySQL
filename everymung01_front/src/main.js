@@ -9,6 +9,8 @@ import '@fortawesome/fontawesome-free/css/all.css'
 import moment from 'moment'
 import VueLocalStorage from 'vue-localstorage'
 import '@mdi/js'
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
+
 
 
 

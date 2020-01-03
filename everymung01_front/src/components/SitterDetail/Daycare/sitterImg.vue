@@ -12,9 +12,9 @@
              cycle
         >
             <v-carousel-item
-                v-for="meetups in meetups"
-                :src="meetups.imageUrl" 
-                :key="meetups.id"
+                v-for="sitterImg in sitterImgs"
+                :src="sitterImg.img" 
+                :key="sitterImg.id"
             ></v-carousel-item>
         </v-carousel>         
     </div>
@@ -27,6 +27,12 @@ export default {
    data() {
        return {
            sitterObj: [],
+           sitterImgs: [
+               {img:''},
+               {img:''},
+               {img:''},
+               {img:''},
+           ]
        }
    },
 
@@ -51,7 +57,10 @@ export default {
             .get(`http://localhost:1234/showSitterDetail/${sitterNo}`)
             .then(res => {
                 this.sitterObj = res.data
-                // console.log(res);
+                this.sitterImgs[0].img = 'http://localhost:1234/download/' +this.sitterObj.sitterImg2
+                this.sitterImgs[1].img = 'http://localhost:1234/download/' +this.sitterObj.sitterImg3
+                this.sitterImgs[2].img = 'http://localhost:1234/download/' +this.sitterObj.sitterImg4
+                this.sitterImgs[3].img = 'http://localhost:1234/download/' +this.sitterObj.sitterImg5
             })
             .catch(err => {
                 console.log(err);

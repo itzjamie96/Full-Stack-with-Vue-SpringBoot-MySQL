@@ -146,7 +146,7 @@ export default {
         sitterInfo: [],
         date: dt.toISOString().substr(0, 10), 
         date1: dt.toISOString().substr(0, 10), 
-        date2: dt.toISOString().substr(0, 10),
+        date2: '',
         menu: false,
         modal: false,
         menu1: false,

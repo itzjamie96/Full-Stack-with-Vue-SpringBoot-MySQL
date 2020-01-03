@@ -1,5 +1,33 @@
 <template>
 <v-container>
+  <v-col cols="12" sm="6">
+    <v-text-field
+      label="지역을 검색해주세요"
+      prepend-icon="place"
+      v-model="area"
+      placeholder="ex) 강남구"
+      @change="searchAddress"
+      >
+    </v-text-field>
+    <v-row justify="center">
+      <v-col cols="12" sm="10">
+        <v-select 
+            v-model="area"
+            v-bind:items="areaList"
+            item-text="name"
+            item-value="name"
+            attach
+            chips
+            label="지역을 선택해주세요"
+            prepend-icon="place"
+            id="area"
+            @change="searchAddress"
+        ></v-select>
+      </v-col>
+    </v-row>
+  </v-col>
+
+    
   <v-card
     class="mb-4 mt-2 mx-auto"
     max-width="85%"
@@ -40,15 +68,22 @@
 
 <script>
 import axios from "axios" 
+import {mapState,mapActions} from "vuex"
+
 export default {
     data () {
       return {
         sitterList: [ //데이터베이스에서 받은 객체들이 들어갈 객체배열
         ],
+        area: ''
       }
     },
     created(){ //현재 컴포넌트가 생성되자 마자 initialize를 수행하라는 의미
       this.initialize()
+    },
+
+    computed: {
+      ...mapState(["areaList"])
     },
 
     methods:{
@@ -68,6 +103,16 @@ export default {
         console.log('detail : ' + sitterNo);
 
         this.$router.push({path: '/homesitters/' + sitterNo})
+      },
+      searchAddress(area){
+        console.log(area)
+        axios.get(`http://localhost:1234/showSitterByAddress/homeSitter/${area}`)
+          .then(res => {
+            this.sitterList = res.data
+            console.log(res);
+          }).catch(err => {
+            console.log(err);
+          })
       }
 
     }

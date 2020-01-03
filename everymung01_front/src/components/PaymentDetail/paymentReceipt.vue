@@ -56,7 +56,7 @@
                 <v-card-actions>
                     <v-btn
                         large
-                        @click="$router.push({path: '/payment/' + paymentObj.paymentNo})"
+                        @click="startKakaoPay"
                     >
                     결제하기
                     </v-btn>
@@ -104,21 +104,21 @@ export default {
    methods: {
        initialize() {
             const paymentNo = this.$route.params.paymentNo;
-
-
-        //    Axios
-        //     .get(`http://localhost:1234/showDetailPayment/${paymentNo}`)
-        //     .then(res => {
-        //         this.paymentObj = res.data
-        //         console.log(res);
-        //     })
-        //     .catch(err => {
-        //         console.log(err);
-        //     })
-
        },
        parseDate() {
            const date = paymentObj.startTime
+       },
+       startKakaoPay() {
+           console.log(this.paymentVO)
+           Axios
+            .post('http://localhost:1234/kakaoPay',this.paymentVO)
+            .then(res => {
+                console.log(res);
+                window.open(res.data)
+            })
+            .catch(err => {
+                console.log(err);
+            })
        }
 
 

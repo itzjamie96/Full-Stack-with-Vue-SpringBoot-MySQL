@@ -55,6 +55,52 @@
 		SET profileTitle=#{profileTitle}, profile=#{profile}, petProfile=#{petProfile}
 		WHERE sitterEmail=#{sitterEmail}
 	</update>
+	
+	<update id="updateSitterInfo" parameterType="SitterVO">
+		UPDATE sitter 
+		SET sitterName=#{sitterName}, sitterEmail=#{sitterEmail}, sitterPw=#{sitterPw},
+			sitterPhone=#{sitterPhone}, sitterAddress=#{sitterAddress}
+		WHERE sitterEmail=#{sitterEmail}
+	</update>
+	
+	<select id="showDaySitterByAddress" resultType="SitterVO" parameterType="String">
+		SELECT 
+			sitterNo, sittingType, sitterEmail, sitterName,  
+			sitterAddress, sitterImg1, sitterImg2, sitterImg3, sitterImg4, 
+			sitterImg5, possibleDay, sitterGender, sitterAge, profileTitle, profile, petProfile, 
+			approvalStatus
+		FROM sitter
+		JOIN sitting_type AS type
+		ON (sitter.sittingNo = type.sittingNo)
+		WHERE sittingType = 'daycare' AND sitterAddress like CONCAT('%', #{area}, '%');
+	</select>
+	
+	<select id="showHomeSitterByAddress" resultType="SitterVO" parameterType="String">
+		SELECT 
+			sitterNo, sittingType, sitterEmail, sitterName,  
+			sitterAddress, sitterImg1, sitterImg2, sitterImg3, sitterImg4, 
+			sitterImg5, possibleDay, sitterGender, sitterAge, profileTitle, profile, petProfile, 
+			approvalStatus
+		FROM sitter
+		JOIN sitting_type AS type
+		ON (sitter.sittingNo = type.sittingNo)
+		WHERE sittingType = 'home' AND sitterAddress like CONCAT('%', #{area}, '%');
+	</select>
+
+	<select id="showDaySitterByDate" resultType="SitterVO" parameterType="String">
+	SELECT sitterNo, sittingType, sitterEmail, sitterName,  
+			sitterAddress, sitterImg1, sitterImg2, sitterImg3, sitterImg4, 
+			sitterImg5, possibleDay, sitterGender, sitterAge, profileTitle, profile, petProfile, 
+			approvalStatus
+	FROM SITTER s JOIN SITTING_TYPE t ON s.sittingNo = t.sittingNo
+	WHERE NOT EXISTS (
+   		SELECT 1 
+   		FROM PAYMENT p  
+   		WHERE p.sitterNo = s.sitterNo AND startTime like CONCAT('%', #{date}, '%')) 
+   	AND sittingType='daycare';
+	</select>
+
+	
 
 	
 </mapper>

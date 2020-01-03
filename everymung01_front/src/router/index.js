@@ -272,6 +272,12 @@ const routes = [
         component: () =>
             import ( /* webpackChunkName: "UserReservationList" */ '../views/Mypage/Sitter/sitterProfile.vue')
     },
+    { //시터 개인정보 등록, 수정
+        path: '/sMyPage/sitterMyPageSetting',
+        name: 'SitterMyPageSetting',
+        component: () =>
+            import ( /* webpackChunkName: "UserReservationList" */ '../views/Mypage/Sitter/sitterMyPageSetting.vue')
+    },
 
 ]
 
