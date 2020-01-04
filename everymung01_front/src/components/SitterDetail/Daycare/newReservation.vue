@@ -225,6 +225,7 @@ export default {
             sitterName: this.sitterInfo.sitterName,
             sitterPhone: this.sitterInfo.sitterPhone,
             sitterAddress: this.sitterInfo.sitterAddress,
+            amount: ''
             // petNo: this.petList.petNo,
             // petName: this.petList.petName,
             // size: this.petList.size,

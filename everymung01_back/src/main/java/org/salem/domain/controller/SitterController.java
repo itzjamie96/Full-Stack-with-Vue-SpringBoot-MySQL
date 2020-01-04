@@ -1,5 +1,6 @@
 package org.salem.domain.controller;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,16 +83,20 @@ public class SitterController {
 	@RequestMapping("/download/{filename}")
     @ResponseBody
     public ResponseEntity<Resource> downloadFile(@PathVariable String filename) {
-		System.out.println(filename);
-		HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.IMAGE_JPEG);
-        Resource resource = storageService.loadAsResource(filename);
-
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE, MediaType.IMAGE_JPEG_VALUE)
+      File lsm = new File("./uploads/"+filename);
+      Resource resource;
+      if(lsm.exists()) {
+         resource = storageService.loadAsResource(filename);
+       }else {
+          resource = storageService.loadAsResource("default.jpg");          
+       }
+      
+        return ResponseEntity.ok().header(HttpHeaders.CONTENT_TYPE)
                 .header(HttpHeaders.CONTENT_DISPOSITION,
                 "attachment; filename=\"" + resource.getFilename() + "\"")
                 .body(resource);
     }
+   
 	
     @PostMapping("/upload-file/{kind}/{sitterEmail}")
     @ResponseBody

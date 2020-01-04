@@ -84,10 +84,11 @@ export default {
    created() {
         this.initialize(), 
         this.test = paymentVO.petDetailList
+        
 
    },
    computed: {
-        lsm(){
+       lsm(){
            return Number(this.paymentVO.endTime.split(" ")[1].split(":")[0])-Number(this.paymentVO.startTime.split(" ")[1].split(":")[0])
        }, 
        paymentNo() {
@@ -125,11 +126,10 @@ export default {
    },
    methods: {
        initialize() {
-            
        },
 
        startKakaoPay() {
-           console.log(this.paymentVO)
+           this.paymentVO.amount = this.total
            Axios
             .post('http://localhost:1234/kakaoPay',this.paymentVO)
             .then(res => {

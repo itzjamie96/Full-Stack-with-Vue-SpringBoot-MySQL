@@ -35,7 +35,7 @@
 		FROM sitter
 		JOIN sitting_type AS type
 		ON (sitter.sittingNo = type.sittingNo)
-		WHERE sittingType = 'daycare'; 
+		WHERE sittingType = 'daycare' AND approvalStatus = '1'; 
 	</select>
 	
 	<select id="showHomeSitters" resultType="SitterVO">
@@ -47,7 +47,7 @@
 		FROM sitter
 		JOIN sitting_type AS type
 		ON (sitter.sittingNo = type.sittingNo)
-		WHERE sittingType = 'home'; 
+		WHERE sittingType = 'home' AND approvalStatus = '1'; 
 	</select>
 	
 	<update id="updateSitterProfile" parameterType="SitterVO">
@@ -72,7 +72,7 @@
 		FROM sitter
 		JOIN sitting_type AS type
 		ON (sitter.sittingNo = type.sittingNo)
-		WHERE sittingType = 'daycare' AND sitterAddress like CONCAT('%', #{area}, '%');
+		WHERE sittingType = 'daycare' AND sitterAddress like CONCAT('%', #{area}, '%') AND approvalStatus = '1';
 	</select>
 	
 	<select id="showHomeSitterByAddress" resultType="SitterVO" parameterType="String">
@@ -84,20 +84,21 @@
 		FROM sitter
 		JOIN sitting_type AS type
 		ON (sitter.sittingNo = type.sittingNo)
-		WHERE sittingType = 'home' AND sitterAddress like CONCAT('%', #{area}, '%');
+		WHERE sittingType = 'home' AND sitterAddress like CONCAT('%', #{area}, '%') AND approvalStatus = '1';
 	</select>
 
 	<select id="showDaySitterByDate" resultType="SitterVO" parameterType="String">
-	SELECT sitterNo, sittingType, sitterEmail, sitterName,  
+		SELECT sitterNo, sittingType, sitterEmail, sitterName,  
 			sitterAddress, sitterImg1, sitterImg2, sitterImg3, sitterImg4, 
 			sitterImg5, possibleDay, sitterGender, sitterAge, profileTitle, profile, petProfile, 
 			approvalStatus
-	FROM SITTER s JOIN SITTING_TYPE t ON s.sittingNo = t.sittingNo
-	WHERE NOT EXISTS (
-   		SELECT 1 
-   		FROM PAYMENT p  
-   		WHERE p.sitterNo = s.sitterNo AND startTime like CONCAT('%', #{date}, '%')) 
-   	AND sittingType='daycare';
+		FROM SITTER s JOIN SITTING_TYPE t ON s.sittingNo = t.sittingNo
+		WHERE NOT EXISTS (
+   			SELECT 1 
+   			FROM PAYMENT p  
+   			WHERE p.sitterNo = s.sitterNo AND startTime like CONCAT('%', #{date}, '%')) 
+		AND sittingType='daycare'
+   		AND approvalStatus = '1';
 	</select>
 
 	

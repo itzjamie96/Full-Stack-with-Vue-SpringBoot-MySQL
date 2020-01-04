@@ -54,7 +54,6 @@ public class PaymentController {
 		System.out.println("controller_addPayment()");
 		int result = paymentMapper.addPayment(paymentVO);
 		System.out.println(result);
-//		return paymentMapper.addPayment(paymentVO);
 		return paymentMapper.addPayment(paymentVO);
 	}
 	
@@ -87,8 +86,7 @@ public class PaymentController {
 		System.out.println("PaymentVO : " + paymentVO);
 		vo = paymentVO;
 		
-//		int sum = paymentVO.getAmount();
-		int sum = 5555;
+		int sum = vo.getAmount();
 		
 		return kakaopay.kakaoPayReady(paymentVO, sum);
 	}
@@ -98,14 +96,12 @@ public class PaymentController {
 							HttpServletResponse response) throws IOException{
 		//kakaoPay 성공 시 payment INSERT
 		
-//		int sum = list.get(0).getAmount();
-		int sum = 5555;
+		int sum = vo.getAmount();
 		
 		System.out.println("----kakaoPaySuccess get----");
 		System.out.println("kakaoPaySuccess pg_token : " + pg_token);
 		
 		KakaoPayApprovalVO info = kakaopay.kakaoPayInfo(pg_token, sum);
-//		int userId = Integer.parseInt(info.getPartner_user_id());
 		
 		
 		//*********************payment insert*************************
