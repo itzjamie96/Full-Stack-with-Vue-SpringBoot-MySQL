@@ -1,10 +1,8 @@
 package org.salem.domain.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
-import javax.print.DocFlavor.STRING;
 import javax.servlet.http.HttpServletResponse;
 
 import org.salem.domain.Mapper.PaymentMapper;
@@ -12,11 +10,8 @@ import org.salem.domain.service.KakaoPay;
 import org.salem.domain.service.PaymentService;
 import org.salem.domain.vo.KakaoPayApprovalVO;
 import org.salem.domain.vo.PaymentVO;
-
 import org.salem.domain.vo.PetInfoVO;
-
 import org.salem.domain.vo.TestVO;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -87,8 +82,8 @@ public class PaymentController {
 		System.out.println("PaymentVO : " + paymentVO);
 		vo = paymentVO;
 		
-//		int sum = paymentVO.getAmount();
-		int sum = 5555;
+		int sum = vo.getAmount();
+
 		
 		return kakaopay.kakaoPayReady(paymentVO, sum);
 	}
@@ -98,14 +93,14 @@ public class PaymentController {
 							HttpServletResponse response) throws IOException{
 		//kakaoPay 성공 시 payment INSERT
 		
-//		int sum = list.get(0).getAmount();
-		int sum = 5555;
+		int sum = vo.getAmount();
+
 		
 		System.out.println("----kakaoPaySuccess get----");
 		System.out.println("kakaoPaySuccess pg_token : " + pg_token);
 		
 		KakaoPayApprovalVO info = kakaopay.kakaoPayInfo(pg_token, sum);
-//		int userId = Integer.parseInt(info.getPartner_user_id());
+
 		
 		
 		//*********************payment insert*************************

@@ -2,7 +2,6 @@ package org.salem.domain.controller;
 
 import java.io.File;
 import java.util.List;
-
 import org.salem.domain.Mapper.SitterMapper;
 import org.salem.domain.file.FileResponse;
 import org.salem.domain.file.FileSystemStorageService;
@@ -11,17 +10,14 @@ import org.salem.domain.vo.LoginVO;
 import org.salem.domain.vo.SearchIdVO;
 import org.salem.domain.vo.SearchPwVO;
 import org.salem.domain.vo.SitterVO;
-import org.salem.domain.vo.UsersVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -226,6 +222,28 @@ public class SitterController {
 		System.out.println("sitter profile update");
 		return sitterMapper.updateSitterProfile(sitterVO);
 	}
+
+	
+	@RequestMapping("/showSitterByAddress/{sittingType}/{area}") //시터 주소로 검색하기
+	public List<SitterVO> showSitterByAddress(@PathVariable String sittingType, @PathVariable String area){
+		if(sittingType.equals("daySitter")) {
+			return (List<SitterVO>)sitterMapper.showDaySitterByAddress(area);
+		}else {
+			return (List<SitterVO>)sitterMapper.showHomeSitterByAddress(area);
+		}
+	}
+	
+	@RequestMapping("/showDaySitterByDate/{sittingType}/{date}")
+	public List<SitterVO> showDaySitterByDate(@PathVariable String sittingType, @PathVariable String date){
+		return (List<SitterVO>)sitterMapper.showDaySitterByDate(date);
+	}
+	
+	@PostMapping("/updateSitterInfo")
+	public int updateSitterInfo(@RequestBody SitterVO sitterVO) {
+		System.out.println("sitterInfo update");
+		return sitterMapper.updateSitterInfo(sitterVO);
+	}
+
 
 
 }

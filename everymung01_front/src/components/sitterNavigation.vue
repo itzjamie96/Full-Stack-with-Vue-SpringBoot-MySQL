@@ -55,7 +55,7 @@ import {mapState,mapActions} from "vuex"
           { title: '예약내역', icon: 'mdi-home-city', link: '/sMyPage/sitterReservationList' },
           { title: '실시간 케어 보기', icon: 'mdi-account' , link: '/sMyPage/live'},
           { title: '프로필 관리', icon: 'mdi-account' , link: '/sMyPage/sitterProfile'},
-          { title: '계정관리', icon: 'mdi-account-group-outline' , link: '/sMyPage/uAccount'},
+          { title: '계정관리', icon: 'mdi-account-group-outline' , link: '/sMyPage/sitterMyPageSetting'},
         ],
       }
     },

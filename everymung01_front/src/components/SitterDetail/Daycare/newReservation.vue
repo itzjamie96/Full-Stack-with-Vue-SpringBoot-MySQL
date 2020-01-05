@@ -6,7 +6,7 @@
                 height="100%"
                 class="mb-5"
         >
-
+        {{usersPets}}
             <v-form @submit.prevent="onNewReservation" >
                 <v-row justify="center">
                     <v-col cols="12" sm="10">
@@ -225,6 +225,7 @@ export default {
             sitterName: this.sitterInfo.sitterName,
             sitterPhone: this.sitterInfo.sitterPhone,
             sitterAddress: this.sitterInfo.sitterAddress,
+            amount: ''
             // petNo: this.petList.petNo,
             // petName: this.petList.petName,
             // size: this.petList.size,
@@ -233,7 +234,7 @@ export default {
         }
         console.log(reserveData)
         this.$store.dispatch('createReservation', reserveData)     //store에 createReservation에 payload로 보내기~
-        this.$router.push(`/paymentinfo/${this.userInfo.userNo}`) //예약확인 페이지로 수정 필요
+        this.$router.push(`/paymentinfoDay/${this.userInfo.userNo}`) //예약확인 페이지로 수정 필요
     },
 
     

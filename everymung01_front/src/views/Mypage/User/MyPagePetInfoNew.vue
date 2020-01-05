@@ -38,10 +38,11 @@
                         <v-col cols="1"></v-col>
       
             <!-- 반려견 견종 정보  -->
+            {{userPetVo.dogBreed}}
                         <v-col cols="5">
                            <v-select
                            v-model="userPetVo.dogBreed"
-                           :items="tempBreed"
+                           :items="lsm"
                            label="견종"
                            >
                            </v-select>
@@ -88,8 +89,8 @@
                         <v-col cols="5" >
                            <p> 성별 </p> 
                               <v-radio-group v-model="userPetVo.petGender" row>
-                                 <v-radio label="수컷" value="1"></v-radio>
-                                 <v-radio label="암컷" value="0"></v-radio>
+                                 <v-radio label="수컷" :value="1"></v-radio>
+                                 <v-radio label="암컷" :value="0"></v-radio>
                               </v-radio-group>
                         </v-col>
        <v-col cols="1"></v-col>
@@ -243,10 +244,16 @@ export default {
     },
     computed:{
       ...mapState(['userInfo']),
-       
+       lsm(){
+          let qwe=[]
+          for(let i in this.tempBreed){
+             qwe.push(this.tempBreed[i].dogBreed)
+          }
+          return qwe
+       },
       getUserNo:{
          get(){
-            return this.$$store.state.userInfo.userNo
+            return this.$store.state.userInfo.userNo
 
          }
       } 
@@ -257,9 +264,9 @@ export default {
        loadBreedInfo(){  //axios 를 통해서 BreedVO 를 불러와서 견종의 종류를 선택할 수 있도록 함 
           axios.get('http://localhost:1234/showAllBreedInfo')
           .then(response =>{
-             //console.log(response.data)
+             console.log(response)
              for(let i=0; i<response.data.length; i++){
-                this.tempBreed.push(response.data[i].dogBreed)
+                this.tempBreed.push(response.data[i])
                 //this.tempBreedNo.push(response.data[i].breedNo)
              }
              // console.log(this.tempBreedNo)
@@ -283,7 +290,7 @@ export default {
            let year = this.tempAge.split('-')
            this.userPetVo.petAge = today - parseInt(year[0])
            
-           switch(this.userPetVo.dogBreed){
+           /* switch(this.userPetVo.dogBreed){
                case 'Maltese':
                   this.userPetVo.breedNo = 1
                   break;
@@ -293,6 +300,12 @@ export default {
                case 'YorkshireTerrier':
                   this.userPetVo.breedNo = 3
                   break;
+           } */
+           for(let i in this.tempBreed){
+              if(this.userPetVo.dogBreed ===this.tempBreed[i].dogBreed){
+                 this.userPetVo.breedNo = this.tempBreed[i].breedNo
+                 break;
+              }
            }
            let formData = new FormData()
             formData.append('file', this.petImg)            

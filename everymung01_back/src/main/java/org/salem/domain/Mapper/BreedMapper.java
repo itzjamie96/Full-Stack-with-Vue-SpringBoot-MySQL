@@ -10,8 +10,7 @@ public interface BreedMapper {
 	
 	 
 	public List<BreedVO> showAllBreed();
-	
-	
+
 	
 
 }

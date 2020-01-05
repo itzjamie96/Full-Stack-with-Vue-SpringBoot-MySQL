@@ -13,6 +13,7 @@
         "core-js": "^3.6.0",
         "moment": "^2.24.0",
         "pubnub-vue": "^1.0.1",
+        "material-design-icons-iconfont": "^5.0.1",
         "vue": "^2.6.11",
         "vue-daum-postcode": "^0.7.0",
         "vue-good-table": "^2.18.1",

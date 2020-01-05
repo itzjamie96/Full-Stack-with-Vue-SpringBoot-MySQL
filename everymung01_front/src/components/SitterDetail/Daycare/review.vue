@@ -1,7 +1,6 @@
 <template>
     <div>
         <div class="headline mx-6">펫시터 후기 {{reivewList.length}} 개</div>
-        
         <v-card
             class="mx-auto mb-10"
             max-width="92%"   
@@ -19,11 +18,12 @@
 
             <v-list-item-content class="mx-auto">
                 <p class="font-weight-bold">{{review.userName}}</p>
-                <p class="subtitle-1 ">{{review.reviewDate}}</p> 
+                <p class="subtitle-1 ">{{review.reviewDate| formatDate}}</p> 
                 <v-rating
                       v-model="review.stars"
                       background-color="orange lighten-3"
                       color="orange"
+                      readonly
                 ></v-rating>
                 <p class="subtitle-1 ">{{review.reviewContent}}</p>
             </v-list-item-content>
@@ -89,7 +89,8 @@ export default {
             stars: null,
             reviewDate: ''
         },
-        rating: null
+        rating: null,
+        writeCheck: 1
       }
     },
     created(){ 
@@ -99,7 +100,7 @@ export default {
     computed: {
       canWrite(){  
         //마이페이지 예약내역에서 pamentNo 넘겨받아 후기작성창 출력 조건 체크 
-        return this.paramPaymentNo > 0
+        return this.paramPaymentNo > 0 && this.writeCheck ==1
       }
     },
 
@@ -133,6 +134,8 @@ export default {
           .then(res => {
             console.log(res);
             this.showList();
+            this.writeCheck++;
+            this.$router.push({path:'/daysitters/' + this.sitterInfo.sitterNo})
           })
           .catch(err => {
             console.log(err);

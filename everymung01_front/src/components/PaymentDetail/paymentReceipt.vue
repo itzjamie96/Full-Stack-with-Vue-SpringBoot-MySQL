@@ -10,27 +10,24 @@
             <v-row justify="center">
                 <v-col>
                     <p class="text--primary">기본 금액</p>
-
                 </v-col>
                 <v-col>
-                    <p>30,000 원</p>
+                    <p>15,000 원</p>
                 </v-col>
             </v-row>
             <v-divider></v-divider>
-             <v-row justify="center">
-                <v-col>
-                    <p class="text--primary">기본 금액</p>
-                </v-col>
-            </v-row>
-            <v-row justify="left" 
->
-
-                <v-col >
             
+             <v-row justify="center"
+                v-for="pets in paymentVO.petDetailList"
+                :key="pets.petNo">
+                <v-col>
+                    <p class="text--primary"></p>
                 </v-col>
-
-
+                <v-col>
+                    <p>{{pets.size}} X {{pets.dayPrice}} 원</p>
+                </v-col>
             </v-row>
+
             <v-divider></v-divider>
             <v-row justify="center">
                 <v-col>
@@ -38,17 +35,16 @@
 
                 </v-col>
                 <v-col>
-                    <p>{{paymentObj.startTime | formatTime}} - {{paymentObj.endTime | formatTime}}</p>
+                    <p>{{paymentVO.startTime | formatTime}} - {{paymentVO.endTime | formatTime}} : 총 {{lsm}}시간</p>
                 </v-col>
             </v-row>
             <v-divider></v-divider>
             <v-row justify="center">
                 <v-col>
                     <p class="text--primary">결제 금액</p>
-
                 </v-col>
                 <v-col>
-                    <p>가격</p>
+                    <p>{{total}} 원</p>
                 </v-col>
             </v-row>
             <v-row justify="center" class="mt-3">
@@ -71,13 +67,15 @@
 
 <script>
 import Axios from 'axios'
+import {mapState,mapActions,mapGetters} from "vuex"
 
 export default {
 
    data() {
        return {
            paymentObj: [],
-           test: null
+           test: null,
+           priceObj: [],
        }
        
    },
@@ -85,9 +83,13 @@ export default {
    created() {
         this.initialize(), 
         this.test = paymentVO.petDetailList
+        
 
    },
    computed: {
+       lsm(){
+           return Number(this.paymentVO.endTime.split(" ")[1].split(":")[0])-Number(this.paymentVO.startTime.split(" ")[1].split(":")[0])
+       }, 
        paymentNo() {
            return this.$route.params.paymentNo
        },
@@ -96,19 +98,37 @@ export default {
        },
         petVO() {
            return this.paymentVO.petDetailList
-       }
+       },
+       ...mapState(["isLogin","userInfo"]),
+        
+        total() {
+            let t = 0
+            for (let no in this.paymentVO.petDetailList) {
+                t += this.paymentVO.petDetailList[no].dayPrice
+            }
+            return t * (Number(this.paymentVO.endTime.split(" ")[1].split(":")[0])-Number(this.paymentVO.startTime.split(" ")[1].split(":")[0]))
+        }
+
+
+       /*
+        forPet() {
+           return this.paymentVO.petNum
+       },
+       pett() {
+           let pett = []
+           for (let no in this.forPet) {
+               pett.push(this.forPet[no])
+           }
+       }*/
 
 
    },
    methods: {
        initialize() {
-            const paymentNo = this.$route.params.paymentNo;
        },
-       parseDate() {
-           const date = paymentObj.startTime
-       },
+
        startKakaoPay() {
-           console.log(this.paymentVO)
+           this.paymentVO.amount = this.total
            Axios
             .post('http://localhost:1234/kakaoPay',this.paymentVO)
             .then(res => {

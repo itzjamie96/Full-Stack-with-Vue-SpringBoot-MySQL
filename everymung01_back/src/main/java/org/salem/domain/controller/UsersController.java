@@ -34,7 +34,7 @@ public class UsersController {
 		}
 		return msg;
 	}
-	
+
 	@PostMapping("/searchPwUser")
 	public String searchPw(@RequestBody SearchPwVO search){
 		String msg="정보가 일치하지 않습니다";
@@ -65,7 +65,19 @@ public class UsersController {
 
 	@PostMapping("/updateUser") 
 	public int updateUser(@RequestBody UsersVO usersVo){
-		return mapper.updateUser(usersVo);
+
+		System.out.println("updateUser 메소드 실행 ");
+	    System.out.println("uservo=>" + usersVo);
+	    UsersVO vo = mapper.getUserVO(usersVo.getUserNo());
+	    System.out.println("vo ==>"+ vo);
+	    
+	    vo.setUserPhone(usersVo.getUserPhone());
+	    vo.setUserPw(usersVo.getUserPw());
+	    vo.setUserEmail(usersVo.getUserEmail());
+	    vo.setUserAddress(usersVo.getUserAddress());
+	    
+		return mapper.updateUser(vo);
+
 		
 		
 	}
