@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTDMapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	
+<mapper namespace="org.salem.domain.Mapper.BreedMapper"   >
+
+  <select id="showAllBreed" resultType="org.salem.domain.vo.BreedVO">
+    
+    SELECT * FROM BREED;
+  
+  </select>
+
+  
+  
+
+
+
+
+
+
+
+</mapper>

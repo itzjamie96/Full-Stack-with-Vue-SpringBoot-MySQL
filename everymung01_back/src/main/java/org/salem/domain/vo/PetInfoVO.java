@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class PetInfoVO {
 	
-	int petNo;
-	String size;
-	String petName;
+	protected int petNo;
+	protected String size;
+	protected String petName;
 	
 }
