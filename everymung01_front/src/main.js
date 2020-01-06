@@ -19,6 +19,7 @@ Vue.prototype.$http = axios;
 
 Vue.use(VueLocalStorage)
 Vue.config.productionTip = false
+Vue.use(require('vue-moment'))
 
 export const eventBus = new Vue()
 
@@ -32,6 +33,7 @@ Vue.filter('formatTime', function(value) {
     return moment(String(value)).format('HH:mm')
   }
 }),
+
 
 new Vue({
   router,
