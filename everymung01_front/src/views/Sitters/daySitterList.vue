@@ -1,0 +1,152 @@
+<template>
+<v-container>
+  <v-col cols="12" sm="6">
+    <v-row class="mb-3" justify="center">
+      <v-col cols="10">
+      <v-menu
+       v-model="menu1"
+       :close-on-content-click="false"
+       transition="scale-transition"
+       offset-y
+       min-width="290px"
+      >
+      <template v-slot:activator="{ on }">
+        <v-text-field
+         v-model="date"
+         label="날짜를 선택하세요"
+         readonly
+         v-on="on"
+        ></v-text-field>
+      </template>
+       <v-date-picker v-model="date" @input="menu1 = false" :min="today" @change="searchDate"></v-date-picker>
+      </v-menu>
+      </v-col>
+    </v-row>
+
+    <v-row justify="center">
+      <v-col cols="12" sm="10">
+        <v-select 
+            v-model="area"
+            v-bind:items="areaList"
+            item-text="name"
+            item-value="name"
+            attach
+            chips
+            label="지역을 선택해주세요"
+            prepend-icon="place"
+            id="area"
+        ></v-select>
+      </v-col>
+    </v-row>
+
+
+  </v-col>
+  <v-card
+    class="mb-4 mt-2 mx-auto"
+    max-width="85%"
+    outlined
+    v-for="sitter in sitterList"
+    v-show="sitter.sitterAddress.includes(area)"
+    :key="sitter.id"
+  >
+    
+    <v-list-item three-line>
+      <v-list-item-avatar
+        tile
+        size="150"
+      >
+        <v-img
+          :src="'http://localhost:1234/download/' + sitter.sitterImg1"
+        ></v-img>
+      </v-list-item-avatar>
+
+      <v-list-item-content class="mx-auto">
+        <p class="body-2">{{sitter.sittingType}} SITTER / {{sitter.sitterNo}}</p>
+        <p class="font-weight-bold ">{{sitter.sitterName}}</p> 
+        <p>{{sitter.sitterAddress.slice(0,7)}}</p>
+        <p class="headline">{{sitter.profileTitle}}</p>
+      </v-list-item-content>
+
+      <v-card-actions>
+        <v-btn 
+          x-large 
+          color
+          @click="$router.push({path: '/daysitters/' + sitter.sitterNo})"
+          >시터 상세 보기</v-btn>
+      </v-card-actions>
+    </v-list-item>
+</v-card>
+</v-container>
+
+</template>
+
+<script>
+import axios from "axios" 
+import { userInfo } from 'os'
+import {mapState,mapActions} from "vuex"
+
+const dt = new Date();
+
+export default {
+    data () {
+      return {
+        sitterList: [ //데이터베이스에서 받은 객체들이 들어갈 객체배열
+        ],
+        area: '',
+        date: dt.toISOString().substr(0, 10),
+        today: dt.toISOString().substr(0, 10),
+        menu1: false,
+      }
+    },
+    created(){ //현재 컴포넌트가 생성되자 마자 initialize를 수행하라는 의미
+      this.initialize()
+    },
+
+    computed: {
+      ...mapState(["areaList"])
+    },
+
+    methods:{
+      initialize(){//DB와 연동
+        axios.get('http://localhost:1234/showDaySitters')
+          .then(res => {
+            this.sitterList=res.data //객체에 DB에서 받은 데이터를 넣어줌
+            //console.log(res);
+          })
+          .catch(err => {
+            // handle error
+            console.log(err);
+          })
+      },
+      showDetail(item){
+        const sitterNo = item.sitterNo
+        console.log('detail : ' + sitterNo);
+
+        this.$router.push({path: '/daysitters/' + sitterNo})
+      },
+      // searchAddress(area){
+      //   console.log(area)
+      //   axios.get(`http://localhost:1234/showSitterByAddress/daySitter/${area}`)
+      //     .then(res => {
+      //       this.sitterList = res.data
+      //       console.log(res);
+      //     }).catch(err => {
+      //       console.log(err);
+      //     })
+      // },
+      searchDate(date){
+        console.log(date);
+        console.log("searchdate")
+        axios.get(`http://localhost:1234/showDaySitterByDate/daySitter/${date}`)
+          .then(res => {
+            this.sitterList = res.data
+            console.log(res);
+          }).catch(err => {
+            console.log(err)
+          })
+      }
+
+    }
+}
+
+</script>
