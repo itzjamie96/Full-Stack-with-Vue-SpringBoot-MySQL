@@ -68,7 +68,7 @@
                 <v-row justify="center">
                     <v-col cols="5">
                         <v-select
-                            :items="time"
+                            :items="checkInTime"
                             label="체크인 시간"
                             v-model="startTime"
                             id="starTime"
@@ -224,6 +224,18 @@ export default {
             }
         }
         return times
+    },
+    checkInTime() {
+        let checkInTimes = []
+        let nowHour = dt.getHours() + 1
+        let a = 0
+        for(let i = 0, length = this.time.length; i<length; i++) {
+            if(this.time[i] > nowHour.toString()) {
+                checkInTimes[a] = this.time[i];
+                a++;
+            }
+        }
+        return checkInTimes
     }
    
   },

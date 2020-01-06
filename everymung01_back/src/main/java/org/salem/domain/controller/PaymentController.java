@@ -40,18 +40,7 @@ public class PaymentController {
 	public PaymentVO showDetailPayment(@PathVariable int paymentNo) { //예약 상세보기
 		return (PaymentVO) paymentService.showDetailPayment(paymentNo);
 	}
-	
-	@PostMapping("/addPayment")
-	public int addPayment(@RequestBody PaymentVO paymentVO) {
-		////////////////////////////////////////////
-		// pet 여러마리 insert 할 경우 여러번 insert 해야됨 -> 수정필요
-		//
-		System.out.println("controller_addPayment()");
-		int result = paymentMapper.addPayment(paymentVO);
-		System.out.println(result);
-//		return paymentMapper.addPayment(paymentVO);
-		return paymentMapper.addPayment(paymentVO);
-	}
+
 	
 	@RequestMapping("/showUserPayment/{userNo}")
 	public List<PaymentVO> showUserPayment(@PathVariable int userNo) { 
@@ -127,6 +116,11 @@ public class PaymentController {
 //		response.sendRedirect("http://localhost:8080/");
 		return "kakaopaySuccess~~";
 		
+	}
+	
+	@RequestMapping("/showSitterPayment/{sitterNo}")
+	public List<PaymentVO> showSitterPayment(@PathVariable int sitterNo){ //시터예약리스트
+		return paymentMapper.showSitterPayment(sitterNo);
 	}
 	
 	

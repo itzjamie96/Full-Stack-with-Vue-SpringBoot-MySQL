@@ -169,7 +169,7 @@ export default new Vuex.Store({
             localStorage.setItem("email",loginobj.email)
                     commit('loginSuccess',res.data)
                     
-                    router.push({name:'sMyPage'})
+                    router.push({name:'SitterReservationList'})
           }
           else if(res.data.sitterEmail != null && res.data.approvalStatus === false){
            commit('sitterAp')

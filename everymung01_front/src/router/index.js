@@ -317,7 +317,19 @@ const routes = [
         path: '/sMyPage/sitterMyPageSetting',
         name: 'SitterMyPageSetting',
         component: () =>
-            import ( /* webpackChunkName: "UserReservationList" */ '../views/Mypage/Sitter/sitterMyPageSetting.vue')
+            import ( /* webpackChunkName: "SitterMyPageSetting" */ '../views/Mypage/Sitter/sitterMyPageSetting.vue')
+    },
+    { //시터 예약 내역 - 상세 페이지
+        path: '/sMyPage/sitterReservationDetail/:paymentNo',
+        name: 'SitterReservationDetail',
+        component: () =>
+            import ( /* webpackChunkName: "SitterReservationDetail" */ '../views/Mypage/Sitter/sitterReservationDetail.vue')
+    },
+    { //시터 프로필 페이지
+        path: '/sitterProfilePage/:sitterNo/:sittingType',
+        name: 'SitterProfilePage',
+        component: () =>
+            import ( /* webpackChunkName: "SitterProfilePage" */ '../views/Sitters/sitterProfilePage.vue')
     },
 
 ]
