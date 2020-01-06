@@ -28,7 +28,7 @@ public interface SitterMapper {
    @Update("update sitter set sitterName=#{sitterName},sitterEmail=#{sitterEmail},sitterPw=#{sitterPw},sitterPhone=#{sitterPhone},sitterAddress=#{sitterAddress},approvalStatus=#{approvalStatus} where sitterNo=#{sitterNo}")
    public int updateSitter(SitterVO sitterVo);
 
-   @Select("select * from sitter where sitterEmail=#{sitterEmail}") //시터 로긴 & 새로고침 관련
+   @Select("select * from sitter JOIN sitting_type AS type ON (sitter.sittingNo = type.sittingNo) where sitterEmail=#{sitterEmail}") //시터 로긴 & 새로고침 관련
    public SitterVO showUserDetailLogin(@Param("sitterEmail") String sitterEmail);
    
    @Insert("INSERT INTO sitter (sittingNo,sitterEmail,sitterName,sitterPw,sitterPhone,sitterAddress,sitterImg1,sitterImg2,sitterImg3,sitterImg4,sitterImg5,possibleDay,sitterGender,sitterAge,profile,petProfile,identityCheck,qualificationCheck,approvalStatus,approvalDate)" + 

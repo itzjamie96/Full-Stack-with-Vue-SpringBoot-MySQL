@@ -10,7 +10,7 @@
     </v-row>
 
     <v-row justify="center">
-        <router-link to="{name:'UserReservationList'}" exact>예약 내역에서 확인하기</router-link>
+        <router-link :to="{name:'UserReservationList'}" exact>예약 내역에서 확인하기</router-link>
     </v-row>
     </v-card>
         <!-- kakao pay success 컨트롤러에서 넘어오는 리턴 값--> 

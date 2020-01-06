@@ -12,7 +12,7 @@ export default new Vuex.Store({
     //로그인 
     trigger:true,
     role:'User',
-    userInfo:null,
+    userInfo:{},
     isLogin : false,
     isLoginError: false,
     sitterApp:false,
@@ -155,7 +155,7 @@ export default new Vuex.Store({
           if(res.data.sitterEmail != null && res.data.approvalStatus === true){
             localStorage.setItem("email",loginobj.email)
                     commit('loginSuccess',res.data)
-                    router.push({name:'sMyPage'})
+                    res.data.sittingNo === 1 ? router.push({name:'SitterReservationList'}) : router.push({name:'HomeSitterReservationList'})
           }
           else if(res.data.sitterEmail != null && res.data.approvalStatus === false){
            commit('sitterAp')

@@ -11,7 +11,9 @@
 		INNER JOIN pet ON pet.petNo = r.petNo
 		INNER JOIN users u ON u.userNo = pet.userNo
 		INNER JOIN sitter s ON s.sitterNo = p.sitterNo
-		WHERE s.sitterNo = #{sitterNo};
+		WHERE s.sitterNo = #{sitterNo}
+		GROUP BY re.paymentNo
+		ORDER BY re.paymentNo DESC
 	</select>
 	
 	<insert id="addReview" parameterType="ReviewVO">
@@ -27,7 +29,8 @@
 		INNER JOIN pet ON pet.petNo = r.petNo
 		INNER JOIN users u ON u.userNo = pet.userNo
 		INNER JOIN sitter s ON s.sitterNo = p.sitterNo
-		WHERE stars=5;
+		WHERE stars=5
+		GROUP BY re.paymentNo;
 	</select>
 	
 </mapper>
