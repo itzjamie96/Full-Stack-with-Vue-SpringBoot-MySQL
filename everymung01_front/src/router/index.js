@@ -331,6 +331,13 @@ const routes = [
         component: () =>
             import ( /* webpackChunkName: "SitterProfilePage" */ '../views/Sitters/sitterProfilePage.vue')
     },
+    { //캘린더 테스트
+        path: '/calendar',
+        name: 'calendar',
+        component: () =>
+            import ( /* webpackChunkName: "SitterProfilePage" */ '../views/Mypage/Sitter/calendar.vue')
+    },
+
 
 ]
 
