@@ -17,7 +17,6 @@
       
   </select>
   
-  
   <select id="showPetDetail"  resultType="org.salem.domain.vo.PetVO" parameterType="int">
    
    SELECT petNo,userNo,breedNo,petName,petGender,petWeight,petAge,neutralization,petAnswer,petImg
@@ -25,7 +24,7 @@
   
   </select>
   
-  
+
   <insert id="addPet"  parameterType="org.salem.domain.vo.PetVO" >
     
     INSERT INTO PET(userNo, breedNo, petName, petGender, petWeight, petAge, neutralization, petAnswer ) VALUES
@@ -49,11 +48,13 @@
   </update>
 
 
+
   <delete id="deletePet">
   
     DELETE FROM PET WHERE petNo = #{petNo};
   
   </delete>
+
 
 
 

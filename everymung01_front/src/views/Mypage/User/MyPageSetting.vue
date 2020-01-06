@@ -13,8 +13,8 @@
                                  <!-- 맨처음 보일  일반유저 프로필 사진 추가   -->
                                 <v-row justify="center">
                                     <v-col cols="3">
-                                         <div class="image-preview" v-if="trig"  >
-                                            <v-img :src="previewUserImg"
+                                         <div class="image-preview"  v-if="trig" >
+                                            <v-img :src="userVo.userProfile"
                                             height="100" width="100" class="preview"  >
                                             </v-img>
                                         </div>
@@ -22,7 +22,7 @@
                                         <div v-else >
                                             <v-img
                                             height="100" width="100"
-                                            :src="updateUserImg"
+                                            :src="previewUserImg"
                                             class="image-preview"
                                             >
                                             </v-img>
@@ -138,6 +138,7 @@
 import axios from 'axios'
 import NavBar from '@/components/userNavigation.vue'
 import { mapState , mapMutations}  from 'vuex'
+import { read } from 'fs'
 
 
 
@@ -152,6 +153,7 @@ export default {
             previewUserImg:'',       //유저 이미지 미리보기 변수 
             updateUserImg:'',            // 변경할 이미지를 담는 변수  
             userImg:'',                 // 디비에 보낼 유저 이미지 변수 새로운 추가 
+            imgData:'',                // 변경하고자 하는 이미지 미리보기 변수 
             userVo:{
                 userName:'',
                 userEmail:'',
@@ -163,11 +165,12 @@ export default {
                 userDate:''
 
             },
+            uploadUserImg:'',
             show1:false,
             userPw:'',
             rules: {
              required: value => !!value || 'Required.',
-             min: v => v.length >= 8 || 'Min 8 characters',
+             min: v => (v && v.length >= 8) || 'Min 8 characters',
              emailMatch: () => ('The email and password you entered don\'t match'),
         }
     }
@@ -200,21 +203,80 @@ export default {
             this.userVo.userPhone = this.userInfo.userPhone
             this.userVo.userNo = this.userInfo.userNo
             this.userVo.userAddress = this.userInfo.userAddress
-            this.userVo.userProfile = this.userInfo.userProfile
+            this.userVo.userProfile ='http://localhost:1234/download/'+this.userInfo.userProfile
             this.userVo.userDate = this.userInfo.userDate
             console.log('uservo')
             console.log(this.userVo)       
         },
         updateUserInfo(){
-            axios.post('http://localhost:1234/updateUser', this.userVo)
-            .then(response =>{
-                console.log('update 성공')
-                console.log(response.data)
-            })
-            .catch(error =>{
-                console.log('update 에러 ')
-                console.log(error)
-            })
+            if(this.trig){  // 유저 이미지 새로 추가 할 경우 
+                let formData = new FormData()
+                formData.append('file',this.userImg)
+                 axios.post('http://localhost:1234/updateUser', this.userVo)
+                      .then(response =>{
+                        console.log('update 성공')
+                        console.log(response.data)
+
+                        axios.post('http://localhost:1234/upload-userImg/'+this.userVo.userEmail+'/'
+                                    +this.userVo.userNo, formData,{
+                                        headers:{
+                                            'Content-Type' : 'multipart/form-data'
+                                        }
+                                    })
+                                    .then(response =>{
+                                        console.log('새로운 이미지 추가 성공')
+                                     })
+                                   .catch(error =>{
+                                        console.log('새로운 이미지 추가 실패 ')
+                                     })
+                       })
+                      .catch(error =>{
+                                 console.log('update 에러 ')
+                                 console.log(error)
+                       })
+                       
+                       if(this.userImg != null){
+                           this.userImg = ''
+                       }
+
+            }else {
+                //기존 유저 이미지 삭제 
+                let formData = new FormData()
+                formData.append('file', this.userImg)
+
+                axios.post('http://localhost:1234/deleteUserImg/'+this.userVo.userNo)
+                     .then(response =>{
+                         console.log('기존 이미지 삭제 성공')
+
+                         axios.post('http://localhost:1234/upload-userImg/'+this.userVo.userEmail+'/'
+                         +this.userVo.userNo, formData,{
+                             headers:{
+                                 'Content-Type':'multipart/form-data'
+                             }
+                            })
+                            .then(response =>{
+                                console.log('유저이미지 수정 성공')
+
+                                axios.post('http://localhost:1234/updateUser',this.userVo)
+                                .then(response =>{
+                                    console.log('유저 이미지 성공 후 나머지 수정 성공')
+                                })
+                                .catch(error =>{
+                                    console.log('유저 이미지 성공 후 나머지 수정 실패')
+                                })
+                            })
+                            .catch(error =>{
+                                console.log('유저이미지 수정 실패 ')
+                            })
+                     })
+                     .catch(error =>{
+                         console.log('기존 이미지 삭제 실패')
+
+                     })
+            }
+            this.$router.push('/uMyPage')
+
+            
         },
         deleteUser(){
             axios.post('http://localhost:1234/deleteUser/'+this.userVo.userNo)
@@ -233,30 +295,69 @@ export default {
 
 
         },
-        userImgPreview(event){
+        // userImgPreview(event){
+        //     //console.log(event)
+        //     //계정관리에서 이미지 insert 
+        //     if(this.trig){  
+        //         this.userImg = event.target.files[0]
+        //         var input = event.target;
+        //         if(input.files && input.files[0]){
+        //             var reader = new FileReader();
+        //             reader.onload = (e) =>{
+        //              this.previewUserImg = e.target.result;
+        //          }
+        //          reader.readAsDataURL(input.files[0])
+        //      }
+        //      console.log('이미지 추가 ')
+        //      console.log(this.trig)
+        //      //this.trig=false
+             
+        //     }else {
+        //         this.updateUserImg = event.target.files[0]
+        //         var input = event.target;
+        //         if(input.files && input.files[0]){
+        //             var reader = new FileReader();
+        //             reader.onload = (e) =>{
+        //                 this.imgData = e.target.result;
+        //             }
+        //             reader.readAsDataURL(input.files[0])
+        //         }
+        //         console.log('이미지 수정')
+        //         console.log(this.trig)
+        //     }
+            
+        // }
+         userImgPreview(event){
             //console.log(event)
             //계정관리에서 이미지 insert 
-            if(this.trig){  
                 this.userImg = event.target.files[0]
                 var input = event.target;
-                    if(input.files && input.files[0]){
-                        var reader = new FileReader();
-                        this.previewUserImg = e.target.result;
-                    }
-            }else {
-                this.updateUserImg = event.target.files[0]
-                var input = event.target;
-                    if(input.files && input.files[0]){
-                        var reader = new FileReader();
-                        this.updateUserImg = e.target.result;
-                    }
-            }
+                if(input.files && input.files[0]){
+                    var reader = new FileReader();
+                 reader.onload = (e) =>{
+                     this.previewUserImg = e.target.result;
+                 }
+                 reader.readAsDataURL(input.files[0])
+             }
+             console.log('이미지 추가 및 수정  ')
+             console.log(this.trig)
+             this.trig=false
+             
             
-            reader.readAsDataURL(input.files[0])
+                // this.updateUserImg = event.target.files[0]
+                // var input = event.target;
+                // if(input.files && input.files[0]){
+                //     var reader = new FileReader();
+                //     reader.onload = (e) =>{
+                //         this.imgData = e.target.result;
+                //     }
+                //     reader.readAsDataURL(input.files[0])
+                // }
+                // console.log('이미지 수정')
+                // console.log(this.trig)
             
+            //reader.readAsDataURL(input.files[0])
         }
-        
-        
     },
     
 }

@@ -4,14 +4,12 @@
             class="mx-auto"
             max-width="500px"
         >
-
             <v-card-text>
             <p class="headline text--primary">결제 정보 확인</p>
 
             <v-row justify="center">
                 <v-col>
                     <p class="text--primary">기본 금액</p>
-
                 </v-col>
                 <v-col>
                     <p>15,000 원</p>
@@ -85,10 +83,11 @@ export default {
    created() {
         this.initialize(), 
         this.test = paymentVO.petDetailList
+        
 
    },
    computed: {
-        lsm(){
+       lsm(){
            return Number(this.paymentVO.endTime.split(" ")[1].split(":")[0])-Number(this.paymentVO.startTime.split(" ")[1].split(":")[0])
        }, 
        paymentNo() {
@@ -126,11 +125,10 @@ export default {
    },
    methods: {
        initialize() {
-            
        },
 
        startKakaoPay() {
-           console.log(this.paymentVO)
+           this.paymentVO.amount = this.total
            Axios
             .post('http://localhost:1234/kakaoPay',this.paymentVO)
             .then(res => {

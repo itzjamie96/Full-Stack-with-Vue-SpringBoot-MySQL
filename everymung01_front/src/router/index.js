@@ -9,25 +9,30 @@ import MyPageLiveCare from '../views/Mypage/User/MyPageLiveCare'
 import UserPetDetail from '../views/Mypage/User/UserPetDetail'
 
 Vue.use(VueRouter)
-
-const rejectAuthUser = (to, from, next) => { //라우터 가드 선언
-    if (store.state.isLogin === true) {
-        //이미 로그인된 유저라 로그인 페이지로 못가게 막아야 함
-        alert('이미 로그인 상태입니다.')
-        next('/')
-    } else {
-        next()
-    }
+//어드민 라우터 가드
+const adminRouteG = (to,from,next) => {
+    localStorage.getItem('email')!==null&&localStorage.getItem('role')!=='Admin'?next('/'):next()
+}
+const adminRouteMG = (to,from,next) => {
+    localStorage.getItem('email')!==null&&localStorage.getItem('role')==='Admin'?next('/admin'):next()
 }
 
-const onlyAuthUser = (to, from, next) => { //라우터 가드 선언
-    if (store.state.isLogin === false) {
+//어드민 라우터 가드 끝
+
+const rejectAuthUser = (to, from, next) => { //라우터 가드 선언
+    localStorage.getItem('email')!==null&&localStorage.getItem('role')!==null?next('/'):next()
+        //이미 로그인된 유저라 로그인 페이지로 못가게 막아야 함
+}
+
+const UserMyPageG = (to, from, next) => { //라우터 가드 선언
+    localStorage.getItem('email')===null&&localStorage.getItem('role')===null?next('/signin'):
+    localStorage.getItem('email')!==null&&localStorage.getItem('role')!=='User'?next('/'):next()
         //로그인이 안된 유저는 마이페이지를 드갈수 없게 해야함
-        alert('로그인을 하지 않았습니다.')
-        next('/signin')
-    } else {
-        next()
-    }
+}
+const SitterMyPageG = (to, from, next) => { //라우터 가드 선언
+    localStorage.getItem('email')===null&&localStorage.getItem('role')===null?next('/signin'):
+    localStorage.getItem('email')!==null&&localStorage.getItem('role')!=='Sitter'?next('/'):next()
+        //로그인이 안된 유저는 마이페이지를 드갈수 없게 해야함
 }
 
 // const Update = () =>
@@ -57,7 +62,7 @@ const routes = [
   {
     path: '/admin',
     name: 'adminHome',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Admin/Admin-Home.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/Admin/Admin-Home.vue'),
   },
   {
     path: '/adminReservation',
@@ -67,47 +72,47 @@ const routes = [
   {
     path: '/adminMember',
     name: 'adminmember',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Admin/Admin-Member.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/Admin/Admin-Member.vue'),
   },
   {
     path: '/adminEmployee',
     name: 'adminemployee',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Admin/Admin-Employee.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/Admin/Admin-Employee.vue'),
   },
   {
     path: '/adminApproval',
     name: 'adminapproval',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Admin/Admin-Approval.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/Admin/Admin-Approval.vue'),
   },
   {
     path: '/adminBoard',
     name: 'adminboard',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Admin/Admin-Board.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/Admin/Admin-Board.vue'),
   },
   {
     path: '/adminPayment',
     name: 'adminpayment',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Admin/Admin-Payment.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/Admin/Admin-Payment.vue'),
   },
   {
     path: '/adminOneday',
     name: 'adminoneday',
-    component: () => import('../views/Admin/reserv/Oneday.vue')
+    component: () => import('../views/Admin/reserv/Oneday.vue'),
   },
   {
     path: '/adminDaycare',
     name: 'admindaycare',
-    component: () => import('../views/Admin/reserv/Daycare.vue')
+    component: () => import('../views/Admin/reserv/Daycare.vue'),
   },
   {
     path: '/adminMain',
     name: 'adminMain',
-    component: () => import('../components/Admin-main.vue')
+    component: () => import('../components/Admin-main.vue'),
   },
 {       //일반 홈
         path: '/',
         name: 'home',
-        component: Home
+        component: Home,
     },
     {   //시터 지원
         path: '/sitterSignUp',
@@ -125,37 +130,43 @@ const routes = [
         path: '/signin',
         name: 'signin',
         component: () =>
-            import ( /* webpackChunkName: "Login" */ '../views/Signup/UserForm/userSignIn.vue')
+        import ( /* webpackChunkName: "Login" */ '../views/Signup/UserForm/userSignIn.vue'),
     },
     {
         path: '/signup',
         name: 'signup',
         component: () =>
-            import ( /* webpackChunkName: "Login" */ '../views/Signup/UserForm/userSignUp.vue')
+            import ( /* webpackChunkName: "Login" */ '../views/Signup/UserForm/userSignUp.vue'),
     },
     { //유저 마이페이지
         path: '/uMyPage',
         name: 'uMyPage',
         component: () =>
-            import ( /* webpackChunkName: "Login" */ '../views/Mypage/User/userMyPage.vue')
+            import ( /* webpackChunkName: "Login" */ '../views/Mypage/User/userMyPage.vue'),
     },
     { //유저 예약내역
         path: '/uMyPage/userReservationList',
         name: 'UserReservationList',
         component: () =>
-            import ( /* webpackChunkName: "UserReservationList" */ '../views/Mypage/User/userReservationList.vue')
+            import ( /* webpackChunkName: "UserReservationList" */ '../views/Mypage/User/userReservationList.vue'),
     },
     { //유저 예약 - 상세 페이지
         path: '/uMyPage/userReservationDetail/:paymentNo',
         name: 'UserReservationDetail',
         component: () =>
-            import ( /* webpackChunkName: "UserReservationDetail" */ '../views/Mypage/User/userReservationDetail.vue')
+            import ( /* webpackChunkName: "UserReservationDetail" */ '../views/Mypage/User/userReservationDetail.vue'),
     },
     { //반려견 정보관리
         path: '/uMyPage/petInfo',
         name: 'myPagePetInfo',
         component: () =>
-            import ( /* webpackChunkName: "Login" */ '../views/Mypage/User/MyPagePetInfo.vue')
+            import ( /* webpackChunkName: "Login" */ '../views/Mypage/User/MyPagePetInfo.vue'),
+    },
+    { //유저 실시간 케어 보기
+        path: '/uMyPage/live',
+        name: 'userLive',
+        component: () =>
+            import ( /* webpackChunkName: "Login" */ '../views/Mypage/User/userLive.vue'),
     },
     {
         path: '/sMyPage',
@@ -175,14 +186,14 @@ const routes = [
         //하루 시터 목록 보기
         path: '/daysitters',
         name: 'DaySitterList',
-        component: DaySitterList
+        component: DaySitterList,
     },
 
     {
         //위탁 시터 목록 보기
         path: '/homesitters',
         name: 'HomeSitterList',
-        component: HomeSitterList
+        component: HomeSitterList,
     },
 
     {
@@ -214,7 +225,7 @@ const routes = [
     {
         path: '/write',
         name: 'Write',
-        component: Write
+        component: Write,
     },
     // {
     //     path: '/update',
@@ -227,14 +238,14 @@ const routes = [
         path: '/userReservationList',
         name: 'UserReservationList',
         component: () =>
-            import ( /* webpackChunkName: "UserReservationList" */ '../views/Mypage/User/userReservationList.vue')
+            import ( /* webpackChunkName: "UserReservationList" */ '../views/Mypage/User/userReservationList.vue'),
     },
 
     {
         path: '/userReservationDetail/:paymentNo',
         name: 'UserReservationDetail',
         component: () =>
-            import ( /* webpackChunkName: "UserReservationDetail" */ '../views/Mypage/User/userReservationDetail.vue')
+            import ( /* webpackChunkName: "UserReservationDetail" */ '../views/Mypage/User/userReservationDetail.vue'),
     },
 
     {
@@ -248,19 +259,19 @@ const routes = [
         //마이페이지
         path:'/mypage/:userNo',
         name:'myPagePetInfo',
-        component:MypagePetInfo
+        component:MypagePetInfo,
       },
       {
         //반려견 추가히기
         path:'/myPetDetail',
         name:'myPetDetail',
-        component:MyPagePetInfoNew
+        component:MyPagePetInfoNew,
       },
       //마이페이지/계정관리
       {
         path:'/uMyPage/uAccount',
         name:'myPgeSetting',
-        component:MyPageSetting
+        component:MyPageSetting,
       },
       
       //kakaopay 성공 시 넘어가는 페이지
@@ -268,19 +279,25 @@ const routes = [
         path: '/kakaoPaySuccess',
         name: 'KakaoPaySuccess',
         component: () =>
-            import ( /* webpackChunkName: "UserReservationList" */ '../views/Payment/kakaoPaySuccess.vue')
+            import ( /* webpackChunkName: "UserReservationList" */ '../views/Payment/kakaoPaySuccess.vue'),
     },
     { //시터 예약내역
         path: '/sMyPage/sitterReservationList',
         name: 'SitterReservationList',
         component: () =>
-            import ( /* webpackChunkName: "UserReservationList" */ '../views/Mypage/Sitter/sitterReservationList.vue')
+            import ( /* webpackChunkName: "UserReservationList" */ '../views/Mypage/Sitter/sitterReservationList.vue'),
     },
     { //시터 프로필 등록, 수정
         path: '/sMyPage/sitterProfile',
         name: 'SitterProfile',
         component: () =>
-            import ( /* webpackChunkName: "UserReservationList" */ '../views/Mypage/Sitter/sitterProfile.vue')
+            import ( /* webpackChunkName: "UserReservationList" */ '../views/Mypage/Sitter/sitterProfile.vue'),
+    },
+    { //시터 실시간 케어 송출
+        path: '/sMyPage/live',
+        name: 'sitterLive',
+        component: () =>
+            import ( /* webpackChunkName: "UserReservationList" */ '../views/Mypage/Sitter/sitterLive.vue'),
     },
     // 마이페이지 / 실시간 케어보기 
     {
@@ -300,7 +317,19 @@ const routes = [
         path: '/sMyPage/sitterMyPageSetting',
         name: 'SitterMyPageSetting',
         component: () =>
-            import ( /* webpackChunkName: "UserReservationList" */ '../views/Mypage/Sitter/sitterMyPageSetting.vue')
+            import ( /* webpackChunkName: "SitterMyPageSetting" */ '../views/Mypage/Sitter/sitterMyPageSetting.vue')
+    },
+    { //시터 예약 내역 - 상세 페이지
+        path: '/sMyPage/sitterReservationDetail/:paymentNo',
+        name: 'SitterReservationDetail',
+        component: () =>
+            import ( /* webpackChunkName: "SitterReservationDetail" */ '../views/Mypage/Sitter/sitterReservationDetail.vue')
+    },
+    { //시터 프로필 페이지
+        path: '/sitterProfilePage/:sitterNo/:sittingType',
+        name: 'SitterProfilePage',
+        component: () =>
+            import ( /* webpackChunkName: "SitterProfilePage" */ '../views/Sitters/sitterProfilePage.vue')
     },
 
 ]

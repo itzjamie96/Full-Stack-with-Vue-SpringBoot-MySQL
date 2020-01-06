@@ -18,18 +18,5 @@ public class PetVO  extends PetInfoVO{
     private int userNo;             // 회원 번호 
     private int dayPrice;
     private int homePrice;
-	
     
-	 
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-	
 }

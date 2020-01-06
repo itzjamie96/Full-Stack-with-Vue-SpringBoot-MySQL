@@ -85,10 +85,13 @@
         <v-divider class="mt-3"></v-divider>
         </v-toolbar-title>
     </v-toolbar>
-    <div class="text-xs-center pl-5 ml-5 pb-5">
-    <v-btn outlined fab color="success" class="ml-5">naver</v-btn>
-    <v-btn outlined fab color="warning" class="mx-12">kakao</v-btn>
-    <v-btn outlined fab color="info" >google</v-btn>
+    <div class="text-xs-center pl-5 ml-5 pb-5" v-if="role !=='Admin'">
+    <KakaoLogin
+      api-key="f64eb8bdf0d591a97100dd290c91ee26"
+      :on-success=onSuccess
+      :on-failure=onFailure
+      />
+    <GoogleLogin :params="params" :renderParams="renderParams" :onSuccess="onSuccessG" :onFailure="onFailure"></GoogleLogin>
     </div>
            <v-divider class="mx-5"></v-divider>
 <div class="layout justify-center">
@@ -106,16 +109,28 @@
 
 
 <script>
+import KakaoLogin from 'vue-kakao-login'
+import GoogleLogin from 'vue-google-login'
 import axios from "axios"
+import {mapState,mapActions} from "vuex"
 import router from '../../../router/index'
 import { VueDaumPostcode } from "vue-daum-postcode"
 const baseURL = 'http://localhost:1234'
 export default {
   components:{
-   VueDaumPostcode
+   VueDaumPostcode,KakaoLogin,GoogleLogin
   },
     data() {
         return {
+           params: {
+                    client_id: "850641622081-mcbv8nhhuue0gae6d23jsujgs0drijrn.apps.googleusercontent.com"
+                },
+                // only needed if you want to render the button with the google ui
+                renderParams: {
+                    width: 300,
+                    height: 40,
+                    longtitle: true
+                },
           Trigger:{
             Name : false,
             Phone : false,
@@ -152,6 +167,7 @@ export default {
         }
     },
     computed: {
+      ...mapState(["isLogin","userInfo","isLoginError","role","sitterApp"]),
       checkP(){
           if(this.userPw !==null&&this.userPwRepeat !==null&&this.userPw===this.userPwRepeat)
             {this.message="비밀번호가 같습니다."
@@ -166,7 +182,58 @@ export default {
 
     },
     methods:{
-        
+      onSuccessG(googleUser){
+        let this_=this;
+        let UsersVO={
+                        userEmail:'',
+                        userName:'구글 :',
+                        userPw:"구글",
+                        userPhone:"구글",
+                        userAddress:"구글"
+                    }
+        UsersVO.userEmail=googleUser.w3.U3
+        UsersVO.userName=googleUser.w3.ig
+
+        axios.post(`${baseURL}/signup`,UsersVO).then(resp => {
+            console.log(resp)
+          this_.login({email:UsersVO.userEmail,password:UsersVO.userPw})
+           })
+
+      },
+      onFailureG(googleUser){
+        console.log(googleUser)
+      },
+      onSuccess(data){
+        let this_=this;
+        //this.login({email:UsersVO.userEmail,password:UsersVO.userPw})
+        let UsersVO={
+                        userEmail:'',
+                        userName:'',
+                        userPw:"카카오",
+                        userPhone:"카카오",
+                        userAddress:"카카오"
+                    }
+ Kakao.API.request({
+
+       url: '/v1/user/me',
+
+       success: function(res) {
+         UsersVO.userEmail=res.kaccount_email
+         UsersVO.userName="카카오:"+res.properties.nickname
+         console.log(res); //<---- kakao.api.request 에서 불러온 결과값 json형태로 출력
+            
+          axios.post(`${baseURL}/signup`,UsersVO).then(resp => {
+            console.log(resp)
+          this_.login({email:UsersVO.userEmail,password:UsersVO.userPw})
+          })
+           }
+         })
+      },
+      onFailure(data){
+      console.log(data)
+  console.log("failure")
+    },
+        ...mapActions(['login','_roles']),
         signup(){
             let UsersVO = {userName:'',userEmail:'',userPw:'',userAddress:'',userPhone:''}
             UsersVO.userName=this.userName

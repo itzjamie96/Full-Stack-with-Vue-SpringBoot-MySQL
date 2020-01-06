@@ -41,7 +41,12 @@
       <v-col>
     <v-card max-width="150" disabled outlined>1/3 페이지</v-card>
     <v-progress-linear value="30"></v-progress-linear>
-    <v-btn v-show="Agree" @click="dialog=true" class="mb-12" large outlined>다음</v-btn>
+    <v-btn 
+    :disabled="!Agree" 
+    @click="dialog=true" 
+    class="mb-12 mt-5" 
+    large 
+    outlined>다음</v-btn>
     </v-col></v-row>
 <!-- dialog start -->
      <v-row justify="center">
@@ -59,7 +64,6 @@
         <v-row justify="center">
         <v-col lg="8">
           <h4>*필수항목을 꼭 입력해주세요</h4><br>
-          {{Trigger}}
        <h1>지원자 정보</h1><br>
           성별 : 
           <v-radio-group v-model="SitterVO.sitterGender" row>
@@ -233,7 +237,7 @@ export default {
       data0 : '93년 이전 출생자(만 26세 이상) / 학력,성별 무관(여성 우대)/<br> 자차 이동 가능자 우대/반려동물 반려경험 1년 이상 / 서울 ,경기 인천 거주자',
       //
       //최종동의서
-      Agree:'',
+      Agree:false,
       data1 : '1. 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라 만세 무궁화 삼천리 화려 강산 대한 사람 대한으로 길이 보전하세',
 
       data2:'2. 남산 위에 저 소나무 철갑을 두른 듯 바람 서리 불변함은 우리 기상일세 무궁화 삼천리 화려 강산 대한 사람 대한으로 길이 보전하세',

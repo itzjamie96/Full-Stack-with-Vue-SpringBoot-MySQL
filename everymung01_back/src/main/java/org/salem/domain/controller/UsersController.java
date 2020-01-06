@@ -3,7 +3,10 @@ package org.salem.domain.controller;
 import java.util.List;
 
 import org.salem.domain.Mapper.UsersMapper;
+import org.salem.domain.file.FileResponse;
+import org.salem.domain.file.StorageService;
 import org.salem.domain.vo.LoginVO;
+import org.salem.domain.vo.PetVO;
 import org.salem.domain.vo.SearchIdVO;
 import org.salem.domain.vo.SearchPwVO;
 import org.salem.domain.vo.UsersVO;
@@ -12,7 +15,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 public class UsersController {
@@ -20,6 +26,9 @@ public class UsersController {
 	
 	@Autowired
 	UsersMapper mapper;
+	
+	@Autowired
+	StorageService storageService;
 	
 	@PostMapping("/searchIdUser")
 	public String searchId(@RequestBody SearchIdVO search){
@@ -34,6 +43,7 @@ public class UsersController {
 		}
 		return msg;
 	}
+
 	@PostMapping("/searchPwUser")
 	public String searchPw(@RequestBody SearchPwVO search){
 		String msg="정보가 일치하지 않습니다";
@@ -62,8 +72,10 @@ public class UsersController {
 	}
 	
 
+	//회원 정보 변경 
 	@PostMapping("/updateUser") 
 	public int updateUser(@RequestBody UsersVO usersVo){
+
 		System.out.println("updateUser 메소드 실행 ");
 	    System.out.println("uservo=>" + usersVo);
 	    UsersVO vo = mapper.getUserVO(usersVo.getUserNo());
@@ -75,11 +87,16 @@ public class UsersController {
 	    vo.setUserAddress(usersVo.getUserAddress());
 	    
 		return mapper.updateUser(vo);
-		
+
 		
 	}
+	
+	
+	//회원 삭제 하기 
 	@PostMapping("/deleteUser/{userNo}")
 	public int deleteUser(@PathVariable int userNo) {
+		System.out.println("deleteUser 메소드 실행 ");
+		
 		return mapper.deleteUser(userNo);
 	}
 	
@@ -147,5 +164,43 @@ public class UsersController {
 //		System.out.println(mapper.test2(id));
 //		System.out.println(mapper.test());
 //	}
+	
+
+	//이미지 업로드 (단일 업로드 ) 
+	@PostMapping("/upload-userImg/{userEmail}/{userNo}")
+    public FileResponse uploadFile(@PathVariable("userNo") int userNo, @PathVariable("userEmail") String userEmail, @RequestParam("file") MultipartFile file) {
+    	System.out.println("upload-userImg 추가  메소드 실행 ");
+    	System.out.println("file=>"+file);
+    	UsersVO userVo = mapper.getUserVO(userNo);
+    	
+    	System.out.println(userVo);
+    	
+    	
+    	String name = storageService.store(file,userEmail+userNo);
+        String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/download/")
+                .path(name)
+                .toUriString();
+        System.out.println(uri);
+        
+        userVo.setUserProfile(name);
+        
+        mapper.updateUser(userVo);
+        
+        return new FileResponse(name, uri, file.getContentType(), file.getSize());
+    }
+	
+	@RequestMapping("/deleteUserImg/{userNo}")
+	public UsersVO deleteUserImg(@PathVariable("userNo")int userNo) {
+		System.out.println("deleteUserImg 메소드 실행 ");
+	    UsersVO uservo = mapper.getUserVO(userNo);
+	    
+	    storageService.deleteO(uservo.getUserProfile());
+		
+	    return uservo;
+	}
+	
+	
+	
 
 }

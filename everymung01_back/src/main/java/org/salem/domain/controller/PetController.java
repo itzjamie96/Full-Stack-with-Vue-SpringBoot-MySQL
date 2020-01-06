@@ -30,8 +30,6 @@ public class PetController {
 
 	@RequestMapping("/showAllpets/{userNo}")
 	public List<PetVO> showAllPets(@PathVariable int userNo) {
-		System.out.println("showAllPets 메소드 실행 ");
-		//System.out.println(petMapper.showAllPets(userNo));
 		return petMapper.showAllPets(userNo);
 
 	}
@@ -102,7 +100,6 @@ return new FileResponse(name, uri, file.getContentType(), file.getSize());
 		 return temp;
 				 
 	}
-
 	
 	@RequestMapping("/deletePet/{petNo}")
 	public void deletePet(@PathVariable("petNo") int petNo) {

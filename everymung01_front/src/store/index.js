@@ -9,10 +9,13 @@ const baseURL = 'http://localhost:1234'
 
 export default new Vuex.Store({
   state: {
+    //채팅
+    me: {},
+    history: [],
     //로그인 
     trigger:true,
     role:'User',
-    userInfo:null,
+    userInfo:{},
     isLogin : false,
     isLoginError: false,
     sitterApp:false,
@@ -56,6 +59,16 @@ export default new Vuex.Store({
   },
 
   mutations: {
+    //채팅 관련
+    setMe(state, {me}) {
+      state.me = me;
+    },
+    addHistory(state, {history}){
+      history.forEach(element => {
+        state.history.push(element.entry);
+      });
+    },
+    ////시터 승인 대기 상태에서 로긴 거절
     sitterAp(state){
       state.isLogin =false
       state.isLoginError=false
@@ -136,7 +149,6 @@ export default new Vuex.Store({
       if(role === 'User'){
         Axios.post(`${baseURL}/signinUser`,loginobj).then(res=> {
            if(res.data.userEmail != null){
-            console.log(res.data.userEmail)
                 localStorage.setItem("email",loginobj.email)
                   commit('loginSuccess',res.data)
                   router.push({name:'uMyPage'})
@@ -153,9 +165,11 @@ export default new Vuex.Store({
       }else if (role === 'Sitter'){
         Axios.post(`${baseURL}/signinSitter`,loginobj).then(res=> {
           if(res.data.sitterEmail != null && res.data.approvalStatus === true){
+            
             localStorage.setItem("email",loginobj.email)
                     commit('loginSuccess',res.data)
-                    router.push({name:'sMyPage'})
+                    
+                    router.push({name:'SitterReservationList'})
           }
           else if(res.data.sitterEmail != null && res.data.approvalStatus === false){
            commit('sitterAp')
@@ -227,11 +241,11 @@ export default new Vuex.Store({
         if(role === 'Admin' && email !== null){
         commit('triggerToggle',false)
         }
-      console.log(email)
+      
       if(email != null){
       Axios.post(`${baseURL}/refresh`+role,{email,password}) 
           .then(res => { 
-            console.log(res.data)
+            
             
             commit('loginSuccess',res.data)
             commit('roles',role)
@@ -268,9 +282,9 @@ export default new Vuex.Store({
 
     featuredPics(state, getters) {   //메인에 걸 사진들만 
       return getters.mainPics.slice(0,5)
-    }
-
-    }
-
+    },
+    getMyUuid: (state) => state.me.uuid,
+    getHistoryMsgs: (state) => state.history,
     
+    }
   })

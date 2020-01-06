@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileSystemUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -103,14 +102,12 @@ public class FileSystemStorageService implements StorageService {
 
     @Override
     public String deleteO(String filename) {
+
     	//File lsm = new File("C:/git/Full-Stack-with-Vue-SpringBoot-MySQL/everymung01_back/uploads/"+filename);
-        File file = new File("/Volumes/DATA/Full-Stack-with-Vue-SpringBoot-MySQL/everymung01_back/uploads/" + filename);
+        File file = new File("./uploads/" + filename);
     	
     	String msg= "";
-    	//    	System.out.println(lsm.exists());
-//    	System.out.println(lsm.getPath());
-//    	System.out.println(lsm.delete());
-//    	System.out.println(lsm.exists());
+
     	if(file.exists()) {
     		file.delete();
     		msg="삭제";

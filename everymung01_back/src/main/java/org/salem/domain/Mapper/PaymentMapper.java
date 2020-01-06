@@ -30,4 +30,7 @@ public interface PaymentMapper {
 
 	public List<TestVO> test1(); 
 	
+	//sitter에게 예약된 리스트 출력
+	public List<PaymentVO> showSitterPayment(int sitterNo);
+	
 }

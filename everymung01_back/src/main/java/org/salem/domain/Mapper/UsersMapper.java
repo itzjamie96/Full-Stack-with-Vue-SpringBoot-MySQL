@@ -21,7 +21,6 @@ public interface UsersMapper {
 	@Delete("delete from users where userNo=#{userNo}")
 	public int deleteUser(int userNo);
 
-
 	@Update("Update users set userName=#{userName},userEmail=#{userEmail},"
 			+ "userPw=#{userPw},userPhone=#{userPhone},userAddress=#{userAddress},"
 			+ "userProfile=#{userProfile} where userNo=#{userNo}")
@@ -50,15 +49,11 @@ public interface UsersMapper {
 	@Delete("delete from users where email=#{email}")
 	public int test2(String email);
 	
-	
 	@Select("SELECT * FROM USERS WHERE userNo = #{userNo}")
 	public UsersVO getUserVO(int userNo);
 	
 	
 	
 	
-	
-	
-	
-	
+
 }
