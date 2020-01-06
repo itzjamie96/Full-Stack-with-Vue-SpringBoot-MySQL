@@ -10,6 +10,12 @@
               size="100"
               color="green"
             >
+            <v-img
+            :src="'http://localhost:1234/download/' + this.userInfo.userProfile"
+            >
+            </v-img>
+
+
             </v-list-item-avatar>
             
             <v-list-item-content>
