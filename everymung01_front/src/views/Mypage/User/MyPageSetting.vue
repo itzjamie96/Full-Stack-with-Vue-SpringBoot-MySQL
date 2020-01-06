@@ -274,7 +274,7 @@ export default {
 
                      })
             }
-            this.$router.push('/uMyPage')
+            this.$router.push('/uMyPage/userReservationList')
 
             
         },

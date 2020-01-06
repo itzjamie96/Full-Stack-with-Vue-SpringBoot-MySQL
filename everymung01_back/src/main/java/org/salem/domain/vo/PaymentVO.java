@@ -32,4 +32,8 @@ public class PaymentVO {
 	private Boolean refundStatus; 
 	private Boolean reviewStatus;
 	private Boolean paymentStatus;
+	
+	private String tid;
+	private String cid;
+	private	String aid;
 }

@@ -19,15 +19,16 @@
 	
 	<insert id="addPayment" parameterType="PaymentVO">
 		INSERT INTO payment (sitterNo, startTime, endTime, request,  
-							paymentStatus, amount, paymentDate, paymentMethod, refundStatus, reviewStatus)
+							paymentStatus, amount, paymentDate, paymentMethod, refundStatus, reviewStatus, cid, aid, tid)
 		VALUES (#{sitterNo}, #{startTime}, #{endTime}, #{request}, 1, #{amount},
-				sysdate(), 'kakaopay', 0, 0)
+				sysdate(), 'kakaopay', 0, 0, #{cid}, #{aid}, #{tid})
 	</insert>
 	
 	<select id="showUserPayment" resultType="PaymentVO" parameterType="int">
 		SELECT pay.paymentNo, s.sitterNo, t.sittingType, s.sitterName, s.sitterPhone, s.sitterAddress, 
 				u.userNo, u.userName, u.userAddress, pay.startTime, pay.endTime, pay.request, 
-				pay.paymentMethod, pay.amount, pay.paymentStatus , pay.refundStatus, pay.reviewStatus, pay.paymentDate
+				pay.paymentMethod, pay.amount, pay.paymentStatus , pay.refundStatus, pay.reviewStatus, pay.paymentDate, 
+				pay.tid, pay.aid
 		FROM USERS u
 		INNER JOIN PET p ON p.userNo = u.userNo
 		INNER JOIN BREED b ON b.breedNo = p.breedNo
