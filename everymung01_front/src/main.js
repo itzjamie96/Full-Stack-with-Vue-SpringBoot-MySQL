@@ -8,8 +8,9 @@ import '@babel/polyfill'
 import '@fortawesome/fontawesome-free/css/all.css'
 import moment from 'moment'
 import VueLocalStorage from 'vue-localstorage'
-import '@mdi/js'
 import PubNubVue from 'pubnub-vue';
+import '@mdi/font/css/materialdesignicons.css'
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 const publish_Key = 'pub-c-c191e7ba-affc-4757-a3be-82fc09a96c50';
 const subscribe_Key = 'sub-c-04c7ffc2-2b82-11ea-a5fd-f6d34a0dd71d';
@@ -76,7 +77,9 @@ Vue.filter('formatTime', function(value) {
     return moment(String(value)).format('HH:mm')
   }
 }),
-
+Vue.use(vuetify, {
+  iconfont: 'md'
+}), 
 
 new Vue({
   beforeCreate() {
