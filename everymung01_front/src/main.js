@@ -1,8 +1,8 @@
 import Vue from 'vue'
+import store from './store'
 import axios from 'axios'
 import App from './App.vue'
 import router from './router'
-import store from './store'
 import vuetify from './plugins/vuetify'
 import '@babel/polyfill'
 import '@fortawesome/fontawesome-free/css/all.css'
@@ -77,12 +77,12 @@ Vue.filter('formatTime', function(value) {
 }),
 
 new Vue({
-  router,
-  store,
-  vuetify,
   beforeCreate() {
     this.$store.dispatch("lsm")
   },
+  router,
+  store,
+  vuetify,
   render: h => h(App)
 }).$mount('#app')
 

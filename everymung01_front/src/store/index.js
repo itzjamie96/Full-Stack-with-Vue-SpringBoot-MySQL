@@ -15,7 +15,7 @@ export default new Vuex.Store({
     //로그인 
     trigger:true,
     role:'User',
-    userInfo:null,
+    userInfo:{},
     isLogin : false,
     isLoginError: false,
     sitterApp:false,
@@ -165,8 +165,10 @@ export default new Vuex.Store({
       }else if (role === 'Sitter'){
         Axios.post(`${baseURL}/signinSitter`,loginobj).then(res=> {
           if(res.data.sitterEmail != null && res.data.approvalStatus === true){
+            
             localStorage.setItem("email",loginobj.email)
                     commit('loginSuccess',res.data)
+                    
                     router.push({name:'sMyPage'})
           }
           else if(res.data.sitterEmail != null && res.data.approvalStatus === false){
@@ -283,5 +285,6 @@ export default new Vuex.Store({
     },
     getMyUuid: (state) => state.me.uuid,
     getHistoryMsgs: (state) => state.history,
+    
     }
   })

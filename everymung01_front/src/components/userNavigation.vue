@@ -11,7 +11,7 @@
               color="green"
             >
             </v-list-item-avatar>
-
+            
             <v-list-item-content>
               <v-list-item-title>{{this.userInfo.userName}}</v-list-item-title>
               <v-list-item-subtitle>일반 유저</v-list-item-subtitle>
@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import {mapState,mapActions} from "vuex"
+import {mapState,mapActions,mapGetters} from "vuex"
 
   export default {
     data () {
@@ -54,11 +54,11 @@ import {mapState,mapActions} from "vuex"
           { title: '반려견 정보관리', icon: 'mdi-account' , link: '/uMyPage/petInfo'},
           { title: '계정관리', icon: 'mdi-account-group-outline' , link: '/uMyPage/uAccount'},
         ],
-      }
+        }
     },
-
     computed: {
-        ...mapState(["isLogin","userInfo","isLoginError"])
+        ...mapState(["isLogin","userInfo","isLoginError"]),
+        ...mapGetters(["getUserInfo"]),
     },
 
 
