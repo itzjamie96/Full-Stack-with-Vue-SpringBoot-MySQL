@@ -3,6 +3,7 @@ package org.salem.domain.Mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import org.salem.domain.vo.PaymentVO;
 import org.salem.domain.vo.TestVO;
 
@@ -25,12 +26,12 @@ public interface PaymentMapper {
 	//후기 작성 시 reviewStatus UPDATE
 	public int updateReviewStatus(int paymentNo);
 
-
 	public List<PaymentVO> showAllPayment(); 
 
 	public List<TestVO> test1(); 
 	
 	//sitter에게 예약된 리스트 출력
 	public List<PaymentVO> showSitterPayment(int sitterNo);
+
 	
 }

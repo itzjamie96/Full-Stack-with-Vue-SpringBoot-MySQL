@@ -26,6 +26,8 @@ public class PaymentVO {
 	private String petName;   //수정할것
 	private String dogBreed;  //수정할것
 	private String size;      //수정할것
+	private int dayPrice;
+	private int HomePrice;
 	private List<PetInfoVO> petDetailList;
 	
 	//reservaionVO

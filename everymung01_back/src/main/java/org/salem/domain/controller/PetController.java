@@ -38,10 +38,12 @@ public class PetController {
 	//이미지 업로드 (단일 업로드 ) 
 	@PostMapping("/upload-petImg/{userEmail}/{petNo}")
     public FileResponse uploadFile(@PathVariable("petNo") int petNo, @PathVariable("userEmail") String userEmail, @RequestParam("file") MultipartFile file) {
+
     	if(file == null) {
     		return new FileResponse("default.jpg","zz","zz",1);
     	}
 		System.out.println("uploadfile 메소드 실행 ");
+
     	System.out.println("file=>"+file);
 		PetVO petvo = petMapper.getPetInfo(petNo);
     	

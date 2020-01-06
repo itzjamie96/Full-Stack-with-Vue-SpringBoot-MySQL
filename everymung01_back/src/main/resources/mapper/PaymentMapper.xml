@@ -5,7 +5,7 @@
 	
 	<select id="showDetailPayment" resultType="PaymentVO" parameterType="int">
 		SELECT pay.paymentNo, s.sitterNo, t.sittingType, s.sitterName, s.sitterPhone, s.sitterAddress, 
-				u.userName, u.userAddress, p.petNo, p.petName, b.dogBreed, b.size, pay.startTime, 
+				u.userName, u.userAddress, p.petNo, p.petName, b.dogBreed, b.dayPrice, b.homePrice, b.size, pay.startTime, 
 				pay.endTime, pay.request, pay.paymentMethod, pay.amount, pay.paymentDate  
 		FROM USERS u
 		INNER JOIN PET p ON p.userNo = u.userNo
@@ -26,7 +26,7 @@
 	
 	<select id="showUserPayment" resultType="PaymentVO" parameterType="int">
 		SELECT pay.paymentNo, s.sitterNo, t.sittingType, s.sitterName, s.sitterPhone, s.sitterAddress, 
-				u.userNo, u.userName, u.userAddress, pay.startTime, pay.endTime, pay.request, 
+				u.userNo, u.userName, u.userAddress, p.petNo, p.petName, b.dogBreed, b.size, pay.startTime, pay.endTime, pay.request, 
 				pay.paymentMethod, pay.amount, pay.paymentStatus , pay.refundStatus, pay.reviewStatus, pay.paymentDate
 		FROM USERS u
 		INNER JOIN PET p ON p.userNo = u.userNo
@@ -97,5 +97,5 @@
         GROUP BY pay.paymentNo
         ORDER BY pay.paymentNo DESC
 	</select>
-	
+
 </mapper>

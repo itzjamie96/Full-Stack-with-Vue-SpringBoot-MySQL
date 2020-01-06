@@ -37,8 +37,8 @@
                 <v-col>
                     <p>{{paymentVO.startTime| formatTime}}</p>
                 </v-col>
-               
             </v-row>
+            
             <v-row justify="left">
                 <v-col>
                     <p class="text--primary">체크아웃 시간</p>
