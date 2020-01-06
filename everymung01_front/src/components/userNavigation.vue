@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import {mapState,mapActions,mapGetters} from "vuex"
+import {mapState,mapActions} from "vuex"
 
   export default {
     data () {
@@ -64,7 +64,6 @@ import {mapState,mapActions,mapGetters} from "vuex"
     },
     computed: {
         ...mapState(["isLogin","userInfo","isLoginError"]),
-        ...mapGetters(["getUserInfo"]),
     },
 
 

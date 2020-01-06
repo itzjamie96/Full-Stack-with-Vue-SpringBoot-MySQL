@@ -9,13 +9,13 @@ const baseURL = 'http://localhost:1234'
 
 export default new Vuex.Store({
   state: {
+    userInfo:{},
     //채팅
     me: {},
     history: [],
     //로그인 
     trigger:true,
     role:'User',
-    userInfo:{},
     isLogin : false,
     isLoginError: false,
     sitterApp:false,
@@ -285,6 +285,5 @@ export default new Vuex.Store({
     },
     getMyUuid: (state) => state.me.uuid,
     getHistoryMsgs: (state) => state.history,
-    
     }
   })

@@ -77,12 +77,12 @@ Vue.filter('formatTime', function(value) {
 }),
 
 new Vue({
-  beforeCreate() {
-    this.$store.dispatch("lsm")
-  },
   router,
   store,
   vuetify,
-  render: h => h(App)
+  beforeCreate() {
+    this.$store.dispatch("lsm")
+  },
+  render: h => h(App),
 }).$mount('#app')
 

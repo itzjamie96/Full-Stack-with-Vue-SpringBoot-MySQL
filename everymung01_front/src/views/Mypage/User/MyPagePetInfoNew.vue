@@ -38,7 +38,7 @@
                         <v-col cols="1"></v-col>
       
             <!-- 반려견 견종 정보  -->
-            {{userPetVo.dogBreed}}
+            
                         <v-col cols="5">
                            <v-select
                            v-model="userPetVo.dogBreed"
@@ -314,16 +314,20 @@ export default {
            .then(response =>{
               console.log(response)
                let newPetVo = response.data
-               
+            if(this.petImg !== ''){   
                  // 성공 후 바로 또 axios를 통해서 이미지만 저장 
                  axios.post('http://localhost:1234/upload-petImg/'+this.userInfo.userEmail+'/'+newPetVo.petNo, formData,{    
                            headers:{
                                  'Content-Type' : 'multipart/form-data'
                                    }
                  }).then(response =>{
+                    console.log(response.data)
                     this.$router.push('/uMyPage/petInfo')
-                     console.log(response.data)
                  })
+           }else{
+              this.$router.push('/uMyPage/petInfo')
+           }
+
            })
            .catch(error =>{
               alert('입력이 잘 되었는지 다시 확인 해 주세요')

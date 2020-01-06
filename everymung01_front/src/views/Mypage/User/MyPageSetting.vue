@@ -4,17 +4,20 @@
         <v-row class="fill-height">
             <v-col cols="3">
             <side-bar></side-bar>
+            <div v-if="false">
+            </div>
             </v-col>
                 <v-col>
                     <v-card
                     >
                         <form>
                             <div>
+                                
                                  <!-- 맨처음 보일  일반유저 프로필 사진 추가   -->
                                 <v-row justify="center">
                                     <v-col cols="3">
                                          <div class="image-preview"  v-if="trig" >
-                                            <v-img :src="userVo.userProfile"
+                                            <v-img :src="lsm"
                                             height="100" width="100" class="preview"  >
                                             </v-img>
                                         </div>
@@ -44,7 +47,7 @@
                                  @input="userInfoReading" -->
                                  <v-text-field
                                  label="이름"
-                                 v-model="userVo.userName"
+                                 v-model="userInfo.userName"
                                 readonly
                                  >
                                  </v-text-field>
@@ -59,8 +62,9 @@
                                      <!-- :value="userInfo.userEmail" -->
                                      <!-- @input="userInfoReading" -->
                                     <v-text-field
-                                    v-model="userVo.userEmail"
+                                    v-model="userInfo.userEmail"
                                     label="E-mail"
+                                    readonly
                                 ></v-text-field>
                                 </v-col>
                             </v-row>
@@ -69,6 +73,7 @@
                                 <v-col cols="3">
                                     <!-- :value="userInfo.userPw" -->
                                     <v-text-field
+                                    :disabled="userInfo.userPw==='구글'||userInfo.userPw==='카카오'"
                                     :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                                     :rules="[rules.required, rules.min]"
                                     :type="show1 ? 'text' : 'password'"
@@ -76,7 +81,7 @@
                                     hint="최소 8자리 이상 "
                                     counter
                                     @click:append="show1 = !show1"
-                                    v-model="userVo.userPw"
+                                    v-model="userInfo.userPw"
                                     ></v-text-field>
                                     
                                 </v-col>
@@ -86,7 +91,7 @@
                                 <v-col cols="3">
                                       <!-- :value="userInfo.userPhone" -->
                                     <v-text-field
-                                    v-model="userVo.userPhone"
+                                    v-model="userInfo.userPhone"
                                     label="휴대폰 번호"
                                     ></v-text-field>
                                 </v-col>
@@ -97,7 +102,7 @@
                                    <!-- :value="userInfo.userAddress" -->
                                     <!-- v-model="userVo.userAddress" -->
                                     <v-text-field
-                                     v-model="userVo.userAddress"
+                                     v-model="userInfo.userAddress"
                                     label=" 주소 "
                                     
                                     ></v-text-field>
@@ -135,17 +140,18 @@
 
 
 <script>
+import { mapState , mapMutations}  from 'vuex'
 import axios from 'axios'
 import NavBar from '@/components/userNavigation.vue'
-import { mapState , mapMutations}  from 'vuex'
 import { read } from 'fs'
 
 
 
 
-
 export default {
-    
+    components:{
+        'side-bar':NavBar
+    },
     data() {
         return {
             trig:true,
@@ -154,6 +160,14 @@ export default {
             updateUserImg:'',            // 변경할 이미지를 담는 변수  
             userImg:'',                 // 디비에 보낼 유저 이미지 변수 새로운 추가 
             imgData:'',                // 변경하고자 하는 이미지 미리보기 변수 
+            uploadUserImg:'',
+            show1:false,
+            userPw:'',
+            rules: {
+             required: value => !!value || 'Required.',
+             min: v => (v && v.length >= 6) || 'Min 8 characters',
+             emailMatch: () => ('The email and password you entered don\'t match'),
+            },
             userVo:{
                 userName:'',
                 userEmail:'',
@@ -163,52 +177,42 @@ export default {
                 userAddress:'',
                 userProfile:'',
                 userDate:''
-
-            },
-            uploadUserImg:'',
-            show1:false,
-            userPw:'',
-            rules: {
-             required: value => !!value || 'Required.',
-             min: v => (v && v.length >= 8) || 'Min 8 characters',
-             emailMatch: () => ('The email and password you entered don\'t match'),
-        }
+                    },
     }
     },
     computed:{
-        ...mapState(['userInfo'])
-       
-    },
-   
-    components:{
-        'side-bar':NavBar
-    },
-    created(){
-        this.init()
-        //this.updateUserInfo()
-       
-
+        ...mapState(['userInfo']),
+        lsm(){
+            let lsm = 'http://localhost:1234/download/'+this.userInfo.userProfile
+            return lsm
+        }
+        },
+        
+    created() {
+        
+        
     },
     methods:{
         ...mapMutations(['logout']),
+       init(){
+            
+            this.userVo.userName = this.userInfo.userName//
+            this.userVo.userEmail = this.userInfo.userEmail//
+            this.userVo.userPw = this.userInfo.userPw//
+            this.userVo.userPhone = this.userInfo.userPhone//
+            this.userVo.userNo = this.userInfo.userNo
+            this.userVo.userAddress = this.userInfo.userAddress//
+            this.userVo.userProfile ='http://localhost:1234/download/'+this.userInfo.userProfile
+            this.userVo.userDate = this.userInfo.userDate    
+           
+        },
         userInfoReading(e){
            this.$store.commit('userInfoReading', e.target.value)
            console.log('유저정보')
            console.log(e)
         },
-        init(){
-            this.userVo.userName = this.userInfo.userName
-            this.userVo.userEmail = this.userInfo.userEmail
-            this.userVo.userPw = this.userInfo.userPw
-            this.userVo.userPhone = this.userInfo.userPhone
-            this.userVo.userNo = this.userInfo.userNo
-            this.userVo.userAddress = this.userInfo.userAddress
-            this.userVo.userProfile ='http://localhost:1234/download/'+this.userInfo.userProfile
-            this.userVo.userDate = this.userInfo.userDate
-            console.log('uservo')
-            console.log(this.userVo)       
-        },
         updateUserInfo(){
+            this.init()
             if(this.trig){  // 유저 이미지 새로 추가 할 경우 
                 let formData = new FormData()
                 formData.append('file',this.userImg)
@@ -255,8 +259,8 @@ export default {
                              }
                             })
                             .then(response =>{
-                                console.log('유저이미지 수정 성공')
-
+                                this.userInfo.userProfile=String(response.data.name)
+                                    
                                 axios.post('http://localhost:1234/updateUser',this.userVo)
                                 .then(response =>{
                                     console.log('유저 이미지 성공 후 나머지 수정 성공')
@@ -274,11 +278,12 @@ export default {
 
                      })
             }
-            this.$router.push('/uMyPage')
+            window.location.href='http://localhost:8080/uMyPage/uAccount'
 
             
         },
         deleteUser(){
+            this.init()
             axios.post('http://localhost:1234/deleteUser/'+this.userVo.userNo)
             .then(response =>{
                 console.log('delete 성공')
@@ -295,39 +300,8 @@ export default {
 
 
         },
-        // userImgPreview(event){
-        //     //console.log(event)
-        //     //계정관리에서 이미지 insert 
-        //     if(this.trig){  
-        //         this.userImg = event.target.files[0]
-        //         var input = event.target;
-        //         if(input.files && input.files[0]){
-        //             var reader = new FileReader();
-        //             reader.onload = (e) =>{
-        //              this.previewUserImg = e.target.result;
-        //          }
-        //          reader.readAsDataURL(input.files[0])
-        //      }
-        //      console.log('이미지 추가 ')
-        //      console.log(this.trig)
-        //      //this.trig=false
-             
-        //     }else {
-        //         this.updateUserImg = event.target.files[0]
-        //         var input = event.target;
-        //         if(input.files && input.files[0]){
-        //             var reader = new FileReader();
-        //             reader.onload = (e) =>{
-        //                 this.imgData = e.target.result;
-        //             }
-        //             reader.readAsDataURL(input.files[0])
-        //         }
-        //         console.log('이미지 수정')
-        //         console.log(this.trig)
-        //     }
-            
-        // }
          userImgPreview(event){
+             this.init()
             //console.log(event)
             //계정관리에서 이미지 insert 
                 this.userImg = event.target.files[0]
@@ -343,20 +317,7 @@ export default {
              console.log(this.trig)
              this.trig=false
              
-            
-                // this.updateUserImg = event.target.files[0]
-                // var input = event.target;
-                // if(input.files && input.files[0]){
-                //     var reader = new FileReader();
-                //     reader.onload = (e) =>{
-                //         this.imgData = e.target.result;
-                //     }
-                //     reader.readAsDataURL(input.files[0])
-                // }
-                // console.log('이미지 수정')
-                // console.log(this.trig)
-            
-            //reader.readAsDataURL(input.files[0])
+           
         }
     },
     
