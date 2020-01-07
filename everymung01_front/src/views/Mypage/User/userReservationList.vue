@@ -49,7 +49,7 @@
             </v-icon>
             <v-icon
               small
-              @click="deleteItem(item)"
+              @click="refund(item)"
             >
               환불
             </v-icon>
@@ -143,6 +143,18 @@ import NavBar from '@/components/userNavigation.vue'
         let edate = new Date(endTime);
         console.log(edate)
         return edate;
+      },
+      refund(item) {
+        axios
+          .post('http://localhost:1234/refund',item)
+          .then(res => {
+            console.log(res);
+            // this.$router.push({path: '/daysitters'})
+            // window.open(res.data)
+          })
+          .catch(err => {
+            console.log(err);
+          })
       }
       
     }

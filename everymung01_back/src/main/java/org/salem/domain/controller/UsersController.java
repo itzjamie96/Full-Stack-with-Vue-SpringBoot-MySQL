@@ -6,11 +6,11 @@ import org.salem.domain.Mapper.UsersMapper;
 import org.salem.domain.file.FileResponse;
 import org.salem.domain.file.StorageService;
 import org.salem.domain.vo.LoginVO;
-import org.salem.domain.vo.PetVO;
 import org.salem.domain.vo.SearchIdVO;
 import org.salem.domain.vo.SearchPwVO;
 import org.salem.domain.vo.UsersVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+
 @RestController
 public class UsersController {
 
@@ -27,6 +28,7 @@ public class UsersController {
 	@Autowired
 	UsersMapper mapper;
 	
+
 	@Autowired
 	StorageService storageService;
 	
@@ -68,35 +70,36 @@ public class UsersController {
 	//@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping("/userlist")
 	public List<UsersVO> showAllUsers(){
-		return (List<UsersVO>) mapper.showAllUsers();
+		System.out.println("1");
+		return mapper.showAllUsers();
 	}
 	
+
 
 	//회원 정보 변경 
 	@PostMapping("/updateUser") 
 	public int updateUser(@RequestBody UsersVO usersVo){
 
-		System.out.println("updateUser 메소드 실행 ");
-	    System.out.println("uservo=>" + usersVo);
-	    UsersVO vo = mapper.getUserVO(usersVo.getUserNo());
-	    System.out.println("vo ==>"+ vo);
+		/*
+		 * System.out.println("updateUser 메소드 실행 "); System.out.println("uservo=>" +
+		 * usersVo); UsersVO vo = mapper.getUserVO(usersVo.getUserNo());
+		 * System.out.println("vo ==>"+ vo);
+		 * 
+		 * vo.setUserPhone(usersVo.getUserPhone()); vo.setUserPw(usersVo.getUserPw());
+		 * vo.setUserEmail(usersVo.getUserEmail());
+		 * vo.setUserAddress(usersVo.getUserAddress());
+		 */
 	    
-	    vo.setUserPhone(usersVo.getUserPhone());
-	    vo.setUserPw(usersVo.getUserPw());
-	    vo.setUserEmail(usersVo.getUserEmail());
-	    vo.setUserAddress(usersVo.getUserAddress());
-	    
-		return mapper.updateUser(vo);
+		return mapper.updateUser(usersVo);
 
 		
+
 	}
 	
 	
 	//회원 삭제 하기 
 	@PostMapping("/deleteUser/{userNo}")
 	public int deleteUser(@PathVariable int userNo) {
-		System.out.println("deleteUser 메소드 실행 ");
-		
 		return mapper.deleteUser(userNo);
 	}
 	
@@ -164,6 +167,7 @@ public class UsersController {
 //		System.out.println(mapper.test2(id));
 //		System.out.println(mapper.test());
 //	}
+
 	
 
 	//이미지 업로드 (단일 업로드 ) 
@@ -199,7 +203,6 @@ public class UsersController {
 		
 	    return uservo;
 	}
-	
 	
 	
 

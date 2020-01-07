@@ -9,77 +9,48 @@ import org.salem.domain.vo.BoardVO;
 @Mapper
 public interface BoardMapper {
 	
-	//답글형으로 전체조회  (BOARD테이블에서 USER테이블의 userName컬럼을 갖다쓰기 위해서 JOIN + 답글형 조회 )  
-	@Select("SELECT * FROM board LEFT JOIN users ON board.userNo=users.userNo ORDER BY groupNo DESC, depth ASC")
-	public List<BoardVO> showAllBoards();
-
-	@Select("select * from board,users where board.userNo=users.userNo and status=false")
-	public List<BoardVO> FailBoards();
-
-	//원글_Insert
+	//Create
 	@Insert("insert into board(userNo,title,content,boardDate,groupNo,depth,hits)"
 			+ "values(#{userNo},#{title},#{content},CURRENT_TIMESTAMP, get_seq('groupNoSeq'),0,0)")
 	public int insertBoard(BoardVO boardVo);
-
-	//2.답글_Insert => 답글을 insert하는 작업으로, groupNo값에 #{boardNo}을 넣어줘서, 원글과 답글의 groupNo값을 갖게 해주기. 
-	@Insert("INSERT INTO board(userNo,title, content, boardDate, groupNo, depth, hits)"
-			+ "VALUES( #{userNo}, #{title}, #{content}, CURRENT_TIMESTAMP, #{groupNo}, 1, 0)") // depth에 '1'로 하드코딩함. 
-	public int insertReply(BoardVO boardVo);
-		// VALUES()에 #{groupNo}를 넣어놨던데, #{baordNo}를 넣어야할지 말지 매우 헷갈림 
-
 	
-	//수정하기
+	//Read_답글형 정렬+users테이블 JOIN을 적용한 전체조회  (BOARD테이블에서 USER테이블의 userName컬럼을 갖다쓰기 위해서 JOIN했음)  
+	@Select("SELECT * FROM board LEFT JOIN users ON board.userNo=users.userNo ORDER BY groupNo DESC, depth ASC")
+	public List<BoardVO> showAllBoards();
+		
+	//Update
 	@Update("Update board set title=#{title},content=#{content} where boardNo=#{boardNo}")
 	public int updateBoard(BoardVO boardVo);
 	
-	//삭제하기
+	//유저_Delete ( 유저페이지에서 삭제버튼 클릭시 수행되는 쿼리문)
+	@Delete("delete from board where groupNo=#{groupNo}")
+	public int deleteBoardByUser(int groupNo);
+	
+	//조회수_Select_메커니즘_기존 클릭된 조회수 총합(0<=n) + 현재 나의 클릭(+1)
+	@Select("select hits + 1 as AddHits from board where boardNo = #{boardNo}")
+	public int selectOriHits(BoardVO boardVo);
+	
+	//조회수_Update
+	@Update("update board set hits = #{hits} where boardNo = #{boardNo}")
+	public void updateHits(BoardVO boardVo);	
+	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	//관리자_답글_Create(userNo에 관리자번호를 집어넣어야되는데, 관리자번호가 변경될 수 있기 때문에, 최종점검 때 해당값을 점검해줘야함)
+	@Insert("INSERT INTO board(userNo,title, content, boardDate, groupNo, depth, hits,status)"
+			+ "VALUES( 0, #{title}, #{content}, CURRENT_TIMESTAMP, #{groupNo}, 1, 0,true)") // depth에 '1'로 하드코딩함. 
+	public int insertReply(BoardVO boardVo);
+
+	//관리자_Read
+	@Select("select * from board,users where board.userNo=users.userNo order by status ASC,groupNo DESC, depth ASC, boardDate DESC")
+	public List<BoardVO> showAdminBoards();
+	
+	//관리자_원글_Update_status를 true로 수정 
+	@Update("Update board set status=#{status} where boardNo=#{boardNo}")
+	public int updateStatus(BoardVO boardVo);
+	
+	//관리자_Delete (관리자페이지에서 삭제버튼 클릭시 수행되는 쿼리문)
 	@Delete("delete from board where boardNo=#{boardNo}")
-	public int deleteBoard(int boardNo);
-	
-	
-/*
-			<<답글_인서트_가데이터>>
-(매개변수ver)
-INSERT INTO board(userNo,title, content, boardDate, hits, groupNo, depth)
-	VALUES( 1, #{title}, #{content}, CURRENT_TIMESTAMP, 0,  #{groupNo}, #{depth})
-(하드코딩ver)
-INSERT INTO board(userNo,title, content, boardDate, hits, groupNo, depth)
-	VALUES( 1, 'ㅁㄴㅇㄹㄹ_답글 테스트', 'ㅁㅇㄴㅁ_답글 테스트', CURRENT_TIMESTAMP, 0,  6, 0)  '답글 테스트', '답글 테스트'  / 're_답글 테스트', 're_답글 테스트'
-			<<답글_업데이트_가데이터>>
-(매개변수ver)
-UPDATE board SET depth=depth+1 WHERE groupNo=#{groupNo}
-(하드코딩ver)
-UPDATE board SET depth=depth+1 WHERE groupNo=6
-			<<답글_셀렉트_답글형으로 정렬해서 나타내기>>
-SELECT * FROM board ORDER BY groupNo DESC, depth ASC
- * 
- */
-	
-	
-	/*
-	 * 	
-	 * 				<매퍼 인터페이스 메소드 선언부>
-	int insertQ(Board1 board);
-	int insertA(int boardNo, int userNo, String title, String userName, String content, int boardDate, int hits,  int originNo, int groupOrder, int groupLayer);
-	int updateGrouplayer(int originno, int groupord);
-	
-					<매퍼 xml_SQL문>
-	
-	<insert id="insertQ">
-	INSERT INTO boardList1(userNo,title, userName, content, boardDate, hits, originNo, groupOrder, groupLayer) 
-	VALUES( 1,#{title}, #{content}, CURRENT_TIMESTAMP, 0,  1, 0)
-	</insert>
-	
-	
-	<insert id="insertA">
-	INSERT INTO boardList1(userid, boardtitle, boardno, boardpw, contentp, regdate, originno, groupord,  grouplayer, countp) 
-	VALUES(#{userid}, #{boardtitle}, seq_board1.NEXTVAL, #{boardpw}, #{contentp}, sysdate, #{originno}, #{groupord}, #{grouplayer}, 0)
-	</insert>
-	
-	<update id="updateGrouplayer">
-		UPDATE boardList1 SET groupord=groupord+1 WHERE originno=#{originno} AND groupord>#{groupord}
-	</update>
-	
-	
-	*/
+	public int deleteBoardByMngr(int boardNo);	
+		
 }

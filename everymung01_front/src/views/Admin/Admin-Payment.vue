@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="center">
+  <v-row >
      <v-col>
     <vue-good-table
     :columns="columns"
@@ -53,31 +53,29 @@
           <v-card>
         <v-toolbar dark color="primary">
           <v-btn icon dark @click="dialog2 = false">
-            <v-icon>mdi-close</v-icon>
+            <i class="fas fa-times"></i>
           </v-btn>
          
           <v-toolbar-title>Settings</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <!-- <v-btn dark text @click="dialog2 = false">Save</v-btn> -->
-            <v-btn dark text @click.native="deleteAlert=true">거절</v-btn>
-            <v-btn dark text @click.native="updateAlert=true">승인</v-btn>
+            <!-- <v-btn dark text @click.native="deleteAlert=true">거절</v-btn>
+            <v-btn dark text @click.native="updateAlert=true">승인</v-btn> -->
           </v-toolbar-items>
         </v-toolbar>
  
         <v-row>
-        <v-col cols="6">
-          <template>
-    <div>
-        <v-card
-            class="mx-auto"
-            max-width="344"
-        >
-        
-            <v-card-text>
-            <p class="headline text--primary">예약 정보 확인</p>
+          <v-col cols="6">
+            <template>
+              <div>
+                <v-card
+                    class="mx-auto"
+                    max-width="344"
+                >
+                  <v-card-text>
+                    <p class="headline text--primary">예약 정보 확인</p>
 
-            <v-row justify="center">
+            <v-row >
                 <v-col>
                     <p class="text--primary">맡기실 반려동물</p>
 
@@ -86,25 +84,44 @@
                       {{paymentdetail.petName}}
                 </v-col>
             </v-row>
-            <v-row justify="center">
+            <v-row >
                 <v-col>
                     <p class="text--primary">예약 날짜</p>
-
                 </v-col>
                 <v-col>
-                    <p>{{paymentdetail.startTime | formatDate}}</p>
+                    <p v-if="paymentdetail.sittingType === 'daycare'">{{paymentdetail.startTime | formatDate}}</p>
+                    <p v-else>{{paymentdetail.startTime | formatDate}} ~ {{paymentdetail.endTime | formatDate}}</p>
                 </v-col>
             </v-row>
-            <v-row justify="center">
+
+            <v-row  v-if="paymentdetail.sittingType === 'daycare'">
                 <v-col>
                     <p class="text--primary">예약 시간</p>
-
                 </v-col>
                 <v-col>
                     <p>{{paymentdetail.startTime | formatTime}} - {{paymentdetail.endTime | formatTime}}</p>
                 </v-col>
             </v-row>
-            <v-row justify="center">
+
+            <v-row  v-if="paymentdetail.sittingType === 'home'">
+                <v-col>
+                    <p class="text--primary">체크인 시간</p>
+                </v-col>
+                <v-col>
+                    <p>{{paymentdetail.startTime| formatTime}}</p>
+                </v-col>
+            </v-row>
+
+            <v-row  v-if="paymentdetail.sittingType === 'home'">
+                <v-col>
+                    <p class="text--primary">체크아웃 시간</p>
+                </v-col>
+                <v-col>
+                    <p>{{paymentdetail.endTime| formatTime}}</p>
+                </v-col>
+            </v-row>
+
+            <v-row >
                 <v-col>
                     <p class="text--primary">방문 주소</p>
 
@@ -113,7 +130,8 @@
                     <p>{{paymentdetail.userAddress}}</p>
                 </v-col>
             </v-row>
-            <v-row justify="center">
+
+            <v-row >
                 <v-col>
                     <p class="text--primary">펫시터</p>
 
@@ -122,7 +140,8 @@
                     <p>{{paymentdetail.sitterName}}</p>
                 </v-col>
             </v-row>
-            <v-row justify="center">
+
+            <v-row >
                 <v-col>
                     <p class="text--primary">요청사항</p>
 
@@ -135,7 +154,7 @@
             </v-card-text>
             
         </v-card>
-            </div>
+      </div>
         </template>
         </v-col>
 
@@ -152,36 +171,48 @@
             <v-card-text>
             <p class="headline text--primary">결제 정보 확인</p>
 
-            <v-row justify="center">
+            <v-row >
                 <v-col>
                     <p class="text--primary">기본 금액</p>
 
                 </v-col>
                 <v-col>
-                    <p>30,000 원</p>
+                    <p>15,000 원</p>
                 </v-col>
             </v-row>
             <v-divider></v-divider>
-            <v-row justify="center" class="mt-3">
-                <v-col>
-                   <p>{{paymentdetail.size}}&nbsp;X </p>
 
+            <v-row class="mt-3">
+                <v-col>
+                   <p>{{paymentdetail.dogBreed}}&nbsp;X </p>
                 </v-col>
                 <v-col>
-                    <p>{{paymentdetail.dogBreed}}</p>
+                    <p>{{paymentdetail.size}} X {{paymentdetail.dayPrice}} 원</p>
                 </v-col>
             </v-row>
-            <v-row justify="center">
+            <v-row v-if="paymentdetail.sittingType === 'daycare'">
                 <v-col>
                     <p class="text--primary">예약 시간</p>
 
                 </v-col>
                 <v-col>
-                    <p>{{paymentdetail.startTime | formatTime}} - {{paymentdetail.endTime | formatTime}}</p>
+                    <p>{{paymentdetail.startTime | formatTime}} - {{paymentdetail.endTime | formatTime}} : 총 {{time}}시간</p>
+                </v-col>
+            </v-row>
+
+            <v-row v-else>
+                <v-col>
+                    <p class="text--primary">예약 날짜</p>
+
+                </v-col>
+                <v-col>
+                    <p>{{paymentdetail.startTime | formatDate}} - {{paymentdetail.endTime | formatDate}}</p>
+                    {{days}} day
+        
                 </v-col>
             </v-row>
             <v-divider></v-divider>
-            <v-row justify="center">
+            <v-row >
                 <v-col>
                     <p class="text--primary">결제 금액</p>
 
@@ -190,7 +221,7 @@
                     <p>{{paymentdetail.amount}}</p>
                 </v-col>
             </v-row>
-            <v-row justify="center" class="mt-3">
+            <v-row class="mt-3">
                 <v-card-actions>
                 </v-card-actions>
             </v-row>
@@ -202,33 +233,12 @@
     </div>
 </template> 
 
-
-
-
         </v-col>
-
-
-
-
         </v-row>
-
-
-
-
-
-
-
-
 
           </v-card>
         </v-dialog>
 
-
-
-
-
-        
-        
       </v-card>
     </v-dialog>
 
@@ -238,6 +248,7 @@
 <script>
 import 'vue-good-table/dist/vue-good-table.css'
 import { VueGoodTable } from 'vue-good-table'
+import moment from 'moment'
 
 export default {
     components: {
@@ -257,6 +268,7 @@ export default {
        paymentdetail:{
         petName:'',
         startTime:'',
+        endTime:'',
         userAddress:'',
         sitterName:'',
         sittingType:'',
@@ -264,6 +276,7 @@ export default {
         amount:'',
         size:'',
         dogBreed:'',
+        dayPrice:'',
        },
       columns: [
         {
@@ -287,16 +300,36 @@ export default {
           field: 'amount',
         },
         {
+          label: '시터타입',
+          field: 'sittingType',
+        },
+        {
           label: '주문상태',
           field: 'paymentStatus',
         },
         
       ],
       rows:[],
+      time:'',
+      day:'',
     };
   },
   created() {
     this.selectAll();
+  },
+  computed: {
+       days() {
+           let endYear = Number(this.paymentdetail.endTime.split(" ")[0].split("-")[0])
+           let endMonth = Number(this.paymentdetail.endTime.split(" ")[0].split("-")[1])
+           let endDay =  Number(this.paymentdetail.endTime.split(" ")[0].split("-")[2])
+           let startYear = Number(this.paymentdetail.startTime.split(" ")[0].split("-")[0])
+           let startMonth = Number(this.paymentdetail.startTime.split(" ")[0].split("-")[1])
+           let startDay =  Number(this.paymentdetail.startTime.split(" ")[0].split("-")[2])
+            let end = moment([endYear, endMonth, endDay])
+            let start = moment([startYear, startMonth, startDay])     
+            let difference = end.diff(start,'days')
+           return difference
+       },
   },
   methods: {
   onRowClick(params) {
@@ -319,14 +352,13 @@ export default {
           })
      
   },
-  dele(userNo){
+  delet(userNo){
      this.dialog=false
      this.deleteAlert=false
      const No = userNo
      
       this.$http.post(`http://localhost:1234/deleteUser/${No}`).then(res =>{
         const idx = this.rows.findIndex(x => x.userNo === userNo)
-        console.log(idx)
               this.dialog=false
               this.rows.splice(idx, 1)
       }).catch(err =>{
@@ -350,7 +382,7 @@ export default {
     this.$http.get(`http://localhost:1234/showDetailPayment/${paymentNo}`)
               .then(res => { 
                 this.paymentdetail = res.data
-                console.log(this.paymentdetail)
+                this.time=this.paymentdetail.endTime.substr(11,2)-this.paymentdetail.startTime.substr(11,2)
               }) 
               .catch(err => { 
                 alert("backend(update) 에러 확인!")

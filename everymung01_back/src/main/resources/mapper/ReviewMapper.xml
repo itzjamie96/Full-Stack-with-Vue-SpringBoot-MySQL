@@ -31,6 +31,7 @@
 		INNER JOIN sitter s ON s.sitterNo = p.sitterNo
 		WHERE stars=5
 		GROUP BY re.paymentNo;
+
 	</select>
 	
 </mapper>
