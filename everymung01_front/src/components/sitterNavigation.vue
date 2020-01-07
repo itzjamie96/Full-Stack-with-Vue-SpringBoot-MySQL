@@ -6,14 +6,15 @@
       >
         <template>
           <v-list-item class="ml-6 mt-3">
+            <router-link :to="{path:'/sitterProfilePage/' + this.userInfo.sitterNo + '/' + this.userInfo.sittingType}">
             <v-list-item-avatar
               size="100"
-              color="green"
             >
              <v-img
               :src="'http://localhost:1234/download/' + this.userInfo.sitterImg1">
              </v-img>
             </v-list-item-avatar>
+            </router-link>
 
             <v-list-item-content>
               <v-list-item-title>{{this.userInfo.sitterName}}</v-list-item-title>

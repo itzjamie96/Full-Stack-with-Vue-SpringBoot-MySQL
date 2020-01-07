@@ -34,4 +34,10 @@ public interface PaymentMapper {
 	public List<PaymentVO> showSitterPayment(int sitterNo);
 
 	
+	public int updateRefundStatus(int paymentNo);
+	
+	public int addPaymentHome(PaymentVO paymentVO);
+	
+	public int updatePaymentStatus(int paymentNo);
+	
 }

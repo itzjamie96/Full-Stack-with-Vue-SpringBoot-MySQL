@@ -25,7 +25,7 @@
 
     <v-row justify="center">
       <v-col cols="12" sm="10">
-        <v-select 
+        <v-select  
             v-model="area"
             v-bind:items="areaList"
             item-text="name"
