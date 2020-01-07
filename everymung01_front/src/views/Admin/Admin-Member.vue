@@ -26,7 +26,7 @@
                 <v-text-field label="Name"  v-model="user.userName" ></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="Email" v-model="user.userEmail" ></v-text-field>
+                <v-text-field label="Email" v-model="user.userEmail" :rules="emailRules" ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-text-field label="Password" v-model="user.userPw"></v-text-field>
@@ -117,6 +117,22 @@ export default {
         
       ],
       rows:[],
+      emailRules: [
+                        v => !!v || 'E-mail is required',
+                        v => /.+@.+\..+/.test(v) || '이메일 형식에 맞지 않습니다.',
+                        ],
+            PhoneRules: [
+                        v => !!v || 'Phone is required',
+                        v=>/^(?:(010\d{4})|(01[1|6|7|8|9]\d{3,4}))(\d{4})$/.test(v) || '-빼주세요',
+                        ],
+            nameRules: [
+                        v => !!v || 'Name is required',
+                        v => (v && v.length <= 10) || '이름은 10글자 이하',
+                       ],
+            PasswordRules: [
+                        v => !!v || 'password is required',
+                        v => (v && v.length >= 6) || '비밀번호는 6자리 이상으로 해주세요',
+                       ],
     };
   },
   created() {
@@ -137,8 +153,10 @@ export default {
   selectAll(){
       this.$http.get(`http://localhost:1234/userlist`)
           .then( res =>{
-            console.log(res.data)
-            this.rows = res.data
+            for(let idx in res.data){
+              if(res.data[idx].userNo !== 0)
+                this.rows.push(res.data[idx])
+            }
           })
           .catch(err => {
             alert("backand(showAllUsers) 에러 확인")
@@ -150,9 +168,9 @@ export default {
      this.deleteAlert=false
      const No = userNo
      
-      this.$http.post(`http://localhost:1234/deleteUser/${No}`).then(res =>{
-        const idx = this.rows.findIndex(x => x.userNo === userNo)
-        console.log(idx)
+      this.$http.post(`http://localhost:1234/deleteUser/${No}`)
+          .then(res =>{
+              const idx = this.rows.findIndex(x => x.userNo === userNo)
               this.dialog=false
               this.rows.splice(idx, 1)
       }).catch(err =>{
@@ -165,6 +183,7 @@ export default {
      this.updateAlert=false
      this.$http.post('http://localhost:1234/updateUser',this.user) 
               .then(res => { 
+                this.rows=[];
                 this.selectAll();
               }) 
               .catch(err => { 

@@ -8,6 +8,7 @@ import org.salem.domain.vo.SearchIdVO;
 import org.salem.domain.vo.SearchPwVO;
 import org.salem.domain.vo.UsersVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -59,24 +60,25 @@ public class UsersController {
 	//@CrossOrigin(origins = "http://localhost:8080")
 	@RequestMapping("/userlist")
 	public List<UsersVO> showAllUsers(){
-		return (List<UsersVO>) mapper.showAllUsers();
+		System.out.println("1");
+		return mapper.showAllUsers();
 	}
 	
 
 	@PostMapping("/updateUser") 
 	public int updateUser(@RequestBody UsersVO usersVo){
 
-		System.out.println("updateUser 메소드 실행 ");
-	    System.out.println("uservo=>" + usersVo);
-	    UsersVO vo = mapper.getUserVO(usersVo.getUserNo());
-	    System.out.println("vo ==>"+ vo);
+		/*
+		 * System.out.println("updateUser 메소드 실행 "); System.out.println("uservo=>" +
+		 * usersVo); UsersVO vo = mapper.getUserVO(usersVo.getUserNo());
+		 * System.out.println("vo ==>"+ vo);
+		 * 
+		 * vo.setUserPhone(usersVo.getUserPhone()); vo.setUserPw(usersVo.getUserPw());
+		 * vo.setUserEmail(usersVo.getUserEmail());
+		 * vo.setUserAddress(usersVo.getUserAddress());
+		 */
 	    
-	    vo.setUserPhone(usersVo.getUserPhone());
-	    vo.setUserPw(usersVo.getUserPw());
-	    vo.setUserEmail(usersVo.getUserEmail());
-	    vo.setUserAddress(usersVo.getUserAddress());
-	    
-		return mapper.updateUser(vo);
+		return mapper.updateUser(usersVo);
 
 		
 		
