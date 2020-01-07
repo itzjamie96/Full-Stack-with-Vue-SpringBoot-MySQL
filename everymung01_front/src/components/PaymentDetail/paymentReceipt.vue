@@ -133,7 +133,7 @@ export default {
             .post('http://localhost:1234/kakaoPay',this.paymentVO)
             .then(res => {
                 console.log(res);
-                window.open(res.data)
+                window.location.replace(res.data)
             })
             .catch(err => {
                 console.log(err);
