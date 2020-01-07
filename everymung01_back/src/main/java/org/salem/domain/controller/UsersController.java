@@ -111,6 +111,9 @@ public class UsersController {
 	@PostMapping("signinUser") //일반유저 로그인
 	public UsersVO signin(@RequestBody LoginVO vo) {
 		UsersVO user =mapper.showUserDetail(vo.getEmail());
+		if(user == null) {
+			return new UsersVO();
+		}
 		System.out.println(user);
 		if(user.getUserPw().equals(vo.getPassword()))
 		{return user;}

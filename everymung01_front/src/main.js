@@ -84,6 +84,7 @@ Vue.filter('formatDate', function(value) {
         router,
         store,
         vuetify,
+        created,
         beforeCreate() {
             this.$store.dispatch("lsm")
         },

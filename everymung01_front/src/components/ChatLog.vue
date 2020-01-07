@@ -3,13 +3,13 @@
     class="chat-log"
     ref="chatLogContainer"
   >
-   <message-bubble
+  <!--  <message-bubble
     v-for="historyMsg in history" 
     v-bind:key="historyMsg.id"
     v-bind:uuid="historyMsg.uuid"
     v-bind:text="historyMsg.text"
   ></message-bubble>
-
+ -->
   <message-bubble
     v-for="msg in vueChatMsg" 
     v-bind:key="msg.id"

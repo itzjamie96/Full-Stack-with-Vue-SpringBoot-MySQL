@@ -189,6 +189,10 @@ public class SitterController {
 	public SitterVO signin(@RequestBody LoginVO vo) {
 		System.out.println(vo);
 		SitterVO sitter =sitterMapper.showUserDetailLogin(vo.getEmail());
+		if(sitter == null) {
+			System.out.println("없는 아이디로 로그인 시도 ");
+			return new SitterVO();
+		}
 		System.out.println(sitter);
 		if(sitter.getSitterPw().equals(vo.getPassword()))
 		{
