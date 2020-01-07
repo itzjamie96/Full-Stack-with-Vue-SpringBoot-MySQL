@@ -11,7 +11,6 @@
     enabled: true,
     }"
 >  </vue-good-table>
-
 <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on }">
       </template>
@@ -29,16 +28,13 @@
                 <v-text-field label="Email" v-model="home.userEmail" ></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="Password" v-model="home.userPw"></v-text-field>
-              </v-col>
-              <v-col cols="12">
                 <v-text-field label="Phone" v-model="home.userPhone" ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-text-field label="Address" v-model="home.userAddress" ></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="Date" v-model="home.userDate" disabled></v-text-field>
+                <v-text-field label="Date" v-model="home.startTime" readonly></v-text-field>
               </v-col>
             </v-row>
           </v-container>
@@ -139,18 +135,31 @@ export default {
         
       ],
       rows:[],
-      asd:[],
     };
   },
   created() {
 
     this.$http.get(`http://localhost:1234/test`)
         .then(res => {
+          let lsm='' //endTime
+          let timeG=''
                 for(let sitterT in res.data){
-                  if(res.data[sitterT].sittingType==="home")
-
-                    this.rows.push(res.data[sitterT])
-                    console.log(this.rows)
+                  if(res.data[sitterT].sittingType==="home"){
+                  lsm=String(res.data[sitterT].startTime).split(" ")
+                  res.data[sitterT].startTime=lsm[0]
+                  
+                  timeG=lsm[1]
+                  timeG+="~"+String(res.data[sitterT].endTime).split(" ")[1]
+                  console.log(lsm[1])
+                  res.data[sitterT].endTime=timeG
+                  /* res.data[sitterT].endTime */
+                  
+                  
+                  this.rows.push(res.data[sitterT])
+                  console.log(this.rows)
+                  
+                  //console.log(this.rows)
+                  }
                   }
 
 
@@ -165,13 +174,11 @@ export default {
   onRowClick(params) {
      this.dialog=true
      this.home.userName = params.row.userName
-     this.user.userName = params.row.userName
-     this.user.userEmail = params.row.userEmail
-     this.user.userPw = params.row.userPw
-     this.user.userPhone = params.row.userPhone
-     this.user.userAddress = params.row.userAddress
-     this.user.userProfile = params.row.userProfile
-     this.user.userDate = params.row.userDate
+     this.home.userEmail = params.row.userEmail
+     this.home.userPhone = params.row.userPhone
+     this.home.userAddress = params.row.userAddress
+     this.home.userProfile = params.row.userProfile
+     this.home.startTime = params.row.startTime
   },
   dele(userNo){
      this.dialog=false

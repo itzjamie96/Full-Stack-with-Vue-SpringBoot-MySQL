@@ -38,7 +38,7 @@
                 <v-text-field label="Address" v-model="home.userAddress" ></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="Date" v-model="home.userDate" disabled></v-text-field>
+                <v-text-field label="Date" v-model="home.startTime" readonly></v-text-field>
               </v-col>
             </v-row>
           </v-container>
@@ -103,6 +103,7 @@ export default {
         {
           label: 'User',
           field: 'userName',
+          width: '80px',
         },
         {
           label: 'Email',
@@ -127,6 +128,7 @@ export default {
         {
           label: '시터',
           field: 'sitterName',
+          width: '80px',
         },
         {
           label: '시터번호',
@@ -148,10 +150,7 @@ export default {
                 for(let sitterT in res.data){
                   if(res.data[sitterT].sittingType==="daycare")
                     this.rows.push(res.data[sitterT])
-                    console.log(this.rows)
                   }
-
-
                 })
                 .catch(err => { 
                 alert("backend(test) 에러 확인!")
@@ -163,13 +162,13 @@ export default {
   onRowClick(params) {
      this.dialog=true
      this.home.userName = params.row.userName
-     this.user.userName = params.row.userName
-     this.user.userEmail = params.row.userEmail
-     this.user.userPw = params.row.userPw
-     this.user.userPhone = params.row.userPhone
-     this.user.userAddress = params.row.userAddress
-     this.user.userProfile = params.row.userProfile
-     this.user.userDate = params.row.userDate
+     this.home.userName = params.row.userName
+     this.home.userEmail = params.row.userEmail
+     this.home.userPw = params.row.userPw
+     this.home.userPhone = params.row.userPhone
+     this.home.userAddress = params.row.userAddress
+     this.home.userProfile = params.row.userProfile
+     this.home.startTime = params.row.startTime +"~"+params.row.endTime.split(" ")[1]
   },
   dele(userNo){
      this.dialog=false
@@ -178,7 +177,6 @@ export default {
      
       this.$http.post(`http://localhost:1234/deleteUser/${No}`).then(res =>{
         const idx = this.rows.findIndex(x => x.userNo === userNo)
-        console.log(idx)
               this.dialog=false
               this.rows.splice(idx, 1)
       }).catch(err =>{

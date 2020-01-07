@@ -5,7 +5,8 @@
             max-width="500px"
         >
             <v-card-text>
-            
+
+
             <p class="headline text--primary">예약 정보 확인</p>
 
             <v-row justify="left">

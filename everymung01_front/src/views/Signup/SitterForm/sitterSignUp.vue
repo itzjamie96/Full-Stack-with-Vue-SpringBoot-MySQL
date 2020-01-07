@@ -181,6 +181,8 @@ import LazyYoutubeVideo from "vue-lazy-youtube-video";
 import axios from 'axios'
 import * as FormData from 'form-data'
 import { VueDaumPostcode } from "vue-daum-postcode"
+import {mapState,mapActions} from "vuex"
+
 const baseURL = 'http://localhost:1234'
 export default {
   components: {
@@ -341,9 +343,16 @@ axios.post( `${baseURL}/upload-file/identityCheck/`+sitterEmail,
         Ag="동의하기"
       return Ag
     },
-    
+    ...mapState(["isLogin","userInfo","isLoginError","role","sitterApp"])
 
   
-  }
+  },
+  created() {
+        if(this.isLogin===true && this.role==='Sitter'){
+          alert("이미 지원하셨습니다")
+          this.$router.push('/')
+        }
+        
+      },
 }
 </script>

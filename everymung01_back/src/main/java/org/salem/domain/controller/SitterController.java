@@ -2,10 +2,12 @@ package org.salem.domain.controller;
 
 import java.io.File;
 import java.util.List;
+
 import org.salem.domain.Mapper.SitterMapper;
 import org.salem.domain.file.FileResponse;
 import org.salem.domain.file.FileSystemStorageService;
 import org.salem.domain.file.StorageService;
+import org.salem.domain.formMail.FormMailImp;
 import org.salem.domain.vo.LoginVO;
 import org.salem.domain.vo.SearchIdVO;
 import org.salem.domain.vo.SearchPwVO;
@@ -34,8 +36,12 @@ public class SitterController {
 	
 	@Autowired
 	SitterMapper sitterMapper;
+	
 	@Autowired
 	private StorageService storageService;
+	
+	@Autowired
+	FormMailImp formMail;
 
 	@PostMapping("/searchIdSitter")
 	public String searchId(@RequestBody SearchIdVO search){
@@ -151,6 +157,15 @@ public class SitterController {
 
 	@PostMapping("/deleteSitter/{sitterNo}")
 	public int deleteSitter(@PathVariable int sitterNo) {
+		SitterVO lsm = sitterMapper.showSitterDetail(sitterNo);
+		fileService.deleteO(lsm.getQualificationCheck());
+		fileService.deleteO(lsm.getIdentityCheck());
+		try {
+			formMail.sendEmail(lsm.getSitterEmail());
+			System.out.println(lsm.getSitterEmail());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return sitterMapper.deleteSitter(sitterNo);
 		
 	}
@@ -247,4 +262,3 @@ public class SitterController {
 
 
 }
-

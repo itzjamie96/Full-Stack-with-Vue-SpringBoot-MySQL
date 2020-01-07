@@ -6,7 +6,7 @@
       >
         <template>
           <v-list-item class="ml-6 mt-3">
-            <router-link :to="{path:'/sitterProfilePage/' + this.userInfo.sittingNo + '/' + this.userInfo.sittingType}">
+            <router-link :to="{path:'/sitterProfilePage/' + this.userInfo.sitterNo + '/' + this.userInfo.sittingType}">
             <v-list-item-avatar
               size="100"
             >

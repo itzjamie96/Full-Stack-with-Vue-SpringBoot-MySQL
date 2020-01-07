@@ -52,7 +52,7 @@
         <v-card-text v-if="deleteAlert">
             <v-alert v-model="deleteAlert" type="warning">
               <h4>정말 삭제 하시겠습니까?</h4>
-              <v-btn class="mr-4"  color="error" @click="dele(sitter.sitterNo)">확인</v-btn>
+              <v-btn class="mr-4"  color="error" @click="delet(sitter.sitterNo)">확인</v-btn>
               <v-btn color="secondary" @click="deleteAlert=false">취소</v-btn>
             </v-alert>
         </v-card-text>
@@ -88,7 +88,7 @@
         <v-card-text v-if="deleteAlert">
             <v-alert v-model="deleteAlert" type="warning">
               <h4>정말 거절 하시겠습니까?</h4>
-              <v-btn class="mr-4"  color="error" @click="dele(sitter.sitterNo)">확인</v-btn>
+              <v-btn class="mr-4"  color="error" @click="delet(sitter.sitterNo)">확인</v-btn>
               <v-btn color="secondary" @click="deleteAlert=false">취소</v-btn>
             </v-alert>
         </v-card-text>
@@ -106,7 +106,6 @@
         <v-col lg="8">
           <h4>*필수항목을 꼭 입력해주세요</h4><br>
           <h1>지원자 정보</h1><br>
-          {{sitter.possibleDay}}
             <v-radio-group v-model="sitter.sitterGender" row>
               성별 :
               <v-radio label="남자" :value="true"></v-radio>
@@ -321,7 +320,7 @@ export default {
           })
      
   },
-  dele(sitterNo){
+  delet(sitterNo){
      this.dialog=false
      this.deleteAlert=false
      const No = sitterNo

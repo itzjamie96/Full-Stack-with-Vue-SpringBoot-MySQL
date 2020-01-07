@@ -1,6 +1,5 @@
 package org.salem.domain.vo;
 
-import java.util.Date;
 import java.util.List;
 
 import lombok.Data;
@@ -23,9 +22,14 @@ public class PaymentVO {
 	private int petNo;
 	private String userName;
 	private String userAddress;
+
 	private String petName;   
 	private String dogBreed;  
 	private String size;      
+
+	private int dayPrice;
+	private int HomePrice;
+
 	private List<PetInfoVO> petDetailList;
 	
 	//reservaionVO
