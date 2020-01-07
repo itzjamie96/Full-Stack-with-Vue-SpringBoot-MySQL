@@ -21,6 +21,7 @@
         "vue": "^2.6.11",
         "vue-daum-postcode": "^0.7.0",
         "vue-full-calendar": "^2.7.0",
+        "vue-fullcalendar": "^1.0.9",
         "vue-good-table": "^2.18.1",
         "vue-google-login": "^2.0.3",
         "vue-kakao-login": "^1.0.5",

@@ -11,9 +11,9 @@ import VueLocalStorage from 'vue-localstorage'
 import PubNubVue from 'pubnub-vue';
 import '@mdi/font/css/materialdesignicons.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
-import FullCalendar from 'vue-full-calendar'
+import fullCalendar from 'vue-fullcalendar'
 
-Vue.use(FullCalendar)
+Vue.component('full-calendar', fullCalendar)
 
 
 const publish_Key = 'pub-c-c191e7ba-affc-4757-a3be-82fc09a96c50';
