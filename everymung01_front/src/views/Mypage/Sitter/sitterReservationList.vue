@@ -27,7 +27,13 @@
           </template>
           <template v-slot:item.action="{ item }">
 
-            
+            <v-icon
+              v-if="item.paymentStatus==true && item.refundStatus==true"
+              small
+              class="mr-2"
+            >
+              [예약취소]
+            </v-icon>
             <v-icon
               small
               class="mr-2"
@@ -91,6 +97,13 @@
               class="mr-2"
             >
               [환불완료]
+            </v-icon>
+            <v-icon
+              v-if="item.paymentStatus==true && item.refundStatus==true"
+              small
+              class="mr-2"
+            >
+              [예약취소]
             </v-icon>
             <v-icon
               small
