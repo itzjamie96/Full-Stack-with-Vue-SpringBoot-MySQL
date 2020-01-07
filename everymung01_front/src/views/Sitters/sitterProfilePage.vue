@@ -13,10 +13,14 @@
                 <v-col cols="6">
                     
                     <router-link :to="{path:'/daysitters/' + sitterNo}" v-if="this.sittingType==='daycare' && isLogin===true && role==='User'">
-                      데이시터예약하러가기 (일반유저만 이용가능하게 조건 추가필요)
+                        <v-card>
+                        데이시터예약하러가기
+                        </v-card>
                     </router-link>
                     <router-link :to="{path:'/home/' + sitterNo}" v-if="this.sittingType==='home' && isLogin===true && role==='User'">
-                      홈시터예약하러가기 (일반유저만 이용가능하게 조건 추가필요)
+                        <v-card>
+                        홈시터예약하러가기
+                        </v-card>
                     </router-link>
                     
                     <review/>

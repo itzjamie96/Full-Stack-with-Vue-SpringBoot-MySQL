@@ -168,7 +168,8 @@ export default {
                                 }
                     }).then(res => {
                         console.log(res)
-                        this.$router.push({path:'/sMyPage/sitterReservationList'})
+                        // this.$router.push({path:'/sMyPage/sitterReservationList'})
+                        window.location.reload()
                     }).catch(err => {
                         console.log(err)
                     })

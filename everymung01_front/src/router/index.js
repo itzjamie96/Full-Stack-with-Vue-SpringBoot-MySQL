@@ -331,6 +331,7 @@ const routes = [
         component: () =>
             import ( /* webpackChunkName: "SitterProfilePage" */ '../views/Sitters/sitterProfilePage.vue')
     },
+   
 
 ]
 

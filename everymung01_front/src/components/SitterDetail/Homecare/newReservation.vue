@@ -76,7 +76,7 @@
                     </v-col>
                     <v-col cols="5">
                         <v-select
-                            :items="selectableTime"
+                            :items="time"
                             label="체크아웃 시간"
                             v-model="endTime"
                             id="endTime"
@@ -213,29 +213,20 @@ export default {
         date.setDate(date.getDate() + 1)
         return date.toISOString().substr(0, 10)
     },
-
-    selectableTime() {
-        let times = []
-        let a = 0
-        for(let i = 0, length = this.time.length; i<length; i++){
-            if(this.time[i]>this.startTime){   
-                times[a] = this.time[i];
-                a++;
-            }
-        }
-        return times
-    },
+    
     checkInTime() {
-        let checkInTimes = []
-        let nowHour = dt.getHours() + 1
-        let a = 0
-        for(let i = 0, length = this.time.length; i<length; i++) {
-            if(this.time[i] > nowHour.toString()) {
-                checkInTimes[a] = this.time[i];
-                a++;
+        if(this.date1=== dt.toISOString().substr(0, 10)) {
+            let checkInTimes = []
+            let nowHour = dt.getHours() + 1
+            let a = 0
+            for(let i = 0, length = this.time.length; i<length; i++) {
+                if(this.time[i] > nowHour.toString()) {
+                    checkInTimes[a] = this.time[i];
+                    a++;
+                }
             }
-        }
-        return checkInTimes
+            return checkInTimes
+        } else return this.time
     }
    
   },

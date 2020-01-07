@@ -193,16 +193,18 @@ export default {
         return times
     },
     checkInTime() {
-        let checkInTimes = []
-        let nowHour = dt.getHours() + 1
-        let a = 0
-        for(let i = 0, length = this.time.length; i<length; i++) {
-            if(this.time[i] > nowHour.toString()) {
-                checkInTimes[a] = this.time[i];
-                a++;
+        if(this.date=== dt.toISOString().substr(0, 10)) {
+            let checkInTimes = []
+            let nowHour = dt.getHours() + 1
+            let a = 0
+            for(let i = 0, length = this.time.length; i<length; i++) {
+                if(this.time[i] > nowHour.toString()) {
+                    checkInTimes[a] = this.time[i];
+                    a++;
+                }
             }
-        }
-        return checkInTimes
+            return checkInTimes
+        } else return this.time
     }
    
   },

@@ -33,4 +33,10 @@ public interface PaymentMapper {
 	//sitter에게 예약된 리스트 출력
 	public List<PaymentVO> showSitterPayment(int sitterNo);
 	
+	public int updateRefundStatus(int paymentNo);
+	
+	public int addPaymentHome(PaymentVO paymentVO);
+	
+	public int updatePaymentStatus(int paymentNo);
+	
 }

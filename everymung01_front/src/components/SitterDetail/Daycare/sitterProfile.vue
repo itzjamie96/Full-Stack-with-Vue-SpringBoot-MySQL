@@ -10,14 +10,13 @@
                     <router-link :to="{path:'/sitterProfilePage/' + sitterNo + '/' + sitterObj.sittingType}">
                     <v-list-item-avatar
                         size="120"
-                        color="grey"
                     >
                      <v-img :src="this.profileImg"> </v-img>
                     </v-list-item-avatar>
                     </router-link>
                     <v-list-item-content>
                         <v-list-item-title class="headline mb-1">{{sitterObj.sitterName}}</v-list-item-title>
-                        <v-list-item-subtitle>{{sitterObj.sitterAddress}}</v-list-item-subtitle>
+                        <v-list-item-subtitle>{{sitterObj.sitterAddress.slice(0,7)}}</v-list-item-subtitle>
                         <v-list-item-subtitle>{{sitterObj.profileTitle}}</v-list-item-subtitle>
                     </v-list-item-content>
                 </v-list-item>
@@ -35,9 +34,9 @@
                 <v-list-item >
                     <v-list-item-avatar
                         size="50"
-                        color="grey"
                         tile                       
                     >
+                    <i class="far fa-id-card fa-2x"></i>
                     </v-list-item-avatar>
                     <v-list-item-content>
                         <v-list-item-title>신원 및 환경 검증 완료</v-list-item-title>
@@ -48,12 +47,12 @@
                 <v-list-item >
                     <v-list-item-avatar
                         size="50"
-                        color="grey"
                         tile                       
-                    ></v-list-item-avatar>
+                    >
+                    <i class="fas fa-award fa-2x"></i>
+                    </v-list-item-avatar>
                     <v-list-item-content>
-                        <v-list-item-title>펫시터 전문가 교육</v-list-item-title>
-                        <v-list-item-subtitle>2019-10-15 취득</v-list-item-subtitle>
+                        <v-list-item-title>펫시터 전문가 교육 수료</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>    
             </v-list>

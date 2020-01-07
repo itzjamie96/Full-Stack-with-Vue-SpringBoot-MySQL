@@ -8,10 +8,6 @@
             <v-card>
                <form>
             <!-- 프로필사진 -->
-            <!-- 다섯개 한번에 업데이트 됨
-                 하나만 수정하려고 하면 중간에 비어있는게 들어가서 에러로 잡혀서 새로고침 안됨
-                 수동으로 새로고침하면 db에는 저장된 것 확인 가능
-                 수정예정-->
                   <div>
                      <v-row justify="center">
                         <v-col cols="3" > 
@@ -263,18 +259,23 @@ export default {
                  }).then(res => {
                      console.log(res.data)
                   //   location.reload();
-                     this.$router.push({path:'/sMyPage/sitterReservationList'})
+                     // this.$router.push({path:'/sMyPage/sitterReservationList'})
+                     window.location.reload()
                  }).catch(err => {
                      console.log(err)
+                     window.location.reload()
                     })
                  }).catch(err => {
                      console.log(err)
+                     window.location.reload()
                     })
                  }).catch(err => {
                      console.log(err)
+                     window.location.reload()
                     })
                  }).catch(err => {
                      console.log(err)
+                     window.location.reload()
                     })
            })
            .catch(err =>{
