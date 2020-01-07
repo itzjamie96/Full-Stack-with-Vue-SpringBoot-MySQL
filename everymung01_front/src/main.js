@@ -11,6 +11,10 @@ import VueLocalStorage from 'vue-localstorage'
 import PubNubVue from 'pubnub-vue';
 import '@mdi/font/css/materialdesignicons.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import FullCalendar from 'vue-full-calendar'
+
+Vue.use(FullCalendar)
+
 
 const publish_Key = 'pub-c-c191e7ba-affc-4757-a3be-82fc09a96c50';
 const subscribe_Key = 'sub-c-04c7ffc2-2b82-11ea-a5fd-f6d34a0dd71d';

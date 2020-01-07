@@ -1,8 +1,6 @@
 <template>
 <v-container>
-
-            {{paylist[0].sitterNo}}
-
+  {{paylist[0].startTime}}
   <v-row class="fill-height">
     <v-col>
       <v-sheet height="64">
@@ -25,24 +23,9 @@
                 color="grey darken-2"
                 v-on="on"
               >
-                <span>{{ typeToLabel[type] }}</span>
-                <v-icon right>mdi-menu-down</v-icon>
+                <span>Month</span>
               </v-btn>
             </template>
-            <v-list>
-              <v-list-item @click="type = 'day'">
-                <v-list-item-title>Day</v-list-item-title>
-              </v-list-item>
-              <v-list-item @click="type = 'week'">
-                <v-list-item-title>Week</v-list-item-title>
-              </v-list-item>
-              <v-list-item @click="type = 'month'">
-                <v-list-item-title>Month</v-list-item-title>
-              </v-list-item>
-              <v-list-item @click="type = '4day'">
-                <v-list-item-title>4 days</v-list-item-title>
-              </v-list-item>
-            </v-list>
           </v-menu>
         </v-toolbar>
       </v-sheet>
@@ -108,76 +91,48 @@
 </template>
 
 <script>
-import Axios from 'axios'
+import axios from 'axios'
 import {mapState,mapActions,mapGetters} from "vuex"
+
   export default {
     data: () => ({
-      focus: '',
-      type: 'month',
-      typeToLabel: {
-        month: 'Month',
-        week: 'Week',
-        day: 'Day',
-        '4day': '4 Days',
-      },
-      start: null,
-      end: null,
-      selectedEvent: {},
-      selectedElement: null,
-      selectedOpen: false,
-      events: [],
-      colors: ['blue', 'indigo', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
-      names: ['Meeting', 'Holiday', 'PTO', 'Travel', 'Event', 'Birthday', 'Conference', 'Party'],
-      paylist: []
+        today: new Date().toISOString().substr(0, 10),
+        focus: new Date().toISOString().substr(0, 10),
+        type: 'month',
+        typeToLabel: {
+          month: 'Month',
+          week: 'Week',
+          day: 'Day',
+          '4day': '4 Days',
+        },
+        name: null,
+        details: null,
+        start: null,
+        end: null,
+        color: '#1976D2', // default event color
+        currentlyEditing: null,
+        selectedEvent: {},
+        selectedElement: null,
+        selectedOpen: false,
+        events: [],
+        dialog: false,
+        paylist: []
     }),
-    computed: {
-        ...mapState(["isLogin","userInfo"]),
-      title () {
-        const { start, end } = this
-        if (!start || !end) {
-          return ''
-        }
+        computed: {
+       ...mapState(["isLogin","userInfo"]),
 
-        const startMonth = this.monthFormatter(start)
-        const endMonth = this.monthFormatter(end)
-        const suffixMonth = startMonth === endMonth ? '' : endMonth
-
-        const startYear = start.year
-        const endYear = end.year
-        const suffixYear = startYear === endYear ? '' : endYear
-
-        const startDay = start.day + this.nth(start.day)
-        const endDay = end.day + this.nth(end.day)
-
-        switch (this.type) {
-          case 'month':
-            return `${startMonth} ${startYear}`
-          case 'week':
-          case '4day':
-            return `${startMonth} ${startDay} ${startYear} - ${suffixMonth} ${endDay} ${suffixYear}`
-          case 'day':
-            return `${startMonth} ${startDay} ${startYear}`
-        }
-        return ''
-      },
-      monthFormatter () {
-        return this.$refs.calendar.getFormatter({
-          timeZone: 'UTC', month: 'long',
-        })
-      },
     },
-    mounted () {
-      this.$refs.calendar.checkChange()
-    },
+
     created(){ //현재 컴포넌트가 생성되자 마자 initialize를 수행하라는 의미
     
       this.initialize()
       
     },
+
     methods: {
-        initialize(){//DB와 연동해서 게시판 목록을 전부 가져옴
+      initialize(){//DB와 연동해서 게시판 목록을 전부 가져옴
         console.log(this.userInfo.sitterNo)
-        Axios.get(`http://localhost:1234/showSitterPayment/${this.userInfo.sitterNo}`)
+        axios.get(`http://localhost:1234/showSitterPayment/${this.userInfo.sitterNo}`)
           .then(res => {
             this.paylist=res.data //table row로 보여질 객체에 DB에서 받은 데이터를 넣어줌
             console.log(res);
@@ -186,78 +141,9 @@ import {mapState,mapActions,mapGetters} from "vuex"
             console.log(err);
           })
       },
-      viewDay ({ date }) {
-        this.focus = date
-        this.type = 'day'
-      },
-      getEventColor (event) {
-        return event.color
-      },
-      setToday () {
-        this.focus = this.today
-      },
-      prev () {
-        this.$refs.calendar.prev()
-      },
-      next () {
-        this.$refs.calendar.next()
-      },
-      showEvent ({ nativeEvent, event }) {
-        const open = () => {
-          this.selectedEvent = event
-          this.selectedElement = nativeEvent.target
-          setTimeout(() => this.selectedOpen = true, 10)
-        }
 
-        if (this.selectedOpen) {
-          this.selectedOpen = false
-          setTimeout(open, 10)
-        } else {
-          open()
-        }
 
-        nativeEvent.stopPropagation()
-      },
-      updateRange ({ start, end }) {
-        const events = []
-
-        const min = new Date(`${start.date}T00:00:00`)
-        const max = new Date(`${end.date}T23:59:59`)
-        const days = (max.getTime() - min.getTime()) / 86400000
-        const eventCount = this.rnd(days, days + 20)
-
-        for (let i = 0; i < eventCount; i++) {
-          const allDay = this.rnd(0, 3) === 0
-          const firstTimestamp = this.rnd(min.getTime(), max.getTime())
-          const first = new Date(firstTimestamp - (firstTimestamp % 900000))
-          const secondTimestamp = this.rnd(2, allDay ? 288 : 8) * 900000
-          const second = new Date(first.getTime() + secondTimestamp)
-
-          events.push({
-            name: this.names[this.paylist[0].userName],
-            start: this.formatDate(first, !allDay),
-            end: this.formatDate(second, !allDay),
-            color: this.colors[this.rnd(0, this.colors.length - 1)],
-          })
-        }
-
-        this.start = start
-        this.end = end
-        this.events = events
-      },
-      nth (d) {
-        return d > 3 && d < 21
-          ? 'th'
-          : ['th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th'][d % 10]
-      },
-      rnd (a, b) {
-        return Math.floor((b - a + 1) * Math.random()) + a
-      },
-      formatDate (a, withTime) {
-        return withTime
-          ? `${a.getFullYear()}-${a.getMonth() + 1}-${a.getDate()} ${a.getHours()}:${a.getMinutes()}`
-          : `${a.getFullYear()}-${a.getMonth() + 1}-${a.getDate()}`
-      },
-    },
+    }
+    
   }
 </script>
