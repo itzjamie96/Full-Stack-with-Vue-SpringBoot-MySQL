@@ -343,11 +343,13 @@ axios.post( `${baseURL}/upload-file/identityCheck/`+sitterEmail,
         Ag="동의하기"
       return Ag
     },
+    ...mapState(["isLogin","userInfo","isLoginError","role","sitterApp"])
 
   
   },
-      created() {
+  created() {
         if(this.isLogin===true && this.role==='Sitter'){
+          alert("이미 지원하셨습니다")
           this.$router.push('/')
         }
         
