@@ -38,11 +38,11 @@ public interface BoardMapper {
 	
 	//관리자_답글_Create(userNo에 관리자번호를 집어넣어야되는데, 관리자번호가 변경될 수 있기 때문에, 최종점검 때 해당값을 점검해줘야함)
 	@Insert("INSERT INTO board(userNo,title, content, boardDate, groupNo, depth, hits,status)"
-			+ "VALUES( 0, #{title}, #{content}, CURRENT_TIMESTAMP, #{groupNo}, 1, 0,#{status})") // depth에 '1'로 하드코딩함. 
+			+ "VALUES( 0, #{title}, #{content}, CURRENT_TIMESTAMP, #{groupNo}, 1, 0,true)") // depth에 '1'로 하드코딩함. 
 	public int insertReply(BoardVO boardVo);
 
 	//관리자_Read
-	@Select("select * from board,users where board.userNo=users.userNo order by status ASC,groupNo DESC, depth ASC")
+	@Select("select * from board,users where board.userNo=users.userNo order by status ASC,groupNo DESC, depth ASC, boardDate DESC")
 	public List<BoardVO> showAdminBoards();
 	
 	//관리자_원글_Update_status를 true로 수정 
@@ -54,8 +54,3 @@ public interface BoardMapper {
 	public int deleteBoardByMngr(int boardNo);	
 		
 }
-	
-
-	
-	
-

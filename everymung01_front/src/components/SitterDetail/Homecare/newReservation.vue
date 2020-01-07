@@ -68,7 +68,7 @@
                 <v-row justify="center">
                     <v-col cols="5">
                         <v-select
-                            :items="time"
+                            :items="checkInTime"
                             label="체크인 시간"
                             v-model="startTime"
                             id="starTime"
@@ -146,7 +146,7 @@ export default {
         sitterInfo: [],
         date: dt.toISOString().substr(0, 10), 
         date1: dt.toISOString().substr(0, 10), 
-        date2: dt.toISOString().substr(0, 10),
+        date2: '',
         menu: false,
         modal: false,
         menu1: false,
@@ -188,6 +188,13 @@ export default {
       
   },
   computed: {
+      petNum() {
+          let nums =[]
+          for(let no in this.usersPets){
+            nums.push(this.usersPets[no].petNo)
+          }
+          return nums
+      },
     formIsValid() {
       return this.description !== '' && this.userPets !== null && this.startTime !== '' && this.endTime !== ''
     },
@@ -217,6 +224,18 @@ export default {
             }
         }
         return times
+    },
+    checkInTime() {
+        let checkInTimes = []
+        let nowHour = dt.getHours() + 1
+        let a = 0
+        for(let i = 0, length = this.time.length; i<length; i++) {
+            if(this.time[i] > nowHour.toString()) {
+                checkInTimes[a] = this.time[i];
+                a++;
+            }
+        }
+        return checkInTimes
     }
    
   },
@@ -254,15 +273,20 @@ export default {
             sitterName: this.sitterInfo.sitterName,
             sitterPhone: this.sitterInfo.sitterPhone,
             sitterAddress: this.sitterInfo.sitterAddress,
-            // petNo: this.petList.petNo,
-            // petName: this.petList.petName,
-            // size: this.petList.size,
+            petNum: this.petNum
             
-            
+
         }
         console.log(reserveData)
         this.$store.dispatch('createReservation', reserveData)     //store에 createReservation에 payload로 보내기~
-        this.$router.push(`/paymentinfo/${this.userInfo.userNo}`) //예약확인 페이지로 수정 필요
+        
+        // const forPet= {
+        // }
+        // console.log(forPet)
+        // this.$store.dispatch('createPetInfo', forPet)     //store에 createReservation에 payload로 보내기~
+        
+        this.$router.push(`/paymentinfoHome/${this.userInfo.userNo}`) //예약확인 페이지로 수정 필요
+
     },
 
     

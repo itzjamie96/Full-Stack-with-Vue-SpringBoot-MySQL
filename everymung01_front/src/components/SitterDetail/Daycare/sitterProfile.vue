@@ -5,17 +5,19 @@
             max-width="95%"   
             
         >
-            <v-list >
+            <v-list>
                 <v-list-item>
+                    <router-link :to="{path:'/sitterProfilePage/' + sitterNo + '/' + sitterObj.sittingType}">
                     <v-list-item-avatar
                         size="120"
                         color="grey"
                     >
                      <v-img :src="this.profileImg"> </v-img>
                     </v-list-item-avatar>
+                    </router-link>
                     <v-list-item-content>
                         <v-list-item-title class="headline mb-1">{{sitterObj.sitterName}}</v-list-item-title>
-                        <v-list-item-subtitle>{{sitterObj.sitterAddress.slice(0,11)}}</v-list-item-subtitle>
+                        <v-list-item-subtitle>{{sitterObj.sitterAddress}}</v-list-item-subtitle>
                         <v-list-item-subtitle>{{sitterObj.profileTitle}}</v-list-item-subtitle>
                     </v-list-item-content>
                 </v-list-item>
@@ -108,9 +110,7 @@ export default {
             .catch(err => {
                 console.log(err);
             })
-
-           
-       }
+       },
    }
 }
 </script>

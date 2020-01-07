@@ -3,7 +3,7 @@
       <v-row>
       
         <v-col cols="6">
-          <payment-detail-home/>
+          <payment-detail/>
         </v-col>
         
         <v-col cols="6">
@@ -16,23 +16,17 @@
 
 <script>
 import PaymentDetail from '@/components/PaymentDetail/paymentDetailTry.vue'
-import PaymentDetailHome from '@/components/PaymentDetail/homePaymentDetailTry.vue'
 import PaymentReceipt from '@/components/PaymentDetail/paymentReceipt.vue'
-
 // {{$store.state.reservationList[0]}}
-
 export default {
   data() {
     return {
       paymentVO : []
     }
   },
-
   components : {
     'payment-detail' : PaymentDetail,
-    'payment-detail-home' : PaymentDetailHome,
     'payment-receipt' : PaymentReceipt
   },
-
 }
 </script>

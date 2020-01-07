@@ -7,17 +7,9 @@
 
   <select id="showAllBreed" resultType="org.salem.domain.vo.BreedVO">
     
-    SELECT breedNo, dogBreed, size, breedInfo FROM BREED;
+    SELECT breedNo, dogBreed, size FROM BREED;
   
   </select>
-
-  
-  
-
-
-
-
-
 
 
 </mapper>

@@ -1,5 +1,6 @@
 package org.salem.domain.controller;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.salem.domain.Mapper.BoardMapper;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 @RestController
 public class BoardController {
 	
@@ -23,6 +25,7 @@ public class BoardController {
 
 		List<BoardVO> boardList = new ArrayList<BoardVO>();
 		boardList = mapper.showAllBoards();
+		
 		return boardList;
 	}
 
@@ -81,6 +84,7 @@ public class BoardController {
 	//관리자 페이지_조회 
 	@GetMapping("/showAdminBoards")
 	public List<BoardVO> showAdminBoards(){ // 파라미터에 boolean status 넣었다가, 민우 말대로 제거해봄. 
+		
 		return mapper.showAdminBoards();
 	}
 	
@@ -95,3 +99,6 @@ public class BoardController {
 		return addHits;
 	}
 }
+
+
+

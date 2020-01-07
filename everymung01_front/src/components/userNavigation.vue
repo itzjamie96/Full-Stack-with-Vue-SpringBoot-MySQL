@@ -10,8 +10,14 @@
               size="100"
               color="green"
             >
-            </v-list-item-avatar>
+            <v-img
+            :src="'http://localhost:1234/download/' + this.userInfo.userProfile"
+            >
+            </v-img>
 
+
+            </v-list-item-avatar>
+            
             <v-list-item-content>
               <v-list-item-title>{{this.userInfo.userName}}</v-list-item-title>
               <v-list-item-subtitle>일반 유저</v-list-item-subtitle>
@@ -50,15 +56,14 @@ import {mapState,mapActions} from "vuex"
       return {
         items: [
           { title: '예약내역', icon: 'mdi-home-city', link: '/uMyPage/userReservationList' },
-          { title: '실시간 케어 보기', icon: 'mdi-account' , link: '/uMypage/live'},
+          { title: '실시간 케어 보기', icon: 'mdi-account' , link: '/uMyPage/live'},
           { title: '반려견 정보관리', icon: 'mdi-account' , link: '/uMyPage/petInfo'},
           { title: '계정관리', icon: 'mdi-account-group-outline' , link: '/uMyPage/uAccount'},
         ],
-      }
+        }
     },
-
     computed: {
-        ...mapState(["isLogin","userInfo","isLoginError"])
+        ...mapState(["isLogin","userInfo","isLoginError"]),
     },
 
 

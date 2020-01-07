@@ -103,6 +103,10 @@ export default {
        
        petVO() {
            return this.paymentVO.petDetailList
+       },
+       
+       forPet() {
+           return this.paymentVO.petNum
        }
 
    }

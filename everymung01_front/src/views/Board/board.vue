@@ -22,7 +22,7 @@
           setCurrentPage: 1,
           nextLabel: '다음',
           prevLabel: '이전',
-          rowsPerPageLabel: '게시물 개수', 
+          rowsPerPageLabel: '페이지당 게시물 개수', 
           ofLabel: 'of',
           pageLabel: 'page', // for 'pages' mode
           allLabel: 'All',
@@ -50,7 +50,7 @@
             <v-row>
               <v-col cols="12">
                 <v-text-field  label="제목" v-model=editedItem.title  required maxlength="44" :readonly=true></v-text-field> <!-- 50-6하는 이유:: 6(ㄴRE:의 글자수) -->
-                <v-text-field  label="작성자" v-model="editedItem.userName" required :readonly=true></v-text-field>
+                <v-text-field  label="작성자" v-model="this.userInfo.userName" required :readonly=true></v-text-field>
                   <!-- v-vind 이용해서 data에 선언된 변수 updateTrig 의 값인 true 연결해주기   -->
                 <v-text-field  label="작성일" v-model="editedItem.boardDate" required readonly="readonly" ></v-text-field>
               </v-col>  <!-- v-vind:value= 우항에 오는 변수명에 따옴표를 써줘도 되고 안써줘도 됨. 둘 다 가능. -->
@@ -69,6 +69,7 @@
             </v-row>
           </v-container>
         </v-card-text>
+         <!-- 상세보기-다이얼로그_버튼목록 -->
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn href="javascript:;" color="blue darken-1" text @click="close()">닫기</v-btn>
@@ -117,7 +118,7 @@
               </v-row>
             </v-container>
           </v-card-text>
-          <!-- 상세보기시 각종버튼 -->
+          <!-- 글쓰기-다이얼로그_버튼목록 -->
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn
@@ -399,7 +400,7 @@
       //1차 수정-버튼(Update) 
       updateClick(){
         if(this.updateTrig==true){
-            this.updateTrig = false, //ReadOnly 해제 -> 글 쓸 수 있는 수정상태로 변신. 
+            this.updateTrig = false, //updateTrig = [ReadOnly 설정/해제 변수]  
             // 
             this.updateName = '수정하기'
             document.getElementById("focus_textarea").focus()
@@ -418,13 +419,7 @@
       },
       //2차 수정-버튼(Update)
       update(){
-          console.log("update_edtiedItem.userNo="+this.editedItem.userNo)
-          console.log("userInfo_userNo="+this.userInfo.userNo)
-          if(this.editedItem.userNo !== this.userInfo.userNo){
-            alert("다른 회원의 글은 수정할 수 없습니다.") // 다른 회원일 때, 다른 사람 글의 수정/삭제 버튼이 아예 안뜨게 만들어야 
-            this.dialog=false
-            return false
-          }
+
           this.updatedItem.boardNo = this.editedItem.boardNo 
           console.log( "update_this.updatedItem.boardNo="+this.updatedItem.boardNo) 
           this.updatedItem.title = this.editedItem.title                     
@@ -453,7 +448,7 @@
         //     </div>
         //     */
         // }      
-        console.log(this.editedItem.groupNo)
+        //console.log(this.editedItem.groupNo)
         axios.get('http://localhost:1234/deleteBoardByUser/'+this.editedItem.groupNo) 
           //axios.get방식으로 depth도 같이 넘기는 시도해봄 
             //결론> front와 back의 모든 경우의 수 따져보기 => ,,(x) / ,+(x) / ,&(x)   // +,(x) / ++(x) / +&(x) // &,(x) / &+(x) / &&(x)  ===> 2개의 파라미터 전달 실패. 

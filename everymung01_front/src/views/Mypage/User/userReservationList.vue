@@ -119,8 +119,7 @@ import NavBar from '@/components/userNavigation.vue'
         axios.get(`http://localhost:1234/showUserPayment/${this.userInfo.userNo}`)
           .then(res => {
             this.paylist=res.data //table row로 보여질 객체에 DB에서 받은 데이터를 넣어줌
-            console.log(res.data);
-           
+            console.log(res);
           })
           .catch(err => {
             console.log(err);

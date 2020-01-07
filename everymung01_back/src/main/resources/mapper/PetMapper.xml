@@ -9,7 +9,7 @@
   
     SELECT p.petno, p.userNo, p.breedNo, p.petName, p.petGender,
        p.petWeight,p.petAge, p.neutralization, p.petAnswer, p.petImg,
-       b.dogBreed, b.size, u.userName, u.userNo
+       b.dogBreed, b.size, u.userName, u.userNo, b.dayPrice, b.homePrice
        FROM PET p JOIN USERS u
        ON p.userNo = u.userNo
        JOIN BREED b on p.breedNo = b.breedNo
@@ -17,6 +17,14 @@
       
   </select>
   
+  <select id="showPetDetail"  resultType="org.salem.domain.vo.PetVO" parameterType="int">
+   
+   SELECT petNo,userNo,breedNo,petName,petGender,petWeight,petAge,neutralization,petAnswer,petImg
+       FROM PET WHERE petNo = #{petNo};
+  
+  </select>
+  
+
   <insert id="addPet"  parameterType="org.salem.domain.vo.PetVO" >
     
     INSERT INTO PET(userNo, breedNo, petName, petGender, petWeight, petAge, neutralization, petAnswer ) VALUES
@@ -39,6 +47,13 @@
   
   </update>
 
+
+
+  <delete id="deletePet">
+  
+    DELETE FROM PET WHERE petNo = #{petNo};
+  
+  </delete>
 
 
 

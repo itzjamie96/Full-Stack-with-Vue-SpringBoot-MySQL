@@ -6,7 +6,7 @@
                 height="100%"
                 class="mb-5"
         >
-
+        {{usersPets}}
             <v-form @submit.prevent="onNewReservation" >
                 <v-row justify="center">
                     <v-col cols="12" sm="10">
@@ -50,7 +50,7 @@
                 <v-row justify="center">
                     <v-col cols="5">
                         <v-select
-                            :items="time"
+                            :items="checkInTime"
                             label="체크인 시간"
                             v-model="startTime"
                             id="starTime"
@@ -119,6 +119,7 @@
 import axios from "axios"
 import {eventBus} from '@/main.js'
 import {mapState,mapActions} from "vuex"
+import { log } from 'util';
 
 const dt = new Date();
 
@@ -190,6 +191,18 @@ export default {
             }
         }
         return times
+    },
+    checkInTime() {
+        let checkInTimes = []
+        let nowHour = dt.getHours() + 1
+        let a = 0
+        for(let i = 0, length = this.time.length; i<length; i++) {
+            if(this.time[i] > nowHour.toString()) {
+                checkInTimes[a] = this.time[i];
+                a++;
+            }
+        }
+        return checkInTimes
     }
    
   },
@@ -225,6 +238,7 @@ export default {
             sitterName: this.sitterInfo.sitterName,
             sitterPhone: this.sitterInfo.sitterPhone,
             sitterAddress: this.sitterInfo.sitterAddress,
+            amount: ''
             // petNo: this.petList.petNo,
             // petName: this.petList.petName,
             // size: this.petList.size,
@@ -233,7 +247,7 @@ export default {
         }
         console.log(reserveData)
         this.$store.dispatch('createReservation', reserveData)     //store에 createReservation에 payload로 보내기~
-        this.$router.push(`/paymentinfo/${this.userInfo.userNo}`) //예약확인 페이지로 수정 필요
+        this.$router.push(`/paymentinfoDay/${this.userInfo.userNo}`) //예약확인 페이지로 수정 필요
     },
 
     
