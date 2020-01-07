@@ -309,7 +309,7 @@ export default {
                console.log(this.userPetList)
                for(let img in this.userPetList){
                    if(response.data[img].petImg === null){
-                       this.tempImg[img]= "";
+                       this.tempImg[img]= 'http://localhost:1234/download/default.jpg';
                    }else{
                    this.tempImg[img]='http://localhost:1234/download/'+response.data[img].petImg
                    }

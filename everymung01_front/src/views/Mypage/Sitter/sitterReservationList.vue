@@ -1,4 +1,6 @@
 <template>
+<div>
+<div v-if="this.userInfo.sittingType==='daycare'">
   <v-container fluid="" class="fill-height">
     <v-row class="fill-height">
         <v-col cols="3">
@@ -26,18 +28,6 @@
           <template v-slot:item.action="{ item }">
 
             
-            <!-- 예약 날짜가 지난 시점이고, 
-                  reviewStatus가 false 일 때만 (review 미작성 상태) 
-                  리뷰쓰러가는 버튼 보임-->
-            <v-icon
-              v-if="(canWrite > calEndTime(item.endTime) && item.reviewStatus == false)"
-              small
-              class="mr-2"
-              @click="writeReview(item)"
-            >
-              review
-            </v-icon>
-            
             <v-icon
               small
               class="mr-2"
@@ -56,6 +46,64 @@
         </v-col>
     </v-row>
   </v-container>
+</div>
+
+<div v-if="this.userInfo.sittingType==='home'">
+<v-container fluid="" class="fill-height">
+    <v-row class="fill-height">
+        <v-col cols="3">
+          <side-bar/>   
+        </v-col>
+        <v-col cols="9">
+          <v-data-table
+          :headers="headers"
+          :items="paylist"
+          class="elevation-1"
+        >
+
+        <template v-slot:top>
+            <v-toolbar flat color="white">
+              <v-toolbar-title>예약 내역 homesitter</v-toolbar-title>
+              <v-divider
+                class="mx-4"
+                inset
+                vertical
+              ></v-divider>
+              <v-spacer></v-spacer>
+            </v-toolbar>
+          </template>
+          <template v-slot:item.action="{ item }">
+
+            
+            <v-icon
+              small
+              class="mr-2"
+              @click="approval(item)"
+            >
+              승인하기
+            </v-icon>
+            <v-icon
+              small
+              class="mr-2"
+              @click="showDetail(item)"
+            >
+              search
+            </v-icon>
+            <v-icon
+              small
+              @click="deleteItem(item)"
+            >
+              delete
+            </v-icon>
+          </template>
+        </v-data-table>
+        </v-col>
+    </v-row>
+  </v-container>
+</div>
+
+</div>
+
 </template>
 
 
@@ -68,14 +116,8 @@ import NavBar from '@/components/sitterNavigation.vue'
     data () {
       return {
         headers: [ //테이블의 헤더부분
-          // {
-          //   text: 'paymentNo',
-          //   align: 'left',
-          //   sortable: false,
-          //   value: 'paymentNo',
-          // },
-          { text: '시팅 유형', value: 'sittingType' },
-          { text: '펫시터', value: 'sitterName' },
+          { text: '예약 번호', value: 'paymentNo' },
+          { text: '예약자', value: 'userName' },
           { text: '예약 날짜', value: 'startTime' },
           { text: '예약 날짜', value: 'endTime' },
           { text: '금액', value: 'amount' },
@@ -105,16 +147,12 @@ import NavBar from '@/components/sitterNavigation.vue'
     computed: {
        ...mapState(["isLogin","userInfo"]),
 
-       canWrite(){
-        let today = new Date();
-        return today
-        }
     },
     
     methods:{
       initialize(){//DB와 연동해서 게시판 목록을 전부 가져옴
-      
-        axios.get(`http://localhost:1234/showUserPayment/${this.userInfo.userNo}`)
+        console.log(this.userInfo.sitterNo)
+        axios.get(`http://localhost:1234/showSitterPayment/${this.userInfo.sitterNo}`)
           .then(res => {
             this.paylist=res.data //table row로 보여질 객체에 DB에서 받은 데이터를 넣어줌
             console.log(res);
@@ -126,22 +164,8 @@ import NavBar from '@/components/sitterNavigation.vue'
 
       showDetail(item){
         const paymentNo = item.paymentNo
-        this.$router.push({path: '/useReservationDetail/' + paymentNo})
+        this.$router.push({path: '/sMyPage/sitterReservationDetail/' + paymentNo})
       },
-
-      writeReview(item){
-        const sitterNo = item.sitterNo
-        const paymentNo = item.paymentNo
-        this.$router.push({path: '/daysitters/' + sitterNo +'/' + paymentNo})
-        // => 해당 예약의 시터 상세 페이지로 가서 후기 작성.
-        // 주소창에 찍히지 않게 변경해야 함.
-      },
-
-      calEndTime(endTime){  //item.endTime String 값을 Date 값으로 변환
-        let edate = new Date(endTime);
-        console.log(edate)
-        return edate;
-      }
       
     }
   }

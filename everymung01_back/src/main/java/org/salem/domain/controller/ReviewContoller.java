@@ -29,6 +29,7 @@ public class ReviewContoller {
 	@PostMapping("/addReview")
 	public int addReview(@RequestBody ReviewVO reviewVO) {
 		//후기 작성 시 payment table의 reviewStatus도 같이 update
+		System.out.println("addReview");
 		paymentMapper.updateReviewStatus(reviewVO.getPaymentNo());
 		return reviewMapper.addReview(reviewVO);
 	}

@@ -146,9 +146,8 @@ public class SitterController {
 	
 	@RequestMapping("/showAllSitters")
 	public List<SitterVO> showAllSitters() {
-		return sitterMapper.showAllSitters();
+		return (List<SitterVO>) sitterMapper.showAllSitters();
 	}
-	
 	//승인 안된 시터 지원자 확인
 	@RequestMapping("/falseAllSitters")
 	public List<SitterVO> falseAllSitters() {
@@ -263,4 +262,3 @@ public class SitterController {
 
 
 }
-

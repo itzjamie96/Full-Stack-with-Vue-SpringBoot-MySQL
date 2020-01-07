@@ -38,21 +38,9 @@ public class PaymentController {
 	
 	@RequestMapping("/showDetailPayment/{paymentNo}")
 	public PaymentVO showDetailPayment(@PathVariable int paymentNo) { //예약 상세보기
-		System.out.println(paymentService.showDetailPayment(paymentNo));
-		return paymentService.showDetailPayment(paymentNo);
+		return (PaymentVO) paymentService.showDetailPayment(paymentNo);
 	}
-	
-	@PostMapping("/addPayment")
-	public int addPayment(@RequestBody PaymentVO paymentVO) {
-		////////////////////////////////////////////
-		// pet 여러마리 insert 할 경우 여러번 insert 해야됨 -> 수정필요
-		//
-		System.out.println("controller_addPayment()");
-		int result = paymentMapper.addPayment(paymentVO);
-		System.out.println(result);
-//		return paymentMapper.addPayment(paymentVO);
-		return paymentMapper.addPayment(paymentVO);
-	}
+
 	
 	@RequestMapping("/showUserPayment/{userNo}")
 	public List<PaymentVO> showUserPayment(@PathVariable int userNo) { 
@@ -62,7 +50,7 @@ public class PaymentController {
 	
 	@RequestMapping("/showAllPayment")
 	public List<PaymentVO> showAllPayment() { //유저의 예약 내역보기
-		return paymentMapper.showAllPayment();
+		return (List<PaymentVO>)paymentMapper.showAllPayment();
 	}
 	
 	@GetMapping("/test")
@@ -103,8 +91,11 @@ public class PaymentController {
 		KakaoPayApprovalVO info = kakaopay.kakaoPayInfo(pg_token, sum);
 
 		
-		
+		vo.setCid(info.getCid());
+		vo.setTid(info.getTid());
+		vo.setAid(info.getAid());
 		//*********************payment insert*************************
+		System.out.println("**vo** : " + vo);
 		int insert = paymentMapper.addPayment(vo);
 		System.out.println("insert : " + insert);
 		
@@ -128,6 +119,19 @@ public class PaymentController {
 //		response.sendRedirect("http://localhost:8080/");
 		return "kakaopaySuccess~~";
 		
+	}
+	
+	@RequestMapping("/showSitterPayment/{sitterNo}")
+	public List<PaymentVO> showSitterPayment(@PathVariable int sitterNo){ //시터예약리스트
+		return paymentMapper.showSitterPayment(sitterNo);
+	}
+	
+	@PostMapping("/refund")
+	public String refund(@RequestBody PaymentVO paymentVO) {
+		System.out.println("환불처리------"); 
+		System.out.println("tid --> " + paymentVO.getTid());
+		kakaopay.kakaoCancel(Integer.toString(paymentVO.getAmount()), paymentVO.getTid());
+		return "refund";
 	}
 	
 	
