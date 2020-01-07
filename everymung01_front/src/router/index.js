@@ -9,36 +9,32 @@ import MyPageLiveCare from '../views/Mypage/User/MyPageLiveCare'
 import UserPetDetail from '../views/Mypage/User/UserPetDetail'
 
 Vue.use(VueRouter)
-//어드민 라우터 가드
-const adminRouteG = (to,from,next) => {
-    localStorage.getItem('email')!==null&&localStorage.getItem('role')!=='Admin'?next('/'):next()
+    //어드민 라우터 가드
+const adminRouteG = (to, from, next) => {
+    localStorage.getItem('email') !== null && localStorage.getItem('role') !== 'Admin' ? next('/') : next()
 }
-const adminRouteMG = (to,from,next) => {
-    localStorage.getItem('email')!==null&&localStorage.getItem('role')==='Admin'?next('/admin'):next()
+const adminRouteMG = (to, from, next) => {
+    localStorage.getItem('email') !== null && localStorage.getItem('role') === 'Admin' ? next('/admin') : next()
 }
 
 //어드민 라우터 가드 끝
 
 const rejectAuthUser = (to, from, next) => { //라우터 가드 선언
-    localStorage.getItem('email')!==null&&localStorage.getItem('role')!==null?next('/'):next()
+    localStorage.getItem('email') !== null && localStorage.getItem('role') !== null ? next('/') : next()
         //이미 로그인된 유저라 로그인 페이지로 못가게 막아야 함
 }
 
 const UserMyPageG = (to, from, next) => { //라우터 가드 선언
-    localStorage.getItem('email')===null&&localStorage.getItem('role')===null?next('/signin'):
-    localStorage.getItem('email')!==null&&localStorage.getItem('role')!=='User'?next('/'):next()
+    localStorage.getItem('email') === null && localStorage.getItem('role') === null ? next('/signin') :
+        localStorage.getItem('email') !== null && localStorage.getItem('role') !== 'User' ? next('/') : next()
         //로그인이 안된 유저는 마이페이지를 드갈수 없게 해야함
 }
 const SitterMyPageG = (to, from, next) => { //라우터 가드 선언
-    localStorage.getItem('email')===null&&localStorage.getItem('role')===null?next('/signin'):
-    localStorage.getItem('email')!==null&&localStorage.getItem('role')!=='Sitter'?next('/'):next()
+    localStorage.getItem('email') === null && localStorage.getItem('role') === null ? next('/signin') :
+        localStorage.getItem('email') !== null && localStorage.getItem('role') !== 'Sitter' ? next('/') : next()
         //로그인이 안된 유저는 마이페이지를 드갈수 없게 해야함
 }
 
-// const Update = () =>
-//     import ('../views/Board/update.vue') // 문의게시판 - 수정
-const Write = () =>
-    import ('../views/Board/write.vue') // 문의게시판 - 글 생성/저장 
 const DaySitterList = () =>
     import ('../views/Sitters/daySitterList.vue') //하루 시터 목록보기
 const DaySitterDetail = () =>
@@ -58,63 +54,72 @@ const PaymentInfoDay = () =>
 const PaymentInfoHome = () =>
     import ('../views/Payment/paymentInfoHome.vue') //결제 정보 (결제 전)
 
-const routes = [
-  {
-    path: '/admin',
-    name: 'adminHome',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Admin/Admin-Home.vue'),
-  },
-  {
-    path: '/adminReservation',
-    name: 'adminreservation',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Admin/Admin-Reservation.vue'),
-  },
-  {
-    path: '/adminMember',
-    name: 'adminmember',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Admin/Admin-Member.vue'),
-  },
-  {
-    path: '/adminEmployee',
-    name: 'adminemployee',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Admin/Admin-Employee.vue'),
-  },
-  {
-    path: '/adminApproval',
-    name: 'adminapproval',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Admin/Admin-Approval.vue'),
-  },
-  {
-    path: '/adminBoard',
-    name: 'adminboard',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Admin/Admin-Board.vue'),
-  },
-  {
-    path: '/adminPayment',
-    name: 'adminpayment',
-    component: () => import(/* webpackChunkName: "about" */ '../views/Admin/Admin-Payment.vue'),
-  },
-  {
-    path: '/adminOneday',
-    name: 'adminoneday',
-    component: () => import('../views/Admin/reserv/Oneday.vue'),
-  },
-  {
-    path: '/adminDaycare',
-    name: 'admindaycare',
-    component: () => import('../views/Admin/reserv/Daycare.vue'),
-  },
-  {
-    path: '/adminMain',
-    name: 'adminMain',
-    component: () => import('../components/Admin-main.vue'),
-  },
-{       //일반 홈
+const routes = [{
+        path: '/admin',
+        name: 'adminHome',
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/Admin/Admin-Home.vue'),
+    },
+    {
+        path: '/adminReservation',
+        name: 'adminreservation',
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/Admin/Admin-Reservation.vue'),
+    },
+    {
+        path: '/adminMember',
+        name: 'adminmember',
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/Admin/Admin-Member.vue'),
+    },
+    {
+        path: '/adminEmployee',
+        name: 'adminemployee',
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/Admin/Admin-Employee.vue'),
+    },
+    {
+        path: '/adminApproval',
+        name: 'adminapproval',
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/Admin/Admin-Approval.vue'),
+    },
+    {
+        path: '/adminBoard',
+        name: 'adminboard',
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/Admin/Admin-Board.vue'),
+    },
+    {
+        path: '/adminPayment',
+        name: 'adminpayment',
+        component: () =>
+            import ( /* webpackChunkName: "about" */ '../views/Admin/Admin-Payment.vue'),
+    },
+    {
+        path: '/adminOneday',
+        name: 'adminoneday',
+        component: () =>
+            import ('../views/Admin/reserv/Oneday.vue'),
+    },
+    {
+        path: '/adminDaycare',
+        name: 'admindaycare',
+        component: () =>
+            import ('../views/Admin/reserv/Daycare.vue'),
+    },
+    {
+        path: '/adminMain',
+        name: 'adminMain',
+        component: () =>
+            import ('../components/Admin-main.vue'),
+    },
+    { //일반 홈
         path: '/',
         name: 'home',
         component: Home,
     },
-    {   //시터 지원
+    { //시터 지원
         path: '/sitterSignUp',
         name: 'sitterSignUp',
         component: () =>
@@ -130,7 +135,7 @@ const routes = [
         path: '/signin',
         name: 'signin',
         component: () =>
-        import ( /* webpackChunkName: "Login" */ '../views/Signup/UserForm/userSignIn.vue'),
+            import ( /* webpackChunkName: "Login" */ '../views/Signup/UserForm/userSignIn.vue'),
     },
     {
         path: '/signup',
@@ -222,16 +227,6 @@ const routes = [
         name: 'Board',
         component: Board
     },
-    {
-        path: '/write',
-        name: 'Write',
-        component: Write,
-    },
-    // {
-    //     path: '/update',
-    //     name: 'Update',
-    //     component: Update
-    // },
 
 
     {
@@ -257,25 +252,25 @@ const routes = [
     },
     {
         //마이페이지
-        path:'/mypage/:userNo',
-        name:'myPagePetInfo',
-        component:MypagePetInfo,
-      },
-      {
+        path: '/mypage/:userNo',
+        name: 'myPagePetInfo',
+        component: MypagePetInfo,
+    },
+    {
         //반려견 추가히기
-        path:'/myPetDetail',
-        name:'myPetDetail',
-        component:MyPagePetInfoNew,
-      },
-      //마이페이지/계정관리
-      {
-        path:'/uMyPage/uAccount',
-        name:'myPgeSetting',
-        component:MyPageSetting,
-      },
-      
-      //kakaopay 성공 시 넘어가는 페이지
-      {
+        path: '/myPetDetail',
+        name: 'myPetDetail',
+        component: MyPagePetInfoNew,
+    },
+    //마이페이지/계정관리
+    {
+        path: '/uMyPage/uAccount',
+        name: 'myPgeSetting',
+        component: MyPageSetting,
+    },
+
+    //kakaopay 성공 시 넘어가는 페이지
+    {
         path: '/kakaoPaySuccess',
         name: 'KakaoPaySuccess',
         component: () =>
@@ -302,15 +297,15 @@ const routes = [
     // 마이페이지 / 실시간 케어보기 
     {
         path: '/uMyPage/uLiveCare',
-        name:'MyPageLiveCare',
-        component:MyPageLiveCare
+        name: 'MyPageLiveCare',
+        component: MyPageLiveCare
 
     },
     // 마이페이지 / 반려견정보관리 / 상세보기 
     {
-        path:'/uMyPage/uPetDetailView',
-        name:'UserPetDetail',
-        component:UserPetDetail
+        path: '/uMyPage/uPetDetailView',
+        name: 'UserPetDetail',
+        component: UserPetDetail
 
     },
     { //시터 개인정보 등록, 수정

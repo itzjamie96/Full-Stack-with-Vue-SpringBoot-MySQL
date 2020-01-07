@@ -51,7 +51,6 @@ public class KakaoPay {
 		params.add("item_name", "에브리멍");  //상품명
 		params.add("quantity", "1");
 		params.add("total_amount", s);
-		
 		params.add("tax_free_amount", "0");
 		params.add("vat_amount", "0");
 		params.add("approval_url", "http://localhost:8080/kakaoPaySuccess");
@@ -126,7 +125,6 @@ public class KakaoPay {
 	}
 	
 	public void kakaoCancel(String cancelAmount, String tid){
-		System.out.println(cancelAmount + "  : "+tid);
 		RestTemplate restTemplate = new RestTemplate();
 		// 서버로 요청할 Header
 		HttpHeaders headers = new HttpHeaders();
@@ -144,8 +142,6 @@ public class KakaoPay {
 		params.add("cancel_vat_amount", "0");
 		System.out.println("환불 params  :  " + params);
 		HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
-		System.out.println(body);
-
 		try {
 			System.out.println("try-----------");
 				System.out.println(restTemplate.postForObject(new URI(HOST + "/v1/payment/cancel"), body,

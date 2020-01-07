@@ -151,9 +151,6 @@ export default {
                   if(res.data[sitterT].sittingType==="daycare")
                     this.rows.push(res.data[sitterT])
                   }
-                  
-
-
                 })
                 .catch(err => { 
                 alert("backend(test) 에러 확인!")

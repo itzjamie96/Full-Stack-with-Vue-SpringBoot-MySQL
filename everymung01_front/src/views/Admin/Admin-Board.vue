@@ -136,13 +136,13 @@ export default {
      this.board.userNo = params.row.userNo
   },
   selectAll(){
-      this.$http.get(`http://localhost:1234/falseBoards`)
+      this.$http.get(`http://localhost:1234/showAdminBoards`)
           .then( res =>{
             this.rows = res.data
 
           })
           .catch(err => {
-            alert("backand(falseBoards) 에러 확인")
+            alert("backand(showAdminBoards) 에러 확인")
           })
      
   },

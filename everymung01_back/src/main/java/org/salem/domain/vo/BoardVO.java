@@ -20,5 +20,6 @@ public class BoardVO {
 	private int hits;
 	private int depth;
 	private int groupNo;
+	private boolean status;
 
 }
