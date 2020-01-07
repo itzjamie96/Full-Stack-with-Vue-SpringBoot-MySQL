@@ -6,6 +6,7 @@ import java.net.URISyntaxException;
 import org.salem.domain.vo.KakaoPayApprovalVO;
 import org.salem.domain.vo.KakaoPayReadyVO;
 import org.salem.domain.vo.PaymentVO;
+
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -50,7 +51,9 @@ public class KakaoPay {
 		params.add("item_name", "에브리멍");  //상품명
 		params.add("quantity", "1");
 		params.add("total_amount", s);
-		params.add("tax_free_amount", "100");
+		
+		params.add("tax_free_amount", "0");
+		params.add("vat_amount", "0");
 		params.add("approval_url", "http://localhost:8080/kakaoPaySuccess");
 		params.add("cancel_url", "http://localhost:8080/kakaoPayCancel");
 		params.add("fail_url", "http://localhost:8080/kakaoPaySuccessFail");
@@ -87,7 +90,7 @@ public class KakaoPay {
 		
 		// 서버로 보낼 Header
 		HttpHeaders headers = new HttpHeaders();
-		headers.add("Authorization", "KakaoAK " + "8921a420fe7e75c1306abfe0fc7e5b52");
+		headers.add("Authorization", "KakaoAK " + "189cb444d1d0a80af1fb1bcaef868817");
 		headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
 		headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
 
@@ -97,6 +100,9 @@ public class KakaoPay {
 		params.add("tid", kakaoPayReadyVO.getTid());
 		params.add("partner_order_id", "1111");
 		params.add("partner_user_id", "1111");
+		params.add("vat_amount", "0");
+		params.add("tax_free_amount", "0");
+		
 		params.add("pg_token", pg_token);
 		params.add("total_amount", s);
 		
@@ -118,5 +124,43 @@ public class KakaoPay {
 
 		return null;
 	}
+	
+	public void kakaoCancel(String cancelAmount, String tid){
+		System.out.println(cancelAmount + "  : "+tid);
+		RestTemplate restTemplate = new RestTemplate();
+		// 서버로 요청할 Header
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Authorization", "KakaoAK " + "189cb444d1d0a80af1fb1bcaef868817");
+		headers.add("Accept", MediaType.APPLICATION_JSON_UTF8_VALUE);
+		headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
+		System.out.println("환불 header  :   " + headers);
+		// 서버로 요청할 Body
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+		params.add("cid", "TC0ONETIME");
+		params.add("tid", tid);
+		params.add("cancel_available_amount", cancelAmount);
+		params.add("cancel_amount", cancelAmount );
+		params.add("cancel_tax_free_amount", "0");
+		params.add("cancel_vat_amount", "0");
+		System.out.println("환불 params  :  " + params);
+		HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
+		System.out.println(body);
+
+		try {
+			System.out.println("try-----------");
+				System.out.println(restTemplate.postForObject(new URI(HOST + "/v1/payment/cancel"), body,
+				KakaoPayApprovalVO.class));
+			
+			// log.info("" + kakaoPayApprovalVO);
+
+		} catch (RestClientException e) {
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	
 	
 }

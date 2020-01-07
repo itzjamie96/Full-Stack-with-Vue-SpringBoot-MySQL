@@ -91,8 +91,11 @@ public class PaymentController {
 		KakaoPayApprovalVO info = kakaopay.kakaoPayInfo(pg_token, sum);
 
 		
-		
+		vo.setCid(info.getCid());
+		vo.setTid(info.getTid());
+		vo.setAid(info.getAid());
 		//*********************payment insert*************************
+		System.out.println("**vo** : " + vo);
 		int insert = paymentMapper.addPayment(vo);
 		System.out.println("insert : " + insert);
 		
@@ -121,6 +124,15 @@ public class PaymentController {
 	@RequestMapping("/showSitterPayment/{sitterNo}")
 	public List<PaymentVO> showSitterPayment(@PathVariable int sitterNo){ //시터예약리스트
 		return paymentMapper.showSitterPayment(sitterNo);
+	}
+	
+	@PostMapping("/refund")
+	public String refund(@RequestBody PaymentVO paymentVO) {
+		
+		System.out.println("환불처리------"); 
+		System.out.println("tid --> " + paymentVO.getTid());
+		kakaopay.kakaoCancel(Integer.toString(paymentVO.getAmount()), paymentVO.getTid());
+		return "refund";
 	}
 	
 	
