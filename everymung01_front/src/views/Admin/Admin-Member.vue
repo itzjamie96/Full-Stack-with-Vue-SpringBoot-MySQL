@@ -159,7 +159,7 @@ export default {
             }
           })
           .catch(err => {
-            alert("backand(showAllUsers) 에러 확인")
+            alert(err+"\n"+"Admin-Member(selectAll) 에러")
           })
      
   },
@@ -174,7 +174,7 @@ export default {
               this.dialog=false
               this.rows.splice(idx, 1)
       }).catch(err =>{
-        alert("backend(delete) 에러 확인!")
+        alert(err+"\n"+"Admin-Member(delet) 에러")
       })
 
   },
@@ -187,7 +187,7 @@ export default {
                 this.selectAll();
               }) 
               .catch(err => { 
-                alert("backend(update) 에러 확인!")
+                alert(err+"\n"+"Admin-Member(update) 에러")
 
               });
   },

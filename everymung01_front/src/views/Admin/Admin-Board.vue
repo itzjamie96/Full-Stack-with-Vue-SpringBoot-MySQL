@@ -48,14 +48,14 @@
         <v-card-text v-if="deleteAlert">
             <v-alert v-model="deleteAlert" type="warning">
               <h4>정말 삭제 하시겠습니까?</h4>
-              <v-btn class="mr-4"  color="error" @click="delet()">확인</v-btn>
+              <v-btn class="mr-4"  color="error" @click="delet(board.status)">확인</v-btn>
               <v-btn color="secondary" @click="deleteAlert=false">취소</v-btn>
             </v-alert>
         </v-card-text>
         <v-card-text v-if="updateAlert">
             <v-alert v-model="updateAlert" type="warning">
               <h4>정말 수정 하시겠습니까?</h4>
-              <v-btn class="mr-4"  color="error" @click="update()">확인</v-btn>
+              <v-btn class="mr-4"  color="error" @click="update(content)">확인</v-btn>
               <v-btn color="secondary" @click="updateAlert=false">취소</v-btn>
             </v-alert>
         </v-card-text>
@@ -63,6 +63,7 @@
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="dialog = false,content=null">확인</v-btn>
           <v-btn color="blue darken-1" text @click.native="deleteAlert=true">삭제</v-btn>
+          <v-btn color="blue darken-1" text @click.native="updateAlert=true">수정</v-btn>
           <v-btn color="blue darken-1" text @click="reply(content)">답변달기</v-btn>
         </v-card-actions>
       </v-card>
@@ -74,6 +75,7 @@
 <script>
 import 'vue-good-table/dist/vue-good-table.css'
 import { VueGoodTable } from 'vue-good-table'
+import { mapState, mapActions } from 'vuex';
 
 export default {
     components: {
@@ -110,6 +112,10 @@ export default {
           label: '날짜',
           field: 'boardDate',
         },
+        {
+          label: '답변여부',
+          field: 'status',
+        },
         
       ],
       rows:[],
@@ -118,7 +124,15 @@ export default {
   created() {
     this.selectAll();
   },
+  computed: {
+    ...mapState(['boardcount']),
+    boardCtn(){
+      return this.boardcount
+    }
+  },
   methods: {
+    ...mapActions(['boardInfo']),
+
     onRowClick(params) {
       this.dialog=true
       this.board.boardNo = params.row.boardNo
@@ -130,8 +144,8 @@ export default {
       this.board.depth = params.row.depth
       this.board.hits = params.row.hits
       this.board.userNo = params.row.userNo
+      this.board.status = params.row.status
       },
-
     selectAll(){
         this.$http.get(`http://localhost:1234/showAdminBoards`)
             .then( res =>{
@@ -139,30 +153,58 @@ export default {
 
             })
             .catch(err => {
-              alert("backand(showAdminBoards) 에러 확인")
+              alert(err+"\n"+"Admin-Board(selectAll) 에러")
             })
       
-      },
-    delet(){
+    },
+    delet(status){
+      let cnt = this.boardcount
       this.dialog=false
       this.deleteAlert=false
       const boardNo = this.board.boardNo
       const groupNo = this.board.groupNo
       
-      
+      if(status === false) {
+        this.$http.post(`http://localhost:1234/deleteBoardByMngr`,this.board)
+              .then(res =>{
+                  const idx = this.rows.findIndex(x => x.boardNo === boardNo)
+                  this.dialog=false
+                  this.rows.splice(idx, 1)
+                  cnt--
+                  this.boardInfo(cnt)
+                }).catch(err =>{
+                  alert(err+"\n"+"Admin-Board(delet) 에러")
+                })
+      }else{
         this.$http.post(`http://localhost:1234/deleteBoardByMngr`,this.board)
               .then(res =>{
                   const idx = this.rows.findIndex(x => x.boardNo === boardNo)
                   const idx2 = this.rows.findIndex(x => x.groupNo === groupNo)
                   this.dialog=false
                   this.rows.splice(idx, 1)
-                  this.rows.splice(idx, 1)
+                  this.rows.splice(idx2, 1)
                 }).catch(err =>{
-                  alert("backend(delete) 에러 확인!")
+                  alert(err+"\n"+"Admin-Board(delet) 에러")
                 })
+        
+      }
+      
 
-      },
+    },
+    update(content){
+      this.board.content = content
+      this.dialog=false
+      this.updateAlert=false
+      this.$http.post(`http://localhost:1234/updateBoardByMngr`,this.board)
+              .then(res =>{
+                  this.selectAll();
+                  this.content=null
+                }).catch(err =>{
+                  alert(err+"\n"+"Admin-Board(update) 에러")
+                })
+    },
     reply(content){
+      let cnt = this.boardcount
       this.board.title = "ㄴRE:  "+this.board.title
       this.board.status = true
       this.board.content = content
@@ -171,12 +213,14 @@ export default {
                 .then(res => { 
                   this.selectAll();
                   this.content=null
+                  cnt--
+                  this.boardInfo(cnt)
                 }) 
                 .catch(err => { 
-                  alert("backend(update) 에러 확인!")
+                  alert(err+"\n"+"Admin-Board(reply) 에러")
 
                 });
-      },
+    },
 },
 
  

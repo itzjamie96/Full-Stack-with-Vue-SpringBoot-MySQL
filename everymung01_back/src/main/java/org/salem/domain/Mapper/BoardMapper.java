@@ -38,8 +38,12 @@ public interface BoardMapper {
 	
 	//관리자_답글_Create(userNo에 관리자번호를 집어넣어야되는데, 관리자번호가 변경될 수 있기 때문에, 최종점검 때 해당값을 점검해줘야함)
 	@Insert("INSERT INTO board(userNo,title, content, boardDate, groupNo, depth, hits,status)"
-			+ "VALUES( 0, #{title}, #{content}, CURRENT_TIMESTAMP, #{groupNo}, 1, 0,true)") // depth에 '1'로 하드코딩함. 
+			+ "VALUES( 0, #{title}, #{content}, CURRENT_TIMESTAMP, #{groupNo}, 1, 0,#{status})") // depth에 '1'로 하드코딩함. 
 	public int insertReply(BoardVO boardVo);
+	
+	//관리자_답글_수정
+	@Update("update board set content=#{content} where boardNo=#{boardNo}")
+	public int updateBoardByMngr(BoardVO boardVo);
 
 	//관리자_Read
 	@Select("select * from board,users where board.userNo=users.userNo order by status ASC,groupNo DESC, depth ASC, boardDate DESC")
@@ -52,6 +56,10 @@ public interface BoardMapper {
 	//관리자_Delete (관리자페이지에서 삭제버튼 클릭시 수행되는 쿼리문)
 	@Delete("delete from board where GroupNo=#{groupNo}")
 	public int deleteBoardByMngr(int groupNo);
+	
+	//관리자_댓글_count
+	@Select("select * from board where status=false")
+	public List<BoardVO> falseBoard();
 	
 	
 		

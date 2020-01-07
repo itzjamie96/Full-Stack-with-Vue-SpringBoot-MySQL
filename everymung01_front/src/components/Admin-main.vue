@@ -59,9 +59,9 @@
             <v-list-item-title>
                 승인대기
               <v-badge
-              v-if="ccount!=='0'"
+                v-if="approvalCnt!=='0'"
                 color="red"
-                :content='ccount'
+                :content='approvalCnt'
                 inline
               >
               </v-badge>
@@ -77,7 +77,15 @@
             <v-icon>mdi-contact-mail</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>게시판 관리</v-list-item-title>
+            <v-list-item-title>
+              게시판 관리
+              <v-badge
+                color="red"
+                :content='boardCnt'
+                inline
+              >
+              </v-badge>
+            </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         
@@ -144,30 +152,44 @@ import { eventBus } from '../main'
      
     }),
     computed:{
-      ...mapState(["trigger",'count']),
+      ...mapState(["trigger",'count','boardcount']),
       
-      ccount(){
+      approvalCnt(){
         return this.count
+      },
+      boardCnt(){
+        return this.boardcount
       }
     },
     methods:{
-      ...mapActions(['TriggerTO','approval']),
-    },
-    created() {
-      
-      this.$http.get(`http://localhost:1234/falseAllSitters`)
+      ...mapActions(['TriggerTO','approval','boardInfo']),
+
+      boardCtn() {
+        this.$http.get(`http://localhost:1234/falseBoard`)
+          .then( res => {
+            this.boardInfo(res.data.length)
+          })
+          .catch( err => {
+            alert(err+"\n"+"Admin-main(boardCtn) 에러")
+          })
+      },
+
+      approvalCtn(){
+        this.$http.get(`http://localhost:1234/falseAllSitters`)
           .then( res =>{
-            //console.log(res.data.length)
             this.approval(String(res.data.length))
           })
           .catch(err => {
-            alert("backand(falseAllSitters) 에러 확인")
+            alert(err+"\n"+"Admin-main(approval) 에러")
           })
+      }
 
-      eventBus.$on('test',payload => {
-        console.log(payload)
-            this.count = payload
-      })
+
+    },
+    created() {
+      this.approvalCtn();
+      this.boardCtn();
+
     }
   }
 </script>

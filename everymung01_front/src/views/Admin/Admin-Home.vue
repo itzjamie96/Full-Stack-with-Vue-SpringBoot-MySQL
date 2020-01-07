@@ -192,7 +192,7 @@ import * as FormData from 'form-data'
                        // this.chartDataA.rows.push({'User':this.user.length,'Home':0,'DayCare':0})
                       }) 
                       .catch(err => { 
-                        alert("backend(/userlist) 에러 확인!ㅋㅋㅋ")
+                        alert(err+"\n"+"Admin-Home(allUser) 에러1")
                       });
               } else{
                 this.$http.get(`http://localhost:1234/userlist`)
@@ -207,7 +207,7 @@ import * as FormData from 'form-data'
                         
                       }) 
                       .catch(err => { 
-                        alert("backend(/userlist) 에러 확인!ㅗㅗㅗ")
+                        alert(err+"\n"+"Admin-Home(allUser) 에러2")
                       });
               } 
 
@@ -242,7 +242,7 @@ if(start !== undefined && end !== undefined){
                           {'date':'Home','sales':this.home.length},{'date':'DayCare','sales':this.daycare.length})
                       })
                         .catch(err => { 
-                          alert("backend(/showAllSitters) 에러 확인!ㅋ")
+                          alert(err+"\n"+"Admin-Home(showAllSitters) 에러1")
                         });
                       }else{
                         this.$http.get(`http://localhost:1234/showAllSitters`)
@@ -257,7 +257,7 @@ if(start !== undefined && end !== undefined){
                                                 {'date':'Home','sales':this.home.length},{'date':'DayCare','sales':this.daycare.length})
                                             })
                                               .catch(err => { 
-                                                alert("backend(/showAllSitters) 에러 확인!")
+                                                alert(err+"\n"+"Admin-Home(showAllSitters) 에러2")
                                               });
                       }
                       

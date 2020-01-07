@@ -22,6 +22,8 @@ export default new Vuex.Store({
         //로그인 끝
         //admin 승인대기 count
         count:'0',
+        //admin 미답변 count
+        boardcount:'',
 
         //메인페이지 사진 박아놓은 예시
         mainPics: [{
@@ -134,6 +136,11 @@ export default new Vuex.Store({
         approvalCount(state, payload) {
             state.count = payload
         },
+
+        //관리자 게시판(미답변) 정보 받기
+        boardCnt(state, payload) {
+            state.boardcount = payload
+        }
 
     },
     actions: {
@@ -279,7 +286,11 @@ export default new Vuex.Store({
         approval({ commit }, payload) {
 
             commit('approvalCount', payload)
-        }
+        },
+
+        boardInfo({ commit }, payload) {
+            commit('boardCnt', payload)
+        },
 
 
     },

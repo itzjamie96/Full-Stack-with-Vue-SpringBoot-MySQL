@@ -171,7 +171,7 @@ export default {
             console.log(this.rows)
           })
           .catch(err => {
-            alert("backand(showAllSitters) 에러 확인")
+            alert(err+"\n"+"Admin-Employee(selectAll) 에러")
           })
      
   },
@@ -186,7 +186,7 @@ export default {
               this.dialog=false
               this.rows.splice(idx, 1)
       }).catch(err =>{
-        alert("backend(delete) 에러 확인!")
+        alert(err+"\n"+"Admin-Employee(delet) 에러")
       })
 
   },
@@ -198,7 +198,7 @@ export default {
                 this.selectAll();
               }) 
               .catch(err => { 
-                alert("backend(update) 에러 확인!")
+                alert(err+"\n"+"Admin-Employee(update) 에러")
 
               });
   },

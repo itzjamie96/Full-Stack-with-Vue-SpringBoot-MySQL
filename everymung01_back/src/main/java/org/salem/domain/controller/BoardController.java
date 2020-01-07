@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -68,6 +69,13 @@ public class BoardController {
 		System.out.println(boardVo);
 		return mapper.deleteBoardByMngr(boardVo.getGroupNo());
 	}
+	
+	//관리자페이지 답글수정
+	@PostMapping("/updateBoardByMngr")
+	public int updateBoardByMngr(@RequestBody BoardVO boardVo) {
+		System.out.println(boardVo);
+		return mapper.updateBoardByMngr(boardVo);
+	}
 
 	//관리자_답글달기
 	@PostMapping("/insertReply") 
@@ -88,6 +96,13 @@ public class BoardController {
 		
 		return mapper.showAdminBoards();
 	}
+	
+	//관리자 페이지_미답변 count
+	@RequestMapping("/falseBoard")
+	public List<BoardVO> falseBoard() {
+		return mapper.falseBoard();
+	}
+		
 	
 	//조회수 처리
 	@PostMapping("/updateHits")

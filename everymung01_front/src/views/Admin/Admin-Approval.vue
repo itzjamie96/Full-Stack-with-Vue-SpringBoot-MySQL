@@ -291,53 +291,52 @@ export default {
               
             })
             .catch(err => {
-              alert("backand(falseAllSitters) 에러 확인")
+              alert(err+"\n"+"Admin-Approval(selectAll) 에러")
             })
      
   },
   delet(sitterNo){
-    let tt = Number(this.count)
+    let cnt = Number(this.count)
     this.dialog=false
-     this.deleteAlert=false
-     const No = sitterNo
+    this.deleteAlert=false
+    const No = sitterNo
      
       this.$http.post(`http://localhost:1234/deleteSitter/${sitterNo}`)
             .then(res =>{
-              /* const idx = this.rows.findIndex(x => x.sitterNo === sitterNo)
+              const idx = this.rows.findIndex(x => x.sitterNo === sitterNo)
               this.dialog=false
-              this.rows.splice(idx, 1) */
-              --tt
-              this.approval(String(tt))
-              this.selectAll();
-              eventBus.$emit('test',this.rows.length)
+              this.rows.splice(idx, 1)
+              --cnt
+              this.approval(String(cnt))
       }).catch(err =>{
-        alert("backend(delete) 에러 확인!")
+        alert(err+"\n"+"Admin-Approval(delet) 에러")
       })
 
   },
   update(){
-    let tt = Number(this.count)
+     let cnt = Number(this.count)
      this.dialog=false
      this.updateAlert=false
      this.sitter.possibleDay=String(this.sitter.possibleDay)
-     this.$http.post('http://localhost:1234/updateSitter',this.sitter) 
-          .then(res => { 
-            --tt
-            this.selectAll();
-            this.approval(String(tt))
-            
-          }) 
-          .catch(err => { 
-            alert("backend(update) 에러 확인!")
+     
+      this.$http.post('http://localhost:1234/updateSitter',this.sitter) 
+            .then(res => { 
+              --cnt
+              this.selectAll();
+              this.approval(String(cnt))
+              
+            }) 
+            .catch(err => { 
+              alert(err+"\n"+"Admin-Approval(update) 에러")
 
-          });
+            });
   },
   ...mapActions(['approval'])
     },
   computed:{
     ...mapState(['count']),
     
-    lsm(){
+    approvalCnt(){
       return this.count
     }
   }
