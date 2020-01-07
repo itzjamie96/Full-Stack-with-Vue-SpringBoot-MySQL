@@ -300,7 +300,7 @@ export default {
           field: 'amount',
         },
         {
-          label: '시터타입',
+          label: '시터종류',
           field: 'sittingType',
         },
         {

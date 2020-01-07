@@ -6,7 +6,7 @@
     :rows="rows"
     @on-row-click="onRowClick"
     max-height="500px"
-    :line-numbers="false"
+    :line-numbers="true"
     :search-options="{
     enabled: true,
     }"
@@ -48,7 +48,7 @@
         <v-card-text v-if="deleteAlert">
             <v-alert v-model="deleteAlert" type="warning">
               <h4>정말 삭제 하시겠습니까?</h4>
-              <v-btn class="mr-4"  color="error" @click="delet(board.boardNo)">확인</v-btn>
+              <v-btn class="mr-4"  color="error" @click="delet()">확인</v-btn>
               <v-btn color="secondary" @click="deleteAlert=false">취소</v-btn>
             </v-alert>
         </v-card-text>
@@ -98,20 +98,16 @@ export default {
        },
       columns: [
         {
-          label: 'No',
-          field: 'boardNo',
-        },
-        {
-          label: 'Name',
+          label: '이름',
           field: 'userName',
         },
         {
-          label: 'Title',
+          label: '제목',
           field: 'title',
 
         },
         {
-          label: 'Date',
+          label: '날짜',
           field: 'boardDate',
         },
         
@@ -123,60 +119,65 @@ export default {
     this.selectAll();
   },
   methods: {
-  onRowClick(params) {
-     this.dialog=true
-     this.board.boardNo = params.row.boardNo
-     this.board.title = params.row.title
-     this.board.userName = params.row.userName
-     this.board.content = params.row.content
-     this.board.boardDate = params.row.boardDate
-     this.board.groupNo = params.row.groupNo
-     this.board.depth = params.row.depth
-     this.board.hits = params.row.hits
-     this.board.userNo = params.row.userNo
-  },
-  selectAll(){
-      this.$http.get(`http://localhost:1234/showAdminBoards`)
-          .then( res =>{
-            this.rows = res.data
+    onRowClick(params) {
+      this.dialog=true
+      this.board.boardNo = params.row.boardNo
+      this.board.title = params.row.title
+      this.board.userName = params.row.userName
+      this.board.content = params.row.content
+      this.board.boardDate = params.row.boardDate
+      this.board.groupNo = params.row.groupNo
+      this.board.depth = params.row.depth
+      this.board.hits = params.row.hits
+      this.board.userNo = params.row.userNo
+      },
 
-          })
-          .catch(err => {
-            alert("backand(showAdminBoards) 에러 확인")
-          })
-     
-  },
-  delet(boardNo){
-     this.dialog=false
-     this.deleteAlert=false
-     const No = boardNo
-     
-      this.$http.get(`http://localhost:1234/delete/${No}`).then(res =>{
-        const idx = this.rows.findIndex(x => x.boardNo === boardNo)
-        console.log(idx)
-              this.dialog=false
-              this.rows.splice(idx, 1)
-      }).catch(err =>{
-        alert("backend(delete) 에러 확인!")
-      })
+    selectAll(){
+        this.$http.get(`http://localhost:1234/showAdminBoards`)
+            .then( res =>{
+              this.rows = res.data
 
-  },
-  reply(content){
-     this.board.title = "ㄴRE:  "+this.board.title
-     this.board.status = true
-     this.board.content = content
-     this.dialog=false
-     this.$http.post('http://localhost:1234/insertReply',this.board) 
-              .then(res => { 
-                this.selectAll();
-                this.content=null
-              }) 
-              .catch(err => { 
-                alert("backend(update) 에러 확인!")
+            })
+            .catch(err => {
+              alert("backand(showAdminBoards) 에러 확인")
+            })
+      
+      },
+    delet(){
+      this.dialog=false
+      this.deleteAlert=false
+      const boardNo = this.board.boardNo
+      const groupNo = this.board.groupNo
+      
+      
+        this.$http.post(`http://localhost:1234/deleteBoardByMngr`,this.board)
+              .then(res =>{
+                  const idx = this.rows.findIndex(x => x.boardNo === boardNo)
+                  const idx2 = this.rows.findIndex(x => x.groupNo === groupNo)
+                  this.dialog=false
+                  this.rows.splice(idx, 1)
+                  this.rows.splice(idx, 1)
+                }).catch(err =>{
+                  alert("backend(delete) 에러 확인!")
+                })
 
-              });
-  },
-    },
+      },
+    reply(content){
+      this.board.title = "ㄴRE:  "+this.board.title
+      this.board.status = true
+      this.board.content = content
+      this.dialog=false
+      this.$http.post('http://localhost:1234/insertReply',this.board) 
+                .then(res => { 
+                  this.selectAll();
+                  this.content=null
+                }) 
+                .catch(err => { 
+                  alert("backend(update) 에러 확인!")
+
+                });
+      },
+},
 
  
 }

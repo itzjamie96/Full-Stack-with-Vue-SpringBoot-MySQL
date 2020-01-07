@@ -50,7 +50,9 @@ public interface BoardMapper {
 	public int updateStatus(BoardVO boardVo);
 	
 	//관리자_Delete (관리자페이지에서 삭제버튼 클릭시 수행되는 쿼리문)
-	@Delete("delete from board where boardNo=#{boardNo}")
-	public int deleteBoardByMngr(int boardNo);	
+	@Delete("delete from board where GroupNo=#{groupNo}")
+	public int deleteBoardByMngr(int groupNo);
+	
+	
 		
 }

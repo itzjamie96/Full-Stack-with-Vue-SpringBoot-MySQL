@@ -56,7 +56,17 @@
             <v-icon>mdi-contact-mail</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>승인대기</v-list-item-title>
+            <v-list-item-title>
+                승인대기
+              <v-badge
+              v-if="ccount!=='0'"
+                color="red"
+                :content='ccount'
+                inline
+              >
+              </v-badge>
+            </v-list-item-title>
+            
           </v-list-item-content>
         </v-list-item>
         
@@ -123,19 +133,41 @@
 <script>
 import {mapState,mapActions} from "vuex"
 import router from '../router/index'
+import { eventBus } from '../main'
+
   export default {
     props: {
       source: String,
     },
     data: () => ({
       drawer: null,
+     
     }),
     computed:{
-      ...mapState(["trigger"]),
+      ...mapState(["trigger",'count']),
+      
+      ccount(){
+        return this.count
+      }
     },
     methods:{
-      ...mapActions(['TriggerTO']),
+      ...mapActions(['TriggerTO','approval']),
+    },
+    created() {
       
+      this.$http.get(`http://localhost:1234/falseAllSitters`)
+          .then( res =>{
+            //console.log(res.data.length)
+            this.approval(String(res.data.length))
+          })
+          .catch(err => {
+            alert("backand(falseAllSitters) 에러 확인")
+          })
+
+      eventBus.$on('test',payload => {
+        console.log(payload)
+            this.count = payload
+      })
     }
   }
 </script>

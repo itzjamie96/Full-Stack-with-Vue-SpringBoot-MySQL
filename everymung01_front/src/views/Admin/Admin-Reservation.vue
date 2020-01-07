@@ -10,13 +10,13 @@
   >
    <v-card-text class="pt-12">
       <br><br>
-       <v-btn text router :to="{name: 'adminoneday'}" exact>
+       <v-btn text router :to="{name: 'admindaycare'}" exact>
         <!-- <v-icon size="100px">mdi-run</v-icon> -->
         <i class="fas fa-running fa-5x"></i>
       </v-btn>
       <b class="display-1 text--primary font-weight-black">하루</b>
         <div class="text-center pl-12 ml-12">
-        <h2 class="mr-8 text--primary font-weight-black">{{home.length}}건</h2>
+        <h2 class="mr-8 text--primary font-weight-black">{{daycare.length}}건</h2>
         </div>
       <br><br><br>
     </v-card-text>
@@ -30,13 +30,13 @@
         >
    <v-card-text class="pt-12">
       <br><br>
-       <v-btn text router :to="{name: 'admindaycare'}" exact>
+       <v-btn text router :to="{name: 'adminhomecare'}" exact>
         <!-- <v-icon size="100px">mdi-home</v-icon>  -->
         <i class="fas fa-home fa-5x"></i> 
       </v-btn>
       <b class="display-1 text--primary font-weight-black">위탁</b>
       <div class="text-center pl-12 ml-12">
-        <h2 class="mr-8 text--primary font-weight-black">{{daycare.length}}건</h2>
+        <h2 class="mr-8 text--primary font-weight-black">{{home.length}}건</h2>
         </div>
       <br><br><br>
     </v-card-text>

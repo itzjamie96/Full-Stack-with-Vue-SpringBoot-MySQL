@@ -160,12 +160,11 @@ public class SitterController {
 		SitterVO lsm = sitterMapper.showSitterDetail(sitterNo);
 		fileService.deleteO(lsm.getQualificationCheck());
 		fileService.deleteO(lsm.getIdentityCheck());
-		try {
-			formMail.sendEmail(lsm.getSitterEmail());
-			System.out.println(lsm.getSitterEmail());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		/*
+		 * try { formMail.sendEmail(lsm.getSitterEmail());
+		 * System.out.println(lsm.getSitterEmail()); } catch (Exception e) {
+		 * e.printStackTrace(); }
+		 */
 		return sitterMapper.deleteSitter(sitterNo);
 		
 	}

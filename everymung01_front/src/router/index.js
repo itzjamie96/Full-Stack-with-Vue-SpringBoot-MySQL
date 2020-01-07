@@ -97,10 +97,10 @@ const routes = [{
             import ( /* webpackChunkName: "about" */ '../views/Admin/Admin-Payment.vue'),
     },
     {
-        path: '/adminOneday',
-        name: 'adminoneday',
+        path: '/adminHomeCare',
+        name: 'adminhomecare',
         component: () =>
-            import ('../views/Admin/reserv/Oneday.vue'),
+            import ('../views/Admin/reserv/HomeCare.vue'),
     },
     {
         path: '/adminDaycare',

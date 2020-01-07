@@ -52,6 +52,7 @@
 		INNER JOIN payment pay ON pay.paymentNo = r.paymentNo
 		INNER JOIN SITTER s ON s.sitterNo = pay.sitterNo
 		INNER JOIN SITTING_TYPE t ON t.sittingNo = s.sittingNo
+		GROUP BY pay.paymentNo
 	</select>
 	
 	<select id="test1" resultType="TestVO" parameterType="string">

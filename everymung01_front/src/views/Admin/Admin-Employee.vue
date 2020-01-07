@@ -23,16 +23,16 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-                <v-text-field label="Name"  v-model="sitter.sitterName" ></v-text-field>
+                <v-text-field label="Name"  v-model="sitter.sitterName" :rules="nameRules"></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="Email" v-model="sitter.sitterEmail" ></v-text-field>
+                <v-text-field label="Email" v-model="sitter.sitterEmail" :rules="emailRules"></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-text-field label="Password" v-model="sitter.sitterPw"></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="Phone" v-model="sitter.sitterPhone" ></v-text-field>
+                <v-text-field label="Phone" v-model="sitter.sitterPhone" :rules="PhoneRules" ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-text-field label="Address" v-model="sitter.sitterAddress" ></v-text-field>
@@ -100,36 +100,52 @@ export default {
        },
       columns: [
         {
-          label: 'Name',
+          label: '이름',
           field: 'sitterName',
         },
         {
-          label: 'Age',
+          label: '나이',
           field: 'sitterAge',
         },
         {
-          label: 'Email',
+          label: '이메일',
           field: 'sitterEmail',
         },
         {
-          label: 'Phone',
+          label: '휴대번호',
           field: 'sitterPhone',
         },
         {
-          label: 'Address',
+          label: '주소',
           field: 'sitterAddress',
         },
         {
-          label: 'Date',
+          label: '날짜',
           field: 'approvalDate',
         },
         {
-          label: 'Type',
+          label: '시터종류',
           field: 'sittingType',
         },
         
       ],
       rows:[],
+      emailRules: [
+                  v => !!v || 'E-mail is required',
+                  v => /.+@.+\..+/.test(v) || '이메일 형식에 맞지 않습니다.',
+                  ],
+      PhoneRules: [
+                  v => !!v || 'Phone is required',
+                  v=>/^(?:(010\d{4})|(01[1|6|7|8|9]\d{3,4}))(\d{4})$/.test(v) || '-빼주세요',
+                  ],
+      nameRules: [
+                  v => !!v || 'Name is required',
+                  v => (v && v.length <= 10) || '이름은 10글자 이하',
+                  ],
+      PasswordRules: [
+                  v => !!v || 'password is required',
+                  v => (v && v.length >= 6) || '비밀번호는 6자리 이상으로 해주세요',
+                  ],
     };
   },
   created() {
