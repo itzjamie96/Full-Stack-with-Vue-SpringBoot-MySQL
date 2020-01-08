@@ -9,6 +9,17 @@
             <v-row>
                 <v-col cols="6">
                     <sitter-profile/> 
+                    <v-card
+                    class="mx-auto mb-10 pl-12"
+                    max-width="95%"
+                    >
+                       
+
+                        <GmapMap style="width: 600px; height: 300px;" :zoom="14" :center="lsm">
+                        <gmap-circle ref="circle" :radius="1000" :center='lsm' :draggable='true' :editable='true' >
+                            </gmap-circle>
+                        </GmapMap>
+                    </v-card>
                 </v-col>
                 <v-col cols="6">
                     
@@ -41,7 +52,13 @@ import { mapState }  from 'vuex'
 
 
 export default {
-
+    data() {
+    return {
+      markers: [],
+      place: null,
+      lsm:{lat:37.496361445796694,lng: 127.05750504049766}
+    }
+  },
    components: {
        'sitter-profile': SitterProfile,
        'sitter-img' : SitterImg,
@@ -57,7 +74,20 @@ export default {
        ...mapState(['userInfo']),
        ...mapState(['isLogin','role'])
        
-   }
+   },
+   methods:{},
+   created() {
+       this.$http.get('http://localhost:1234/showSitterDetail/'+this.$route.params.sitterNo) 
+              .then(res => { 
+                  this.lsm.lat=res.data.lat
+                  this.lsm.lng=res.data.lng
+                }) 
+              .catch(err => { 
+                console.log(err)
+
+              });
+   },
 }
+
 
 </script>

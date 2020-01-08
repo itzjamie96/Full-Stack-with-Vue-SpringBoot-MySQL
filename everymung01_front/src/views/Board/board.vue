@@ -8,7 +8,7 @@
       :rows ="rows"
       @on-row-click="onRowClick"
       max-height="500px"
-      :line-numbers="false"
+      :line-numbers="true"
       :search-options="{
           enabled: true,
       }"
@@ -50,7 +50,8 @@
             <v-row>
               <v-col cols="12">
                 <v-text-field  label="제목" v-model=editedItem.title  required maxlength="44" :readonly=true></v-text-field> <!-- 50-6하는 이유:: 6(ㄴRE:의 글자수) -->
-                <v-text-field  label="작성자" v-model="this.userInfo.userName" required :readonly=true></v-text-field>
+                <v-text-field  label="작성자" v-model="editedItem.userName" required :readonly=true></v-text-field>
+                  <!-- ### editedItem.userName(O), this.userinfo.userName(X) => userName of null에러 뜸.### -->
                   <!-- v-vind 이용해서 data에 선언된 변수 updateTrig 의 값인 true 연결해주기   -->
                 <v-text-field  label="작성일" v-model="editedItem.boardDate" required readonly="readonly" ></v-text-field>
               </v-col>  <!-- v-vind:value= 우항에 오는 변수명에 따옴표를 써줘도 되고 안써줘도 됨. 둘 다 가능. -->
@@ -78,7 +79,55 @@
 
             <v-btn color="blue darken-1" text @click="updateClick()">수정</v-btn>
 
-            <v-btn color="blue darken-1" text @click="dbClickProtectedReply()">답글달기</v-btn>
+            <!-- <v-btn color="blue darken-1" text @click="dbClickProtectedReply()">답글달기</v-btn> -->
+          </div>
+        </v-card-actions> <!-- @click="$router.push({path: '/update'}) -->
+      </v-card>
+    </v-dialog>
+
+       <!-- [수정하기_다이얼로그] -->
+   <v-dialog v-model="dialog_update" persistent max-width="600px">
+      <template v-slot:activator="{ on }">
+      </template>
+      <v-card>
+        <v-card-title>
+          <span class="headline">수정하기</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-col cols="12">
+                <v-text-field  label="제목" v-model=editedItem.title  required maxlength="44" :readonly=true></v-text-field> <!-- 50-6하는 이유:: 6(ㄴRE:의 글자수) -->
+                <v-text-field  label="작성자" v-model="editedItem.userName" required :readonly=true></v-text-field>
+                  <!-- ### editedItem.userName(O), this.userinfo.userName(X) => userName of null에러 뜸.### -->
+                  <!-- v-vind 이용해서 data에 선언된 변수 updateTrig 의 값인 true 연결해주기   -->
+                <v-text-field  label="작성일" v-model="editedItem.boardDate" required readonly="readonly" ></v-text-field>
+              </v-col>  <!-- v-vind:value= 우항에 오는 변수명에 따옴표를 써줘도 되고 안써줘도 됨. 둘 다 가능. -->
+                        
+              <v-textarea
+                id="focus_textarea"
+                label="내용을 입력해주세요"
+                outlined
+                name="input-7-4"
+                v-model="editedItem.content"
+                maxlength="255"
+                required
+                
+                auto-grow
+              ></v-textarea> <!-- :readonly=updateTrig -->
+            </v-row>
+          </v-container>
+        </v-card-text>
+         <!-- 수정하기-다이얼로그_버튼목록 -->
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn href="javascript:;" color="blue darken-1" text @click="close_update()">닫기</v-btn>
+          <div v-if="isLogin==true && userInfo.userNo==editedItem.userNo">
+            <v-btn color="blue darken-1" text @click="dele()">삭제</v-btn>
+
+            <v-btn color="blue darken-1" text @click="update()">수정</v-btn>
+
+            <!-- <v-btn color="blue darken-1" text @click="dbClickProtectedReply()">답글달기</v-btn> -->
           </div>
         </v-card-actions> <!-- @click="$router.push({path: '/update'}) -->
       </v-card>
@@ -150,9 +199,11 @@
       },
   data(){
     return {
+      lsm:'',
       updateName:'상세보기',
       updateTrig:true,
       dialog_detail: false,
+      dialog_update:false,
       dialog_write: false,
       
       // 상세보기_테이블의 행에 들어있는 컬럼값들을 여기에 저장해서, 엑시오스로 컨트롤러에 보냄
@@ -177,16 +228,7 @@
           content:'',
           boardDate: '',
           hits: '',
-     },
-     // 수정하기_
-     updatedItem2:{
-          boardNo: '',
-          title: '',
-          user: '',
-          content:'',
-          boardDate: '',
-          hits: '',
-     },     
+     }, 
      //글쓰기 & 답글달기 
      BoardVO:{
           boardNo: '',
@@ -211,14 +253,13 @@
      },
      // 전체조회 테이블의 컬럼
      columns: [
-        {
-           label: '글번호',
-           field: 'boardNo',
-           width: '100px',
-           //thClass: 'text-center',
-           //tdClass: 'text-center',
-           /* type: 'number', */
-       },
+      //   {
+      //      label: '글번호',
+      //      field: 'boardNo',
+      //      width: '100px',
+      //      //thClass: 'text-center',
+      //      //tdClass: 'text-center',
+      //  },
        {
            label: '제목',
            field: 'title',
@@ -390,36 +431,50 @@
         // params.selected - if selection is enabled this argument 
         // indicates selected or not
         // params.event - click event
-        this.dialog_detail=true
+         this.dialog_detail=true
         //재조회로 삭제하는 방법 쓰기 전에 인덱스로 삭제하는 법 쓸 때 사용하던 페이지인덱스 정보.
         //this.editidItemIndex = params.pageIndex  
          //조회 메소드 만들기              
          this.updateHits()
       },
 
-      //1차 수정-버튼(Update) 
+      //수정-버튼(Update) 
       updateClick(){
-        if(this.updateTrig==true){
-            this.updateTrig = false, //updateTrig = [ReadOnly 설정/해제 변수]  
-            // 
-            this.updateName = '수정하기'
-            document.getElementById("focus_textarea").focus()
-            
-        }else{
-            this.BoardVO.content=this.editedItem.content // 비어있는 BoardVO에 기존내용 담아주기_20.01.06_19시20분
-            this.editedItem.content=this.editedItem.content
-            
-            if(this.BoardVO.content==this.editedItem.content){
-            alert("수정하실 내용을 입력해주세요!")
-            this.editedItem.content=this.BoardVO.content
-            }else{
-            this.update() //수정버튼 한번더 클릭했을 때 수행됨 
-            }
-        }
-      },
-      //2차 수정-버튼(Update)
-      update(){
+          this.dialog_update=true
 
+        //   this.editedItem.content=this.lsm 
+        //   if(this.updateTrig===true){//상세보기 모드일 때  
+        //     this.lsm =this.editedItem.content
+        //     console.log("this.editedItem.content ::" +this.editedItem.content)
+        //     console.log("this.lsm ::" +this.lsm)
+
+        //     this.editedItem.content = null
+        //     console.log("this.editedItem.content ::" +this.editedItem.content)
+        //     //수정_밑작업 
+        //     this.updateName = '수정하기'
+        //     this.updateTrig = false //수정가능 상태가 됨 
+        //     document.getElementById("focus_textarea").focus()
+              
+        //       /* lsm !==this.editedItem.content&&this.editedItem.content.length!==0?this.update():
+        //       alert("내용이 같거나 내용이 없습니다.") */
+ 
+        //   }
+         
+        //  else if(this.updateTrig === false){// 수정모드일 때 
+           
+        //    console.log("lsm::"+this.lsm)
+        //    console.log("this.editedItem.content ::" +this.editedItem.content)
+        //    this.lsm !==this.editedItem.content && this.editedItem.content!==null
+        //    &&this.editedItem.content !== '' && this.editedItem.content !== undefined?this.update():
+        //     alert("내용이 같거나 공백입니다.")
+        //    this.updateTrig=false
+        //    document.getElementById("focus_textarea").focus()
+           
+        //  }
+      },
+      //2차 수정(Update)
+      update(){
+        //this.lsm=null
           this.updatedItem.boardNo = this.editedItem.boardNo 
           console.log( "update_this.updatedItem.boardNo="+this.updatedItem.boardNo) 
           this.updatedItem.title = this.editedItem.title                     
@@ -461,17 +516,26 @@
          this.dialog_detail=false
          history.go(0)
       },
-      //닫기-버튼
+      //상세보기-닫기버튼
       close(){
-        
-        this.updateTrig = true
-        this.updateName = '상세보기'
-        //여기에 confirm을 써주면 될듯! => "수정중인데 진짜 나갈거냐? Yes or No"
-        if(confirm("수정중에 나가시면 입력하신 정보가 저장되지 않을 수 있습니다.        정말로 나가시겠습니까?")){
+        if(this.updateName==='상세보기'){
           this.dialog_detail=false
         }else{
-          this.dialog_detail=true
+          this.updateTrig = true
+          this.updateName = '상세보기'
+          //여기에 confirm을 써주면 될듯! => "수정중인데 진짜 나갈거냐? Yes or No"
+          if(confirm("수정중에 나가시면 입력하신 정보가 저장되지 않을 수 있습니다.        정말로 나가시겠습니까?")){
+            this.dialog_detail=false
+          }else{
+            this.dialog_detail=true
+          }
         }
+      },
+      //수정-다이얼로그 닫기 
+      close_update(){
+        this.dialog_detail=false
+        this.dialog_update=false
+        
       },
       //더블클릭-중복입력-방지       
       doubleSubmitCheck(){

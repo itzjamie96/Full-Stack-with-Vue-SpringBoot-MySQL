@@ -1,109 +1,174 @@
 <template>
-    <v-container fill-height style="max-width:450px;">
-        <v-layout align-center row wrap>
-            <v-flex xs12>
-                <v-alert
-                :value="isSignUpError"
-                type="error"
-                >
-                이미 존재하는 이메일입니다.
-                </v-alert>
-                <v-alert
-                class="mb-3"
-                :value="isSignUp"
-                type="success"
-                >
-                회원가입 완료
-                </v-alert>
-            <v-card>
+    <v-container>
+      <v-card 
+        class="mx-auto"
+        max-width="850">
+        <v-row>
+          <v-col>         
+            <v-alert
+              :value="isSignUpError"
+              type="error"
+            >
+            이미 존재하는 이메일입니다.
+            </v-alert>
+            <v-alert
+              class="mb-3"
+              :value="isSignUp"
+              type="success"
+            >
+            회원가입 완료
+            </v-alert>
 
-    <v-toolbar flat>
-    <v-toolbar-title primary-title class="layout justify-center"><i class="fas fa-paw"></i><b>에브리멍 회원가입</b></v-toolbar-title>
-    </v-toolbar>
-    <div class="pa-3">
-        <v-text-field
-        @keydown="OpenBtnName(userName)"
-                v-model="userName"
-                :rules="nameRules"
-            label="이름"
-            required
-          ></v-text-field>
-        
-          <VueDaumPostcode 
-          style="height: 200px; overflow: scroll;"
-          @complete="userAddress = $event.roadAddress"
-          />
-          <v-text-field
-          :disabled="userAddress === null"
-             v-model="userAddress"
-            label="상세주소(건물명,층)"
-            required
-          ></v-text-field>
+              <v-toolbar flat>
+                <v-toolbar-title primary-title class="layout justify-center">
+                  <div>
+                    <div class="d-inline">
+                      <i class="fas fa-paw fa-1x"></i>
+                    </div>
+                    <div class="d-inline" id="everymung">
+                      에브리멍
+                    </div>
+                  </div>                  
+                  <b class="ml-2">회원가입</b>
+                </v-toolbar-title>
+              </v-toolbar>
+              <v-divider></v-divider>
+              <div class="pa-3">
+                <v-row class="justify-center">
+                  <v-col cols="8">
+                    <v-text-field
+                      @keydown="OpenBtnName(userName)"
+                      v-model="userName"
+                      :rules="nameRules"
+                      label="이름"
+                      required
+                      color="black"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
 
-        <v-text-field
-        @keydown="OpenBtnPhone(userPhone)"
-                v-model="userPhone"
-                :rules="PhoneRules"
-            label="핸드폰"
-          ></v-text-field>
-                <v-text-field
-                @keydown="OpenBtnEmail(userEmail)"
-                v-model="userEmail"
-                :rules="emailRules"
-            label="이메일"
-            required
-          ></v-text-field>
-                <v-text-field
-                v-model="userPw"
-                :rules="PasswordRules"
-                type="password"
-            label="패스워드"
-            required
-          ></v-text-field>
-                <v-text-field
-                v-model="userPwRepeat"
-                type="password"
-            label="패스워드 확인"
-          ></v-text-field>
-          <b>{{checkP}}</b>
-          <v-btn
-          :disabled="userPw ===null || userPw !== userPwRepeat || Trigger.Name===false||Trigger.Phone===false||Trigger.Email===false||
-          Trigger.password===false||userAddress===null"
-          depressed 
-          large
-          block
-          color="primary"
-          @click="signup()"
-          >회원가입</v-btn>
-          
-    </div>
+                <v-row class="justify-center">
+                  <v-col cols="8">
+                    <VueDaumPostcode
+                      style="overflow: scroll; height: 300px"
+                      @complete="userAddress = $event.roadAddress"
+                    />
+                  </v-col>
+                </v-row>
 
-<v-toolbar flat>
-    <v-toolbar-title primary-title class="layout justify-center">
-        <v-divider class="mt-3"></v-divider>
-        <pre>   간편하게 시작하기   </pre>
-        <v-divider class="mt-3"></v-divider>
-        </v-toolbar-title>
-    </v-toolbar>
-    <div class="text-xs-center pl-5 ml-5 pb-5" v-if="role !=='Admin'">
-    <KakaoLogin
-      api-key="f64eb8bdf0d591a97100dd290c91ee26"
-      :on-success=onSuccess
-      :on-failure=onFailure
-      />
-    <GoogleLogin :params="params" :renderParams="renderParams" :onSuccess="onSuccessG" :onFailure="onFailure"></GoogleLogin>
-    </div>
-           <v-divider class="mx-5"></v-divider>
-<div class="layout justify-center">
-    <b class="mt-2">이미 계정이 있다면 ? </b>
-    <v-btn color="white"  router :to="{name:'signin'}" depressed> 로그인 </v-btn>
-    
-</div>
+                <v-row class="justify-center">
+                  <v-col cols="8">
+                    <v-text-field
+                    :disabled="userAddress === null"
+                      v-model="userAddress"
+                      label="상세주소(건물명,층)"
+                      required
+          color="black"
+                    ></v-text-field>
 
-          </v-card>
-            </v-flex>
-        </v-layout>
-        
+                  </v-col>
+                </v-row>
+                <v-row class="justify-center">
+                  <v-col cols="8">
+                    <v-text-field
+                    @keydown="OpenBtnPhone(userPhone)"
+                            v-model="userPhone"
+                            :rules="PhoneRules"
+                        label="핸드폰"
+                        color="black"
+                      ></v-text-field>
+                  </v-col>
+                </v-row>
+
+                <v-row class="justify-center">
+                  <v-col cols="8">
+                          <v-text-field
+                          @keydown="OpenBtnEmail(userEmail)"
+                          v-model="userEmail"
+                          :rules="emailRules"
+                      label="이메일"
+                      required
+               color="black"
+                    ></v-text-field>
+
+                  </v-col>
+                </v-row>                
+
+                <v-row class="justify-center">
+                  <v-col cols="8">
+                    <v-text-field
+                      v-model="userPw"
+                      :rules="PasswordRules"
+                      type="password"
+                      label="비밀번호"
+                      required
+                  color="black"
+                    ></v-text-field>
+
+                  </v-col>
+                </v-row>
+                <v-row class="justify-center">
+                  <v-col cols="8">
+                          <v-text-field
+                          v-model="userPwRepeat"
+                          type="password"
+                      label="비밀번호 확인"
+                 color="black"
+                    ></v-text-field>
+                    <p id="checkMsg">{{checkP}}</p>
+                  </v-col>
+                </v-row>
+                <v-row class="justify-center">
+                  <v-col cols="4">
+                    <v-btn
+                      :disabled="userPw ===null || userPw !== userPwRepeat || Trigger.Name===false||Trigger.Phone===false||Trigger.Email===false||
+                      Trigger.password===false||userAddress===null"
+                      large
+                      block
+                      
+                      @click="signup()"
+                      >회원가입</v-btn>
+
+                  </v-col>
+                </v-row> 
+              </div>
+
+            <v-toolbar flat >
+                <v-toolbar-title primary-title class="layout justify-center">
+                    <v-divider class="mt-3"></v-divider>
+                    <pre id="easy">   간편하게 시작하기   </pre>
+                    <v-divider class="mt-3"></v-divider>
+                    </v-toolbar-title>
+            </v-toolbar>
+            <v-row class="justify-center">
+              <div v-if="role !=='Admin'">
+                <v-row class="mb-3">
+                  <KakaoLogin
+                    api-key="f64eb8bdf0d591a97100dd290c91ee26"
+                    :on-success=onSuccess
+                    :on-failure=onFailure
+                    />
+
+                </v-row>
+                <v-row class="mb-3">
+                   <GoogleLogin :params="params" :renderParams="renderParams" :onSuccess="onSuccessG" :onFailure="onFailure"></GoogleLogin>  
+                </v-row>
+              </div>
+            </v-row>
+           <v-divider class="mt-6"></v-divider>
+          <v-row class="justify-center">
+              <p class="mt-3">이미 계정이 있다면 ? </p>
+              <router-link :to="{name: 'signin'}" depressed>
+                <p class="mt-3 ml-3">
+                로그인
+                </p>
+              </router-link>
+
+          </v-row>
+            
+          </v-col>
+        </v-row>
+      </v-card>    
     </v-container>
 </template>
 
@@ -278,3 +343,24 @@ export default {
     }
 }
 </script>
+
+<style>
+@import url('https://fonts.googleapis.com/css?family=Gugi|Jua|Single+Day&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
+
+#everymung {
+    text-decoration: none;
+    font-size: 16pt;
+    font-family: 'Gugi', cursive;
+}
+
+#checkMsg{
+  color: brown;
+  font-size: 9pt;
+}
+#easy{
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: bold;
+}
+
+</style>

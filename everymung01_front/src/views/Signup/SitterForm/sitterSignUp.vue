@@ -144,40 +144,33 @@
               required
             ></v-text-field>
 
-            <VueDaumPostcode 
-            style="height: 200px; overflow: scroll;"
-            @complete="SitterVO.sitterAddress = $event.roadAddress"
-            />
-
-              <v-text-field
-              :disabled="SitterVO.sitterAddress === null"
-              v-model="SitterVO.sitterAddress"
-              label="상세주소(건물명,층)"
-              required
-            ></v-text-field>
-            <br>
-            <v-card max-width="150" disabled outlined>2/3 페이지</v-card>
-            <v-progress-linear value="60"></v-progress-linear>
-            <br>
-            <p>*활동가능한 요일을 모두 선택해주세요.(*돌봄 시간은 10시~21시 사이에 이뤄집니다)</p>
-            <v-row justify="space-around">
-              <v-checkbox v-model="checkWorking.mon" class="mx-2" label="월요일"></v-checkbox>
-              <v-checkbox v-model="checkWorking.tue" class="mx-2" label="화요일"></v-checkbox>
-              <v-checkbox v-model="checkWorking.wed" class="mx-2" label="수요일"></v-checkbox>
-              <v-checkbox v-model="checkWorking.thu" class="mx-2" label="목요일"></v-checkbox>
-              <v-checkbox v-model="checkWorking.fri" class="mx-2" label="금요일"></v-checkbox>
-              <v-checkbox v-model="checkWorking.sat" class="mx-2" label="토요일"></v-checkbox>
-              <v-checkbox v-model="checkWorking.sun" class="mx-2" label="일요일"></v-checkbox>
-            </v-row>
-            
-            <v-textarea
-            label="*반려견 관련 업종에서 활동한 경험이 있다면 소개해주세요."
-            auto-grow
-            outlined
-            v-model="SitterVO.profile"
-            rows="4"
-            row-height="45"
-          ></v-textarea>
+          <!-- <VueDaumPostcode 
+          style="height: 200px; overflow: scroll;"
+          @complete="SitterVO.sitterAddress = $event.roadAddress"
+          />
+ -->
+    
+            <label class="ml-12">
+      시/구/동 입력
+      <GmapAutocomplete 
+      @place_changed="setPlace">
+      </GmapAutocomplete>
+      <button @click="usePlace">Add</button>
+    </label>
+    <br/>
+    <GmapMap style="width: 800px; height: 400px;" :zoom="14" :center="{lat:SitterVO.lat,lng:SitterVO.lng}">
+      <gmap-circle ref="circle" :radius="1000" :center='{lat:SitterVO.lat,lng:SitterVO.lng}' :draggable='true' :editable='true' >
+                            </gmap-circle>
+    </GmapMap>
+            <v-text-field
+            :disabled="SitterVO.sitterAddress === null"
+            v-model="SitterVO.sitterAddress"
+            label="상세주소(건물명,층)"
+            required
+          ></v-text-field>
+          <br>
+          <v-card max-width="150" disabled outlined>2/3 페이지</v-card>
+          <v-progress-linear value="60"></v-progress-linear>
           <br>
           <v-card>
           <p>신원확인은 필수입니다.신분증 사본을 반드시 첨부해주세요</p>
@@ -224,6 +217,10 @@ export default {
   
   data(){
     return{
+/////////////////////////////////////////////////////구글맵
+      place: null,
+      lsm:{lat:37.496361445796694,lng: 127.05750504049766},
+/////////////////////////////////////////////////////구글맵
       Trigger:{
         Name:false,
         Phone:false,
@@ -256,7 +253,9 @@ export default {
         sitterPhone:'',
         sitterAddress:null,
         possibleDay:'',
-      profile:'',
+        profile:'',
+        lat:37.496361445796694,
+        lng: 127.05750504049766,
       },
       //자기소개
       //
@@ -292,6 +291,18 @@ export default {
     }
   },
   methods:{
+    setPlace(place) {
+      this.place=place
+      
+    },
+    usePlace(place) {
+      this.SitterVO.sitterAddress = this.place.formatted_address
+      if (this.place) {
+        this.SitterVO.lat=this.place.geometry.location.lat()
+        this.SitterVO.lng=this.place.geometry.location.lng()
+        this.place = null;
+      }
+    },
     submit($router){
       let trigger=null
        let sitterEmail = this.SitterVO.sitterEmail
