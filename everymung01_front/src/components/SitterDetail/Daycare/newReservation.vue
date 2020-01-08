@@ -21,6 +21,7 @@
                             label="반려동물 선택"
                             id="usersPets"
                             return-object
+                            :clearable="true"
                         ></v-select>
                     </v-col>
                 </v-row>
