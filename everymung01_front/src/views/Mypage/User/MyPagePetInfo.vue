@@ -5,10 +5,13 @@
           <side-bar/>   
         </v-col>
         <v-col cols="9">
-            
             <v-row>
+             <v-btn router :to="{name:'myPetDetail'}"> 반려견 추가하기 </v-btn>
+            </v-row>
+            
                 <v-card
-                width="100%"
+                class="mb-4 mt-2"
+                width="70%"
                 outlined
                 v-for="(userPet,index) in userPetList"
                 :key="index"
@@ -20,19 +23,21 @@
                     >
                         <v-img
                         :src="tempImg[index]"
-                            > </v-img>
+                        > </v-img>
                     </v-list-item-avatar>
-                    <v-list-item-content>
-                        <p class="body-2">반려견이름: {{userPet.petName}}</p>
+                    <v-list-item-content class="mx-auto">
+                        <p class="font-weight-bold">{{userPet.petName}}</p>
                         <br><br>
                         <p class="font-weigth-bold"
-                        v-if="userPet.petGender === '1'"
-                        > ( {{userPet.dogBreed}},수컷,만{{userPet.petAge}}살 ) </p>
+                            v-if="userPet.petGender === '1'"
+                        > 
+                        ( {{userPet.dogBreed}},수컷,만{{userPet.petAge}}살 ) 
+                        </p>
                         <p v-else>
                           ( {{userPet.dogBreed}}, 암컷 ,만{{userPet.petAge}}살 ) 
                         </p>
                         <v-col class="text-reft">
-                        <v-btn text large color="primary"
+                        <v-btn large color
                         @click="itemView(userPet,index)"
                         >상세보기</v-btn>
                         </v-col>
@@ -46,11 +51,7 @@
                 </v-card>
                
 
-            </v-row>
-            <v-row>
-
-            <v-btn router :to="{name:'myPetDetail'}"> 반려견 추가하기 </v-btn>
-            </v-row>
+            
           
         </v-col>
       </v-row> 
@@ -58,8 +59,7 @@
       <v-dialog v-model="dialog"  max-width="600px">
          <!-- 상세보기 다이얼로그  -->
          
-          <v-card
-          >
+          <v-card>
            
             
               <v-card-title>

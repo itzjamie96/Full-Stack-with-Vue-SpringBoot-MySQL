@@ -26,20 +26,20 @@
             </v-toolbar>
           </template>
           <template v-slot:item.action="{ item }">
-
-            
+            <!-- 유저가 환불 했을 때 예약 취소된 상태-->
+            <v-icon
+              v-if="item.paymentStatus==true && item.refundStatus==true"
+              small
+              class="mr-2"
+            >
+              [예약취소]
+            </v-icon>
             <v-icon
               small
               class="mr-2"
               @click="showDetail(item)"
             >
               search
-            </v-icon>
-            <v-icon
-              small
-              @click="deleteItem(item)"
-            >
-              delete
             </v-icon>
           </template>
         </v-data-table>
@@ -63,7 +63,7 @@
 
         <template v-slot:top>
             <v-toolbar flat color="white">
-              <v-toolbar-title>예약 내역 homesitter</v-toolbar-title>
+              <v-toolbar-title>예약 내역</v-toolbar-title>
               <v-divider
                 class="mx-4"
                 inset
@@ -76,11 +76,42 @@
 
             
             <v-icon
+              v-if="item.paymentStatus==false && item.refundStatus==false"
               small
               class="mr-2"
               @click="approval(item)"
             >
-              승인하기
+              [승인]
+            </v-icon>
+            <v-icon
+              v-if="item.paymentStatus==false && item.refundStatus==false"
+              small
+              class="mr-2"
+              @click="refund(item)"
+            >
+              [거절]
+            </v-icon>
+            <v-icon
+              v-if="item.paymentStatus==true && item.refundStatus==false"
+              small
+              class="mr-2"
+            >
+              [승인완료]
+            </v-icon>
+            <v-icon
+              v-if="item.paymentStatus==false && item.refundStatus==true"
+              small
+              class="mr-2"
+            >
+              [환불완료]
+            </v-icon>
+            <!-- 유저가 환불 했을 때 예약 취소된 상태-->
+            <v-icon
+              v-if="item.paymentStatus==true && item.refundStatus==true"
+              small
+              class="mr-2"
+            >
+              [예약취소]
             </v-icon>
             <v-icon
               small
@@ -88,12 +119,6 @@
               @click="showDetail(item)"
             >
               search
-            </v-icon>
-            <v-icon
-              small
-              @click="deleteItem(item)"
-            >
-              delete
             </v-icon>
           </template>
         </v-data-table>
@@ -121,9 +146,9 @@ import NavBar from '@/components/sitterNavigation.vue'
           { text: '예약 날짜', value: 'startTime' },
           { text: '예약 날짜', value: 'endTime' },
           { text: '금액', value: 'amount' },
-          { text: '결제 상태', value: 'paymentStatus' },
-          { text: 'reviewStatus', value: 'reviewStatus' },
-          { text: 'refundStatus', value: 'refundStatus' },
+          // { text: '결제 상태', value: 'paymentStatus' },
+          // { text: 'reviewStatus', value: 'reviewStatus' },
+          // { text: 'refundStatus', value: 'refundStatus' },
           { text: 'Actions', value: 'action', sortable: false },
         ],
         paylist: [
@@ -166,6 +191,32 @@ import NavBar from '@/components/sitterNavigation.vue'
         const paymentNo = item.paymentNo
         this.$router.push({path: '/sMyPage/sitterReservationDetail/' + paymentNo})
       },
+
+      approval(item){
+        const paymentNo = item.paymentNo
+        console.log(paymentNo)
+        axios.get(`http://localhost:1234/updatePaymentStatus/${paymentNo}`)
+          .then(res => {
+            console.log(res)
+            // window.location.reload()
+            this.$router.push({path: '/sMyPage/calendar'})
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      },
+
+      refund(item) {
+        axios
+          .post('http://localhost:1234/refund',item)
+          .then(res => {
+            console.log(res);
+            window.location.reload()
+          })
+          .catch(err => {
+            console.log(err);
+          })
+      }
       
     }
   }

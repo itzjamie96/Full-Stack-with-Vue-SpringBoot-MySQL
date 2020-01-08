@@ -147,6 +147,7 @@ export default {
 
        startKakaoPay() {
            console.log(this.paymentVO)
+           this.paymentVO.amount = this.totalDays
            Axios
             .post('http://localhost:1234/kakaoPay',this.paymentVO)
             .then(res => {

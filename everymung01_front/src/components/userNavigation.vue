@@ -8,7 +8,6 @@
           <v-list-item class="ml-6 mt-3">
             <v-list-item-avatar
               size="100"
-              color="green"
             >
             <v-img
             :src="'http://localhost:1234/download/' + this.userInfo.userProfile"
