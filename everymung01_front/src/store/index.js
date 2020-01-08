@@ -47,6 +47,7 @@ export default new Vuex.Store({
         forPet: [],
 
         areaList: [ //서울 구 리스트 
+            {name: ''},
             { name: '종로구' }, { name: '중구' }, { name: '용산구' }, { name: '성동구' }, { name: '광진구' },
             { name: '동대문구' }, { name: '중랑구' }, { name: '성북구' }, { name: '강북구' }, { name: '도봉구' },
             { name: '노원구' }, { name: '은평구' }, { name: '서대문구' }, { name: '마포구' }, { name: '양천구' },

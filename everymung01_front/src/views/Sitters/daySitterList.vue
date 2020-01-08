@@ -31,10 +31,12 @@
             item-text="name"
             item-value="name"
             attach
-            chips
+            
             label="지역을 선택해주세요"
             prepend-icon="place"
             id="area"
+            
+
         ></v-select>
       </v-col>
     </v-row>
@@ -112,6 +114,17 @@ export default {
     },
 
     methods:{
+    afterselection(name){
+      console.log(name);
+      this.$nextTick(() => {
+        this.area = ""  
+      })
+    },
+    clearOneField() {
+  this.$nextTick(() => {
+        this.area = null  
+      })
+},
       initialize(){//DB와 연동
         axios.get('http://localhost:1234/showDaySitters')
           .then(res => {
