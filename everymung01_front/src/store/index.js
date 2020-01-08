@@ -238,7 +238,7 @@ export default new Vuex.Store({
                     if (res.data.userEmail != null) {
                         localStorage.setItem("email", loginobj.email)
                         commit('loginSuccess', res.data)
-                        router.push({ name: 'uMyPage' })
+                        router.push({ name: 'UserReservationList' })
                             //로그인 성공 시 마이페이지로 이동시켜 줌
                     } else {
                         commit('loginError')
