@@ -114,17 +114,7 @@ export default {
     },
 
     methods:{
-    afterselection(name){
-      console.log(name);
-      this.$nextTick(() => {
-        this.area = ""  
-      })
-    },
-    clearOneField() {
-  this.$nextTick(() => {
-        this.area = null  
-      })
-},
+
       initialize(){//DB와 연동
         axios.get('http://localhost:1234/showDaySitters')
           .then(res => {
