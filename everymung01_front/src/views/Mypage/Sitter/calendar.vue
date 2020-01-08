@@ -1,15 +1,30 @@
 <template>
-<v-container>
-  <full-calendar :events="schedule" locale="ko"
-      @eventClick="showDetail"
-  >
-  </full-calendar> 
+<div v-if="this.userInfo.sittingType==='home'">
+<v-container fluid="" class="fill-height">
+  <v-row class="fill-height">
+    <v-col cols="3">
+      <side-bar/>   
+    </v-col>
+
+    <v-col cols="9">
+      <router-link :to="{path:'/sMyPage/sitterReservationList'}" exact><h3>리스트보기</h3></router-link>
+      <h3 @click="$router.push({path: '/sMyPage/sitterReservationList'})">리스트보기</h3>
+      <v-btn @click="$router.push({path: '/sMyPage/sitterReservationList'})">리스트보기</v-btn>
+      <full-calendar :events="schedule" locale="ko"
+        @eventClick="showDetail"
+      >
+      </full-calendar> 
+    </v-col>
+  </v-row>
+
 </v-container>
+</div>
 </template>
 
 <script>
 import {mapState,mapActions} from "vuex"
 import axios from "axios"
+import NavBar from '@/components/sitterNavigation.vue'
 
 export default {
 
@@ -21,7 +36,8 @@ export default {
 	  }
   },
   components : {
-	'full-calendar': require('vue-fullcalendar')	
+  'full-calendar': require('vue-fullcalendar')	,
+  'side-bar' : NavBar
   },
 
       created(){ //현재 컴포넌트가 생성되자 마자 initialize를 수행하라는 의미
