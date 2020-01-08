@@ -1,20 +1,20 @@
 <template>
-  <v-container fluid="" class="fill-height">
-    <v-row class="fill-height">
-        <v-col cols="3">
+  <v-container class="pt-12">
+    <v-row >
+        <v-col cols="3"> 
           <side-bar/>   
         </v-col>
 
-        <v-col cols="9">
+        <v-col cols="8" class="ml-12">
           <v-data-table
-          :headers="headers"
-          :items="paylist"
-          class="elevation-1"
+            :headers="headers"
+            :items="paylist"
+            class="elevation-1"
         >
 
         <template v-slot:top>
             <v-toolbar flat color="white">
-              <v-toolbar-title>예약 내역</v-toolbar-title>
+              <p id="text" class="mt-3">예약 내역</p>
               <v-divider
                 class="mx-4"
                 inset
@@ -186,3 +186,25 @@ import NavBar from '@/components/userNavigation.vue'
 
   
 </script>
+
+<style>
+@font-face { 
+  font-family: 'HangeulNuri-Bold'; 
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_three@1.0/HangeulNuri-Bold.woff') format('woff'); 
+  font-weight: normal; 
+  font-style: normal; }
+
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
+
+#text{
+    font-size: 19pt;
+    font-weight: bold;
+    color: rgb(239, 83, 80);
+    font-family: 'HangeulNuri-Bold';  
+}
+
+.v-data-table th{
+  font-size: 0.9em;
+}
+
+</style>
