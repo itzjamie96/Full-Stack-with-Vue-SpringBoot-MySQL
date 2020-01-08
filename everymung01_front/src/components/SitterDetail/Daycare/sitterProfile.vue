@@ -91,7 +91,10 @@ export default {
        sitterNo() {
            return this.$route.params.sitterNo
        },
-    
+        SitterAdd(){
+            let lsm = String(this.sitterObj.sitterAddress).slice(0,7)
+            return lsm
+        }
    },
    methods: {
        initialize() {

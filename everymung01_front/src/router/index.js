@@ -97,10 +97,10 @@ const routes = [{
             import ( /* webpackChunkName: "about" */ '../views/Admin/Admin-Payment.vue'),
     },
     {
-        path: '/adminOneday',
-        name: 'adminoneday',
+        path: '/adminHomeCare',
+        name: 'adminhomecare',
         component: () =>
-            import ('../views/Admin/reserv/Oneday.vue'),
+            import ('../views/Admin/reserv/HomeCare.vue'),
     },
     {
         path: '/adminDaycare',
@@ -326,11 +326,11 @@ const routes = [{
         component: () =>
             import ( /* webpackChunkName: "SitterProfilePage" */ '../views/Sitters/sitterProfilePage.vue')
     },
-    { //캘린더 테스트
-        path: '/calendar',
-        name: 'calendar',
+    { //캘린더 - 시터스케줄
+        path: '/sMyPage/calendar',
+        name: 'Calendar',
         component: () =>
-            import ( /* webpackChunkName: "SitterProfilePage" */ '../views/Mypage/Sitter/calendar.vue')
+            import ( /* webpackChunkName: "Calendar" */ '../views/Mypage/Sitter/calendar.vue')
     },
 
 

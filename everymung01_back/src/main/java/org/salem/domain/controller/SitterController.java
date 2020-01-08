@@ -151,7 +151,7 @@ public class SitterController {
 	//승인 안된 시터 지원자 확인
 	@RequestMapping("/falseAllSitters")
 	public List<SitterVO> falseAllSitters() {
-		return (List<SitterVO>) sitterMapper.falseAllSitters();
+		return sitterMapper.falseAllSitters();
 	}
 	
 
@@ -160,12 +160,11 @@ public class SitterController {
 		SitterVO lsm = sitterMapper.showSitterDetail(sitterNo);
 		fileService.deleteO(lsm.getQualificationCheck());
 		fileService.deleteO(lsm.getIdentityCheck());
-		try {
-			formMail.sendEmail(lsm.getSitterEmail());
-			System.out.println(lsm.getSitterEmail());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		/*
+		 * try { formMail.sendEmail(lsm.getSitterEmail());
+		 * System.out.println(lsm.getSitterEmail()); } catch (Exception e) {
+		 * e.printStackTrace(); }
+		 */
 		return sitterMapper.deleteSitter(sitterNo);
 		
 	}

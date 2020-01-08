@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -64,8 +65,20 @@ public class BoardController {
 	
 	//관리자페이지 삭제버튼
 	@PostMapping("/deleteBoardByMngr") // {id}
-	public int deleteBoardByMngr(@RequestBody BoardVO boardVo) { // URI의 일부를 변수로 전달할 수 있다 //String id = "id" // @PathVariable
-		return mapper.deleteBoardByMngr(boardVo.getBoardNo());
+	public void deleteBoardByMngr(@RequestBody BoardVO boardVo) { // URI의 일부를 변수로 전달할 수 있다 //String id = "id" // @PathVariable
+		System.out.println(boardVo);
+		if(boardVo.getUserNo() == 0) {
+			 mapper.deleteReply(boardVo.getBoardNo());
+			 mapper.updateStatus(boardVo);
+		}else
+			 mapper.deleteBoardByMngr(boardVo.getGroupNo());
+	}
+	
+	//관리자페이지 답글수정
+	@PostMapping("/updateBoardByMngr")
+	public int updateBoardByMngr(@RequestBody BoardVO boardVo) {
+		return mapper.updateBoardByMngr(boardVo);
+
 	}
 
 	//관리자_답글달기
@@ -87,6 +100,13 @@ public class BoardController {
 		
 		return mapper.showAdminBoards();
 	}
+	
+	//관리자 페이지_미답변 count
+	@RequestMapping("/falseBoard")
+	public List<BoardVO> falseBoard() {
+		return mapper.falseBoard();
+	}
+		
 	
 	//조회수 처리
 	@PostMapping("/updateHits")

@@ -300,7 +300,7 @@ export default {
           field: 'amount',
         },
         {
-          label: '시터타입',
+          label: '시터종류',
           field: 'sittingType',
         },
         {
@@ -348,7 +348,7 @@ export default {
           
           })
           .catch(err => {
-            alert("backand(showAllPayment) 에러 확인")
+            alert(err+"\n"+"Admin-Payment(selectAll) 에러")
           })
      
   },
@@ -362,7 +362,7 @@ export default {
               this.dialog=false
               this.rows.splice(idx, 1)
       }).catch(err =>{
-        alert("backend(delete) 에러 확인!")
+        alert(err+"\n"+"Admin-Payment(delet) 에러")
       })
 
   },
@@ -374,7 +374,7 @@ export default {
                 this.selectAll();
               }) 
               .catch(err => { 
-                alert("backend(update) 에러 확인!")
+                alert(err+"\n"+"Admin-Payment(update) 에러")
 
               });
   },
@@ -385,7 +385,7 @@ export default {
                 this.time=this.paymentdetail.endTime.substr(11,2)-this.paymentdetail.startTime.substr(11,2)
               }) 
               .catch(err => { 
-                alert("backend(update) 에러 확인!")
+                alert(err+"\n"+"Admin-Payment(paymentDetail) 에러")
 
               });
 

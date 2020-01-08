@@ -50,9 +50,7 @@
   </v-col>
 
 </v-row>
-
-
-  <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+  <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="5">
     <v-card
       class="mb-4 mt-2 mx-auto"
       max-width="85%"
@@ -74,7 +72,7 @@
       <v-list-item-content class="mx-auto">
         <p class="body-2">{{sitter.sittingType}} SITTER / {{sitter.sitterNo}}</p>
         <p class="font-weight-bold ">{{sitter.sitterName}}</p> 
-        <p>{{sitter.sitterAddress.slice(0,7)}}</p>
+        <p>{{sitter.sitterAddress.slice(4,15)}}</p>
         <p class="headline">{{sitter.profileTitle}}</p>
       </v-list-item-content>
 
@@ -140,16 +138,6 @@ export default {
 
         this.$router.push({path: '/daysitters/' + sitterNo})
       },
-      // searchAddress(area){
-      //   console.log(area)
-      //   axios.get(`http://localhost:1234/showSitterByAddress/daySitter/${area}`)
-      //     .then(res => {
-      //       this.sitterList = res.data
-      //       console.log(res);
-      //     }).catch(err => {
-      //       console.log(err);
-      //     })
-      // },
       searchDate(date){
         console.log(date);
         console.log("searchdate")
@@ -166,16 +154,8 @@ export default {
         this.busy = true;
         axios.get('http://localhost:1234/showDaySitters')
           .then(res => {
-            // this.sitterList=res.data 
-            //console.log(res);
-            // this.sitterList.push(res.data);
-            let items = [];
-            // for(let i=0, j=this.limit; i<j; i++){
-            //   items.push({});
-            // }
             const append = res.data.slice(this.sitterList.length,this.sitterList.length + this.limit )         
             this.sitterList = this.sitterList.concat(append);
-            // this.sitterList = this.sitterList.concat(items);
             this.busy=false;
           })
           .catch(err => {

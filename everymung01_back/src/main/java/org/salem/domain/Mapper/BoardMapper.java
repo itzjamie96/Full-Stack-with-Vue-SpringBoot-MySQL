@@ -37,20 +37,34 @@ public interface BoardMapper {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	//관리자_답글_Create(userNo에 관리자번호를 집어넣어야되는데, 관리자번호가 변경될 수 있기 때문에, 최종점검 때 해당값을 점검해줘야함)
-	@Insert("INSERT INTO board(userNo,title, content, boardDate, groupNo, depth, hits,status)"
-			+ "VALUES( 0, #{title}, #{content}, CURRENT_TIMESTAMP, #{groupNo}, 1, 0,true)") // depth에 '1'로 하드코딩함. 
+	@Insert("INSERT INTO board(userNo,title, content, boardDate, groupNo, depth, hits)"
+			+ "VALUES( 0, #{title}, #{content}, CURRENT_TIMESTAMP, #{groupNo}, 1, 0)") // depth에 '1'로 하드코딩함. 
 	public int insertReply(BoardVO boardVo);
+	
+	//관리자_답글_수정
+	@Update("update board set content=#{content} where boardNo=#{boardNo}")
+	public int updateBoardByMngr(BoardVO boardVo);
 
-	//관리자_Read
+	//관리자_전체조회_Read
 	@Select("select * from board,users where board.userNo=users.userNo order by status ASC,groupNo DESC, depth ASC, boardDate DESC")
 	public List<BoardVO> showAdminBoards();
 	
 	//관리자_원글_Update_status를 true로 수정 
-	@Update("Update board set status=#{status} where boardNo=#{boardNo}")
+	@Update("Update board set status=#{status} where groupNo=#{groupNo}")
 	public int updateStatus(BoardVO boardVo);
 	
-	//관리자_Delete (관리자페이지에서 삭제버튼 클릭시 수행되는 쿼리문)
+	//관리자_유저게시글_Delete (관리자페이지에서 삭제버튼 클릭시 수행되는 쿼리문)
+	@Delete("delete from board where GroupNo=#{groupNo}")
+	public int deleteBoardByMngr(int groupNo);
+	
+	//관리자_댓글_Delete
 	@Delete("delete from board where boardNo=#{boardNo}")
-	public int deleteBoardByMngr(int boardNo);	
+	public int deleteReply(int boardNo);
+	
+	//관리자_댓글_count
+	@Select("select * from board where status=false")
+	public List<BoardVO> falseBoard();
+	
+	
 		
 }

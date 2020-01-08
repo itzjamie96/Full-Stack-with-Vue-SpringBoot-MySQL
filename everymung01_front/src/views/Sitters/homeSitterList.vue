@@ -22,7 +22,8 @@
   <v-col cols="5"></v-col>
 
 </v-row>
- <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
+
+ <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="5">
   <v-card
     class="mb-4 mt-2 mx-auto"
     max-width="85%"
@@ -71,11 +72,15 @@ export default {
       return {
         sitterList: [ //데이터베이스에서 받은 객체들이 들어갈 객체배열
         ],
-        area: ''
+        area: '',
+        busy: false, //
+        limit: 5, //
+        resultList: [] //
       }
     },
     created(){ //현재 컴포넌트가 생성되자 마자 initialize를 수행하라는 의미
-      this.initialize()
+      // this.initialize(),
+      this.loadMore();
     },
 
     computed: {
@@ -109,6 +114,21 @@ export default {
           }).catch(err => {
             console.log(err);
           })
+      },
+      loadMore() {
+        if(! this.busy){
+        this.busy = true;
+        axios.get('http://localhost:1234/showHomeSitters')
+          .then(res => {
+            const append = res.data.slice(this.sitterList.length,this.sitterList.length + this.limit )         
+            this.sitterList = this.sitterList.concat(append);
+            this.busy=false;
+          })
+          .catch(err => {
+            console.log(err);
+            this.busy=false;
+          })
+        }
       }
 
     }

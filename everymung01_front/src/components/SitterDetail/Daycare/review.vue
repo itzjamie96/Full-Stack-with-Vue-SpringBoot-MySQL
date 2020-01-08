@@ -1,6 +1,7 @@
 <template>
     <div>
-        <div class="ml-9 mt-2" id="review">펫시터 후기 {{reivewList.length}} 개</div>
+      <v-divider class="mx-6"></v-divider>
+        <div class="ml-9 mt-2" id="review">펫시터 후기 {{reviewList.length}} 개</div>
         <v-card
             class="mx-auto mb-10"
             max-width="91%"   
@@ -11,7 +12,7 @@
                 class="mb-4 mt-2"
                 max-width="100%"
                 outlined
-                v-for="review in reivewList"
+                v-for="review in reviews"
                 :key="review.id"
             >
             <div>
@@ -29,8 +30,11 @@
                 ></v-rating>
             </div>
             <div class="ml-3 mt-2">{{review.reviewContent}}</div>
-
             </v-card>
+              <v-btn 
+                @click="appendReviews()"
+                :disabled="this.dataFull==true"
+                >후기 더보기 ({{reviews.length}} / {{totalReviews}}) </v-btn>
         </v-container>
 
         <!-- 예약한 사람만 후기 작성창 볼 수 있음 -->
@@ -81,7 +85,7 @@ export default {
     data () {
       return {
         paramPaymentNo: 0,
-        reivewList: [ //데이터베이스에서 받은 객체들이 들어갈 객체배열
+        reviewList: [ //리뷰리스트
         ],
         sitterInfo: [],
         reviewVO: {
@@ -91,7 +95,11 @@ export default {
             reviewDate: ''
         },
         rating: null,
-        writeCheck: 1
+        writeCheck: 1,
+        reviews: [], //출력할 리뷰 리스트
+        countReviews: 3,
+        dataFull: false, 
+        totalReviews: 0,
       }
     },
     created(){ 
@@ -122,8 +130,22 @@ export default {
       showList(){ //후기 리스트 불러오는 axios 따로 뺌
         axios.get(`http://localhost:1234/showSitterReview/${this.sitterInfo.sitterNo}`)
           .then(res => {
-            this.reivewList=res.data //객체에 DB에서 받은 데이터를 넣어줌
-            console.log(res);
+            console.log(res)
+            let data = []
+            this.reviewList=res.data //객체에 DB에서 받은 데이터를 넣어줌
+            if(this.reviewList.length<=3){
+              for(let i=0; i<this.reviewList.length; i++){
+                  data.push(res.data[i])
+                }
+              this.dataFull = true
+            }
+            else{
+                for(let i=0; i<this.countReviews; i++){
+                  data.push(res.data[i])
+                }
+            }
+            this.reviews = data
+            this.totalReviews = this.reviewList.length
           })
           .catch(err => {
             console.log(err);
@@ -141,8 +163,22 @@ export default {
           .catch(err => {
             console.log(err);
           })
+      },
 
-    },
+      appendReviews() {
+        if(this.countReviews < this.totalReviews) {
+          let nowCount = this.countReviews
+          this.countReviews += 3
+
+          const append = this.reviewList.slice(nowCount,this.countReviews)
+          this.reviews = this.reviews.concat(append)
+          if(this.countReviews>=this.totalReviews){
+            this.dataFull = true
+          }
+        }else {
+          this.dataFull = true
+        }
+      }
 
 
 
@@ -156,7 +192,6 @@ export default {
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_three@1.0/HangeulNuri-Bold.woff') format('woff'); 
   font-weight: normal; 
   font-style: normal; }
-
 #review{
     font-size: 19pt;
     font-weight: bold;
