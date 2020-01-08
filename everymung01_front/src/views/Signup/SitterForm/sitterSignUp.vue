@@ -326,10 +326,7 @@ export default {
        axios.post(`${baseURL}/signupSitter`,this.SitterVO) 
        .then(res => { 
          if(res.data == "이미 존재")
-         {this.msg=res.data
-         console.log(res.data)
-         
-         }
+         {this.msg=res.data}
          else{
 axios.post( `${baseURL}/upload-file/identityCheck/`+sitterEmail,
   formData,
@@ -347,8 +344,7 @@ axios.post( `${baseURL}/upload-file/identityCheck/`+sitterEmail,
     }
   }
 ).then(res => {
-  console.log(res.data)
-  $router.push({name:'signin'})
+  $router.push({name:'sitterSignUpFinish'})
 }).catch(error => { 
          console.log(error)
        })  
@@ -357,7 +353,7 @@ axios.post( `${baseURL}/upload-file/identityCheck/`+sitterEmail,
          console.log(error)
        })
 
-           console.log(res.data)
+          
          }
        }) 
        .catch(error => { 

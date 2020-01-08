@@ -29,9 +29,8 @@
               <v-col cols="12">
                 <v-text-field label="Title" v-model="board.title" readonly></v-text-field>
               </v-col>
-              <!-- <v-col cols="12">
-                <v-text-field label="Content" v-model="board.content" readonly></v-text-field>
-              </v-col> --> 
+              <v-col cols="12">
+              </v-col>
               <v-textarea
                 cols="12"
                 outlined
@@ -88,8 +87,11 @@ import { mapState, mapActions } from 'vuex';
 export default {
     components: {
   VueGoodTable,
+    'editor': Editor,
+    'viewer': Viewer
 },data(){
     return {
+       editorText: '',
        content:'',
        dialog: false,
        deleteAlert: false,

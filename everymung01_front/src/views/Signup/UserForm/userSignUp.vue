@@ -306,10 +306,10 @@ export default {
             UsersVO.userPw=this.userPw
             UsersVO.userAddress=this.userAddress
             UsersVO.userPhone=this.userPhone
-            console.log(UsersVO)
+            
           axios.post(`${baseURL}/signup`,UsersVO) 
        .then(res => { 
-         console.log(res.data)
+         
          if(res.data == "회원가입 완료"){
              this.isSignUpError=false
              this.isSignUp=true
