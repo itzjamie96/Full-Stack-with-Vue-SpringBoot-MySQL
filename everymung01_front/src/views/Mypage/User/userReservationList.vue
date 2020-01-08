@@ -32,7 +32,28 @@
                   v-if="(canWrite > calEndTime(item.endTime) && item.reviewStatus == false)"
                   -->
             <v-icon
-              
+              v-if="item.sittingType=='home' && item.paymentStatus==false"
+              small
+              class="mr-2"
+            >
+              승인대기
+            </v-icon>
+            <v-icon
+              v-if="item.sittingType=='home' && item.paymentStatus==true"
+              small
+              class="mr-2"
+            >
+              승인완료
+            </v-icon>
+            <v-icon
+              v-if="item.sittingType=='home' && item.refuneStatus==true"
+              small
+              class="mr-2"
+            >
+              환불완료
+            </v-icon>
+            <v-icon
+            
               small
               class="mr-2"
               @click="writeReview(item)"
@@ -45,11 +66,13 @@
               class="mr-2"
               @click="showDetail(item)"
             >
-              상세보기
+              search
             </v-icon>
+            <!-- 예약 날짜가 되기 전에만 환불 가능-->
             <v-icon
+              v-if="(canWrite < calEndTime(item.startTime) && item.refuneStatus == false)"
               small
-              @click="deleteItem(item)"
+              @click="refund(item)"
             >
               환불
             </v-icon>
@@ -107,10 +130,11 @@ import NavBar from '@/components/userNavigation.vue'
     computed: {
        ...mapState(["isLogin","userInfo"]),
 
-       canWrite(){
+      canWrite(){
         let today = new Date();
         return today
-        }
+      },
+      
     },
     
     methods:{
@@ -143,6 +167,18 @@ import NavBar from '@/components/userNavigation.vue'
         let edate = new Date(endTime);
         console.log(edate)
         return edate;
+      },
+
+      refund(item) {
+        axios
+          .post('http://localhost:1234/refund',item)
+          .then(res => {
+            console.log(res);
+            window.location.reload()
+          })
+          .catch(err => {
+            console.log(err);
+          })
       }
       
     }

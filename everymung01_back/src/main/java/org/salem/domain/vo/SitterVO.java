@@ -31,4 +31,6 @@ public class SitterVO {
 	private boolean approvalStatus;
 	private String approvalDate;
 	private String profileTitle;
+	private double lat;
+	private double lng;
 }

@@ -51,6 +51,7 @@ export default new Vuex.Store({
         forPet: [],
 
         areaList: [ //서울 구 리스트 
+            {name: ''},
             { name: '종로구' }, { name: '중구' }, { name: '용산구' }, { name: '성동구' }, { name: '광진구' },
             { name: '동대문구' }, { name: '중랑구' }, { name: '성북구' }, { name: '강북구' }, { name: '도봉구' },
             { name: '노원구' }, { name: '은평구' }, { name: '서대문구' }, { name: '마포구' }, { name: '양천구' },
@@ -155,10 +156,97 @@ export default new Vuex.Store({
 
         },
 
-        //로그인 시도
-        login({ state, commit }, loginobj) {
-            localStorage.setItem("role", state.role)
-            let role = localStorage.getItem("role")
+    //로그인 시도
+    login({state,commit},loginobj){
+      localStorage.setItem("role",state.role)
+      let role = localStorage.getItem("role")
+      
+
+      if(role === 'User'){
+        Axios.post(`${baseURL}/signinUser`,loginobj).then(res=> {
+           if(res.data.userEmail != null){
+                localStorage.setItem("email",loginobj.email)
+                  commit('loginSuccess',res.data)
+                  router.push({name:'UserReservationList'})
+                    //로그인 성공 시 마이페이지로 이동시켜 줌
+           }
+           else{
+            commit('loginError')
+           }
+           
+        }).catch(err => {
+          console.log(err)
+          commit('loginError')
+        })
+      }else if (role === 'Sitter'){
+        Axios.post(`${baseURL}/signinSitter`,loginobj).then(res=> {
+          if(res.data.sitterEmail != null && res.data.approvalStatus === true){
+            
+            localStorage.setItem("email",loginobj.email)
+                    commit('loginSuccess',res.data)
+                    
+                    router.push({name:'SitterReservationList'})
+          }
+          else if(res.data.sitterEmail != null && res.data.approvalStatus === false){
+           commit('sitterAp')
+          }
+          else{
+            commit('loginError')
+          }
+       }).catch(err => {
+         console.log(err)
+         commit('loginError')
+       })
+      }else if (role === 'Admin'){
+        Axios.post(`${baseURL}/signinAdmin`,loginobj).then(res=> {
+          if(res.data.adminId != null){
+            localStorage.setItem("email",loginobj.email)
+               commit('loginSuccess',res.data.adminId)
+               commit('triggerToggle',false)
+               router.push({name:'adminHome'})
+          }
+          else{
+           commit('loginError')
+          }
+       }).catch(err => {
+         console.log(err)
+         commit('loginError')
+       })
+      }else {
+        commit('loginError')
+      }
+      // Axios.post(`${baseURL}/signin`+role,loginobj) 
+      // .then(res => { 
+      //   console.log("qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq")
+      //   console.log(res.data)
+      //   if(res.data.userEmail != null){
+      //     console.log(res.data.userEmail)
+      //     localStorage.setItem("email",loginobj.email)
+            
+            
+      //       commit('loginSuccess',res.data)
+      //       router.push({name:'uMyPage'})
+      //         //로그인 성공 시 마이페이지로 이동시켜 줌
+      //       }
+      //       else if(res.data.sitterEmail != null){
+      //         localStorage.setItem("email",loginobj.email)
+      //         commit('loginSuccess',res.data)
+      //         router.push({name:'sMyPage'})
+      //       }
+      //       else if(res.data.adminId !== null){
+      //         localStorage.setItem("email",loginobj.email)
+      //         commit('loginSuccess',res.data.adminId)
+      //         commit('triggerToggle',false)
+      //         router.push({name:'adminHome'})
+      //       }
+      //       else{
+      //         commit('loginError')
+      //       }
+      //     }) 
+      //     .catch(error => { 
+      //       console.log(error)
+      //       commit('loginError')
+      //     })
 
 
             if (role === 'User') {
@@ -166,7 +254,7 @@ export default new Vuex.Store({
                     if (res.data.userEmail != null) {
                         localStorage.setItem("email", loginobj.email)
                         commit('loginSuccess', res.data)
-                        router.push({ name: 'uMyPage' })
+                        router.push({ name: 'UserReservationList' })
                             //로그인 성공 시 마이페이지로 이동시켜 줌
                     } else {
                         commit('loginError')

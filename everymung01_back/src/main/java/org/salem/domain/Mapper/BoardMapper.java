@@ -45,7 +45,7 @@ public interface BoardMapper {
 	@Update("update board set content=#{content} where boardNo=#{boardNo}")
 	public int updateBoardByMngr(BoardVO boardVo);
 
-	//관리자_Read
+	//관리자_전체조회_Read
 	@Select("select * from board,users where board.userNo=users.userNo order by status ASC,groupNo DESC, depth ASC, boardDate DESC")
 	public List<BoardVO> showAdminBoards();
 	

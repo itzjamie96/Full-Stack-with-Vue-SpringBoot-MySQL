@@ -91,12 +91,15 @@ public class PaymentController {
 		KakaoPayApprovalVO info = kakaopay.kakaoPayInfo(pg_token, sum);
 
 		
-		vo.setCid(info.getCid());
 		vo.setTid(info.getTid());
-		vo.setAid(info.getAid());
 		//*********************payment insert*************************
 		System.out.println("**vo** : " + vo);
-		int insert = paymentMapper.addPayment(vo);
+		int insert = 0;
+		if(vo.getSittingType().equals("daycare")) {
+			insert = paymentMapper.addPayment(vo);
+		}else {
+			insert = paymentMapper.addPaymentHome(vo);
+		}
 		System.out.println("insert : " + insert);
 		
 	
@@ -116,7 +119,6 @@ public class PaymentController {
 		
 		
 		System.out.println("approvalVO : " + info);
-//		response.sendRedirect("http://localhost:8080/");
 		return "kakaopaySuccess~~";
 		
 	}
@@ -131,8 +133,21 @@ public class PaymentController {
 		System.out.println("환불처리------"); 
 		System.out.println("tid --> " + paymentVO.getTid());
 		kakaopay.kakaoCancel(Integer.toString(paymentVO.getAmount()), paymentVO.getTid());
+		paymentMapper.updateRefundStatus(paymentVO.getPaymentNo());
 		return "refund";
 	}
+	
+	@RequestMapping("/updatePaymentStatus/{paymentNo}")
+	public int updatePaymentStatus(@PathVariable int paymentNo) {
+		System.out.println("payment update");
+		return paymentMapper.updatePaymentStatus(paymentNo);
+	}
+	
+	@RequestMapping("/showPaymentCalendar/{sitterNo}")
+	public List<PaymentVO> showPaymentCalendar(@PathVariable int sitterNo){ //시터예약리스트-캘린더
+		return paymentMapper.showPaymentCalendar(sitterNo);
+	}
+	
 	
 	
 }

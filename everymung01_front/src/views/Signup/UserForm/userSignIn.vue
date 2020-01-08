@@ -4,23 +4,24 @@
         <v-layout align-center row wrap>
             <v-flex xs12>
               <v-btn-toggle
-              v-model="$store.state.role"
-          tile
-          color="deep-purple accent-3"
-          group
-        >
-          <v-btn @click="_roles('User')" value="User">
-            일반
-          </v-btn>
-
-          <v-btn @click="_roles('Sitter')" value="Sitter">
-            시터
-          </v-btn>
-
-          <v-btn @click="_roles('Admin')" value="Admin">
-            운영자
-          </v-btn>
-        </v-btn-toggle>
+                v-model="$store.state.role"
+                tile
+                color="deep-purple accent-3"
+                group
+                id="togg"
+              >
+                <v-btn @click="_roles('User')" value="User" id="reg">
+                  일반
+                </v-btn>
+                <v-divider vertical inset></v-divider>
+                <v-btn @click="_roles('Sitter')" value="Sitter" id="sit">
+                  시터
+                </v-btn>
+                <v-divider vertical inset></v-divider>
+                <v-btn @click="_roles('Admin')" value="Admin" id="ad">
+                  운영자
+                </v-btn>
+              </v-btn-toggle>
                 <v-alert
                 :value="sitterApp"
                 type="error"
@@ -31,7 +32,7 @@
                 :value="isLoginError"
                 type="error"
                 >
-                아이디와 비번을 확인하세요
+                이메일과 비밀번호를 확인하세요
                 </v-alert>
                 <v-alert
                 class="mb-3"
@@ -104,60 +105,83 @@
 
 
 <!-- -->
-    <v-toolbar flat>
-        
-    <v-toolbar-title primary-title class="layout justify-center"><i class="fas fa-paw"></i><b>에브리멍</b></v-toolbar-title>
-    </v-toolbar>
-    
-    <div class="pa-3">
-                <v-text-field
-                v-model="email"
-                :rules="emailRules"
-            label="이메일 입력"
-            required
-          ></v-text-field>
-                <v-text-field
-                v-model="password"
-                type="password"
-                :rules="passwordRules"
-            label="패스워드 입력"
-            required
-          ></v-text-field>
-          <!-- :disabled="email.match(/.+@.+\..+/)===null || String(password).length<6" -->
-          <v-btn
-          
-          depressed 
+ <v-toolbar flat>
+  <v-toolbar-title primary-title class="layout justify-center">
+    <div>
+      <div class="d-inline">
+        <i class="fas fa-paw fa-1x"></i>
+    </div>
+    <div class="d-inline" id="everymung">에브리멍</div>
+    </div>                  
+  </v-toolbar-title>
+</v-toolbar>
+
+<v-row class="justify-center">
+  <v-col cols="8">
+    <v-text-field
+      v-model="email"
+      :rules="emailRules"
+      label="이메일 입력"
+      required
+      color="black"
+    ></v-text-field>
+  </v-col>
+</v-row>
+<v-row class="justify-center">
+  <v-col cols="8">
+    <v-text-field
+      v-model="password"
+      type="password"
+      :rules="passwordRules"
+      label="패스워드 입력"
+      required
+      color="black"
+    ></v-text-field>
+<!-- :disabled="email.match(/.+@.+\..+/)===null || String(password).length<6" -->
+  </v-col>
+</v-row>
+
+<v-row class="justify-center">
+  <v-col cols="8">
+          <v-btn 
           large
           block
-          color="primary"
           @click="login({email:email,
           password:password})"
           >로그인</v-btn>
-          
-    </div>
 
-<v-toolbar flat v-if="role !=='Admin'">
-    <v-toolbar-title primary-title class="layout justify-center">
-        <v-divider class="mt-3"></v-divider>
-        <pre>   간편하게 시작하기   </pre>
-        <v-divider class="mt-3"></v-divider>
-        </v-toolbar-title>
-    </v-toolbar>
-    <div class="text-xs-center pl-5 ml-5 pb-5" v-if="role !=='Admin'">
-    <KakaoLogin
-      api-key="f64eb8bdf0d591a97100dd290c91ee26"
-      :on-success=onSuccess
-      :on-failure=onFailure
-      />
-    <GoogleLogin :params="params" :renderParams="renderParams" :onSuccess="onSuccessG" :onFailure="onFailure"></GoogleLogin>
-    </div>
+  </v-col>
+</v-row>
+
+            <v-toolbar flat v-if="role !=='Admin'">
+                <v-toolbar-title primary-title class="layout justify-center">
+                    <v-divider class="mt-3"></v-divider>
+                    <pre id="easy">   간편하게 시작하기   </pre>
+                    <v-divider class="mt-3"></v-divider>
+                    </v-toolbar-title>
+            </v-toolbar>
+            <v-row class="justify-center">
+              <div v-if="role !=='Admin'">
+                <v-row class="mb-3">
+                  <KakaoLogin
+                    api-key="f64eb8bdf0d591a97100dd290c91ee26"
+                    :on-success=onSuccess
+                    :on-failure=onFailure
+                    />
+
+                </v-row>
+                <v-row class="mb-3">
+                   <GoogleLogin :params="params" :renderParams="renderParams" :onSuccess="onSuccessG" :onFailure="onFailure"></GoogleLogin>  
+                </v-row>
+              </div>
+            </v-row>
            <v-divider class="mx-5"></v-divider>
-<div class="layout justify-center" v-if="role !=='Admin'">
-    <v-btn color="white" @click="dialogId=true" depressed>아이디 찾기</v-btn>
+<div class="layout justify-center" v-if="role !=='Admin'" id="test">
+    <v-btn @click="dialogId=true" depressed id="id" text>아이디 찾기</v-btn>
     <v-divider vertical class="my-2"></v-divider>
-    <v-btn color="white" @click="dialogPw=true" depressed>비밀번호 찾기</v-btn>
+    <v-btn text @click="dialogPw=true" depressed id="pw">비밀번호 찾기</v-btn>
     <v-divider vertical class="my-2"></v-divider>
-    <v-btn color="white" @click="$router.push({name : 'signup'})" depressed>회원가입</v-btn>
+    <v-btn text @click="$router.push({name : 'signup'})" depressed id="signup">회원가입</v-btn>
 </div>
 
           </v-card>
@@ -312,3 +336,25 @@ export default {
     }
 }
 </script>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css?family=Gugi|Jua|Single+Day&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
+
+#reg, #sit, #ad{
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: bold;
+}
+
+#everymung {
+    text-decoration: none;
+    font-size: 18pt;
+    font-family: 'Gugi', cursive;
+}
+#easy{
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: bold;
+}
+
+</style>

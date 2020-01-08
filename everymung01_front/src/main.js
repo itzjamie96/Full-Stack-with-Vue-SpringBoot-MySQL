@@ -11,6 +11,19 @@ import VueLocalStorage from 'vue-localstorage'
 import PubNubVue from 'pubnub-vue';
 import '@mdi/font/css/materialdesignicons.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import fullCalendar from 'vue-fullcalendar'
+import * as VueGoogleMaps from "vue2-google-maps";
+
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: "AIzaSyAJ9a1JG4Adnk_2xnf51QdCx_JKi_5L60g",
+    libraries: "places" // necessary for places input
+  }
+});
+Vue.component('full-calendar', fullCalendar)
+
+var infiniteScroll = require('vue-infinite-scroll'); 
+Vue.use(infiniteScroll)
 
 const publish_Key = 'pub-c-c191e7ba-affc-4757-a3be-82fc09a96c50';
 const subscribe_Key = 'sub-c-04c7ffc2-2b82-11ea-a5fd-f6d34a0dd71d';
@@ -84,6 +97,7 @@ Vue.filter('formatDate', function(value) {
         router,
         store,
         vuetify,
+        created,
         beforeCreate() {
             this.$store.dispatch("lsm")
         },

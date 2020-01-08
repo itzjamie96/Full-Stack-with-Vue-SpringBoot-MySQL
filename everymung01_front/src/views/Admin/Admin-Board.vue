@@ -114,7 +114,6 @@ export default {
         {
           label: '제목',
           field: 'title',
-
         },
         {
           label: '날짜',
@@ -140,7 +139,7 @@ export default {
   },
   methods: {
     ...mapActions(['boardInfo']),
-
+    
     onRowClick(params) {
       this.dialog=true
       this.board.boardNo = params.row.boardNo

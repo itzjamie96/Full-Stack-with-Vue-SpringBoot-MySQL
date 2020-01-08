@@ -78,6 +78,7 @@ public class BoardController {
 	@PostMapping("/updateBoardByMngr")
 	public int updateBoardByMngr(@RequestBody BoardVO boardVo) {
 		return mapper.updateBoardByMngr(boardVo);
+
 	}
 
 	//관리자_답글달기

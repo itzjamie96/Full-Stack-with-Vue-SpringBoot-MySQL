@@ -112,16 +112,28 @@ export default {
 
 <style>
 @import url('https://fonts.googleapis.com/css?family=Gugi|Jua|Single+Day&display=swap');
+@font-face { 
+  font-family: 'S-CoreDream-8Heavy'; 
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-8Heavy.woff') format('woff'); 
+  font-weight: normal; 
+  font-style: normal; 
+}
+@font-face { 
+  font-family: 'HangeulNuri-Bold'; 
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_three@1.0/HangeulNuri-Bold.woff') format('woff'); 
+  font-weight: normal; 
+  font-style: normal; }
 
 #homebtn{
     text-decoration: none;
-    font-size: 17pt;
+    font-size: 19pt;
     font-family: 'Gugi', cursive;
 
 }
 
 .v-btn__content{
-  font-size: 12pt;
+  font-size: 14pt;
+  /* font-family: 'HangeulNuri-Bold';  */
 }
 
 </style>

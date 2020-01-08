@@ -89,7 +89,7 @@
 	<select id="showSitterPayment" resultType="PaymentVO" parameterType="int">
 		SELECT pay.paymentNo, s.sitterNo, s.sitterName, s.sitterPhone, s.sitterAddress, 
 				u.userNo, u.userName, u.userAddress, pay.startTime, pay.endTime, pay.request, 
-				pay.paymentMethod, pay.amount, pay.paymentStatus , pay.refundStatus, pay.reviewStatus, pay.paymentDate
+				pay.paymentMethod, pay.amount, pay.paymentStatus , pay.refundStatus, pay.reviewStatus, pay.paymentDate, pay.tid
 		FROM USERS u
 		INNER JOIN PET p ON p.userNo = u.userNo
 		INNER JOIN reservation r ON p.petNo = r.petNo
@@ -99,5 +99,41 @@
         GROUP BY pay.paymentNo
         ORDER BY pay.paymentNo DESC
 	</select>
+	
+	<update id="updateRefundStatus" parameterType="int">
+		UPDATE payment
+		SET refundStatus = 1
+		WHERE paymentNo = #{paymentNo}
+	</update>
+	
+	<insert id="addPaymentHome" parameterType="PaymentVO">
+		INSERT INTO payment (sitterNo, startTime, endTime, request,  
+							paymentStatus, amount, paymentDate, paymentMethod, refundStatus, reviewStatus, tid)
+		VALUES (#{sitterNo}, #{startTime}, #{endTime}, #{request}, 
+				0, #{amount}, sysdate(), 'kakaopay', 0, 0, #{tid})
+	</insert>
+	
+	<update id="updatePaymentStatus" parameterType="int">
+		UPDATE payment
+		SET paymentStatus = 1
+		WHERE paymentNo = #{paymentNo}
+	</update>
+	
+	<select id="showPaymentCalendar" resultType="PaymentVO" parameterType="int">
+		SELECT pay.paymentNo, s.sitterNo, s.sitterName, s.sitterPhone, s.sitterAddress, 
+				u.userNo, u.userName, u.userAddress, pay.startTime, pay.endTime, pay.request, 
+				pay.paymentMethod, pay.amount, pay.paymentStatus , pay.refundStatus, pay.reviewStatus, pay.paymentDate, pay.tid
+		FROM USERS u
+		INNER JOIN PET p ON p.userNo = u.userNo
+		INNER JOIN reservation r ON p.petNo = r.petNo
+		INNER JOIN payment pay ON pay.paymentNo = r.paymentNo
+		INNER JOIN SITTER s ON s.sitterNo = pay.sitterNo
+		WHERE pay.sitterNo = #{sitterNo}
+			AND pay.paymentStatus = 1
+			AND pay.refundStatus = 0
+        GROUP BY pay.paymentNo
+        ORDER BY pay.paymentNo DESC
+	</select>
+	
 
 </mapper>

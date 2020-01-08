@@ -64,7 +64,6 @@
                                     counter
                                     @click:append="show1 = !show1"
                                     ></v-text-field>
-                                    <v-btn>비밀번호 변경하기 </v-btn>
                                 </v-col>
                             </v-row>
           
@@ -168,7 +167,8 @@ export default {
                                 }
                     }).then(res => {
                         console.log(res)
-                        this.$router.push({path:'/sMyPage/sitterReservationList'})
+                        // this.$router.push({path:'/sMyPage/sitterReservationList'})
+                        window.location.reload()
                     }).catch(err => {
                         console.log(err)
                     })

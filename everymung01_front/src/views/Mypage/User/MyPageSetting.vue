@@ -78,7 +78,7 @@
                                     :rules="[rules.required, rules.min]"
                                     :type="show1 ? 'text' : 'password'"
                                     label="패스워드"
-                                    hint="최소 8자리 이상 "
+                                    hint="최소 6자리 이상 "
                                     counter
                                     @click:append="show1 = !show1"
                                     v-model="userInfo.userPw"
@@ -278,7 +278,7 @@ export default {
 
                      })
             }
-            window.location.href='http://localhost:8080/uMyPage/uAccount'
+            // window.location.href='http://localhost:8080/uMyPage/uAccount'
 
             
         },
