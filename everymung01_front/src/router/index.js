@@ -105,10 +105,10 @@ const routes = [{
             beforeEnter:adminRouteG
     },
     {
-        path: '/adminOneday',
-        name: 'adminoneday',
+        path: '/adminHomeCare',
+        name: 'adminhomecare',
         component: () =>
-            import ('../views/Admin/reserv/Oneday.vue'),
+            import ('../views/Admin/reserv/HomeCare.vue'),
             beforeEnter:adminRouteG
     },
     {

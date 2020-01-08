@@ -56,18 +56,10 @@
               <v-btn color="secondary" @click="deleteAlert=false">취소</v-btn>
             </v-alert>
         </v-card-text>
-        <!-- <v-card-text v-if="updateAlert">
-            <v-alert v-model="updateAlert" type="warning">
-              <h4>정말 승인 하시겠습니까?</h4>
-              <v-btn class="mr-4"  color="error" @click="update(sitter.approvalStatus=true)">확인</v-btn>
-              <v-btn color="secondary" @click="updateAlert=false">취소</v-btn>
-            </v-alert>
-        </v-card-text> -->
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="dialog = false">확인</v-btn>
-          <v-btn color="blue darken-1" text @click.native="deleteAlert=true">삭제</v-btn>
-          <!-- <v-btn color="blue darken-1" text @click.native="updateAlert=true">승인</v-btn> -->
+          <v-btn color="blue darken-1" text @click.native="deleteAlert=true">거절</v-btn>
           <v-btn color="blue darken-1"  text @click="dialog2 = true">지원서보기</v-btn>
           <v-dialog v-model="dialog2" fullscreen hide-overlay transition="dialog-bottom-transition">
           <v-card>
@@ -79,7 +71,6 @@
           <v-toolbar-title>Settings</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
-            <!-- <v-btn dark text @click="dialog2 = false">Save</v-btn> -->
             <v-btn dark text @click.native="deleteAlert=true">거절</v-btn>
             <v-btn dark text @click.native="updateAlert=true">승인</v-btn>
             
@@ -195,27 +186,11 @@
   </v-col>
   </v-row>
 </template>
-
-        <!-- <v-list three-line subheader>
-          <v-subheader>User Controls</v-subheader>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>Content filtering</v-list-item-title>
-              <v-list-item-subtitle>Set the content filtering level to restrict apps that can be downloaded</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-          <v-list-item>
-            <v-list-item-content>
-              <v-list-item-title>Password</v-list-item-title>
-              <v-list-item-subtitle>Require password for purchase or use password to restrict purchase</v-list-item-subtitle>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list> -->
-
-
 <script>
 import 'vue-good-table/dist/vue-good-table.css'
 import { VueGoodTable } from 'vue-good-table'
+import { eventBus } from '../../main'
+import { mapState,mapActions } from 'vuex'
 
 export default {
     components: {
@@ -248,35 +223,35 @@ export default {
        },
       columns: [
         {
-          label: 'Name',
+          label: '이름',
           field: 'sitterName',
         },
         {
-          label: 'Age',
+          label: '나이',
           field: 'sitterAge',
         },
         {
-          label: 'Email',
+          label: '이메일',
           field: 'sitterEmail',
         },
         {
-          label: 'Phone',
+          label: '휴대번호',
           field: 'sitterPhone',
         },
         {
-          label: 'Address',
+          label: '주소',
           field: 'sitterAddress',
         },
         {
-          label: 'Date',
+          label: '날짜',
           field: 'approvalDate',
         },
         {
-          label: 'Type',
+          label: '시타종류',
           field: 'sittingType',
         },
         {
-          label: 'Status',
+          label: '가입상태',
           field: 'approvalStatus',
         },
         
@@ -304,51 +279,64 @@ export default {
      this.sitter.identityCheck ='http://localhost:1234/download/'+ params.row.identityCheck
      this.sitter.qualificationCheck = 'http://localhost:1234/download/'+ params.row.qualificationCheck
      this.sitter.possibleDay = params.row.possibleDay.split(',')
-     /* console.log(this.sitter.possibleDay[3])
-     console.log(this.sitter.possibleDay[2])
-     console.log(this.sitter.possibleDay[1]) */
      this.sitter.profile = params.row.profile
   },
   selectAll(){
       this.$http.get(`http://localhost:1234/falseAllSitters`)
-          .then( res =>{
-            this.rows = res.data
-            console.log(res.data)
-          })
-          .catch(err => {
-            alert("backand(falseAllSitters) 에러 확인")
-          })
+            .then( res =>{
+              this.rows = res.data
+              
+            })
+            .catch(err => {
+              alert(err+"\n"+"Admin-Approval(selectAll) 에러")
+            })
      
   },
   delet(sitterNo){
-     this.dialog=false
-     this.deleteAlert=false
-     const No = sitterNo
+    let cnt = this.count
+    this.dialog=false
+    this.deleteAlert=false
+    const No = sitterNo
      
-      this.$http.post(`http://localhost:1234/deleteSitter/${sitterNo}`).then(res =>{
-        const idx = this.rows.findIndex(x => x.sitterNo === sitterNo)
+      this.$http.post(`http://localhost:1234/deleteSitter/${sitterNo}`)
+            .then(res =>{
+              const idx = this.rows.findIndex(x => x.sitterNo === sitterNo)
               this.dialog=false
               this.rows.splice(idx, 1)
+              --cnt
+              this.approval(String(cnt))
       }).catch(err =>{
-        alert("backend(delete) 에러 확인!")
+        alert(err+"\n"+"Admin-Approval(delet) 에러")
       })
 
   },
   update(){
+     let cnt = this.count
      this.dialog=false
      this.updateAlert=false
      this.sitter.possibleDay=String(this.sitter.possibleDay)
-     this.$http.post('http://localhost:1234/updateSitter',this.sitter) 
-              .then(res => { 
-                this.selectAll();
-              }) 
-              .catch(err => { 
-                alert("backend(update) 에러 확인!")
+     
+      this.$http.post('http://localhost:1234/updateSitter',this.sitter) 
+            .then(res => { 
+              --cnt
+              this.selectAll();
+              this.approval(String(cnt))
+              
+            }) 
+            .catch(err => { 
+              alert(err+"\n"+"Admin-Approval(update) 에러")
 
-              });
+            });
   },
+  ...mapActions(['approval'])
     },
-
+  computed:{
+    ...mapState(['count']),
+    
+    approvalCnt(){
+      return this.count
+    }
+  }
  
 }
 </script>

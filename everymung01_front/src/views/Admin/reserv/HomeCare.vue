@@ -42,7 +42,7 @@
         <v-card-text v-if="deleteAlert">
             <v-alert v-model="deleteAlert" type="warning">
               <h4>정말 삭제 하시겠습니까?</h4>
-              <v-btn class="mr-4"  color="error" @click="dele(user.userNo)">확인</v-btn>
+              <v-btn class="mr-4"  color="error" @click="delet(user.userNo)">확인</v-btn>
               <v-btn color="secondary" @click="deleteAlert=false">취소</v-btn>
             </v-alert>
         </v-card-text>
@@ -152,20 +152,18 @@ export default {
                   timeG+="~"+String(res.data[sitterT].endTime).split(" ")[1]
                   console.log(lsm[1])
                   res.data[sitterT].endTime=timeG
-                  /* res.data[sitterT].endTime */
                   
                   
                   this.rows.push(res.data[sitterT])
                   console.log(this.rows)
                   
-                  //console.log(this.rows)
                   }
                   }
 
 
                 })
                 .catch(err => { 
-                alert("backend(test) 에러 확인!")
+                alert(err+"\n"+"HomeCare(created) 에러")
               });
               
 
@@ -180,7 +178,7 @@ export default {
      this.home.userProfile = params.row.userProfile
      this.home.startTime = params.row.startTime
   },
-  dele(userNo){
+  delet(userNo){
      this.dialog=false
      this.deleteAlert=false
      const No = userNo
@@ -191,7 +189,7 @@ export default {
               this.dialog=false
               this.rows.splice(idx, 1)
       }).catch(err =>{
-        alert("backend(delete) 에러 확인!")
+        alert(err+"\n"+"HomeCare(delet) 에러")
       })
 
   },
@@ -203,7 +201,7 @@ export default {
                 this.selectAll();
               }) 
               .catch(err => { 
-                alert("backend(update) 에러 확인!")
+                alert(err+"\n"+"HomeCare(update) 에러")
 
               });
   },

@@ -20,6 +20,10 @@ export default new Vuex.Store({
         isLoginError: false,
         sitterApp: false,
         //로그인 끝
+        //admin 승인대기 count
+        count:'0',
+        //admin 미답변 count
+        boardcount:'0',
 
         //메인페이지 사진 박아놓은 예시
         mainPics: [{
@@ -59,6 +63,8 @@ export default new Vuex.Store({
     },
 
     mutations: {
+
+
         //채팅 관련
         setMe(state, { me }) {
             state.me = me;
@@ -125,6 +131,16 @@ export default new Vuex.Store({
         //마이페이지 중 계정관리 정보 받기 
         userInfoReading(state, payload) {
             state.userInfo = payload
+        },
+
+        //관리자 승인대기(미승인) 정보 받기
+        approvalCount(state, payload) {
+            state.count = payload
+        },
+
+        //관리자 게시판(미답변) 정보 받기
+        boardCnt(state, payload) {
+            state.boardcount = payload
         }
 
     },
@@ -238,7 +254,7 @@ export default new Vuex.Store({
                     if (res.data.userEmail != null) {
                         localStorage.setItem("email", loginobj.email)
                         commit('loginSuccess', res.data)
-                        router.push({ name: 'uMyPage' })
+                        router.push({ name: 'UserReservationList' })
                             //로그인 성공 시 마이페이지로 이동시켜 줌
                     } else {
                         commit('loginError')
@@ -353,7 +369,17 @@ export default new Vuex.Store({
 
         createPetInfo({ commit }, payload) {
             commit('forPet', payload)
-        }
+        },
+        
+        approval({ commit }, payload) {
+
+            commit('approvalCount', payload)
+        },
+
+        boardInfo({ commit }, payload) {
+            commit('boardCnt', payload)
+        },
+
 
     },
     getters: {

@@ -23,16 +23,16 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-                <v-text-field label="Name"  v-model="user.userName" ></v-text-field>
+                <v-text-field label="Name"  v-model="user.userName" :rules="nameRules" ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-text-field label="Email" v-model="user.userEmail" :rules="emailRules" ></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="Password" v-model="user.userPw"></v-text-field>
+                <v-text-field label="Password" v-model="user.userPw" :rules="PasswordRules"></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="Phone" v-model="user.userPhone" ></v-text-field>
+                <v-text-field label="Phone" v-model="user.userPhone" :rules="PhoneRules" ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-text-field label="Address" v-model="user.userAddress" ></v-text-field>
@@ -95,44 +95,44 @@ export default {
        },
       columns: [
         {
-          label: 'Name',
+          label: '이름',
           field: 'userName',
         },
         {
-          label: 'Email',
+          label: '이메일',
           field: 'userEmail',
         },
         {
-          label: 'Phone',
+          label: '휴대번호',
           field: 'userPhone',
         },
         {
-          label: 'Address',
+          label: '주소',
           field: 'userAddress',
         },
         {
-          label: 'Date',
+          label: '날짜',
           field: 'userDate',
         },
         
       ],
       rows:[],
       emailRules: [
-                        v => !!v || 'E-mail is required',
-                        v => /.+@.+\..+/.test(v) || '이메일 형식에 맞지 않습니다.',
-                        ],
-            PhoneRules: [
-                        v => !!v || 'Phone is required',
-                        v=>/^(?:(010\d{4})|(01[1|6|7|8|9]\d{3,4}))(\d{4})$/.test(v) || '-빼주세요',
-                        ],
-            nameRules: [
-                        v => !!v || 'Name is required',
-                        v => (v && v.length <= 10) || '이름은 10글자 이하',
-                       ],
-            PasswordRules: [
-                        v => !!v || 'password is required',
-                        v => (v && v.length >= 6) || '비밀번호는 6자리 이상으로 해주세요',
-                       ],
+                  v => !!v || 'E-mail is required',
+                  v => /.+@.+\..+/.test(v) || '이메일 형식에 맞지 않습니다.',
+                  ],
+      PhoneRules: [
+                  v => !!v || 'Phone is required',
+                  v=>/^(?:(010\d{4})|(01[1|6|7|8|9]\d{3,4}))(\d{4})$/.test(v) || '-빼주세요',
+                  ],
+      nameRules: [
+                  v => !!v || 'Name is required',
+                  v => (v && v.length <= 10) || '이름은 10글자 이하',
+                  ],
+      PasswordRules: [
+                  v => !!v || 'password is required',
+                  v => (v && v.length >= 6) || '비밀번호는 6자리 이상으로 해주세요',
+                  ],
     };
   },
   created() {
@@ -159,7 +159,7 @@ export default {
             }
           })
           .catch(err => {
-            alert("backand(showAllUsers) 에러 확인")
+            alert(err+"\n"+"Admin-Member(selectAll) 에러")
           })
      
   },
@@ -174,7 +174,7 @@ export default {
               this.dialog=false
               this.rows.splice(idx, 1)
       }).catch(err =>{
-        alert("backend(delete) 에러 확인!")
+        alert(err+"\n"+"Admin-Member(delet) 에러")
       })
 
   },
@@ -187,7 +187,7 @@ export default {
                 this.selectAll();
               }) 
               .catch(err => { 
-                alert("backend(update) 에러 확인!")
+                alert(err+"\n"+"Admin-Member(update) 에러")
 
               });
   },

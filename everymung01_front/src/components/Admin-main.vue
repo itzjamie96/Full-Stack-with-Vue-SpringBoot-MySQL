@@ -56,7 +56,17 @@
             <v-icon>mdi-contact-mail</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>승인대기</v-list-item-title>
+            <v-list-item-title>
+                승인대기
+              <v-badge
+                v-if="approvalcnt!=='0'"
+                color="red"
+                :content='approvalcnt'
+                inline
+              >
+              </v-badge>
+            </v-list-item-title>
+            
           </v-list-item-content>
         </v-list-item>
         
@@ -67,7 +77,16 @@
             <v-icon>mdi-contact-mail</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>게시판 관리</v-list-item-title>
+            <v-list-item-title>
+              게시판 관리
+              <v-badge
+                v-if="boardcnt!=='0'"
+                color="red"
+                :content='boardcnt'
+                inline
+              >
+              </v-badge>
+            </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         
@@ -123,19 +142,55 @@
 <script>
 import {mapState,mapActions} from "vuex"
 import router from '../router/index'
+import { eventBus } from '../main'
+
   export default {
     props: {
       source: String,
     },
     data: () => ({
       drawer: null,
+     
     }),
     computed:{
-      ...mapState(["trigger"]),
+      ...mapState(["trigger",'count','boardcount']),
+      
+      approvalcnt(){
+        return this.count
+      },
+      boardcnt(){
+        return this.boardcount
+      }
     },
     methods:{
-      ...mapActions(['TriggerTO']),
-      
+      ...mapActions(['TriggerTO','approval','boardInfo']),
+
+      boardCtn() {
+        this.$http.get(`http://localhost:1234/falseBoard`)
+          .then( res => {
+            this.boardInfo(String(res.data.length))
+          })
+          .catch( err => {
+            alert(err+"\n"+"Admin-main(boardCtn) 에러")
+          })
+      },
+
+      approvalCtn(){
+        this.$http.get(`http://localhost:1234/falseAllSitters`)
+          .then( res =>{
+            this.approval(String(res.data.length))
+          })
+          .catch(err => {
+            alert(err+"\n"+"Admin-main(approval) 에러")
+          })
+      }
+
+
+    },
+    created() {
+      this.approvalCtn();
+      this.boardCtn();
+
     }
   }
 </script>
