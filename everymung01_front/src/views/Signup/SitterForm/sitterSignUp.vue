@@ -149,14 +149,15 @@
           @complete="SitterVO.sitterAddress = $event.roadAddress"
           />
  -->
-    
+          
             <label class="ml-12">
-      시/구/동 입력
-      <GmapAutocomplete 
-      @place_changed="setPlace">
-      </GmapAutocomplete>
-      <button @click="usePlace">Add</button>
-    </label>
+              시/구/동 입력
+              <GmapAutocomplete 
+              @place_changed="setPlace">
+              </GmapAutocomplete>
+              <v-btn text @click="usePlace">Add</v-btn>
+            </label>
+          
     <br/>
     <GmapMap style="width: 800px; height: 400px;" :zoom="14" :center="{lat:SitterVO.lat,lng:SitterVO.lng}">
       <gmap-circle ref="circle" :radius="1000" :center='{lat:SitterVO.lat,lng:SitterVO.lng}' :draggable='true' :editable='true' >
@@ -209,6 +210,7 @@ import axios from 'axios'
 import * as FormData from 'form-data'
 import { VueDaumPostcode } from "vue-daum-postcode"
 import {mapState} from "vuex"
+
 const baseURL = 'http://localhost:1234'
 export default {
   components: {
@@ -255,7 +257,7 @@ export default {
         possibleDay:'',
         profile:'',
         lat:37.496361445796694,
-        lng: 127.05750504049766,
+        lng:127.05750504049766,
       },
       //자기소개
       //
