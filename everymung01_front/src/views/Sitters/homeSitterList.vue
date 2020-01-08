@@ -1,24 +1,28 @@
 <template>
 <v-container>
-  <v-col cols="12" sm="6">
-    <v-row justify="center">
-      <v-col cols="12" sm="10">
+<v-row class="justify-center my-5">
+  <v-col cols="5">
+    <v-card outlined>
+      <div class="px-6 pt-3">
         <v-select 
             v-model="area"
             v-bind:items="areaList"
             item-text="name"
             item-value="name"
-            attach
-            chips
+            attach     
             label="지역을 선택해주세요"
             prepend-icon="place"
             id="area"
+            color="black"
         ></v-select>
-      </v-col>
-    </v-row>
+        
+      </div>
+    </v-card>
   </v-col>
+  <v-col cols="5"></v-col>
 
-    
+</v-row>
+ <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
   <v-card
     class="mb-4 mt-2 mx-auto"
     max-width="85%"
@@ -53,6 +57,7 @@
       </v-card-actions>
     </v-list-item>
 </v-card>
+ </div>
 </v-container>
 
 </template>
@@ -110,3 +115,8 @@ export default {
 }
 
 </script>
+<style>
+.col, .col-5{
+  padding: 0;
+}
+</style>

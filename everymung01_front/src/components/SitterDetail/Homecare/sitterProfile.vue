@@ -1,9 +1,9 @@
 <template>
     <div>
         <v-card
-            class="mx-auto mb-10"
-            max-width="95%"   
-            
+            class="ml-3 mb-10"
+            max-width="96%"   
+            elevation="0"
         >
             <v-list>
                 <v-list-item>

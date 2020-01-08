@@ -37,7 +37,7 @@
       </v-list-item>
       </v-navigation-drawer>
 
-    <v-toolbar dark color="red lighten-1">
+    <v-toolbar dark color="red lighten-1" class="px-12">
 
       <v-app-bar-nav-icon 
         @click.stop="drawer = !drawer"
@@ -63,7 +63,7 @@
 
       <v-spacer></v-spacer>
 
-      <v-toolbar-items class="hidden-sm-and-down">
+      <v-toolbar-items class="hidden-sm-and-down" dense>
 
         <v-btn 
         text
@@ -134,6 +134,9 @@ export default {
 .v-btn__content{
   font-size: 14pt;
   /* font-family: 'HangeulNuri-Bold';  */
+}
+.v-toolbar__content{
+  margin-left: 3px;
 }
 
 </style>
