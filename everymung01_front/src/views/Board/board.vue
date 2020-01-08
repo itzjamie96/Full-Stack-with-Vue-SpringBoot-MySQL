@@ -28,7 +28,7 @@
           allLabel: 'All',
     }"
     >  </vue-good-table>
-
+ 
     <!-- 글쓰기 버튼 -->
     <div v-if="this.isLogin==false">
       <v-btn color="red lighten-1" dark v-on:click="alert()" @click="$router.push({path: '/signin'})">글쓰기</v-btn>
@@ -36,20 +36,20 @@
     <div v-if="this.isLogin==true" >
       <v-btn color="red lighten-1" dark  @click="writeClick()" >글쓰기</v-btn>
     </div>
-
+ 
    <!-- [상세보기_다이얼로그] -->
    <v-dialog v-model="dialog_detail" persistent max-width="600px">
       <template v-slot:activator="{ on }">
       </template>
       <v-card>
         <v-card-title>
-          <span class="headline">{{updateName}}</span>
+          <span class="headline">상세보기</span>
         </v-card-title>
         <v-card-text>
           <v-container>
             <v-row>
               <v-col cols="12">
-                <v-text-field  label="제목" v-model=editedItem.title  required maxlength="44" :readonly=true></v-text-field> <!-- 50-6하는 이유:: 6(ㄴRE:의 글자수) -->
+                <v-text-field  label="제목" v-model=editedItem.title  required maxlength="240" :readonly=true></v-text-field> <!-- 50-6하는 이유:: 6(ㄴRE:의 글자수) -->
                 <v-text-field  label="작성자" v-model="editedItem.userName" required :readonly=true></v-text-field>
                   <!-- ### editedItem.userName(O), this.userinfo.userName(X) => userName of null에러 뜸.### -->
                   <!-- v-vind 이용해서 data에 선언된 변수 updateTrig 의 값인 true 연결해주기   -->
@@ -57,12 +57,12 @@
               </v-col>  <!-- v-vind:value= 우항에 오는 변수명에 따옴표를 써줘도 되고 안써줘도 됨. 둘 다 가능. -->
                         
               <v-textarea
-                id="focus_textarea"
+                
                 label="내용을 입력해주세요"
                 outlined
                 name="input-7-4"
                 v-model="editedItem.content"
-                maxlength="255"
+                maxlength="1000"
                 required
                 :readonly=updateTrig
                 auto-grow
@@ -73,18 +73,16 @@
          <!-- 상세보기-다이얼로그_버튼목록 -->
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn href="javascript:;" color="blue darken-1" text @click="close()">닫기</v-btn>
+          <v-btn color="blue darken-1" text @click="close()">닫기</v-btn>
           <div v-if="isLogin==true && userInfo.userNo==editedItem.userNo">
+            <v-btn href="javascript:;" color="blue darken-1" text @click="updateClick()">수정</v-btn>
             <v-btn color="blue darken-1" text @click="dele()">삭제</v-btn>
-
-            <v-btn color="blue darken-1" text @click="updateClick()">수정</v-btn>
-
             <!-- <v-btn color="blue darken-1" text @click="dbClickProtectedReply()">답글달기</v-btn> -->
           </div>
         </v-card-actions> <!-- @click="$router.push({path: '/update'}) -->
       </v-card>
     </v-dialog>
-
+ 
        <!-- [수정하기_다이얼로그] -->
    <v-dialog v-model="dialog_update" persistent max-width="600px">
       <template v-slot:activator="{ on }">
@@ -97,11 +95,11 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-                <v-text-field  label="제목" v-model=editedItem.title  required maxlength="44" :readonly=true></v-text-field> <!-- 50-6하는 이유:: 6(ㄴRE:의 글자수) -->
-                <v-text-field  label="작성자" v-model="editedItem.userName" required :readonly=true></v-text-field>
+                <v-text-field  label="제목" v-model=editedItem.title  required maxlength="240" disabled></v-text-field> <!-- 50-6하는 이유:: 6(ㄴRE:의 글자수) -->
+                <v-text-field  label="작성자" v-model="editedItem.userName" required disabled></v-text-field>
                   <!-- ### editedItem.userName(O), this.userinfo.userName(X) => userName of null에러 뜸.### -->
                   <!-- v-vind 이용해서 data에 선언된 변수 updateTrig 의 값인 true 연결해주기   -->
-                <v-text-field  label="작성일" v-model="editedItem.boardDate" required readonly="readonly" ></v-text-field>
+                <v-text-field  label="작성일" v-model="editedItem.boardDate" required  disabled ></v-text-field>
               </v-col>  <!-- v-vind:value= 우항에 오는 변수명에 따옴표를 써줘도 되고 안써줘도 됨. 둘 다 가능. -->
                         
               <v-textarea
@@ -110,29 +108,27 @@
                 outlined
                 name="input-7-4"
                 v-model="editedItem.content"
-                maxlength="255"
+                maxlength="1000"
                 required
                 
                 auto-grow
-              ></v-textarea> <!-- :readonly=updateTrig -->
+              ></v-textarea> <!-- :readonly=updateTrig // v-model=editedItem.content-->
             </v-row>
           </v-container>
         </v-card-text>
          <!-- 수정하기-다이얼로그_버튼목록 -->
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn href="javascript:;" color="blue darken-1" text @click="close_update()">닫기</v-btn>
+          <v-btn color="blue darken-1" text @click="close_update()">닫기</v-btn>
           <div v-if="isLogin==true && userInfo.userNo==editedItem.userNo">
+            <v-btn href="javascript:;" color="blue darken-1" text @click="update()">수정</v-btn>
             <v-btn color="blue darken-1" text @click="dele()">삭제</v-btn>
-
-            <v-btn color="blue darken-1" text @click="update()">수정</v-btn>
-
             <!-- <v-btn color="blue darken-1" text @click="dbClickProtectedReply()">답글달기</v-btn> -->
           </div>
         </v-card-actions> <!-- @click="$router.push({path: '/update'}) -->
       </v-card>
     </v-dialog>
-
+ 
    
     <!-- [글쓰기 다이얼로그] 
      // 여기서 비로그인시 문의게시글 조회 에러 발생_
@@ -149,7 +145,7 @@
             <v-container>
               <v-row>
                 <v-col cols="12">
-                  <v-text-field label="제목" v-model="BoardVO.title"  required maxlength="44" ></v-text-field>
+                  <v-text-field label="제목" v-model="BoardVO.title"  required maxlength="240" ></v-text-field>
                   <v-text-field  label="작성자" v-model="BoardVO.userName" required readonly="readonly">
                   </v-text-field>  
                 </v-col>  
@@ -160,7 +156,7 @@
                   outlined
                   name="input-7-4"
                   v-model="BoardVO.content"
-                  maxlength="255"
+                  maxlength="1000"
                   required
                   auto-grow
                 ></v-textarea>
@@ -177,13 +173,13 @@
           </v-card-actions> <!-- @click="$router.push({path: '/update'}) -->
         </v-card>
     </v-dialog>  
-
+ 
   </v-col>
   </v-row>
 </v-container>
 </template>
-
-
+ 
+ 
 <script>
     import 'vue-good-table/dist/vue-good-table.css'
     import { VueGoodTable } from 'vue-good-table'
@@ -199,14 +195,12 @@
       },
   data(){
     return {
-      lsm:'',
-      updateName:'상세보기',
       updateTrig:true,
       dialog_detail: false,
       dialog_update:false,
       dialog_write: false,
       
-      // 상세보기_테이블의 행에 들어있는 컬럼값들을 여기에 저장해서, 엑시오스로 컨트롤러에 보냄
+      // 상세보기 + 수정하기에서 사용 
       editedItem:{
            boardNo: '',
            userNo:'',
@@ -217,18 +211,9 @@
            hits: '',
            status:'',
        },
-     // 삭제하기_
+     // 삭제하기
      editidItemIndex: '', // 테이블 행마다의 index번호
-  
-     // 수정하기_
-     updatedItem:{
-          boardNo: '',
-          title: '',
-          user: '',
-          content:'',
-          boardDate: '',
-          hits: '',
-     }, 
+ 
      //글쓰기 & 답글달기 
      BoardVO:{
           boardNo: '',
@@ -263,23 +248,24 @@
        {
            label: '제목',
            field: 'title',
-           width: '600px',
+           width: '700px',
            thClass: 'text-center',
            //tdClass: 'text-center',
        },
        {
            label: '작성자',
            field: 'userName',
+           width: '100px',
            //thClass: 'text-center',           
            //tdClass: 'text-center',
        },       
        {
            label: '조회수',
            field: 'hits',
-           width: '100px',
+           width: '80px',
           //  type: 'number',
           //thClass: 'text-center',          
-          //tdClass: 'text-center',
+           tdClass: 'text-center',
           
        },
        {
@@ -324,7 +310,7 @@
         {this.BoardVO.userName=this.userInfo.userName}
         else
         {this.BoardVO.userName=''}
-        setTimeout(this.initialize(),1000);
+        setTimeout(this.showAllBoards(),1000);
         //console.log(this.userInfo.userName)
         //###########에러해결 by상민_기발하다!##############
         
@@ -335,7 +321,7 @@
   methods: {
       //수정버튼에서 updateTrig로 if/else 걸어서  true일땐 -> a함수 실행하고, false일땐->b함수 실행
       //### 전체목록 조회(R) ###
-      initialize(){//DB와 연동해서 게시판 목록을 전부 가져옴
+      showAllBoards(){//DB와 연동해서 게시판 목록을 전부 가져옴
             axios.get('http://localhost:1234/showAllBoards')
             .then( res =>{ 
               
@@ -362,6 +348,7 @@
             return 
             }else{
               this.add(); 
+              //this.showAllBoards() //이걸로 재조회가 안되네 
             }
             // console.log(this.doubleSubmitCheck())
             // console.log(this.doubleSubmitFlag)
@@ -369,6 +356,7 @@
             //글쓰기 
  
             //##################발표 전 반드시 포트번호 확인하고 바꿔줘야함############################## 
+            
             window.location.href="http://localhost:8080/board"
             //######################################################################################## 
             
@@ -385,7 +373,7 @@
             //BoardNo값을 안넣어서 보내면 스프링쪽에선 boardNo=0이라고 찍히더라. 
             console.log(this.BoardVO.title)
             if(this.BoardVO.title===''){ // === null로 할 땐 안먹었는데, ''로 하니까 되네. 
-              alert("값을 입력하라우~")
+              //alert("값을 입력하라우~")
               this.BoardVO.userName = this.userInfo.userName
             }
             
@@ -398,8 +386,8 @@
             //router.push({name:'Board'}) // 이유는 모르겠지만 확실한건 새로고침이 됐다가 말았다가 한다.. 거의 대부분 되다가 딱 1번 안되는 식. 
            
         },
-
-
+ 
+ 
       //### 상세보기(Read) ### + //### 조회수 처리 시작부분### 
       onRowClick(params) {     
           //this.rows[0].boardNo = 99999     \
@@ -437,17 +425,18 @@
          //조회 메소드 만들기              
          this.updateHits()
       },
-
+ 
       //수정-버튼(Update) 
       updateClick(){
           this.dialog_update=true
-
+          this.updateTrig=false
+          //document.getElementById("focus_textarea").focus()
         //   this.editedItem.content=this.lsm 
         //   if(this.updateTrig===true){//상세보기 모드일 때  
         //     this.lsm =this.editedItem.content
         //     console.log("this.editedItem.content ::" +this.editedItem.content)
         //     console.log("this.lsm ::" +this.lsm)
-
+ 
         //     this.editedItem.content = null
         //     console.log("this.editedItem.content ::" +this.editedItem.content)
         //     //수정_밑작업 
@@ -473,22 +462,21 @@
         //  }
       },
       //2차 수정(Update)
-      update(){
-        //this.lsm=null
-          this.updatedItem.boardNo = this.editedItem.boardNo 
-          console.log( "update_this.updatedItem.boardNo="+this.updatedItem.boardNo) 
-          this.updatedItem.title = this.editedItem.title                     
-          this.updatedItem.content = this.editedItem.content                                                
-          
-
-          axios.post ('http://localhost:1234/update',this.updatedItem)
+      update(){  
+          // console.log(this.editedItem.content)
+          // const existingContent = this.editedItem.content // ex) editedItem.content값이 고정된 값으로 저장됨. 
+          // console.log(existingContent)
+          // if(existingContent===this.editedItem.content){
+          //   console.log("if(existingContent===this.editedItem.content)==>"+existingContent)
+          //   alert("내용을 입력해주세요")
+          // }else{    
+          axios.post ('http://localhost:1234/update',this.editedItem)
           .then( res =>{
           }),  
-          console.log("board.vue_update()"+this.updatedItem)
           alert("수정이 완료되었습니다.")
           this.dialog_detail=false
           history.go(0) 
-          
+  
       },
       //삭제하기(Delete)
       dele(){
@@ -531,7 +519,6 @@
           }
         }
       },
-      //수정-다이얼로그 닫기 
       close_update(){
         this.dialog_detail=false
         this.dialog_update=false
@@ -576,7 +563,7 @@
            })
           //history.go(0) //현재 페이지 새로고침 
        
-          this.BoardVO.title= "ㄴRE: "+this.BoardVO.title
+          this.BoardVO.title= "ㄴRE "+this.BoardVO.title
           //<i class="fab fa-replyd"></i> 
           window.location.href="http://localhost:8080/board"
           console.log("reply() 수행완료")
@@ -606,8 +593,8 @@
     alert(){
       alert("로그인을 하셔야만 글을 쓰실 수 있습니다!")
     },
-    
  
   },
 }
 </script>
+ 

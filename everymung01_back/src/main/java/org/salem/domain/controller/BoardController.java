@@ -65,7 +65,8 @@ public class BoardController {
 	//관리자페이지 삭제버튼
 	@PostMapping("/deleteBoardByMngr") // {id}
 	public int deleteBoardByMngr(@RequestBody BoardVO boardVo) { // URI의 일부를 변수로 전달할 수 있다 //String id = "id" // @PathVariable
-		return mapper.deleteBoardByMngr(boardVo.getBoardNo());
+		 mapper.deleteBoardByMngr(boardVo.getBoardNo());
+		 return mapper.updateStatus(boardVo);//영주_01.08.오전11시26분  
 	}
 
 	//관리자_답글달기
@@ -79,6 +80,13 @@ public class BoardController {
 		mapper.updateStatus(boardVo); // 01.03_15:23분_추가 
 		System.out.println("BoardController.replyBoard__End================");
 		//return mapper.showOneBoard(boardVo.getBoardNo()); //앞딴에서 DB데이터가 담긴 BoardVO객체 하나를 받기위해 리턴해줌! 
+	}
+	
+	//관리자페이지 답글수정
+	@PostMapping("/updateBoardByMngr")
+	public int updateBoardByMngr(@RequestBody BoardVO boardVo) {
+		System.out.println(boardVo);
+		return mapper.updateBoardByMngr(boardVo);
 	}
 
 	//관리자 페이지_조회 

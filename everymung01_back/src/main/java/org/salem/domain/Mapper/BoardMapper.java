@@ -41,12 +41,16 @@ public interface BoardMapper {
 			+ "VALUES( 0, #{title}, #{content}, CURRENT_TIMESTAMP, #{groupNo}, 1, 0,true)") // depth에 '1'로 하드코딩함. 
 	public int insertReply(BoardVO boardVo);
 
-	//관리자_Read
+	//관리자_답글_수정
+	@Update("update board set content=#{content} where boardNo=#{boardNo}")
+	public int updateBoardByMngr(BoardVO boardVo);
+	
+	//관리자_전체조회_Read
 	@Select("select * from board,users where board.userNo=users.userNo order by status ASC,groupNo DESC, depth ASC, boardDate DESC")
 	public List<BoardVO> showAdminBoards();
 	
-	//관리자_원글_Update_status를 true로 수정 
-	@Update("Update board set status=#{status} where boardNo=#{boardNo}")
+	//관리자_status 수정_true/false로 수정 
+	@Update("Update board set status=#{status} where groupNo=#{groupNo}") //원본=>boardNo=#{boardNo}
 	public int updateStatus(BoardVO boardVo);
 	
 	//관리자_Delete (관리자페이지에서 삭제버튼 클릭시 수행되는 쿼리문)
