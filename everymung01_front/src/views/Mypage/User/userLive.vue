@@ -1,20 +1,25 @@
 <template>
-  <v-container fluid="" class="fill-height"> 
-      <v-row class="fill-height">
-        <v-col cols="3">
-          
-          <side-bar/>
-
-          
-          
+  <v-container class="pt-12">
+    <v-row >
+        <v-col cols="3"> 
+          <side-bar/>   
         </v-col>
 
-        <v-col cols="9">
-            <div>
-                <v-btn href="https://hsok0070.github.io/remon-devguide-quickstartlivestreaming/simplewatch.html">댕댕이 보기</v-btn>
+        <v-col cols="8">
+          <v-row>
+            <v-col cols="4">
+              <iframe 
+                src="https://hsok0070.github.io/remon-devguide-quickstartlivestreaming/simplewatch.html" 
+                frameborder="0" 
+                style="height:500px;width:400px"
+                id="frame"
+                ></iframe>
+            </v-col>
+            <v-col cols="4">
                 <chat-container/>
-            </div>
-          
+            </v-col>
+          </v-row>
+     
         </v-col>
 
       </v-row>
@@ -109,5 +114,9 @@ export default {
   height: 36px !important;
   -webkit-transform: translate(-18px, -18px) scale(0.18) translate(18px, 18px);
   transform: translate(-18px, -18px) scale(0.18) translate(18px, 18px);
+}
+
+#frame{
+  background-color: white;
 }
 </style>

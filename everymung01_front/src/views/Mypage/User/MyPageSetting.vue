@@ -1,8 +1,7 @@
 <template>
-
-    <v-container fluid="" >
-        <v-row class="fill-height">
-            <v-col cols="3">
+<v-container class="pt-12">
+    <v-row >
+        <v-col cols="3" class="mr-3"> 
             <side-bar></side-bar>
             <div v-if="false">
             </div>

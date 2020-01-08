@@ -1,11 +1,11 @@
 <template>
-  <v-container fluid="" class="fill-height">
-      <v-row class="fill-height">
+  <v-container class="pt-12">
+      <v-row>
           <v-col cols="3">
               <side-bar></side-bar>
           </v-col>
 
-          <v-col >
+          <v-col cols="8" class="ml-12">
               <!-- 실시간 영상 보기  -->
               <v-row>
                   <v-card

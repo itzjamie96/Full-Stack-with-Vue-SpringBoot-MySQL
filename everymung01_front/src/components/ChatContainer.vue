@@ -1,7 +1,7 @@
 <template>
   <div class="chat-container">
-    <div class="heading">
-      <h1>{{title + '-chat'  }}</h1>
+    <div class="heading" id="heading">
+      <h1>{{title + ' : 실시간 케어'  }}</h1>
     </div>
     <div class="body">
       <div class="table">
@@ -44,7 +44,7 @@
     },
     data() {
       return {
-        title: 'EveryMung ',
+        title: '에브리멍 ',
       };
     },
     mounted() {
@@ -80,19 +80,22 @@ h1 {
   margin: auto;
   background-color: #FFFFFF;
   border: solid 1px #BFBFBF;
-  border-radius: 3px;
+  /* border-radius: 3px; */
 }
 
 .heading {
   display: table;
   width: 100%;
-  height: 28px;
+  height: 40px;
   text-align: center;
-  background-color: #CDCDCD;
-  border-radius: 3px 3px 0 0;
+  background-color: rgb(138, 43, 226,0.6);
+  color: white;
+  /* border-radius: 3px 3px 0 0; */
   -ms-user-select: none;
   user-select: none;
-  background: linear-gradient(#EDEDED 0%, #CDCDCD 75%);
+  /* background: linear-gradient(#EDEDED 0%, #CDCDCD 75%); */
+  font-family: 'ON-IGothic'; 
+
 }
 
 .body {

@@ -4,7 +4,6 @@
         <v-col cols="3" class="mr-3"> 
           <side-bar/>   
         </v-col>
-    <v-row>
         <v-col cols="8" class="ml-12">
             <div>
                 <v-card
@@ -13,11 +12,11 @@
                     tile=""
                 >
                     <v-card-text>
-                    <p id="text" class="text-center">예약 상세 정보</p>
+                    <p id="detailTitle" class="text-center">예약 상세 정보</p>
 
                     <v-divider class="my-4"></v-divider>
 
-                    <v-row class="justify-center">
+                    <v-row class="justify-left pl-9">
                         <v-col cols="5">
                             <p id="context">맡기실 반려동물</p>
                         </v-col>
@@ -25,6 +24,7 @@
                             v-for="pets in paymentObj.petDetailList"
                             :key="pets.petNo"
                             cols="2"
+                            class="pl-4"
                         >
                             <p id="request">{{pets.petName}}</p>
                         </v-col>
@@ -96,7 +96,6 @@
         </v-col>
     </v-row>
 
-    </v-row>
 </v-container>
 </template>
 
@@ -164,18 +163,8 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Gugi|Jua|Single+Day&display=swap');
 
-@font-face { 
-  font-family: 'HangeulNuri-Bold'; 
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_three@1.0/HangeulNuri-Bold.woff') format('woff'); 
-  font-weight: normal; 
-  font-style: normal; }
-@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
-
-
-
-#text{
+#detailTitle{
     font-size: 19pt;
     font-weight: bold;
     color: rgb(239, 83, 80);

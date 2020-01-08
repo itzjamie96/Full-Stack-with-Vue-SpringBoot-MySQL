@@ -14,7 +14,7 @@
 
         <template v-slot:top>
             <v-toolbar flat color="white">
-              <p id="text" class="mt-3">예약 내역</p>
+              <p id="reserveTitle" class="mt-3">예약 내역</p>
               <v-divider
                 class="mx-4"
                 inset
@@ -23,7 +23,7 @@
               <v-spacer></v-spacer>
             </v-toolbar>
           </template>
-          <template v-slot:item.action="{ item }">
+          <template v-slot:item.action="{ item }" class="text-center">
 
             
             <!-- 예약 날짜가 지난 시점이고, 
@@ -31,51 +31,67 @@
                   리뷰쓰러가는 버튼 보임
                   v-if="(canWrite > calEndTime(item.endTime) && item.reviewStatus == false)"
                   -->
-            <v-icon
-              v-if="item.sittingType=='home' && item.paymentStatus==false"
-              small
-              class="mr-2"
+
+            <!-- 똑같은 공백 만들고 싶어서...여백 만들기 -->
+            <span
+              v-if="(canWrite < calEndTime(item.startTime) && item.refundStatus == false 
+                    && item.paymentStatus==true && item.sittingType=='daycare')"
+              id="statusMsg"
             >
-              승인대기
-            </v-icon>
-            <v-icon
-              v-if="item.sittingType=='home' && item.paymentStatus==true"
-              small
-              class="mr-2"
+              아직 안함
+            </span>
+            <span
+              v-if="(canWrite > calEndTime(item.startTime) && item.refundStatus == false 
+                    && item.paymentStatus==true && item.sittingType=='daycare')"
+              id="statusMsg"
             >
-              승인완료
-            </v-icon>
-            <v-icon
-              v-if="item.sittingType=='home' && item.refuneStatus==true"
-              small
-              class="mr-2"
+              이미 완료
+            </span>
+
+           
+            <span
+              v-if="item.sittingType=='home' && item.paymentStatus==false && canWrite < calEndTime(item.startTime)"
+              id="status"
+              
             >
-              환불완료
-            </v-icon>
-            <v-icon
-            
-              small
-              class="mr-2"
-              @click="writeReview(item)"
+              승인 대기
+            </span>
+            <span v-if="item.sittingType=='home' && item.paymentStatus==true" 
+              id="status"
+              >
+              승인 완료
+            </span>
+            <span
+              v-if=" item.refundStatus==true"
+              id="status"
+              
             >
-              [후기]
-            </v-icon>
-            
-            <v-icon
-              small
-              class="mr-2"
+              환불 완료
+            </span>
+
+            <button
               @click="showDetail(item)"
+              type="button"
+              id="click"
             >
-              search
-            </v-icon>
+              상세 보기
+            </button>
+            <span
+              @click="writeReview(item)"
+              id="click"
+              v-if="(canWrite > calEndTime(item.startTime) && item.refundStatus == false)"
+            >
+              후기 쓰기
+            </span>  
             <!-- 예약 날짜가 되기 전에만 환불 가능-->
-            <v-icon
-              v-if="(canWrite < calEndTime(item.startTime) && item.refuneStatus == false)"
-              small
+            <button
+              v-if="(canWrite < calEndTime(item.startTime) && item.refundStatus == false)"
+              type="button"
+              id="click"
               @click="refund(item)"
             >
-              환불
-            </v-icon>
+              환불 가능
+            </button>
           </template>
         </v-data-table>
         </v-col>
@@ -101,8 +117,8 @@ import NavBar from '@/components/userNavigation.vue'
           // },
           { text: '시팅 유형', value: 'sittingType' },
           { text: '펫시터', value: 'sitterName' },
-          { text: '예약 날짜', value: 'startTime' },
-          { text: '예약 날짜', value: 'endTime' },
+          { text: '시작 날짜', value: 'startTime' },
+          { text: '종료 날짜', value: 'endTime' },
           { text: '금액', value: 'amount' },
           // { text: '결제 상태', value: 'paymentStatus' },
           // { text: 'reviewStatus', value: 'reviewStatus' },
@@ -188,15 +204,8 @@ import NavBar from '@/components/userNavigation.vue'
 </script>
 
 <style>
-@font-face { 
-  font-family: 'HangeulNuri-Bold'; 
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_three@1.0/HangeulNuri-Bold.woff') format('woff'); 
-  font-weight: normal; 
-  font-style: normal; }
 
-@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
-
-#text{
+#reserveTitle{
     font-size: 19pt;
     font-weight: bold;
     color: rgb(239, 83, 80);
@@ -205,6 +214,32 @@ import NavBar from '@/components/userNavigation.vue'
 
 .v-data-table th{
   font-size: 0.9em;
+}
+
+#click{
+  font-size: 10.5pt;
+  padding: 3px 8px 3px 8px;
+  transition-duration: 0.4s;
+  border-radius: 4px;
+  font-weight: bold;
+  margin: 0 6px 0 6px;
+  cursor: pointer;
+  background-color: rgba(0,0,0,0.05);
+
+}
+#click:hover{
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.23),0 17px 50px 0 rgba(0,0,0,0.19);
+
+}
+
+#status{
+    color: rgb(239, 83, 80);
+    font-weight: bold;
+    margin-right: 6px;
+}
+#statusMsg{
+  color: rgba(0,0,0,0);
+  margin-right: 6px;
 }
 
 </style>
