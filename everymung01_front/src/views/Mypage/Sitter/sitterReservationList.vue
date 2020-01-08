@@ -69,6 +69,9 @@
                 inset
                 vertical
               ></v-divider>
+              <router-link :to="{path:'/sMyPage/calendar'}" exact><h3>캘린더보기</h3></router-link>
+              <h3 @click="$router.push({path: '/sMyPage/calendar'})">캘린더보기</h3>
+              <v-btn @click="$router.push({path: '/sMyPage/calendar'})">캘린더보기</v-btn>
               <v-spacer></v-spacer>
             </v-toolbar>
           </template>
@@ -216,7 +219,7 @@ import NavBar from '@/components/sitterNavigation.vue'
           .catch(err => {
             console.log(err);
           })
-      }
+      },
       
     }
   }
