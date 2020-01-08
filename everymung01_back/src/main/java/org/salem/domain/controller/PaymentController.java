@@ -143,6 +143,11 @@ public class PaymentController {
 		return paymentMapper.updatePaymentStatus(paymentNo);
 	}
 	
+	@RequestMapping("/showPaymentCalendar/{sitterNo}")
+	public List<PaymentVO> showPaymentCalendar(@PathVariable int sitterNo){ //시터예약리스트-캘린더
+		return paymentMapper.showPaymentCalendar(sitterNo);
+	}
+	
 	
 	
 }

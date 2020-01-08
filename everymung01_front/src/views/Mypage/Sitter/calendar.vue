@@ -1,8 +1,7 @@
 <template>
 <v-container>
-  {{schedule}}
   <full-calendar :events="schedule" locale="ko"
-      @eventClick="showDetail(schedule.t)"
+      @eventClick="showDetail"
   >
   </full-calendar> 
 </v-container>
@@ -15,11 +14,11 @@ import axios from "axios"
 export default {
 
   data () {
-	return {
-    schedule : [ ],
-    paylist: [],
-    no: null
-	}
+	  return {
+      schedule : [ ],
+      paylist: [],
+      no: null
+	  }
   },
   components : {
 	'full-calendar': require('vue-fullcalendar')	
@@ -47,7 +46,7 @@ export default {
     },
     initialize(){//DB와 연동해서 게시판 목록을 전부 가져옴
         console.log(this.userInfo.sitterNo)
-        axios.get(`http://localhost:1234/showSitterPayment/${this.userInfo.sitterNo}`)
+        axios.get(`http://localhost:1234/showPaymentCalendar/${this.userInfo.sitterNo}`)
           .then(res => {
             this.paylist=res.data //table row로 보여질 객체에 DB에서 받은 데이터를 넣어줌
             console.log(res.data);
@@ -58,6 +57,7 @@ export default {
               range.end=res.data[i].endTime.split(" ")[0]
               this.no = res.data[i].paymentNo
               range.t = res.data[i].paymentNo
+              console.log(range.t)
               this.schedule.push(range)
             }
           })
@@ -65,10 +65,9 @@ export default {
             console.log(err);
           })
       },
-      //배열의 인덱스로
-      showDetail(t){
-        const paymentNo = this.schedule.paymentNo
-        this.$router.push({path: '/sMyPage/sitterReservationDetail/' + paymentNo})
+      
+      showDetail(payment){
+        this.$router.push({path: '/sMyPage/sitterReservationDetail/' + payment.t})
       },
 
   },
