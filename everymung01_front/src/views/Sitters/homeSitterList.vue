@@ -26,7 +26,6 @@
     v-for="sitter in sitterList"
     v-show="sitter.sitterAddress.includes(area)"
     :key="sitter.id"
-    
   >
     <v-list-item three-line>
       <v-list-item-avatar
