@@ -26,8 +26,14 @@
             </v-toolbar>
           </template>
           <template v-slot:item.action="{ item }">
-
-            
+            <!-- 유저가 환불 했을 때 예약 취소된 상태-->
+            <v-icon
+              v-if="item.paymentStatus==true && item.refundStatus==true"
+              small
+              class="mr-2"
+            >
+              [예약취소]
+            </v-icon>
             <v-icon
               small
               class="mr-2"
@@ -86,11 +92,26 @@
               [거절]
             </v-icon>
             <v-icon
+              v-if="item.paymentStatus==true && item.refundStatus==false"
+              small
+              class="mr-2"
+            >
+              [승인완료]
+            </v-icon>
+            <v-icon
               v-if="item.paymentStatus==false && item.refundStatus==true"
               small
               class="mr-2"
             >
               [환불완료]
+            </v-icon>
+            <!-- 유저가 환불 했을 때 예약 취소된 상태-->
+            <v-icon
+              v-if="item.paymentStatus==true && item.refundStatus==true"
+              small
+              class="mr-2"
+            >
+              [예약취소]
             </v-icon>
             <v-icon
               small
@@ -126,7 +147,7 @@ import NavBar from '@/components/sitterNavigation.vue'
           { text: '예약 날짜', value: 'endTime' },
           { text: '금액', value: 'amount' },
           // { text: '결제 상태', value: 'paymentStatus' },
-          { text: 'reviewStatus', value: 'reviewStatus' },
+          // { text: 'reviewStatus', value: 'reviewStatus' },
           // { text: 'refundStatus', value: 'refundStatus' },
           { text: 'Actions', value: 'action', sortable: false },
         ],
@@ -177,7 +198,8 @@ import NavBar from '@/components/sitterNavigation.vue'
         axios.get(`http://localhost:1234/updatePaymentStatus/${paymentNo}`)
           .then(res => {
             console.log(res)
-            window.location.reload()
+            // window.location.reload()
+            this.$router.push({path: '/sMyPage/calendar'})
           })
           .catch(err => {
             console.log(err)

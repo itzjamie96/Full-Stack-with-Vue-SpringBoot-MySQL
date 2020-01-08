@@ -25,13 +25,12 @@
 
     <v-row justify="center">
       <v-col cols="12" sm="10">
-        <v-select  
+        <v-select 
             v-model="area"
             v-bind:items="areaList"
             item-text="name"
             item-value="name"
             attach
-            chips
             label="지역을 선택해주세요"
             prepend-icon="place"
             id="area"
@@ -41,15 +40,15 @@
 
 
   </v-col>
-  <v-card
-    class="mb-4 mt-2 mx-auto"
-    max-width="85%"
-    outlined
-    v-for="sitter in sitterList"
-    v-show="sitter.sitterAddress.includes(area)"
-    :key="sitter.id"
-  >
-    
+  <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="5">
+    <v-card
+      class="mb-4 mt-2 mx-auto"
+      max-width="85%"
+      outlined
+      v-for="sitter in sitterList"
+      v-show="sitter.sitterAddress.includes(area)"
+      :key="sitter.id"
+    >
     <v-list-item three-line>
       <v-list-item-avatar
         tile
@@ -75,7 +74,8 @@
           >시터 상세 보기</v-btn>
       </v-card-actions>
     </v-list-item>
-</v-card>
+  </v-card>
+</div>
 </v-container>
 
 </template>
@@ -96,10 +96,14 @@ export default {
         date: dt.toISOString().substr(0, 10),
         today: dt.toISOString().substr(0, 10),
         menu1: false,
+        busy: false, //
+        limit: 5, //
+        resultList: [] //
       }
     },
     created(){ //현재 컴포넌트가 생성되자 마자 initialize를 수행하라는 의미
-      this.initialize()
+      // this.initialize()
+      this.loadMore();
     },
 
     computed: {
@@ -107,6 +111,17 @@ export default {
     },
 
     methods:{
+    afterselection(name){
+      console.log(name);
+      this.$nextTick(() => {
+        this.area = ""  
+      })
+    },
+    clearOneField() {
+  this.$nextTick(() => {
+        this.area = null  
+      })
+},
       initialize(){//DB와 연동
         axios.get('http://localhost:1234/showDaySitters')
           .then(res => {
@@ -114,7 +129,6 @@ export default {
             //console.log(res);
           })
           .catch(err => {
-            // handle error
             console.log(err);
           })
       },
@@ -124,16 +138,6 @@ export default {
 
         this.$router.push({path: '/daysitters/' + sitterNo})
       },
-      // searchAddress(area){
-      //   console.log(area)
-      //   axios.get(`http://localhost:1234/showSitterByAddress/daySitter/${area}`)
-      //     .then(res => {
-      //       this.sitterList = res.data
-      //       console.log(res);
-      //     }).catch(err => {
-      //       console.log(err);
-      //     })
-      // },
       searchDate(date){
         console.log(date);
         console.log("searchdate")
@@ -144,6 +148,22 @@ export default {
           }).catch(err => {
             console.log(err)
           })
+      },
+      loadMore() {
+        if(! this.busy){
+        this.busy = true;
+        axios.get('http://localhost:1234/showDaySitters')
+          .then(res => {
+            const append = res.data.slice(this.sitterList.length,this.sitterList.length + this.limit )         
+            this.sitterList = this.sitterList.concat(append);
+            this.busy=false;
+          })
+          .catch(err => {
+            console.log(err);
+            this.busy=false;
+          })
+        }
+          
       }
 
     }
