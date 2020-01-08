@@ -1,8 +1,8 @@
 <template>
 <v-container>
-  {{no}}
+  {{schedule}}
   <full-calendar :events="schedule" locale="ko"
-      @eventClick="showDetail(no)"
+      @eventClick="showDetail(schedule.t)"
   >
   </full-calendar> 
 </v-container>
@@ -57,6 +57,7 @@ export default {
               range.start=res.data[i].startTime.split(" ")[0]
               range.end=res.data[i].endTime.split(" ")[0]
               this.no = res.data[i].paymentNo
+              range.t = res.data[i].paymentNo
               this.schedule.push(range)
             }
           })
@@ -65,8 +66,8 @@ export default {
           })
       },
       //배열의 인덱스로
-      showDetail(no){
-        const paymentNo = this.no
+      showDetail(t){
+        const paymentNo = this.schedule.paymentNo
         this.$router.push({path: '/sMyPage/sitterReservationDetail/' + paymentNo})
       },
 
