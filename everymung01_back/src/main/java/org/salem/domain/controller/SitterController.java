@@ -100,8 +100,10 @@ public class SitterController {
     @PostMapping("/upload-file/{kind}/{sitterEmail}")
     @ResponseBody
     public FileResponse uploadFile(@PathVariable("kind") String kind, @PathVariable("sitterEmail") String sitterEmail, @RequestParam("file") MultipartFile file) {
+    	if(file == null) {
+    		return new FileResponse("default.jpg","zz","zz",1);
+    	}
     	SitterVO sitter = sitterMapper.showUserDetailLogin(sitterEmail);
-    	System.out.println(sitter);
     	String name = storageService.store(file,sitterEmail);
         String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/download/")

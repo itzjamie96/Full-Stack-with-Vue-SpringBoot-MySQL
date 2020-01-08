@@ -59,7 +59,7 @@
 	<update id="updateSitterInfo" parameterType="SitterVO">
 		UPDATE sitter 
 		SET sitterName=#{sitterName}, sitterEmail=#{sitterEmail}, sitterPw=#{sitterPw},
-			sitterPhone=#{sitterPhone}, sitterAddress=#{sitterAddress}
+			sitterPhone=#{sitterPhone}, sitterAddress=#{sitterAddress}, lat=#{lat}, lng=#{lng}
 		WHERE sitterEmail=#{sitterEmail}
 	</update>
 	

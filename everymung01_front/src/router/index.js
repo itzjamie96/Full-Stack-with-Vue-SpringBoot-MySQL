@@ -11,7 +11,7 @@ import UserPetDetail from '../views/Mypage/User/UserPetDetail'
 Vue.use(VueRouter)
     //어드민 라우터 가드
 const adminRouteG = (to, from, next) => {
-    localStorage.getItem('email') !== null && localStorage.getItem('role') !== 'Admin' ? next('/') : next()
+    localStorage.getItem('email') !== null || localStorage.getItem('role') !== 'Admin' ? next('/') : next()
 }
 const adminRouteMG = (to, from, next) => {
     localStorage.getItem('email') !== null && localStorage.getItem('role') === 'Admin' ? next('/admin') : next()

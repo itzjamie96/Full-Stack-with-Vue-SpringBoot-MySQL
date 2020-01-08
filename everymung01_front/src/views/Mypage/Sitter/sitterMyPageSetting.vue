@@ -79,9 +79,14 @@
                             <v-row justify="center">
                                 <v-col cols="3">
                                     <v-text-field
+                                    :disabled="userInfo.sittingNo===2"
                                     v-model="sitterInfo.sitterAddress"
                                     label=" 주소 "
                                     ></v-text-field>
+                                <v-btn
+                                v-if="userInfo.sittingNo===2"
+                                @click="upHomeAdd"
+                                >주소 수정</v-btn>
                                 </v-col>
                             </v-row>
          
@@ -92,6 +97,62 @@
                     </v-card>
                 </v-col> 
             </v-row>
+             <v-dialog
+                v-model="homeSitterAdd"
+                max-width= 800
+                max-height= 500
+                >
+                <v-card>
+                    <div class="ml-12">
+                    <v-card-title class="headline">홈 시터 주소 수정</v-card-title>
+                    <GmapMap style="width: 600px; height: 300px;" :zoom="14" :center="{lat:sitterInfo.lat,lng:sitterInfo.lng}">
+                    <gmap-circle ref="circle" :radius="800" :center='{lat:sitterInfo.lat,lng:sitterInfo.lng}' :draggable='true' :editable='true' >
+                        </gmap-circle>
+                    </GmapMap>
+                    <label>
+                        시/구/동 주소 입력:
+                        <GmapAutocomplete @place_changed="setPlace" id="lsm" class="mx-4">
+                        </GmapAutocomplete>
+                        <v-btn class="mx-12" text @click="usePlace" outlined>주소 입력</v-btn>
+                        </label>
+                    </div>
+                    <v-row justify="center">
+                                <v-col cols="8">
+                                    <v-text-field
+                                    :disabled="true"
+                                    v-model="sitterInfo.sitterAddress"
+                                    label=" 주소 "
+                                    ></v-text-field>
+                                </v-col>
+                            </v-row>
+                            <v-row justify="center">
+                                <v-col cols="8">
+                                    <v-text-field
+                                    v-model="sitterInfo.sitterAddress"
+                                    label=" 상세 주소 "
+                                    ></v-text-field>
+                                </v-col>
+                            </v-row>
+                    <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        color="green darken-1"
+                        text
+                        @click="homeSitterAdd = false"
+                    >
+                        Disagree
+                    </v-btn>
+
+                    <v-btn
+                        color="green darken-1"
+                        text
+                        @click="homeSitterAdd = false"
+                    >
+                        Agree
+                    </v-btn>
+                    </v-card-actions>
+                </v-card>
+                </v-dialog>
     </v-container>
 </template>
 
@@ -109,6 +170,10 @@ export default {
     
     data(){
         return{
+            ///
+            place:null,
+            homeSitterAdd:false,
+            /////
             show1:false,
             rules: {
              required: value => !!value || 'Required.',
@@ -120,7 +185,9 @@ export default {
                 sitterEmail:'',
                 sitterPw:'',
                 sitterPhone:'',
-                sitterAddress:''
+                sitterAddress:'',
+                lat:37.496361445796694,
+                lng:127.05750504049766
             },
             imageData:'',
             img:'',
@@ -139,6 +206,10 @@ export default {
     },
 
     methods:{
+        upHomeAdd(){
+        this.homeSitterAdd =true
+        
+        },
         userInfoReading(e){
            this.$store.commit('userInfoReading', e.target.value)
            console.log(e)
@@ -189,6 +260,18 @@ export default {
                 reader.readAsDataURL(input.files[0]);
             }
         },
+        setPlace(place) {
+      this.place=place
+      
+    },
+    usePlace(place) {
+      this.sitterInfo.sitterAddress = this.place.formatted_address
+      if (this.place) {
+        this.sitterInfo.lat=this.place.geometry.location.lat()
+        this.sitterInfo.lng=this.place.geometry.location.lng()
+        this.place = null;
+      }
+    },
     }
     
 }
@@ -205,5 +288,8 @@ export default {
     border: 1px solid #DDD;
     padding: 5px;
 }
+    #lsm{
+        width: 280px
+    }
 </style>
 
