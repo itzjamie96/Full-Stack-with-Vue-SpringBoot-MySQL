@@ -12,7 +12,14 @@ import PubNubVue from 'pubnub-vue';
 import '@mdi/font/css/materialdesignicons.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import fullCalendar from 'vue-fullcalendar'
+import * as VueGoogleMaps from "vue2-google-maps";
 
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: "AIzaSyAJ9a1JG4Adnk_2xnf51QdCx_JKi_5L60g",
+    libraries: "places" // necessary for places input
+  }
+});
 Vue.component('full-calendar', fullCalendar)
 
 

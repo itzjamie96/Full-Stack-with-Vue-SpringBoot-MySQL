@@ -9,10 +9,15 @@
             <v-row>
                 <v-col cols="6">
                     <sitter-profile/> 
+                    
                 </v-col>
                 
                 <v-col cols="6">
                     <new-reservation/>
+                    <GmapMap style="width: 600px; height: 300px;" :zoom="14" :center="lsm">
+                        <gmap-circle ref="circle" :radius="1000" :center='lsm' :draggable='true' :editable='true' >
+                            </gmap-circle>
+                        </GmapMap>
                 </v-col>
             </v-row>
             
@@ -41,7 +46,23 @@ export default {
        'sitter-img' : SitterImg,
        'new-reservation' : NewReservation,
        'review' : Review
-   }
+   },
+   data(){
+       return{
+           lsm:{lat:37.496361445796694,lng: 127.05750504049766},
+       }
+   },
+   created() {
+       this.$http.get('http://localhost:1234/showSitterDetail/'+this.$route.params.sitterNo) 
+              .then(res => { 
+                  this.lsm.lat=res.data.lat
+                  this.lsm.lng=res.data.lng
+                }) 
+              .catch(err => { 
+                console.log(err)
+
+              });
+   },
 }
 
 </script>

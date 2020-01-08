@@ -111,11 +111,24 @@
             required
           ></v-text-field>
 
-          <VueDaumPostcode 
+          <!-- <VueDaumPostcode 
           style="height: 200px; overflow: scroll;"
           @complete="SitterVO.sitterAddress = $event.roadAddress"
           />
-
+ -->
+    
+            <label class="ml-12">
+      시/구/동 입력
+      <GmapAutocomplete 
+      @place_changed="setPlace">
+      </GmapAutocomplete>
+      <button @click="usePlace">Add</button>
+    </label>
+    <br/>
+    <GmapMap style="width: 800px; height: 400px;" :zoom="14" :center="{lat:SitterVO.lat,lng:SitterVO.lng}">
+      <gmap-circle ref="circle" :radius="1000" :center='{lat:SitterVO.lat,lng:SitterVO.lng}' :draggable='true' :editable='true' >
+                            </gmap-circle>
+    </GmapMap>
             <v-text-field
             :disabled="SitterVO.sitterAddress === null"
             v-model="SitterVO.sitterAddress"
@@ -190,6 +203,10 @@ export default {
   
   data(){
     return{
+/////////////////////////////////////////////////////구글맵
+      place: null,
+      lsm:{lat:37.496361445796694,lng: 127.05750504049766},
+/////////////////////////////////////////////////////구글맵
       Trigger:{
         Name:false,
         Phone:false,
@@ -222,7 +239,9 @@ export default {
         sitterPhone:'',
         sitterAddress:null,
         possibleDay:'',
-      profile:'',
+        profile:'',
+        lat:37.496361445796694,
+        lng: 127.05750504049766,
       },
       //자기소개
       //
@@ -256,6 +275,18 @@ export default {
     }
   },
   methods:{
+    setPlace(place) {
+      this.place=place
+      
+    },
+    usePlace(place) {
+      this.SitterVO.sitterAddress = this.place.formatted_address
+      if (this.place) {
+        this.SitterVO.lat=this.place.geometry.location.lat()
+        this.SitterVO.lng=this.place.geometry.location.lng()
+        this.place = null;
+      }
+    },
     submit($router){
       let trigger=null
        let sitterEmail = this.SitterVO.sitterEmail

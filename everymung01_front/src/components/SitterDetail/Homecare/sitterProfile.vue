@@ -16,7 +16,7 @@
                     </router-link>
                     <v-list-item-content>
                         <v-list-item-title class="headline mb-1">{{sitterObj.sitterName}}</v-list-item-title>
-                        <v-list-item-subtitle>{{sitterObj.sitterAddress.slice(0,7)}}</v-list-item-subtitle>
+                        <v-list-item-subtitle>{{SitterAdd}}</v-list-item-subtitle>
                         <v-list-item-subtitle>{{sitterObj.profileTitle}}</v-list-item-subtitle>
                     </v-list-item-content>
                 </v-list-item>
@@ -90,7 +90,10 @@ export default {
        sitterNo() {
            return this.$route.params.sitterNo
        },
-    
+        SitterAdd(){
+            let lsm = String(this.sitterObj.sitterAddress).slice(0,7)
+            return lsm
+        }
    },
    methods: {
        initialize() {

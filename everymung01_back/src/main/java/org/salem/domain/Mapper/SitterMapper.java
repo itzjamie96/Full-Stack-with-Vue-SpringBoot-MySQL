@@ -31,9 +31,9 @@ public interface SitterMapper {
    @Select("select * from sitter JOIN sitting_type AS type ON (sitter.sittingNo = type.sittingNo) where sitterEmail=#{sitterEmail}") //시터 로긴 & 새로고침 관련
    public SitterVO showUserDetailLogin(@Param("sitterEmail") String sitterEmail);
    
-   @Insert("INSERT INTO sitter (sittingNo,sitterEmail,sitterName,sitterPw,sitterPhone,sitterAddress,sitterImg1,sitterImg2,sitterImg3,sitterImg4,sitterImg5,possibleDay,sitterGender,sitterAge,profile,petProfile,identityCheck,qualificationCheck,approvalStatus,approvalDate)" + 
+   @Insert("INSERT INTO sitter (sittingNo,sitterEmail,sitterName,sitterPw,sitterPhone,sitterAddress,sitterImg1,sitterImg2,sitterImg3,sitterImg4,sitterImg5,possibleDay,sitterGender,sitterAge,profile,petProfile,identityCheck,qualificationCheck,approvalStatus,approvalDate,lat,lng)" + 
          " VALUES" + 
-         " (#{sittingNo},#{sitterEmail},#{sitterName},#{sitterPw},#{sitterPhone},#{sitterAddress},#{sitterImg1},#{sitterImg2},#{sitterImg3},#{sitterImg4},#{sitterImg5},#{possibleDay},#{sitterGender},#{sitterAge},#{profile},'펫소개',1,1,0,sysdate())")
+         " (#{sittingNo},#{sitterEmail},#{sitterName},#{sitterPw},#{sitterPhone},#{sitterAddress},#{sitterImg1},#{sitterImg2},#{sitterImg3},#{sitterImg4},#{sitterImg5},#{possibleDay},#{sitterGender},#{sitterAge},#{profile},'펫소개',1,1,0,sysdate(),#{lat},#{lng})")
    public Integer addSitter(SitterVO vo);
    
    @Update("update sitter set identityCheck=#{identityCheck},qualificationCheck=#{qualificationCheck}, sitterImg1=#{sitterImg1}, sitterImg2=#{sitterImg2}, sitterImg3=#{sitterImg3}, sitterImg4=#{sitterImg4}, sitterImg5=#{sitterImg5} where sitterEmail=#{sitterEmail}")
