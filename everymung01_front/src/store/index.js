@@ -23,7 +23,7 @@ export default new Vuex.Store({
         //admin 승인대기 count
         count:'0',
         //admin 미답변 count
-        boardcount:'',
+        boardcount:'0',
 
         //메인페이지 사진 박아놓은 예시
         mainPics: [{

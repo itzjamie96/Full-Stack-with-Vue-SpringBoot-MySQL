@@ -59,9 +59,9 @@
             <v-list-item-title>
                 승인대기
               <v-badge
-                v-if="approvalCnt!=='0'"
+                v-if="approvalcnt!=='0'"
                 color="red"
-                :content='approvalCnt'
+                :content='approvalcnt'
                 inline
               >
               </v-badge>
@@ -80,8 +80,9 @@
             <v-list-item-title>
               게시판 관리
               <v-badge
+                v-if="boardcnt!=='0'"
                 color="red"
-                :content='boardCnt'
+                :content='boardcnt'
                 inline
               >
               </v-badge>
@@ -154,10 +155,10 @@ import { eventBus } from '../main'
     computed:{
       ...mapState(["trigger",'count','boardcount']),
       
-      approvalCnt(){
+      approvalcnt(){
         return this.count
       },
-      boardCnt(){
+      boardcnt(){
         return this.boardcount
       }
     },
@@ -167,7 +168,7 @@ import { eventBus } from '../main'
       boardCtn() {
         this.$http.get(`http://localhost:1234/falseBoard`)
           .then( res => {
-            this.boardInfo(res.data.length)
+            this.boardInfo(String(res.data.length))
           })
           .catch( err => {
             alert(err+"\n"+"Admin-main(boardCtn) 에러")

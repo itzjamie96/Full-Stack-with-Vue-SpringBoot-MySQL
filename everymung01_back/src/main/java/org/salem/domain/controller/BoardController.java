@@ -65,15 +65,18 @@ public class BoardController {
 	
 	//관리자페이지 삭제버튼
 	@PostMapping("/deleteBoardByMngr") // {id}
-	public int deleteBoardByMngr(@RequestBody BoardVO boardVo) { // URI의 일부를 변수로 전달할 수 있다 //String id = "id" // @PathVariable
+	public void deleteBoardByMngr(@RequestBody BoardVO boardVo) { // URI의 일부를 변수로 전달할 수 있다 //String id = "id" // @PathVariable
 		System.out.println(boardVo);
-		return mapper.deleteBoardByMngr(boardVo.getGroupNo());
+		if(boardVo.getUserNo() == 0) {
+			 mapper.deleteReply(boardVo.getBoardNo());
+			 mapper.updateStatus(boardVo);
+		}else
+			 mapper.deleteBoardByMngr(boardVo.getGroupNo());
 	}
 	
 	//관리자페이지 답글수정
 	@PostMapping("/updateBoardByMngr")
 	public int updateBoardByMngr(@RequestBody BoardVO boardVo) {
-		System.out.println(boardVo);
 		return mapper.updateBoardByMngr(boardVo);
 	}
 

@@ -279,9 +279,6 @@ export default {
      this.sitter.identityCheck ='http://localhost:1234/download/'+ params.row.identityCheck
      this.sitter.qualificationCheck = 'http://localhost:1234/download/'+ params.row.qualificationCheck
      this.sitter.possibleDay = params.row.possibleDay.split(',')
-     /* console.log(this.sitter.possibleDay[3])
-     console.log(this.sitter.possibleDay[2])
-     console.log(this.sitter.possibleDay[1]) */
      this.sitter.profile = params.row.profile
   },
   selectAll(){
@@ -296,7 +293,7 @@ export default {
      
   },
   delet(sitterNo){
-    let cnt = Number(this.count)
+    let cnt = this.count
     this.dialog=false
     this.deleteAlert=false
     const No = sitterNo
@@ -314,7 +311,7 @@ export default {
 
   },
   update(){
-     let cnt = Number(this.count)
+     let cnt = this.count
      this.dialog=false
      this.updateAlert=false
      this.sitter.possibleDay=String(this.sitter.possibleDay)

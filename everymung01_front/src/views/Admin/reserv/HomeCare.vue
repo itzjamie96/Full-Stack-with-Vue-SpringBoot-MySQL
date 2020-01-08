@@ -152,13 +152,11 @@ export default {
                   timeG+="~"+String(res.data[sitterT].endTime).split(" ")[1]
                   console.log(lsm[1])
                   res.data[sitterT].endTime=timeG
-                  /* res.data[sitterT].endTime */
                   
                   
                   this.rows.push(res.data[sitterT])
                   console.log(this.rows)
                   
-                  //console.log(this.rows)
                   }
                   }
 

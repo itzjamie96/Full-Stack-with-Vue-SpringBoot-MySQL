@@ -27,11 +27,19 @@
                 <v-text-field label="Name" v-model="board.userName" disabled></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="Title" v-model="board.title" disabled></v-text-field>
+                <v-text-field label="Title" v-model="board.title" readonly></v-text-field>
               </v-col>
-              <v-col cols="12">
-                <v-text-field label="Content" v-model="board.content" disabled></v-text-field>
-              </v-col>
+              <!-- <v-col cols="12">
+                <v-text-field label="Content" v-model="board.content" readonly></v-text-field>
+              </v-col> --> 
+              <v-textarea
+                cols="12"
+                outlined
+                label="Content"
+                v-model="board.content" 
+                readonly
+              >
+              </v-textarea>
               <v-col cols="12">
                 <v-text-field label="Date" v-model="board.boardDate" disabled ></v-text-field>
               </v-col>
@@ -63,8 +71,8 @@
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="dialog = false,content=null">확인</v-btn>
           <v-btn color="blue darken-1" text @click.native="deleteAlert=true">삭제</v-btn>
-          <v-btn color="blue darken-1" text @click.native="updateAlert=true">수정</v-btn>
-          <v-btn color="blue darken-1" text @click="reply(content)">답변달기</v-btn>
+          <v-btn color="blue darken-1" text @click.native="updateAlert=true" v-if="board.userNo === 0">답글수정</v-btn>
+          <v-btn color="blue darken-1" text @click="reply(content)" v-if="board.userNo !== 0">답변달기</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -150,7 +158,6 @@ export default {
         this.$http.get(`http://localhost:1234/showAdminBoards`)
             .then( res =>{
               this.rows = res.data
-
             })
             .catch(err => {
               alert(err+"\n"+"Admin-Board(selectAll) 에러")
@@ -159,44 +166,55 @@ export default {
     },
     delet(status){
       let cnt = this.boardcount
-      this.dialog=false
-      this.deleteAlert=false
+      this.board.status = false
       const boardNo = this.board.boardNo
       const groupNo = this.board.groupNo
       
-      if(status === false) {
+      if(status === false) { // 게시판 원글만 삭제
         this.$http.post(`http://localhost:1234/deleteBoardByMngr`,this.board)
               .then(res =>{
+                console.log(trig)
                   const idx = this.rows.findIndex(x => x.boardNo === boardNo)
                   this.dialog=false
+                  this.deleteAlert=false
                   this.rows.splice(idx, 1)
                   cnt--
-                  this.boardInfo(cnt)
+                  this.boardInfo(String(cnt))
                 }).catch(err =>{
                   alert(err+"\n"+"Admin-Board(delet) 에러")
                 })
-      }else{
+      }else{ 
+        if(this.board.userNo===0){ // 댓글만 삭제
         this.$http.post(`http://localhost:1234/deleteBoardByMngr`,this.board)
               .then(res =>{
-                  const idx = this.rows.findIndex(x => x.boardNo === boardNo)
-                  const idx2 = this.rows.findIndex(x => x.groupNo === groupNo)
+                  cnt++
+                  this.boardInfo(String(cnt))
+                  this.selectAll();
                   this.dialog=false
-                  this.rows.splice(idx, 1)
-                  this.rows.splice(idx2, 1)
+                  this.deleteAlert=false
                 }).catch(err =>{
                   alert(err+"\n"+"Admin-Board(delet) 에러")
-                })
+                })}
+          else{ // 원글+댓글 삭제
+            this.$http.post(`http://localhost:1234/deleteBoardByMngr`,this.board)
+                .then(res =>{
+                    this.selectAll();
+                    this.dialog=false
+                    this.deleteAlert=false
+                  }).catch(err =>{
+                    alert(err+"\n"+"Admin-Board(delet) 에러")
+                  })
+                  }
         
       }
       
-
     },
     update(content){
       this.board.content = content
-      this.dialog=false
-      this.updateAlert=false
       this.$http.post(`http://localhost:1234/updateBoardByMngr`,this.board)
               .then(res =>{
+                  this.dialog=false
+                  this.updateAlert=false
                   this.selectAll();
                   this.content=null
                 }).catch(err =>{
@@ -208,13 +226,13 @@ export default {
       this.board.title = "ㄴRE:  "+this.board.title
       this.board.status = true
       this.board.content = content
-      this.dialog=false
       this.$http.post('http://localhost:1234/insertReply',this.board) 
                 .then(res => { 
                   this.selectAll();
+                  this.dialog=false
                   this.content=null
                   cnt--
-                  this.boardInfo(cnt)
+                  this.boardInfo(String(cnt))
                 }) 
                 .catch(err => { 
                   alert(err+"\n"+"Admin-Board(reply) 에러")

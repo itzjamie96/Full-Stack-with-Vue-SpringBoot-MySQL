@@ -11,8 +11,8 @@
    <v-card-text class="pt-12">
       <br><br>
        <v-btn text router :to="{name: 'admindaycare'}" exact>
-        <!-- <v-icon size="100px">mdi-run</v-icon> -->
-        <i class="fas fa-running fa-5x"></i>
+        <v-icon size="100px">mdi-run</v-icon>
+        <!-- <i class="fas fa-running fa-5x"></i> -->
       </v-btn>
       <b class="display-1 text--primary font-weight-black">하루</b>
         <div class="text-center pl-12 ml-12">
@@ -32,7 +32,7 @@
       <br><br>
        <v-btn text router :to="{name: 'adminhomecare'}" exact>
         <!-- <v-icon size="100px">mdi-home</v-icon>  -->
-        <i class="fas fa-home fa-5x"></i> 
+        <i class="fas fa-home fa-5x"></i>
       </v-btn>
       <b class="display-1 text--primary font-weight-black">위탁</b>
       <div class="text-center pl-12 ml-12">
