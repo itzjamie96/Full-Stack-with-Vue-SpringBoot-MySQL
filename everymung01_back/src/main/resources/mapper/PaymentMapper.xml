@@ -56,7 +56,8 @@
 	</select>
 	
 	<select id="test1" resultType="TestVO" parameterType="string">
-		select u.userName, u.userEmail, u.userPhone, u.userAddress, pay.paymentNo, pay.startTime, pay.endTime, s.sitterName,s.sitterPhone, st.sittingType
+		select u.userName, u.userEmail, u.userPhone, u.userAddress, pay.paymentNo, pay.startTime, pay.endTime, s.sitterName, s.sitterPhone, 
+		st.sittingType, s.sitterEmail
         from users u 
         inner join pet p on u.userNo=p.userNo
         inner join reservation r on p.petNo=r.petNo

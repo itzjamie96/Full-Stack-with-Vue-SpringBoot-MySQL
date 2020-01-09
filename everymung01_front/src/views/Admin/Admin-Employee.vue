@@ -133,10 +133,12 @@ export default {
         {
           label: '이름',
           field: 'sitterName',
+          width: '80px',
         },
         {
           label: '나이',
           field: 'sitterAge',
+          width: '70px',
         },
         {
           label: '이메일',
@@ -153,10 +155,12 @@ export default {
         {
           label: '날짜',
           field: 'approvalDate',
+          width: '180px',
         },
         {
           label: '시터종류',
           field: 'sittingType',
+          width: '110px',
         },
         
       ],

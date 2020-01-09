@@ -20,26 +20,40 @@
         </v-card-title>
         <v-card-text>
           <v-container>
+            <span>예약자</span>
             <v-row>
               <v-col cols="12">
-                <v-text-field label="Name"  v-model="home.userName" ></v-text-field>
+                <v-text-field label="Name"  v-model="home.userName" readonly ></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="Email" v-model="home.userEmail" ></v-text-field>
+                <v-text-field label="Email" v-model="home.userEmail" readonly ></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="Phone" v-model="home.userPhone" ></v-text-field>
+                <v-text-field label="Phone" v-model="home.userPhone" readonly ></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="Address" v-model="home.userAddress" ></v-text-field>
+                <v-text-field label="Address" v-model="home.userAddress" readonly ></v-text-field>
               </v-col>
               <v-col cols="12">
                 <v-text-field label="Date" v-model="home.startTime" readonly></v-text-field>
               </v-col>
+              <span class="ml-3">시터</span>
+              <v-col cols="12">
+                <v-text-field label="SitterName" v-model="home.sitterName" readonly></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field label="Phone" v-model="home.sitterPhone" readonly></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field label="Email" v-model="home.sitterEmail" readonly></v-text-field>
+              </v-col>
+              <v-col cols="12">
+                <v-text-field label="Type" v-model="home.sittingType" readonly></v-text-field>
+              </v-col>
             </v-row>
           </v-container>
         </v-card-text>
-        <v-card-text v-if="deleteAlert">
+        <!-- <v-card-text v-if="deleteAlert">
             <v-alert v-model="deleteAlert" type="warning">
               <h4>정말 삭제 하시겠습니까?</h4>
               <v-btn class="mr-4"  color="error" @click="delet(user.userNo)">확인</v-btn>
@@ -52,12 +66,12 @@
               <v-btn class="mr-4"  color="error" @click="update()">확인</v-btn>
               <v-btn color="secondary" @click="updateAlert=false">취소</v-btn>
             </v-alert>
-        </v-card-text>
+        </v-card-text> -->
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="dialog = false">확인</v-btn>
-          <v-btn color="blue darken-1" text @click.native="deleteAlert=true">삭제</v-btn>
-          <v-btn color="blue darken-1" text @click.native="updateAlert=true">수정</v-btn>
+          <!-- <v-btn color="blue darken-1" text @click.native="deleteAlert=true">삭제</v-btn>
+          <v-btn color="blue darken-1" text @click.native="updateAlert=true">수정</v-btn> -->
         </v-card-actions>
         
         
@@ -89,32 +103,31 @@ export default {
        endTime:'',
        sitterName:'',
        sitterPhone:'',
+       sitterEmail:'',
        sittingType:'',
        },
       columns: [
         {
-          label: 'payNo',
-          field: 'paymentNo',
-        },
-        {
-          label: 'User',
+          label: '이름',
           field: 'userName',
+          width: '80px',
         },
         {
-          label: 'Email',
+          label: '이메일',
           field: 'userEmail',
         },
         {
-          label: 'Phone',
+          label: '휴대번호',
           field: 'userPhone',
         },
         {
-          label: 'Address',
+          label: '주소',
           field: 'userAddress',
         },
         {
           label: '예약날짜',
           field: 'startTime',
+          width: '110px',
         },
         {
           label: '예약시간',
@@ -123,6 +136,7 @@ export default {
         {
           label: '시터',
           field: 'sitterName',
+          width: '80px',
         },
         {
           label: '시터번호',
@@ -131,6 +145,7 @@ export default {
         {
           label: '타입',
           field: 'sittingType',
+          width: '80px',
         },
         
       ],
@@ -177,6 +192,11 @@ export default {
      this.home.userAddress = params.row.userAddress
      this.home.userProfile = params.row.userProfile
      this.home.startTime = params.row.startTime
+     this.home.sitterName = params.row.sitterName
+     this.home.sitterPhone = params.row.sitterPhone
+     this.home.sitterEmail = params.row.sitterEmail
+     this.home.sittingType = params.row.sittingType
+
   },
   delet(userNo){
      this.dialog=false

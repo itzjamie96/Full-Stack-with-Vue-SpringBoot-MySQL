@@ -23,7 +23,7 @@
             <v-icon>mdi-home</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title>예약관리</v-list-item-title>
+            <v-list-item-title>예약현황</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
         

@@ -218,7 +218,7 @@ import * as FormData from 'form-data'
                               zz >=dddate && zz<=ddate &&res.data[i].sittingNo===2?this.home.push(res.data[i]):''
                             }
                           this.chartDataA.rows.push({'date':'User','sales':this.user.length},
-                          {'date':'Home','sales':this.home.length},{'date':'DayCare','sales':this.daycare.length})
+                          {'date':'HomeCare','sales':this.home.length},{'date':'DayCare','sales':this.daycare.length})
                       })
                         .catch(err => { 
                           alert(err+"\n"+"Admin-Home(showAllSitters) 에러1")
@@ -233,7 +233,7 @@ import * as FormData from 'form-data'
                                                     res.data[i].sittingNo===2?this.home.push(res.data[i]):''
                                                   }
                                                 this.chartDataA.rows.push({'date':'User','sales':this.user.length},
-                                                {'date':'Home','sales':this.home.length},{'date':'DayCare','sales':this.daycare.length})
+                                                {'date':'HomeCare','sales':this.home.length},{'date':'DayCare','sales':this.daycare.length})
                                             })
                                               .catch(err => { 
                                                 alert(err+"\n"+"Admin-Home(showAllSitters) 에러2")

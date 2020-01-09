@@ -100,6 +100,7 @@ public class UsersController {
 	//회원 삭제 하기 
 	@PostMapping("/deleteUser/{userNo}")
 	public int deleteUser(@PathVariable int userNo) {
+		System.out.println(userNo);
 		return mapper.deleteUser(userNo);
 	}
 	
