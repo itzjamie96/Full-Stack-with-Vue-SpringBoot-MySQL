@@ -1,17 +1,16 @@
 <template>
-   <v-container fluid="" class="fill-height">
-       <v-row class="fill-height">
-        <v-col cols="3">
+<v-container class="pt-12">
+    <v-row >
+        <v-col cols="3" class="mr-3"> 
           <side-bar/>   
         </v-col>
-        <v-col cols="9">
-            <v-row>
-             <v-btn router :to="{name:'myPetDetail'}"> 반려견 추가하기 </v-btn>
+        <v-col cols="8" class="ml-12">
+            <v-row class="ml-1">
+                <v-btn router :to="{name:'myPetDetail'}"> 반려견 추가하기 </v-btn>
             </v-row>
-            
                 <v-card
                 class="mb-4 mt-2"
-                width="70%"
+                width="50%"
                 outlined
                 v-for="(userPet,index) in userPetList"
                 :key="index"
@@ -36,7 +35,7 @@
                         <p v-else>
                           ( {{userPet.dogBreed}}, 암컷 ,만{{userPet.petAge}}살 ) 
                         </p>
-                        <v-col class="text-reft">
+                        <v-col class="text-left">
                         <v-btn large color
                         @click="itemView(userPet,index)"
                         >상세보기</v-btn>

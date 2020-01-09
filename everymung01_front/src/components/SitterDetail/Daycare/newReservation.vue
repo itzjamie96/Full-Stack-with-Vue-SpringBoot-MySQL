@@ -1,15 +1,13 @@
 <template>
-    <div>
+    <div class="px-6 mx-3">
         
         <v-card 
-                color="green"
                 height="100%"
-                class="mb-5"
+                class="mb-5 pb-3"
         >
-        {{usersPets}}
             <v-form @submit.prevent="onNewReservation" >
-                <v-row justify="center">
-                    <v-col cols="12" sm="10">
+                <v-row class="justify-center pt-3">
+                    <v-col cols="10">
                         <v-select 
                             v-model="usersPets"
                             v-bind:items="petList"
@@ -22,11 +20,12 @@
                             id="usersPets"
                             return-object
                             :clearable="true"
+                            color="red lighten-1"
                         ></v-select>
                     </v-col>
                 </v-row>
 
-                <v-row class="mb-3" justify="center">
+                <v-row class="mb-3 justify-center">
                     <v-col cols="10">
                         <v-menu
                             v-model="menu1"
@@ -34,6 +33,7 @@
                             transition="scale-transition"
                             offset-y
                             min-width="290px"
+                            color="red lighten-1"
                         >
                             <template v-slot:activator="{ on }">
                                 <v-text-field
@@ -41,20 +41,22 @@
                                 label="날짜를 선택하세요"
                                 readonly
                                 v-on="on"
+                                color="red lighten-1"
                                 ></v-text-field>
                             </template>
-                            <v-date-picker v-model="date" @input="menu1 = false" :min="date"></v-date-picker>
+                            <v-date-picker v-model="date" @input="menu1 = false" :min="date" no-title="" color="red lighten-1"></v-date-picker>
                         </v-menu>
                     </v-col>
                 </v-row>
 
-                <v-row justify="center">
+                <v-row class="justify-center">
                     <v-col cols="5">
                         <v-select
                             :items="checkInTime"
                             label="체크인 시간"
                             v-model="startTime"
                             id="starTime"
+                            color="red lighten-1"
                         ></v-select>
                     </v-col>
                     <v-col cols="5">
@@ -63,55 +65,73 @@
                             label="체크아웃 시간"
                             v-model="endTime"
                             id="endTime"
+                            color="red lighten-1"
                         ></v-select>
                     </v-col>
                 </v-row>
 
-                <v-row justify="center">
+                <v-row class="justify-center">
                     <v-col cols="10">
                         <v-textarea
                         name="description"
                         label="Description"
                         id="description"
                         v-model="description"
+                        color="red lighten-1"
                         >   
                         </v-textarea>
                     </v-col>
                     
                 </v-row>
                 
-                <v-row justify="center" class="mb-5">
+                <v-row class="mb-5 justify-center">
                     <v-btn 
                     :disabled="!formIsValid"
                     type="submit"
                     >예약하기</v-btn>
                 </v-row>
             </v-form>
-
-            <v-row justify="center" class="mt-5">
-                <v-simple-table>
-                    <template>
-                   
-                    <thead>
-                        <tr>
-                            <th class="subtitle-1 font-weight-bold">체급</th>
-                            <th class="subtitle-1 font-weight-bold">시간 당 가격</th>
-                        </tr>
-                    </thead>
-                    <thead class="text-center">
-                        <tr
-                            v-for="price in price"
-                            :key="price.size"
-                        >
-                            <td>{{price.size}}</td>
-                            <td>{{price.cost}} 원</td>
-                        </tr>
-                    </thead>
-                   
-                    </template>
-                </v-simple-table>
+        </v-card>
+        <v-card outlined>
+            <v-row class="mt-5 justify-center">
+                <v-col class="title font-weight-bold text-center" cols="5">
+                    <p>체급</p>
+                </v-col>
+                <v-divider vertical class="mb-3"></v-divider>
+                <v-col class="title font-weight-bold text-center" cols="5">
+                    <p>시간 당 가격</p>
+                </v-col>
             </v-row>
 
+            <v-divider class="mx-8"></v-divider>
+            
+            <v-row class="justify-center">
+                <v-col class="text-center" 
+                    cols="5"
+                    >
+                    <v-row
+                        v-for="price in price"
+                        :key="price.size"
+                        class="justify-center my-2"
+                        >
+                        
+                    <p>{{price.size}}</p>
+
+                    </v-row>
+                </v-col>
+                <v-col class="text-center" cols="5">
+                    <v-row
+                        v-for="price in price"
+                        :key="price.size"
+                        class="justify-center my-2"
+                        >
+                        
+                    <p>{{price.cost}} 원</p>
+
+                    </v-row>
+                </v-col>
+            </v-row>            
+  
         </v-card>
     </div>
 </template>
@@ -144,15 +164,15 @@ export default {
         price: [ 
             {
                 size: '소형견',
-                cost: '5,000'
+                cost: '15,000'
             },
             {
                 size: '중형견',
-                cost: '6,000'
+                cost: '25,000'
             },
             {
                 size: '대형견',
-                cost: '7,000'
+                cost: '35,000'
             }
         ],
 

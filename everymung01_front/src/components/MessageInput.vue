@@ -2,7 +2,7 @@
   <div class="message-input">
     <textarea
       ref="messageInput"
-      placeholder="message..."
+      placeholder="메세지를 입력해주세요"
       maxlength="20000"
       @keydown.enter="submitMessage"
     ></textarea>
@@ -55,17 +55,18 @@ export default {
 }
 
 textarea {
-  width: 98%;
-  height: 30px;
+  width: 95%;
+  height: 120px;
   padding: 0 5px;
-  margin: 0;
+  margin: 0 5px 2px 7px;
   box-sizing: border-box;
   line-height: 20pt;
   resize: none;
   outline: none;
-  font-size: 14px;
-  border: solid 1px #AAAAAA;
-  border-radius: 3px;
-  font-family: Helvetica;
+  font-size: 15px;
+  /* border: solid 1px #AAAAAA; */
+  /* border-radius: 3px; */
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: rgba(255, 218, 185, 0.2);
 }
 </style>

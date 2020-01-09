@@ -1,11 +1,11 @@
 <template>
-   <v-container fluid="">
-      <v-row class="fill-height">
-         <v-col cols="3">
-            <side-bar/>   
-         </v-col>
-         <v-col cols="9">
-            <v-card>
+<v-container class="pt-12">
+    <v-row >
+        <v-col cols="3" class="mr-3"> 
+          <side-bar/>   
+        </v-col>
+        <v-col cols="8" class="ml-12">
+            <v-card max-width="70%">
                <form>
             <!-- 반려견 사진 -->
                   <div>
@@ -19,7 +19,7 @@
                               accept="image/*">
                   </div>
                      <div class="image-preview" v-if="imageData.length > 0">
-                        <img  class="preview" :src="imageData">
+                        <img  class="preview" :src="imageData" width="30%" height="30%">
                      </div>
                         </v-col>
                      </v-row>   
@@ -103,10 +103,12 @@
                               </v-radio-group>
                         </v-col>
                      </v-row>
+                     <v-divider class="mx-6"></v-divider>
                <!-- 반려견 답변 1 -->
+                     <h2 class="text-center pa-4">필수 답변 문항</h2>
                      <v-row justify="center" class="ml-12">
                         <v-col cols="5">
-                           <p> Q. 반려동물 등록을 하였습니까?(필수)  </p> 
+                           <p> Q. 반려동물 등록을 하였습니까?  </p> 
                               <v-radio-group v-model="petAnswerOne" column>
                                  <v-radio label="내장형 무선식별장치 개체삽입" value="내장형 무선식별장치 개체삽입"></v-radio>
                                  <v-radio label="외장형 무선식별장치 부착"    value="외장형 무선식별장치 부착"></v-radio>
@@ -119,7 +121,7 @@
                <!-- 반려견 답변 2-->
                      <v-row justify="center" class="ml-12">
                         <v-col cols="5">
-                           <p> Q. 다른 강아지와 친화적인가요?(필수)  </p>
+                           <p> Q. 다른 강아지와 친화적인가요?  </p>
                               <v-radio-group v-model="petAnswerTwo" row>
                                  <v-radio label="YES" value="1"></v-radio>
                                  <v-radio label="NO"  value="0"></v-radio>
@@ -129,7 +131,7 @@
                <!-- 반려견 답변 3-->
                      <v-row justify="center" class="ml-12">
                            <v-col cols="5">
-                              <p> Q. 필수 예방 접종을 완료하셨나요?(필수)  </p>
+                              <p> Q. 필수 예방 접종을 완료하셨나요?  </p>
                                  <v-radio-group v-model="petAnswerThree" row>
                                     <v-radio label="YES" value="1"></v-radio>
                                     <v-radio label="NO"  value="0"></v-radio>
@@ -140,7 +142,7 @@
                <!-- 반려견 답변 4-->
                      <v-row justify="center" class="ml-12">
                            <v-col cols="5">
-                              <p>Q. 기타 참고사항 및 특이사항(선택)</p>
+                              <p>Q. 기타 참고사항 및 특이사항</p>
                                  <v-textarea
                                  filled
                                  auto-grow

@@ -1,34 +1,35 @@
 <template>
     <div>
         <v-card
-            class="mx-auto mb-10"
-            max-width="95%"   
-            
+            class="ml-3 mb-10"
+            max-width="96%"   
+            elevation="0"
         >
             <v-list>
                 <v-list-item>
                     <router-link :to="{path:'/sitterProfilePage/' + sitterNo + '/' + sitterObj.sittingType}">
                     <v-list-item-avatar
                         size="120"
+                        color=""
                     >
                      <v-img :src="this.profileImg"> </v-img>
                     </v-list-item-avatar>
                     </router-link>
                     <v-list-item-content>
-                        <v-list-item-title class="headline mb-1">{{sitterObj.sitterName}}</v-list-item-title>
-                        <v-list-item-subtitle>{{SitterAdd}}</v-list-item-subtitle>
+                        <v-list-item-title class="mb-3" id="sit">{{sitterObj.sitterName}}</v-list-item-title>
+                        <v-list-item-title class="mb-3">{{sitterObj.sitterAddress.slice(0,7)}}</v-list-item-title>
                         <v-list-item-subtitle>{{sitterObj.profileTitle}}</v-list-item-subtitle>
                     </v-list-item-content>
                 </v-list-item>
             </v-list>
         </v-card>
-
-        <div class="headline mx-6">자격증 및 인증내용</div>
+        <v-divider class="mx-6"></v-divider>
+        <div class="ml-9 mt-2" id="certificate">자격증 및 인증내용</div>
         
         <v-card
             class="mx-auto mb-10"
-            max-width="92%"   
-            elevation="1"
+            max-width="91%"   
+            elevation="0"
         >
             <v-list>
                 <v-list-item >
@@ -36,10 +37,10 @@
                         size="50"
                         tile                       
                     >
-                    <i class="far fa-id-card fa-2x"></i>
+                    <i class="far fa-id-card fa-3x"></i>
                     </v-list-item-avatar>
                     <v-list-item-content>
-                        <v-list-item-title>신원 및 환경 검증 완료</v-list-item-title>
+                        <v-list-item-title id="text">신원 및 환경 검증 완료</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>    
             </v-list>
@@ -49,20 +50,20 @@
                         size="50"
                         tile                       
                     >
-                    <i class="fas fa-award fa-2x"></i>
+                    <i class="fas fa-award fa-3x"></i>
                     </v-list-item-avatar>
                     <v-list-item-content>
-                        <v-list-item-title>펫시터 전문가 교육 수료</v-list-item-title>
+                        <v-list-item-title id="text">펫시터 전문가 교육 수료</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>    
             </v-list>
         </v-card>
-        
-        <div class="headline mx-6">{{sitterObj.sitterName}} 펫시터 소개글</div>
+        <v-divider class="mx-6"></v-divider>
+        <div class="ml-9 mt-2" id="name">{{sitterObj.sitterName}} 펫시터 소개글</div>
         <v-card
-            class="mx-auto mb-10 mt-2"
-            max-width="92%"   
-            elevation="1"
+            class="ml-9 mb-10 mt-2"
+            max-width="91%"   
+            elevation="0"
         >
             <div>{{sitterObj.profile}}</div>
         </v-card>
@@ -116,3 +117,37 @@ export default {
    }
 }
 </script>
+
+<style>
+@import url('https://fonts.googleapis.com/css?family=Gugi|Jua|Single+Day&display=swap');
+@font-face { 
+  font-family: 'S-CoreDream-8Heavy'; 
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-8Heavy.woff') format('woff'); 
+  font-weight: normal; 
+  font-style: normal; 
+}
+@font-face { 
+  font-family: 'HangeulNuri-Bold'; 
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_three@1.0/HangeulNuri-Bold.woff') format('woff'); 
+  font-weight: normal; 
+  font-style: normal; }
+
+#certificate, #name{
+    font-size: 19pt;
+    font-weight: bold;
+    color: rgb(239, 83, 80);
+    font-family: 'HangeulNuri-Bold'; 
+    
+}
+#sit{
+    font-size: 19pt;
+    font-weight: bold;
+    font-family: 'HangeulNuri-Bold'; 
+}
+/* .fa-id-card, .fa-award{
+    color: rgb(239, 83, 80);
+} */
+#text{
+    font-size: 13pt;
+}
+</style>

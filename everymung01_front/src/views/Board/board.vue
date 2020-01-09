@@ -1,7 +1,7 @@
 <template>
 <v-container>
-  <v-row justify="center" >
-  <v-col>
+  <v-row class="justify-center">
+    <v-col cols="12">
       <!-- 테이블 -->
       <vue-good-table
       :columns="columns"
@@ -10,7 +10,7 @@
       max-height="500px"
       :line-numbers="true"
       :search-options="{
-          enabled: true,
+        enabled: true,
       }"
       :pagination-options="{
           enabled: true,
@@ -28,14 +28,16 @@
           allLabel: 'All',
     }"
     >  </vue-good-table>
-    <v-spacer></v-spacer>
+
     <!-- 글쓰기 버튼 -->
+    <v-row  class="justify-center mt-6">
     <div v-if="this.isLogin==false">
-      <v-btn  v-on:click="alert()" @click="$router.push({path: '/signin'})">글쓰기</v-btn>
+      <v-btn v-on:click="alert()" @click="$router.push({path: '/signin'})">글쓰기</v-btn>
     </div>
     <div v-if="this.isLogin==true" >
-      <v-btn  @click="writeClick()" >글쓰기</v-btn>
+      <v-btn  @click="writeClick()">문의하기</v-btn>
     </div>
+    </v-row>
  
    <!-- [상세보기_다이얼로그] -->
    <v-dialog v-model="dialog_detail" persistent max-width="600px">
@@ -49,9 +51,9 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-                <v-text-field  label="제목" v-model=editedItem.title  required maxlength="240" :readonly=true></v-text-field> 
-                <v-text-field  label="작성자" v-model="editedItem.userName" required :readonly=true></v-text-field>
-                <v-text-field  label="작성일" v-model="editedItem.boardDate" required readonly="readonly" ></v-text-field>
+                <v-text-field  label="제목" v-model=editedItem.title  required maxlength="240" :readonly=true color="red lighten-1"></v-text-field> 
+                <v-text-field  label="작성자" v-model="editedItem.userName" required :readonly=true color="red lighten-1"></v-text-field>
+                <v-text-field  label="작성일" v-model="editedItem.boardDate" required readonly="readonly" color="red lighten-1"></v-text-field>
               </v-col>  
                         
               <v-textarea
@@ -63,6 +65,7 @@
                 required
                 :readonly=updateTrig
                 auto-grow
+                color="red lighten-1"
               ></v-textarea>
             </v-row>
           </v-container>
@@ -70,10 +73,10 @@
          <!-- 상세보기-다이얼로그_버튼목록 -->
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="close()">닫기</v-btn>
+          <v-btn color="red lighten-1" text @click="close()">닫기</v-btn>
           <div v-if="isLogin==true && userInfo.userNo==editedItem.userNo">
-            <v-btn href="javascript:;" color="blue darken-1" text @click="updateClick()">수정</v-btn>
-            <v-btn color="blue darken-1" text @click="dele()">삭제</v-btn>
+            <v-btn href="javascript:;" color="red lighten-1" text @click="updateClick()">수정</v-btn>
+            <v-btn color="red lighten-1" text @click="dele()">삭제</v-btn>
           </div>
         </v-card-actions>
       </v-card>
@@ -91,9 +94,9 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-                <v-text-field  label="제목" v-model=editedItem.title  required maxlength="240" disabled></v-text-field>
-                <v-text-field  label="작성자" v-model="editedItem.userName" required disabled></v-text-field>
-                <v-text-field  label="작성일" v-model="editedItem.boardDate" required  disabled ></v-text-field>
+                <v-text-field  label="제목" v-model=editedItem.title  required maxlength="240" disabled color="red lighten-1"></v-text-field>
+                <v-text-field  label="작성자" v-model="editedItem.userName" required disabled color="red lighten-1"></v-text-field>
+                <v-text-field  label="작성일" v-model="editedItem.boardDate" required  disabled color="red lighten-1"></v-text-field>
               </v-col>  
                         
               <v-textarea
@@ -104,7 +107,7 @@
                 v-model="editedItem.content"
                 maxlength="1000"
                 required
-                
+                color="red lighten-1"
                 auto-grow
               ></v-textarea> 
             </v-row>
@@ -113,10 +116,10 @@
          <!-- 수정하기-다이얼로그_버튼목록 -->
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue darken-1" text @click="close_update()">닫기</v-btn>
+          <v-btn color="red lighten-1" text @click="close_update()" >닫기</v-btn>
           <div v-if="isLogin==true && userInfo.userNo==editedItem.userNo">
-            <v-btn href="javascript:;" color="blue darken-1" text @click="update()">수정</v-btn>
-            <v-btn color="blue darken-1" text @click="dele()">삭제</v-btn>
+            <v-btn href="javascript:;" color="red lighten-1" text @click="update()">수정</v-btn>
+            <v-btn color="red lighten-1" text @click="dele()">삭제</v-btn>
           </div>
         </v-card-actions> 
       </v-card>
@@ -135,8 +138,8 @@
             <v-container>
               <v-row>
                 <v-col cols="12">
-                  <v-text-field label="제목" v-model="BoardVO.title"  required maxlength="240" ></v-text-field>
-                  <v-text-field  label="작성자" v-model="BoardVO.userName" required readonly="readonly">
+                  <v-text-field label="제목" v-model="BoardVO.title"  required maxlength="240" color="red lighten-1"></v-text-field>
+                  <v-text-field  label="작성자" v-model="BoardVO.userName" required readonly="readonly" color="red lighten-1">
                   </v-text-field>  
                 </v-col>  
 
@@ -147,6 +150,7 @@
                   v-model="BoardVO.content"
                   maxlength="1000"
                   required
+                  color="red lighten-1"
                   auto-grow>
                 </v-textarea>
               </v-row>
@@ -157,8 +161,8 @@
             <v-spacer></v-spacer>
             <v-btn
             :disabled="BoardVO.title ===''"
-             color="blue darken-1" text @click="dbClickProtectedAdd()">제출</v-btn>
-            <v-btn color="blue darken-1" text @click="dialog_write = false">닫기</v-btn>
+             color="red lighten-1" text @click="dbClickProtectedAdd()">제출</v-btn>
+            <v-btn color="red lighten-1" text @click="dialog_write = false">닫기</v-btn>
           </v-card-actions>
         </v-card>
     </v-dialog>  
