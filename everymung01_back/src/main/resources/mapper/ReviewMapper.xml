@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTDMapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.salem.domain.Mapper.ReviewMapper">
+	
+	<select id="showSitterReview" resultType="ReviewVO" parameterType="int">
+		SELECT re.reviewNo, u.userName , re.reviewContent, re.stars, re.reviewDate
+		FROM review re
+		INNER JOIN payment p ON re.paymentNo = p.paymentNo 
+		INNER JOIN reservation r ON r.paymentNo = p.paymentNo
+		INNER JOIN pet ON pet.petNo = r.petNo
+		INNER JOIN users u ON u.userNo = pet.userNo
+		INNER JOIN sitter s ON s.sitterNo = p.sitterNo
+		WHERE s.sitterNo = #{sitterNo}
+		GROUP BY re.paymentNo
+		ORDER BY re.paymentNo DESC
+	</select>
+	
+	<insert id="addReview" parameterType="ReviewVO">
+		INSERT INTO review (paymentNo, reviewContent, stars, reviewDate)
+		VALUES (#{paymentNo}, #{reviewContent}, #{stars}, SYSDATE());
+	</insert>
+	
+	<select id="showFeaturedReview" resultType="ReviewVO">
+		SELECT re.reviewNo, u.userName , re.reviewContent, re.stars, re.reviewDate
+		FROM review re
+		INNER JOIN payment p ON re.paymentNo = p.paymentNo 
+		INNER JOIN reservation r ON r.paymentNo = p.paymentNo
+		INNER JOIN pet ON pet.petNo = r.petNo
+		INNER JOIN users u ON u.userNo = pet.userNo
+		INNER JOIN sitter s ON s.sitterNo = p.sitterNo
+		WHERE stars=5
+		GROUP BY re.paymentNo;
+
+	</select>
+	
+</mapper>

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTDMapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+	
+<mapper namespace="org.salem.domain.Mapper.PetMapper"   >
+
+  <select id="showAllPets" resultType="org.salem.domain.vo.PetVO" parameterType="int" >
+  
+    SELECT p.petno, p.userNo, p.breedNo, p.petName, p.petGender,
+       p.petWeight,p.petAge, p.neutralization, p.petAnswer, p.petImg,
+       b.dogBreed, b.size, u.userName, u.userNo, b.dayPrice, b.homePrice
+       FROM PET p JOIN USERS u
+       ON p.userNo = u.userNo
+       JOIN BREED b on p.breedNo = b.breedNo
+       WHERE p.userNo = #{userNo};
+      
+  </select>
+  
+  <select id="showPetDetail"  resultType="org.salem.domain.vo.PetVO" parameterType="int">
+   
+   SELECT petNo,userNo,breedNo,petName,petGender,petWeight,petAge,neutralization,petAnswer,petImg
+       FROM PET WHERE petNo = #{petNo};
+  
+  </select>
+  
+
+  <insert id="addPet"  parameterType="org.salem.domain.vo.PetVO" >
+    
+    INSERT INTO PET(userNo, breedNo, petName, petGender, petWeight, petAge, neutralization, petAnswer ) VALUES
+(#{userNo}, #{breedNo}, #{petName}, #{petGender}, #{petWeight}, #{petAge}, #{neutralization}, #{petAnswer} );
+  
+  </insert>
+  
+  
+  <select id="getPetInfo" resultType="org.salem.domain.vo.PetVO" parameterType="int" >
+  
+      SELECT * FROM PET WHERE petNo = #{petNo};
+  
+  </select>
+
+  <update id="updatePet" parameterType="org.salem.domain.vo.PetVO">
+        
+        UPDATE PET SET petName=#{petName} , petWeight=#{petWeight} , petAge=#{petAge}, petGender=#{petGender},
+         neutralization=#{neutralization}, petAnswer=#{petAnswer},
+         petImg=#{petImg} WHERE petNo = #{petNo};
+  
+  </update>
+
+
+
+  <delete id="deletePet">
+  
+    DELETE FROM PET WHERE petNo = #{petNo};
+  
+  </delete>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
+	
+	

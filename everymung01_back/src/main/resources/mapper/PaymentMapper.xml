@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTDMapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.salem.domain.Mapper.PaymentMapper">
+	
+	<select id="showDetailPayment" resultType="PaymentVO" parameterType="int">
+		SELECT pay.paymentNo, s.sitterNo, t.sittingType, s.sitterName, s.sitterPhone, s.sitterAddress, 
+				u.userName, u.userAddress, p.petNo, p.petName, b.dogBreed, b.dayPrice, b.homePrice, b.size, pay.startTime, 
+				pay.endTime, pay.request, pay.paymentMethod, pay.amount, pay.paymentDate  
+		FROM USERS u
+		INNER JOIN PET p ON p.userNo = u.userNo
+		INNER JOIN BREED b ON b.breedNo = p.breedNo
+		INNER JOIN reservation r ON p.petNo = r.petNo
+		INNER JOIN payment pay ON pay.paymentNo = r.paymentNo
+		INNER JOIN SITTER s ON s.sitterNo = pay.sitterNo
+		INNER JOIN SITTING_TYPE t ON t.sittingNo = s.sittingNo
+		WHERE pay.paymentNo=#{paymentNo}
+	</select>
+	
+	<insert id="addPayment" parameterType="PaymentVO">
+		INSERT INTO payment (sitterNo, startTime, endTime, request,  
+							paymentStatus, amount, paymentDate, paymentMethod, refundStatus, reviewStatus, tid)
+		VALUES (#{sitterNo}, #{startTime}, #{endTime}, #{request}, 1, #{amount},
+				sysdate(), 'kakaopay', 0, 0, #{tid})
+	</insert>
+	
+	<select id="showUserPayment" resultType="PaymentVO" parameterType="int">
+		SELECT pay.paymentNo, s.sitterNo, t.sittingType, s.sitterName, s.sitterPhone, s.sitterAddress, 
+				u.userNo, u.userName, u.userAddress, pay.startTime, pay.endTime, pay.request, 
+				pay.paymentMethod, pay.amount, pay.paymentStatus , pay.refundStatus, pay.reviewStatus, pay.paymentDate, 
+				pay.tid
+		FROM USERS u
+		INNER JOIN PET p ON p.userNo = u.userNo
+		INNER JOIN BREED b ON b.breedNo = p.breedNo
+		INNER JOIN reservation r ON p.petNo = r.petNo
+		INNER JOIN payment pay ON pay.paymentNo = r.paymentNo
+		INNER JOIN SITTER s ON s.sitterNo = pay.sitterNo
+		INNER JOIN SITTING_TYPE t ON t.sittingNo = s.sittingNo
+		WHERE u.userNo = #{userNo}
+		GROUP BY pay.paymentNo
+		ORDER BY pay.paymentNo DESC
+	</select>
+
+	<select id="showAllPayment" resultType="PaymentVO">
+		SELECT pay.paymentNo, s.sitterNo, t.sittingType, s.sitterName, s.sitterPhone, s.sitterAddress, 
+				u.userNo, u.userName, u.userAddress, p.petNo, p.petName, b.dogBreed, b.size, pay.startTime, pay.endTime, pay.request, 
+				pay.paymentMethod, pay.amount, pay.paymentStatus , pay.refundStatus, pay.reviewStatus, pay.paymentDate
+		FROM USERS u
+		INNER JOIN PET p ON p.userNo = u.userNo
+		INNER JOIN BREED b ON b.breedNo = p.breedNo
+		INNER JOIN reservation r ON p.petNo = r.petNo
+		INNER JOIN payment pay ON pay.paymentNo = r.paymentNo
+		INNER JOIN SITTER s ON s.sitterNo = pay.sitterNo
+		INNER JOIN SITTING_TYPE t ON t.sittingNo = s.sittingNo
+		GROUP BY pay.paymentNo
+	</select>
+	
+	<select id="test1" resultType="TestVO" parameterType="string">
+		select u.userName, u.userEmail, u.userPhone, u.userAddress, pay.paymentNo, pay.startTime, pay.endTime, s.sitterName,s.sitterPhone, st.sittingType
+        from users u 
+        inner join pet p on u.userNo=p.userNo
+        inner join reservation r on p.petNo=r.petNo
+        inner join payment pay on pay.paymentNo=r.paymentNo
+        inner join sitter s on s.sitterNo=pay.sitterNo
+        inner join sitting_type st on st.sittingNo=s.sittingNo
+        where 
+        DATE_FORMAT(pay.paymentDate, "%Y-%m-%d") = curdate();
+    </select>
+	
+	<select id="showPaymentNo" resultType="PaymentVO" parameterType="PaymentVO">
+		SELECT paymentNo
+		FROM payment
+		WHERE sitterNo = #{sitterNo}
+		AND startTime = #{startTime}
+		AND endTime = #{endTime}
+	</select>
+	
+	<insert id="addReservation" parameterType="int">
+		INSERT INTO reservation (petNo, paymentNo)
+		VALUES (#{petNo}, #{paymentNo})
+	</insert>
+	
+	<update id="updateReviewStatus" parameterType="int">
+		UPDATE payment
+		SET reviewStatus = 1
+		WHERE paymentNo = #{paymentNo}
+	</update>
+	
+	<select id="showSitterPayment" resultType="PaymentVO" parameterType="int">
+		SELECT pay.paymentNo, s.sitterNo, s.sitterName, s.sitterPhone, s.sitterAddress, 
+				u.userNo, u.userName, u.userAddress, pay.startTime, pay.endTime, pay.request, 
+				pay.paymentMethod, pay.amount, pay.paymentStatus , pay.refundStatus, pay.reviewStatus, pay.paymentDate, pay.tid
+		FROM USERS u
+		INNER JOIN PET p ON p.userNo = u.userNo
+		INNER JOIN reservation r ON p.petNo = r.petNo
+		INNER JOIN payment pay ON pay.paymentNo = r.paymentNo
+		INNER JOIN SITTER s ON s.sitterNo = pay.sitterNo
+		WHERE pay.sitterNo = #{sitterNo}
+        GROUP BY pay.paymentNo
+        ORDER BY pay.paymentNo DESC
+	</select>
+	
+	<update id="updateRefundStatus" parameterType="int">
+		UPDATE payment
+		SET refundStatus = 1
+		WHERE paymentNo = #{paymentNo}
+	</update>
+	
+	<insert id="addPaymentHome" parameterType="PaymentVO">
+		INSERT INTO payment (sitterNo, startTime, endTime, request,  
+							paymentStatus, amount, paymentDate, paymentMethod, refundStatus, reviewStatus, tid)
+		VALUES (#{sitterNo}, #{startTime}, #{endTime}, #{request}, 
+				0, #{amount}, sysdate(), 'kakaopay', 0, 0, #{tid})
+	</insert>
+	
+	<update id="updatePaymentStatus" parameterType="int">
+		UPDATE payment
+		SET paymentStatus = 1
+		WHERE paymentNo = #{paymentNo}
+	</update>
+	
+	<select id="showPaymentCalendar" resultType="PaymentVO" parameterType="int">
+		SELECT pay.paymentNo, s.sitterNo, s.sitterName, s.sitterPhone, s.sitterAddress, 
+				u.userNo, u.userName, u.userAddress, pay.startTime, pay.endTime, pay.request, 
+				pay.paymentMethod, pay.amount, pay.paymentStatus , pay.refundStatus, pay.reviewStatus, pay.paymentDate, pay.tid
+		FROM USERS u
+		INNER JOIN PET p ON p.userNo = u.userNo
+		INNER JOIN reservation r ON p.petNo = r.petNo
+		INNER JOIN payment pay ON pay.paymentNo = r.paymentNo
+		INNER JOIN SITTER s ON s.sitterNo = pay.sitterNo
+		WHERE pay.sitterNo = #{sitterNo}
+			AND pay.paymentStatus = 1
+			AND pay.refundStatus = 0
+        GROUP BY pay.paymentNo
+        ORDER BY pay.paymentNo DESC
+	</select>
+	
+
+</mapper>
