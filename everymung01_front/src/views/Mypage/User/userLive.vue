@@ -1,27 +1,22 @@
 <template>
-  <v-container class="pt-12">
-    <v-row >
+  <v-container class="pt-12 px-0">
+    <v-row class="justify-center">
         <v-col cols="3"> 
           <side-bar/>   
         </v-col>
 
-        <v-col cols="8">
-          <v-row>
-            <v-col cols="4">
+        <v-col cols="4" class="">
               <iframe 
                 src="https://hsok0070.github.io/remon-devguide-quickstartlivestreaming/simplewatch.html" 
                 frameborder="0" 
-                style="height:500px;width:400px"
+                style="height:600px;width:400px"
                 id="frame"
                 ></iframe>
-            </v-col>
-            <v-col cols="4">
-                <chat-container/>
-            </v-col>
-          </v-row>
-     
         </v-col>
-
+        <v-col cols="5">
+              <chat-container/>
+        </v-col>
+    
       </v-row>
     </v-container>
 
@@ -118,5 +113,12 @@ export default {
 
 #frame{
   background-color: white;
+}
+#care-vid, #care-chat{
+  display: inline-block;
+}
+#care-chat{
+  margin-left: 3em;
+  /* height: ; */
 }
 </style>
