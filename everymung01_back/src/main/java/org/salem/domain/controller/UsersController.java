@@ -176,24 +176,18 @@ public class UsersController {
 	//이미지 업로드 (단일 업로드 ) 
 	@PostMapping("/upload-userImg/{userEmail}/{userNo}")
     public FileResponse uploadFile(@PathVariable("userNo") int userNo, @PathVariable("userEmail") String userEmail, @RequestParam("file") MultipartFile file) {
-    	System.out.println("upload-userImg 추가  메소드 실행 ");
-    	System.out.println("file=>"+file);
     	UsersVO userVo = mapper.getUserVO(userNo);
-    	
-    	System.out.println(userVo);
-    	
+    	storageService.deleteO(userVo.getUserProfile());
     	
     	String name = storageService.store(file,userEmail+userNo);
         String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/download/")
                 .path(name)
                 .toUriString();
-        System.out.println(uri);
         
         userVo.setUserProfile(name);
-        
         mapper.updateUser(userVo);
-        
+        System.out.println(userVo);
         return new FileResponse(name, uri, file.getContentType(), file.getSize());
     }
 	

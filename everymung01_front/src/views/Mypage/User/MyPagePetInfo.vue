@@ -64,6 +64,7 @@
             
               <v-card-title>
                   <span class="headline"> 상세정보 </span>
+                  
               </v-card-title>
               <v-card-text>
                   <v-container>
@@ -245,7 +246,8 @@ export default {
                petAnswer:'',
                breedNo:'',
                userNo:'',
-
+               petNo:'',
+               index:null, 
            },
            tempUpdatePet:{
               u_neutralization:'',
@@ -290,6 +292,8 @@ export default {
            this.tempPetAnswer = item.petAnswer.split(',')
            this.diaDefault.breedNo = item.breedNo
            this.diaDefault.userNo = item.userNo
+           this.diaDefault.petNo = item.petNo
+          
            this.petNo = item.petNo
            
            //console.log(this.diaDefault)
@@ -362,7 +366,7 @@ export default {
                     formData.append('file', this._tempUpdatePetImg)
 
                     //수정할 이미지 업로드 한 후 
-                    axios.post('http://localhost:1234/upload-petImg/'+this.userInfo.userEmail+'/'+petVO.petNo, formData,{
+                    axios.post('http://localhost:1234/upload-petImg/'+this.userInfo.userEmail+'/'+this.diaDefault.petNo, formData,{
                         headers:{
                             'Content-Type':'multipart/form-data'
                         }
@@ -373,9 +377,10 @@ export default {
 
                         axios.post('http://localhost:1234/updatePet',this.diaDefault)
                         .then(response =>{
+                            
                             console.log('이미지 수정 업로드 완료 !! ')
                             //this.dialog=false
-                            //this.init()
+                            this.init()
                             
                         })
 

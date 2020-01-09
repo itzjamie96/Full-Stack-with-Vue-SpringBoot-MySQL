@@ -200,7 +200,7 @@ export default {
             this.userVo.userPhone = this.userInfo.userPhone//
             this.userVo.userNo = this.userInfo.userNo
             this.userVo.userAddress = this.userInfo.userAddress//
-            this.userVo.userProfile ='http://localhost:1234/download/'+this.userInfo.userProfile
+            this.userVo.userProfile =this.userInfo.userProfile
             this.userVo.userDate = this.userInfo.userDate    
            
         },
@@ -210,8 +210,10 @@ export default {
            console.log(e)
         },
         updateUserInfo(){
-            this.init()
+        this.init()
+            
             if(this.trig){  // 유저 이미지 새로 추가 할 경우 
+
                 let formData = new FormData()
                 formData.append('file',this.userImg)
                  axios.post('http://localhost:1234/updateUser', this.userVo)
@@ -237,7 +239,7 @@ export default {
                                  console.log(error)
                        })
                        
-                       if(this.userImg != null){
+                       if(this.userImg !== null){
                            this.userImg = ''
                        }
 

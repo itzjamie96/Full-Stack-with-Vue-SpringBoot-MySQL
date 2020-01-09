@@ -100,14 +100,15 @@ public class SitterController {
     @PostMapping("/upload-file/{kind}/{sitterEmail}")
     @ResponseBody
     public FileResponse uploadFile(@PathVariable("kind") String kind, @PathVariable("sitterEmail") String sitterEmail, @RequestParam("file") MultipartFile file) {
+    	if(file == null) {
+    		return new FileResponse("default.jpg","zz", "zz", 0);
+    	}else {
     	SitterVO sitter = sitterMapper.showUserDetailLogin(sitterEmail);
-    	System.out.println(sitter);
     	String name = storageService.store(file,sitterEmail);
         String uri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/download/")
                 .path(name)
                 .toUriString();
-        System.out.println(uri);
         
         switch (kind) {
 		case "identityCheck":
@@ -141,6 +142,7 @@ public class SitterController {
 		}
         sitterMapper.sitterCheck(sitter);
         return new FileResponse(name, uri, file.getContentType(), file.getSize());
+    	}
     }
 /////////////////////////////////////////////////
 	
@@ -258,7 +260,7 @@ public class SitterController {
 	
 	@PostMapping("/updateSitterInfo")
 	public int updateSitterInfo(@RequestBody SitterVO sitterVO) {
-		System.out.println("sitterInfo update");
+		System.out.println(sitterVO);
 		return sitterMapper.updateSitterInfo(sitterVO);
 	}
 
