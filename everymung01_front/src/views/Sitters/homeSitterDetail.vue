@@ -53,7 +53,7 @@ export default {
        }
    },
    created() {
-       this.$http.get('http://localhost:1234/showSitterDetail/'+this.$route.params.sitterNo) 
+       this.$http.get('http://192.168.0.128:1234/showSitterDetail/'+this.$route.params.sitterNo) 
               .then(res => { 
                   this.lsm.lat=res.data.lat
                   this.lsm.lng=res.data.lng

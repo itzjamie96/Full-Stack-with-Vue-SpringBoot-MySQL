@@ -167,7 +167,7 @@ import * as FormData from 'form-data'
         let dddate = new Date(start)
         let ddate =new Date(end) 
               if(start !== undefined && end !== undefined){
-              this.$http.get(`http://localhost:1234/userlist`)
+              this.$http.get(`http://192.168.0.128:1234/userlist`)
                 .then(res => { 
                   
                         for(let i in res.data){
@@ -185,7 +185,7 @@ import * as FormData from 'form-data'
                         alert(err+"\n"+"Admin-Home(allUser) 에러1")
                       });
               } else{
-                this.$http.get(`http://localhost:1234/userlist`)
+                this.$http.get(`http://192.168.0.128:1234/userlist`)
                 .then(res => { 
                   
                         for(let i in res.data){
@@ -209,7 +209,7 @@ import * as FormData from 'form-data'
         this.daycare=[];
         this.home=[];      
                   if(start !== undefined && end !== undefined){
-                    this.$http.get(`http://localhost:1234/showAllSitters`)
+                    this.$http.get(`http://192.168.0.128:1234/showAllSitters`)
                       .then(res => { 
                            for(let i in res.data){
                             let zz =new Date(res.data[i].approvalDate.substr(0,7))
@@ -224,7 +224,7 @@ import * as FormData from 'form-data'
                           alert(err+"\n"+"Admin-Home(showAllSitters) 에러1")
                         });
                       }else{
-                        this.$http.get(`http://localhost:1234/showAllSitters`)
+                        this.$http.get(`http://192.168.0.128:1234/showAllSitters`)
                                             .then(res => { 
                                               console.log(res.data)
                                                 for(let i in res.data){
@@ -243,7 +243,7 @@ import * as FormData from 'form-data'
       },
       payment(start,end){
         
-            this.$http.get(`http://localhost:1234/showAllPayment`)
+            this.$http.get(`http://192.168.0.128:1234/showAllPayment`)
               .then(res => {
                 let lsm = []
                 this.test1 =res.data

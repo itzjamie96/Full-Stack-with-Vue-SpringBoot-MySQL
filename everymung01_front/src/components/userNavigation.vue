@@ -10,7 +10,7 @@
               size="100"
             >
             <v-img
-            :src="'http://localhost:1234/download/' + this.userInfo.userProfile"
+            :src="'http://192.168.0.128:1234/download/' + this.userInfo.userProfile"
             >
             </v-img>
 

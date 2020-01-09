@@ -11,7 +11,7 @@
               size="100"
             >
              <v-img
-              :src="'http://localhost:1234/download/' + this.userInfo.sitterImg1">
+              :src="'http://192.168.0.128:1234/download/' + this.userInfo.sitterImg1">
              </v-img>
             </v-list-item-avatar>
             </router-link>

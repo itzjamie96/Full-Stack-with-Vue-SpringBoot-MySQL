@@ -5,7 +5,7 @@ import Axios from 'axios'
 
 Vue.use(Vuex)
 
-const baseURL = 'http://localhost:1234'
+const baseURL = 'http://192.168.0.128:1234'
 
 export default new Vuex.Store({
     state: {

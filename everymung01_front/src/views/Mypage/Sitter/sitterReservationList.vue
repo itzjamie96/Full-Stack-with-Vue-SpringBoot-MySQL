@@ -180,7 +180,7 @@ import NavBar from '@/components/sitterNavigation.vue'
     methods:{
       initialize(){//DB와 연동해서 게시판 목록을 전부 가져옴
         console.log(this.userInfo.sitterNo)
-        axios.get(`http://localhost:1234/showSitterPayment/${this.userInfo.sitterNo}`)
+        axios.get(`http://192.168.0.128:1234/showSitterPayment/${this.userInfo.sitterNo}`)
           .then(res => {
             this.paylist=res.data //table row로 보여질 객체에 DB에서 받은 데이터를 넣어줌
             console.log(res);
@@ -198,7 +198,7 @@ import NavBar from '@/components/sitterNavigation.vue'
       approval(item){
         const paymentNo = item.paymentNo
         console.log(paymentNo)
-        axios.get(`http://localhost:1234/updatePaymentStatus/${paymentNo}`)
+        axios.get(`http://192.168.0.128:1234/updatePaymentStatus/${paymentNo}`)
           .then(res => {
             console.log(res)
             // window.location.reload()
@@ -211,7 +211,7 @@ import NavBar from '@/components/sitterNavigation.vue'
 
       refund(item) {
         axios
-          .post('http://localhost:1234/refund',item)
+          .post('http://192.168.0.128:1234/refund',item)
           .then(res => {
             console.log(res);
             window.location.reload()

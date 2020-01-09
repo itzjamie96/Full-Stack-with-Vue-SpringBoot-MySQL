@@ -127,7 +127,7 @@ export default {
       },
 
       showList(){ //후기 리스트 불러오는 axios 따로 뺌
-        axios.get(`http://localhost:1234/showSitterReview/${this.sitterInfo.sitterNo}`)
+        axios.get(`http://192.168.0.128:1234/showSitterReview/${this.sitterInfo.sitterNo}`)
           .then(res => {
             console.log(res)
             let data = []
@@ -152,7 +152,7 @@ export default {
       },
 
        addReview() { //후기 등록
-         axios.post('http://localhost:1234/addReview', this.reviewVO)
+         axios.post('http://192.168.0.128:1234/addReview', this.reviewVO)
           .then(res => {
             console.log(res);
             this.showList();

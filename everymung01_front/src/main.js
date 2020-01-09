@@ -13,7 +13,10 @@ import '@mdi/font/css/materialdesignicons.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 import fullCalendar from 'vue-fullcalendar'
 import * as VueGoogleMaps from "vue2-google-maps";
+import { Editor, Viewer } from '@toast-ui/vue-editor'
 
+Vue.component('editor', Editor)
+Vue.component('viewer', Viewer)
 
 Vue.use(VueGoogleMaps, {
   load: {

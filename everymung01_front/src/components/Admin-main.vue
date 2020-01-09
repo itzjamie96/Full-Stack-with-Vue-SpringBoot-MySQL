@@ -166,7 +166,7 @@ import { eventBus } from '../main'
       ...mapActions(['TriggerTO','approval','boardInfo']),
 
       boardCtn() {
-        this.$http.get(`http://localhost:1234/falseBoard`)
+        this.$http.get(`http://192.168.0.128:1234/falseBoard`)
           .then( res => {
             this.boardInfo(String(res.data.length))
           })
@@ -176,7 +176,7 @@ import { eventBus } from '../main'
       },
 
       approvalCtn(){
-        this.$http.get(`http://localhost:1234/falseAllSitters`)
+        this.$http.get(`http://192.168.0.128:1234/falseAllSitters`)
           .then( res =>{
             this.approval(String(res.data.length))
           })

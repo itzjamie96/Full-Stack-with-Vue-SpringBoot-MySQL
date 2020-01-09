@@ -55,7 +55,7 @@
         size="150"
       >
         <v-img
-          :src="'http://localhost:1234/download/' + sitter.sitterImg1"
+          :src="'http://192.168.0.128:1234/download/' + sitter.sitterImg1"
         ></v-img>
       </v-list-item-avatar>
 
@@ -113,7 +113,7 @@ export default {
     methods:{
 
       initialize(){//DB와 연동
-        axios.get('http://localhost:1234/showDaySitters')
+        axios.get('http://192.168.0.128:1234/showDaySitters')
           .then(res => {
             this.sitterList=res.data //객체에 DB에서 받은 데이터를 넣어줌
             //console.log(res);
@@ -131,7 +131,7 @@ export default {
       searchDate(date){
         console.log(date);
         console.log("searchdate")
-        axios.get(`http://localhost:1234/showDaySitterByDate/daySitter/${date}`)
+        axios.get(`http://192.168.0.128:1234/showDaySitterByDate/daySitter/${date}`)
           .then(res => {
             this.sitterList = res.data
             console.log(res);
@@ -142,7 +142,7 @@ export default {
       loadMore() {
         if(! this.busy){
         this.busy = true;
-        axios.get('http://localhost:1234/showDaySitters')
+        axios.get('http://192.168.0.128:1234/showDaySitters')
           .then(res => {
             const append = res.data.slice(this.sitterList.length,this.sitterList.length + this.limit )         
             this.sitterList = this.sitterList.concat(append);

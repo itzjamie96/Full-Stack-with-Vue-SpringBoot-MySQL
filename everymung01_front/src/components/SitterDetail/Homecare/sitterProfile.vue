@@ -101,12 +101,12 @@ export default {
            
            
            Axios
-            .get(`http://localhost:1234/showSitterDetail/${sitterNo}`)
+            .get(`http://192.168.0.128:1234/showSitterDetail/${sitterNo}`)
             .then(res => {
                 this.sitterObj = res.data
                 eventBus.$emit("sitterObj",this.sitterObj)
                 //console.log(res);
-                this.profileImg = 'http://localhost:1234/download/' + this.sitterObj.sitterImg1
+                this.profileImg = 'http://192.168.0.128:1234/download/' + this.sitterObj.sitterImg1
             })
             .catch(err => {
                 console.log(err);

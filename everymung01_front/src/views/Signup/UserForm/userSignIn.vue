@@ -198,7 +198,7 @@ import KakaoLogin from 'vue-kakao-login'
 import GoogleLogin from 'vue-google-login'
 import {mapState,mapActions} from "vuex"
 import axios from "axios"
-const baseURL = 'http://localhost:1234'
+const baseURL = 'http://192.168.0.128:1234'
 export default {
   components: {
     KakaoLogin,GoogleLogin

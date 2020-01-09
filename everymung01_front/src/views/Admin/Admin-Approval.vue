@@ -276,13 +276,13 @@ export default {
      this.sitter.approvalStatus = params.row.approvalStatus
      this.sitter.sitterAge = params.row.sitterAge
      this.sitter.sitterGender = params.row.sitterGender
-     this.sitter.identityCheck ='http://localhost:1234/download/'+ params.row.identityCheck
-     this.sitter.qualificationCheck = 'http://localhost:1234/download/'+ params.row.qualificationCheck
+     this.sitter.identityCheck ='http://192.168.0.128:1234/download/'+ params.row.identityCheck
+     this.sitter.qualificationCheck = 'http://192.168.0.128:1234/download/'+ params.row.qualificationCheck
      this.sitter.possibleDay = params.row.possibleDay.split(',')
      this.sitter.profile = params.row.profile
   },
   selectAll(){
-      this.$http.get(`http://localhost:1234/falseAllSitters`)
+      this.$http.get(`http://192.168.0.128:1234/falseAllSitters`)
             .then( res =>{
               this.rows = res.data
               
@@ -298,7 +298,7 @@ export default {
     this.deleteAlert=false
     const No = sitterNo
      
-      this.$http.post(`http://localhost:1234/deleteSitter/${sitterNo}`)
+      this.$http.post(`http://192.168.0.128:1234/deleteSitter/${sitterNo}`)
             .then(res =>{
               const idx = this.rows.findIndex(x => x.sitterNo === sitterNo)
               this.dialog=false
@@ -316,7 +316,7 @@ export default {
      this.updateAlert=false
      this.sitter.possibleDay=String(this.sitter.possibleDay)
      
-      this.$http.post('http://localhost:1234/updateSitter',this.sitter) 
+      this.$http.post('http://192.168.0.128:1234/updateSitter',this.sitter) 
             .then(res => { 
               --cnt
               this.selectAll();

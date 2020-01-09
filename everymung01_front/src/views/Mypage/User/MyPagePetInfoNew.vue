@@ -262,7 +262,7 @@ export default {
     },
     methods:{
        loadBreedInfo(){  //axios 를 통해서 BreedVO 를 불러와서 견종의 종류를 선택할 수 있도록 함 
-          axios.get('http://localhost:1234/showAllBreedInfo')
+          axios.get('http://192.168.0.128:1234/showAllBreedInfo')
           .then(response =>{
              console.log(response)
              for(let i=0; i<response.data.length; i++){
@@ -310,13 +310,13 @@ export default {
            let formData = new FormData()
             formData.append('file', this.petImg)            
 
-           axios.post('http://localhost:1234/addPet', this.userPetVo)   //이미지만 제외 후 저장 
+           axios.post('http://192.168.0.128:1234/addPet', this.userPetVo)   //이미지만 제외 후 저장 
            .then(response =>{
               console.log(response)
                let newPetVo = response.data
             if(this.petImg !== ''){   
                  // 성공 후 바로 또 axios를 통해서 이미지만 저장 
-                 axios.post('http://localhost:1234/upload-petImg/'+this.userInfo.userEmail+'/'+newPetVo.petNo, formData,{    
+                 axios.post('http://192.168.0.128:1234/upload-petImg/'+this.userInfo.userEmail+'/'+newPetVo.petNo, formData,{    
                            headers:{
                                  'Content-Type' : 'multipart/form-data'
                                    }

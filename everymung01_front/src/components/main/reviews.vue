@@ -48,7 +48,7 @@ export default {
     initialize(){//DB와 연동
 
     //리뷰 긁어와야함
-        axios.get('http://localhost:1234/showFeaturedReview')
+        axios.get('http://192.168.0.128:1234/showFeaturedReview')
           .then(res => {
             this.reviews=res.data //객체에 DB에서 받은 데이터를 넣어줌
             //console.log(res);

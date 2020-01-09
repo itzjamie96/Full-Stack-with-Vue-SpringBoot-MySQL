@@ -30,7 +30,6 @@
                 <v-text-field label="Title" v-model="board.title" readonly></v-text-field>
               </v-col>
               <v-col cols="12">
-              </v-col>
               <v-textarea
                 cols="12"
                 outlined
@@ -39,6 +38,8 @@
                 readonly
               >
               </v-textarea>
+              </v-col>
+
               <v-col cols="12">
                 <v-text-field label="Date" v-model="board.boardDate" disabled ></v-text-field>
               </v-col>
@@ -87,11 +88,8 @@ import { mapState, mapActions } from 'vuex';
 export default {
     components: {
   VueGoodTable,
-    'editor': Editor,
-    'viewer': Viewer
 },data(){
     return {
-       editorText: '',
        content:'',
        dialog: false,
        deleteAlert: false,
@@ -156,7 +154,7 @@ export default {
       this.board.status = params.row.status
       },
     selectAll(){
-        this.$http.get(`http://localhost:1234/showAdminBoards`)
+        this.$http.get(`http://192.168.0.128:1234/showAdminBoards`)
             .then( res =>{
               this.rows = res.data
             })
@@ -172,7 +170,7 @@ export default {
       const groupNo = this.board.groupNo
       
       if(status === false) { // 게시판 원글만 삭제
-        this.$http.post(`http://localhost:1234/deleteBoardByMngr`,this.board)
+        this.$http.post(`http://192.168.0.128:1234/deleteBoardByMngr`,this.board)
               .then(res =>{
                 console.log(trig)
                   const idx = this.rows.findIndex(x => x.boardNo === boardNo)
@@ -186,7 +184,7 @@ export default {
                 })
       }else{ 
         if(this.board.userNo===0){ // 댓글만 삭제
-        this.$http.post(`http://localhost:1234/deleteBoardByMngr`,this.board)
+        this.$http.post(`http://192.168.0.128:1234/deleteBoardByMngr`,this.board)
               .then(res =>{
                   cnt++
                   this.boardInfo(String(cnt))
@@ -197,7 +195,7 @@ export default {
                   alert(err+"\n"+"Admin-Board(delet) 에러")
                 })}
           else{ // 원글+댓글 삭제
-            this.$http.post(`http://localhost:1234/deleteBoardByMngr`,this.board)
+            this.$http.post(`http://192.168.0.128:1234/deleteBoardByMngr`,this.board)
                 .then(res =>{
                     this.selectAll();
                     this.dialog=false
@@ -212,7 +210,7 @@ export default {
     },
     update(content){
       this.board.content = content
-      this.$http.post(`http://localhost:1234/updateBoardByMngr`,this.board)
+      this.$http.post(`http://192.168.0.128:1234/updateBoardByMngr`,this.board)
               .then(res =>{
                   this.dialog=false
                   this.updateAlert=false
@@ -227,7 +225,7 @@ export default {
       this.board.title = "ㄴRE:  "+this.board.title
       this.board.status = true
       this.board.content = content
-      this.$http.post('http://localhost:1234/insertReply',this.board) 
+      this.$http.post('http://192.168.0.128:1234/insertReply',this.board) 
                 .then(res => { 
                   this.selectAll();
                   this.dialog=false

@@ -130,7 +130,7 @@ export default {
        startKakaoPay() {
            this.paymentVO.amount = this.total
            Axios
-            .post('http://localhost:1234/kakaoPay',this.paymentVO)
+            .post('http://192.168.0.128:1234/kakaoPay',this.paymentVO)
             .then(res => {
                 console.log(res);
                 window.location.replace(res.data)

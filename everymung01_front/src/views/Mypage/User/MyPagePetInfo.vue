@@ -303,15 +303,15 @@ export default {
        },
        init(){
            
-           axios.post(`http://localhost:1234/showAllpets/${this.userInfo.userNo}`) // 2=> 로그인 하면서 userNo 가 들어오면 동적으로 변수 바인딩 해줘야 한다. 
+           axios.post(`http://192.168.0.128:1234/showAllpets/${this.userInfo.userNo}`) // 2=> 로그인 하면서 userNo 가 들어오면 동적으로 변수 바인딩 해줘야 한다. 
            .then(response => {
                this.userPetList = response.data
                console.log(this.userPetList)
                for(let img in this.userPetList){
                    if(response.data[img].petImg === null){
-                       this.tempImg[img]= 'http://localhost:1234/download/default.jpg';
+                       this.tempImg[img]= 'http://192.168.0.128:1234/download/default.jpg';
                    }else{
-                   this.tempImg[img]='http://localhost:1234/download/'+response.data[img].petImg
+                   this.tempImg[img]='http://192.168.0.128:1234/download/'+response.data[img].petImg
                    }
                }
                //console.log(response.data)
@@ -342,7 +342,7 @@ export default {
             console.log(this.diaDefault)
 
             if(this.trig){  //이미지를 수정하지 않았을 때
-                axios.post('http://localhost:1234/updatePet', this.diaDefault)
+                axios.post('http://192.168.0.128:1234/updatePet', this.diaDefault)
                 .then(response =>{
                     console.log('success')
                     //this.dialog=false
@@ -353,7 +353,7 @@ export default {
                 })
 
             }else {    // 이미지를 수정 했다면.. 
-                axios.post('http://localhost:1234/deletePetImg/'+this.diaDefault.userNo)   // 기존 이미지 삭제 후 
+                axios.post('http://192.168.0.128:1234/deletePetImg/'+this.diaDefault.userNo)   // 기존 이미지 삭제 후 
                 .then(response =>{
                     console.log('이미지 수정 성공')
                     let petVO = response.data
@@ -362,7 +362,7 @@ export default {
                     formData.append('file', this._tempUpdatePetImg)
 
                     //수정할 이미지 업로드 한 후 
-                    axios.post('http://localhost:1234/upload-petImg/'+this.userInfo.userEmail+'/'+petVO.petNo, formData,{
+                    axios.post('http://192.168.0.128:1234/upload-petImg/'+this.userInfo.userEmail+'/'+petVO.petNo, formData,{
                         headers:{
                             'Content-Type':'multipart/form-data'
                         }
@@ -371,7 +371,7 @@ export default {
                         let finalPetVo = response.data
                         console.log(finalPetVo)
 
-                        axios.post('http://localhost:1234/updatePet',this.diaDefault)
+                        axios.post('http://192.168.0.128:1234/updatePet',this.diaDefault)
                         .then(response =>{
                             console.log('이미지 수정 업로드 완료 !! ')
                             //this.dialog=false
@@ -392,8 +392,8 @@ export default {
        
         deletePet(){
             
-            //axios.post('http://localhost:1234/deletePet/'+this.diaDefault.userNo)
-            axios.post('http://localhost:1234/deletePet/'+this.petNo)
+            //axios.post('http://192.168.0.128:1234/deletePet/'+this.diaDefault.userNo)
+            axios.post('http://192.168.0.128:1234/deletePet/'+this.petNo)
             .then(response =>{
                 console.log('delete 성공')
             })

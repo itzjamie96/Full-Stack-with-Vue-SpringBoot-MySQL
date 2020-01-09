@@ -180,7 +180,7 @@ import axios from "axios"
 import {mapState,mapActions} from "vuex"
 import router from '../../../router/index'
 import { VueDaumPostcode } from "vue-daum-postcode"
-const baseURL = 'http://localhost:1234'
+const baseURL = 'http://192.168.0.128:1234'
 export default {
   components:{
    VueDaumPostcode,KakaoLogin,GoogleLogin

@@ -280,7 +280,7 @@
   methods: {
         //전체목록 조회(R)
         showAllBoards(){//DB와 연동해서 게시판 목록을 전부 가져옴
-              axios.get('http://localhost:1234/showAllBoards')
+              axios.get('http://192.168.0.128:1234/showAllBoards')
               .then( res =>{ 
               this.rows = res.data
               })              
@@ -299,7 +299,7 @@
             }else{
               this.add(); 
             }           
-            window.location.href="http://localhost:8080/board"       
+            window.location.href="http://192.168.0.128:8080/board"       
        },
         
       //제출 버튼_중복방지처리 X
@@ -312,7 +312,7 @@
             if(this.BoardVO.title===''){ 
               this.BoardVO.userName = this.userInfo.userName
             }   
-            axios.post ('http://localhost:1234/add',this.BoardVO) // 여기선 객체 던져주는 식이네 
+            axios.post ('http://192.168.0.128:1234/add',this.BoardVO) // 여기선 객체 던져주는 식이네 
            .then( res =>{
             this.BoardVO = res.data             
            })      
@@ -352,7 +352,7 @@
       },
       //2차 수정(Update)
       update(){    
-          axios.post ('http://localhost:1234/update',this.editedItem)
+          axios.post ('http://192.168.0.128:1234/update',this.editedItem)
           .then( res =>{
           }),  
           alert("수정이 완료되었습니다.")
@@ -362,7 +362,7 @@
       },
       //삭제하기(Delete)
       dele(){
-        axios.get('http://localhost:1234/deleteBoardByUser/'+this.editedItem.groupNo) 
+        axios.get('http://192.168.0.128:1234/deleteBoardByUser/'+this.editedItem.groupNo) 
         .then(response =>{
         })
          this.dialog_detail=false
@@ -414,13 +414,13 @@
           this.BoardVO.groupNo=this.editedItem.groupNo
           this.BoardVO.status=true
 
-          axios.post ('http://localhost:1234/insertReply',this.BoardVO)  
+          axios.post ('http://192.168.0.128:1234/insertReply',this.BoardVO)  
           .then( res =>{
                 this.BoardVO = res.data
            })
        
           this.BoardVO.title= "ㄴRE "+this.BoardVO.title
-          window.location.href="http://localhost:8080/board"
+          window.location.href="http://192.168.0.128:8080/board"
        },
 
      //답글달기(Create)_더블클릭 중복입력 방지O 
@@ -438,7 +438,7 @@
     updateHits(){
       
       //indexForHits            
-      axios.post('http://localhost:1234/updateHits',this.editedItem).then(res=>{
+      axios.post('http://192.168.0.128:1234/updateHits',this.editedItem).then(res=>{
         this.rows[this.indexForHits].hits = res.data // res.data => 제대로 이해못함.  
       console.log("res" +"::"+res) // res = 컨트롤러에서 return값!!!
       console.log("res.data"+"::"+res.data)

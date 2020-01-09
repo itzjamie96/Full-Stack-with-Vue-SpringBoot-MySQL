@@ -54,13 +54,13 @@ export default {
            const sitterNo = this.$route.params.sitterNo
            
            Axios
-            .get(`http://localhost:1234/showSitterDetail/${sitterNo}`)
+            .get(`http://192.168.0.128:1234/showSitterDetail/${sitterNo}`)
             .then(res => {
                 this.sitterObj = res.data
-                this.sitterImgs[0].img = 'http://localhost:1234/download/' +this.sitterObj.sitterImg2
-                this.sitterImgs[1].img = 'http://localhost:1234/download/' +this.sitterObj.sitterImg3
-                this.sitterImgs[2].img = 'http://localhost:1234/download/' +this.sitterObj.sitterImg4
-                this.sitterImgs[3].img = 'http://localhost:1234/download/' +this.sitterObj.sitterImg5
+                this.sitterImgs[0].img = 'http://192.168.0.128:1234/download/' +this.sitterObj.sitterImg2
+                this.sitterImgs[1].img = 'http://192.168.0.128:1234/download/' +this.sitterObj.sitterImg3
+                this.sitterImgs[2].img = 'http://192.168.0.128:1234/download/' +this.sitterObj.sitterImg4
+                this.sitterImgs[3].img = 'http://192.168.0.128:1234/download/' +this.sitterObj.sitterImg5
             })
             .catch(err => {
                 console.log(err);

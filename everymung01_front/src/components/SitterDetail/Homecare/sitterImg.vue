@@ -49,7 +49,7 @@ export default {
            const sitterNo = this.$route.params.sitterNo
            
            Axios
-            .get(`http://localhost:1234/showSitterDetail/${sitterNo}`)
+            .get(`http://192.168.0.128:1234/showSitterDetail/${sitterNo}`)
             .then(res => {
                 this.sitterObj = res.data
                 console.log(res);

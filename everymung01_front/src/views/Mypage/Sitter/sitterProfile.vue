@@ -207,11 +207,11 @@ export default {
            this.sitterProfile.profileTitle = this.userInfo.profileTitle
            this.sitterProfile.profile = this.userInfo.profile
            this.sitterProfile.petProfile = this.userInfo.petProfile
-           this.img1 = 'http://localhost:1234/download/' + this.userInfo.sitterImg1
-           this.img2 = 'http://localhost:1234/download/' + this.userInfo.sitterImg2
-           this.img3 = 'http://localhost:1234/download/' + this.userInfo.sitterImg3
-           this.img4 = 'http://localhost:1234/download/' + this.userInfo.sitterImg4
-           this.img5 = 'http://localhost:1234/download/' + this.userInfo.sitterImg5
+           this.img1 = 'http://192.168.0.128:1234/download/' + this.userInfo.sitterImg1
+           this.img2 = 'http://192.168.0.128:1234/download/' + this.userInfo.sitterImg2
+           this.img3 = 'http://192.168.0.128:1234/download/' + this.userInfo.sitterImg3
+           this.img4 = 'http://192.168.0.128:1234/download/' + this.userInfo.sitterImg4
+           this.img5 = 'http://192.168.0.128:1234/download/' + this.userInfo.sitterImg5
        },
        updateSitterProfile(){  // 저장 후 디비 저장할 수 있도록 axios 
            this.sitterProfile.sitterEmail = this.userInfo.sitterEmail
@@ -226,32 +226,32 @@ export default {
            formData3.append('file', this.sitterImg3)            
            formData4.append('file', this.sitterImg4)            
            formData5.append('file', this.sitterImg5)      
-           axios.post('http://localhost:1234/updateSitterProfile', this.sitterProfile)   //이미지만 제외 후 저장 
+           axios.post('http://192.168.0.128:1234/updateSitterProfile', this.sitterProfile)   //이미지만 제외 후 저장 
            .then(res =>{
               console.log(res)
                  // 성공 후 바로 또 axios를 통해서 이미지만 저장 
-                  axios.post('http://localhost:1234/upload-file/'+ 'sitterImg2' +'/'+ email, 
+                  axios.post('http://192.168.0.128:1234/upload-file/'+ 'sitterImg2' +'/'+ email, 
                   formData2,{    
                      headers:{
                          'Content-Type' : 'multipart/form-data'
                               }
                  }).then(res => {
                     console.log(res.data)
-                    axios.post('http://localhost:1234/upload-file/'+ 'sitterImg3' +'/'+ email, 
+                    axios.post('http://192.168.0.128:1234/upload-file/'+ 'sitterImg3' +'/'+ email, 
                      formData3,{    
                         headers:{
                             'Content-Type' : 'multipart/form-data'
                                 }
                  }).then(res => {
                     console.log(res.data)
-                    axios.post('http://localhost:1234/upload-file/'+ 'sitterImg4' +'/'+ email, 
+                    axios.post('http://192.168.0.128:1234/upload-file/'+ 'sitterImg4' +'/'+ email, 
                      formData4,{    
                         headers:{
                             'Content-Type' : 'multipart/form-data'
                                 }
                  }).then(res => {
                      console.log(res.data)
-                     axios.post('http://localhost:1234/upload-file/'+ 'sitterImg5' +'/'+ email, 
+                     axios.post('http://192.168.0.128:1234/upload-file/'+ 'sitterImg5' +'/'+ email, 
                      formData5,{    
                         headers:{
                             'Content-Type' : 'multipart/form-data'

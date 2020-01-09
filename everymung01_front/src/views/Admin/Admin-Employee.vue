@@ -194,9 +194,11 @@ export default {
      this.sitter.sitterPhone = params.row.sitterPhone
      this.sitter.sitterAddress = params.row.sitterAddress
      this.sitter.approvalDate = params.row.approvalDate
+     this.sitter.lat = params.row.lat
+     this.sitter.lng = params.row.lng
   },
   selectAll(){
-      this.$http.get(`http://localhost:1234/showAllSitters`)
+      this.$http.get(`http://192.168.0.128:1234/showAllSitters`)
           .then( res =>{
             this.rows = res.data
             console.log(this.rows)
@@ -211,7 +213,7 @@ export default {
      this.deleteAlert=false
      const No = sitterNo
      
-      this.$http.post(`http://localhost:1234/deleteSitter/${No}`).then(res =>{
+      this.$http.post(`http://192.168.0.128:1234/deleteSitter/${No}`).then(res =>{
         const idx = this.rows.findIndex(x => x.sitterNo === sitterNo)
         console.log(idx)
               this.dialog=false
@@ -225,7 +227,7 @@ export default {
      this.dialog=false
      this.updateAlert=false
      
-     this.$http.post('http://localhost:1234/updateSitter',this.sitter) 
+     this.$http.post('http://192.168.0.128:1234/updateSitter',this.sitter) 
               .then(res => { 
                 this.selectAll();
               }) 

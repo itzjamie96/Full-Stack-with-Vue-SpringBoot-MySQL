@@ -145,7 +145,7 @@ export default {
   },
   created() {
 
-    this.$http.get(`http://localhost:1234/test`)
+    this.$http.get(`http://192.168.0.128:1234/test`)
         .then(res => {
                 for(let sitterT in res.data){
                   if(res.data[sitterT].sittingType==="daycare")
@@ -175,7 +175,7 @@ export default {
      this.deleteAlert=false
      const No = userNo
      
-      this.$http.post(`http://localhost:1234/deleteUser/${No}`).then(res =>{
+      this.$http.post(`http://192.168.0.128:1234/deleteUser/${No}`).then(res =>{
         const idx = this.rows.findIndex(x => x.userNo === userNo)
               this.dialog=false
               this.rows.splice(idx, 1)
@@ -187,7 +187,7 @@ export default {
   update(){
      this.dialog=false
      this.updateAlert=false
-     this.$http.post('http://localhost:1234/updateUser',this.user) 
+     this.$http.post('http://192.168.0.128:1234/updateUser',this.user) 
               .then(res => { 
                 this.selectAll();
               }) 

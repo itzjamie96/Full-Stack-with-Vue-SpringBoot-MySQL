@@ -51,7 +51,7 @@ export default {
     initialize(){
         const kakaoUrl = this.$route.query.pg_token
         console.log(kakaoUrl)
-        axios.get(`http://localhost:1234/kakaoPaySuccesss?pg_token=${kakaoUrl}`)
+        axios.get(`http://192.168.0.128:1234/kakaoPaySuccesss?pg_token=${kakaoUrl}`)
                 .then(res => {
                     this.kakao = res.data
                     console.log(res);

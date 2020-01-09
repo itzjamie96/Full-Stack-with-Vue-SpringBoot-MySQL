@@ -128,7 +128,7 @@ export default {
             const paymentNo = this.$route.params.paymentNo;
            
            Axios
-            .get(`http://localhost:1234/showDetailPayment/${paymentNo}`)
+            .get(`http://192.168.0.128:1234/showDetailPayment/${paymentNo}`)
             .then(res => {
                 this.paymentObj = res.data
                 console.log(res);

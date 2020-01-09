@@ -183,7 +183,7 @@ export default {
     computed:{
         ...mapState(['userInfo']),
         lsm(){
-            let lsm = 'http://localhost:1234/download/'+this.userInfo.userProfile
+            let lsm = 'http://192.168.0.128:1234/download/'+this.userInfo.userProfile
             return lsm
         }
         },
@@ -202,7 +202,7 @@ export default {
             this.userVo.userPhone = this.userInfo.userPhone//
             this.userVo.userNo = this.userInfo.userNo
             this.userVo.userAddress = this.userInfo.userAddress//
-            this.userVo.userProfile ='http://localhost:1234/download/'+this.userInfo.userProfile
+            this.userVo.userProfile ='http://192.168.0.128:1234/download/'+this.userInfo.userProfile
             this.userVo.userDate = this.userInfo.userDate    
            
         },
@@ -216,12 +216,12 @@ export default {
             if(this.trig){  // 유저 이미지 새로 추가 할 경우 
                 let formData = new FormData()
                 formData.append('file',this.userImg)
-                 axios.post('http://localhost:1234/updateUser', this.userVo)
+                 axios.post('http://192.168.0.128:1234/updateUser', this.userVo)
                       .then(response =>{
                         console.log('update 성공')
                         console.log(response.data)
 
-                        axios.post('http://localhost:1234/upload-userImg/'+this.userVo.userEmail+'/'
+                        axios.post('http://192.168.0.128:1234/upload-userImg/'+this.userVo.userEmail+'/'
                                     +this.userVo.userNo, formData,{
                                         headers:{
                                             'Content-Type' : 'multipart/form-data'
@@ -248,11 +248,11 @@ export default {
                 let formData = new FormData()
                 formData.append('file', this.userImg)
 
-                axios.post('http://localhost:1234/deleteUserImg/'+this.userVo.userNo)
+                axios.post('http://192.168.0.128:1234/deleteUserImg/'+this.userVo.userNo)
                      .then(response =>{
                          console.log('기존 이미지 삭제 성공')
 
-                         axios.post('http://localhost:1234/upload-userImg/'+this.userVo.userEmail+'/'
+                         axios.post('http://192.168.0.128:1234/upload-userImg/'+this.userVo.userEmail+'/'
                          +this.userVo.userNo, formData,{
                              headers:{
                                  'Content-Type':'multipart/form-data'
@@ -261,7 +261,7 @@ export default {
                             .then(response =>{
                                 this.userInfo.userProfile=String(response.data.name)
                                     
-                                axios.post('http://localhost:1234/updateUser',this.userVo)
+                                axios.post('http://192.168.0.128:1234/updateUser',this.userVo)
                                 .then(response =>{
                                     console.log('유저 이미지 성공 후 나머지 수정 성공')
                                 })
@@ -278,13 +278,13 @@ export default {
 
                      })
             }
-            // window.location.href='http://localhost:8080/uMyPage/uAccount'
+            // window.location.href='http://192.168.0.128:8080/uMyPage/uAccount'
 
             
         },
         deleteUser(){
             this.init()
-            axios.post('http://localhost:1234/deleteUser/'+this.userVo.userNo)
+            axios.post('http://192.168.0.128:1234/deleteUser/'+this.userVo.userNo)
             .then(response =>{
                 console.log('delete 성공')
                 console.log(response)

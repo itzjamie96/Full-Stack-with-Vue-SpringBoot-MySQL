@@ -66,7 +66,7 @@ export default {
     }
   },
   created(){
-    this.$http.get(`http://localhost:1234/test`)
+    this.$http.get(`http://192.168.0.128:1234/test`)
         .then(res => { 
                 this.data=res.data
                 for(let sitterT in res.data){

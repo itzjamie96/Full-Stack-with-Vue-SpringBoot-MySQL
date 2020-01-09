@@ -62,7 +62,7 @@ export default {
     },
     initialize(){//DB와 연동해서 게시판 목록을 전부 가져옴
         console.log(this.userInfo.sitterNo)
-        axios.get(`http://localhost:1234/showPaymentCalendar/${this.userInfo.sitterNo}`)
+        axios.get(`http://192.168.0.128:1234/showPaymentCalendar/${this.userInfo.sitterNo}`)
           .then(res => {
             this.paylist=res.data //table row로 보여질 객체에 DB에서 받은 데이터를 넣어줌
             console.log(res.data);

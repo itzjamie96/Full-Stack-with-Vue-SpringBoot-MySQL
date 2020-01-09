@@ -237,7 +237,7 @@ export default {
            
            
            axios
-            .get(`http://localhost:1234/showAllpets/${this.userInfo.userNo}`)
+            .get(`http://192.168.0.128:1234/showAllpets/${this.userInfo.userNo}`)
             .then(res => {
                 this.petList = res.data
                 console.log(res);
