@@ -1,11 +1,11 @@
 <template>
-  <v-container class="pt-12">
-    <v-row >
+  <v-container class="pt-12 px-0">
+    <v-row class="justify-center">
         <v-col cols="3"> 
           <side-bar/>   
         </v-col>
 
-        <v-col cols="8" class="ml-12">
+        <v-col cols="9" class="">
           <v-data-table
             :headers="headers"
             :items="paylist"

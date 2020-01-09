@@ -1,11 +1,12 @@
 <template>
-<v-container class="pt-12">
-    <v-row >
-        <v-col cols="3" class="mr-3"> 
+  <v-container class="pt-12 px-0">
+    <v-row class="justify-center">
+        <v-col cols="3"> 
           <side-bar/>   
         </v-col>
-        <v-col cols="8" class="ml-12">
-            <v-card max-width="70%">
+
+        <v-col cols="9" class="">
+            <v-card max-width="85%">
                <form>
             <!-- 반려견 사진 -->
                   <div>
