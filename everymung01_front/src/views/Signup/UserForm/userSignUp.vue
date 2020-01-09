@@ -19,8 +19,7 @@
             회원가입 완료
             </v-alert>
 
-              <v-toolbar flat>
-                <v-toolbar-title primary-title class="layout justify-center">
+            <v-row class="justify-center mt-8 mb-6">
                   <div>
                     <div class="d-inline">
                       <i class="fas fa-paw fa-1x"></i>
@@ -30,9 +29,8 @@
                     </div>
                   </div>                  
                   <b class="ml-2">회원가입</b>
-                </v-toolbar-title>
-              </v-toolbar>
-              <v-divider></v-divider>
+            </v-row>
+              <v-divider class="mx-12"></v-divider>
               <div class="pa-3">
                 <v-row class="justify-center">
                   <v-col cols="8">
@@ -133,13 +131,13 @@
                 </v-row> 
               </div>
 
-            <v-toolbar flat >
-                <v-toolbar-title primary-title class="layout justify-center">
-                    <v-divider class="mt-3"></v-divider>
+              <v-row class="justify-center my-6">
+                    <v-divider class="mt-3 mx-12"></v-divider>
                     <pre id="easy">   간편하게 시작하기   </pre>
-                    <v-divider class="mt-3"></v-divider>
-                    </v-toolbar-title>
-            </v-toolbar>
+                    <v-divider class="mt-3 mx-12"></v-divider>
+
+              </v-row>
+
             <v-row class="justify-center">
               <div v-if="role !=='Admin'">
                 <v-row class="mb-3">
@@ -155,7 +153,7 @@
                 </v-row>
               </div>
             </v-row>
-           <v-divider class="mt-6"></v-divider>
+           <v-divider class="mt-3 mx-12"></v-divider>
           <v-row class="justify-center">
               <p class="mt-3">이미 계정이 있다면 ? </p>
               <router-link :to="{name: 'signin'}" depressed>

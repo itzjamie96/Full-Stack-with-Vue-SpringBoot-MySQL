@@ -180,7 +180,7 @@
               <v-col cols="6">
               <v-text-field
               v-model="SitterVO.sitterAge"
-              label="나이"
+              label="나이 (23세 이하 지원 불가)"
               type="number"
               required
             ></v-text-field>
@@ -192,7 +192,7 @@
               @keydown="OpenBtnPhone(SitterVO.sitterPhone)"
               v-model="SitterVO.sitterPhone"
               :rules="PhoneRules"
-              label="핸드폰번호"
+              label="휴대폰 번호"
               required
             ></v-text-field>
               </v-col>
@@ -207,10 +207,10 @@
               <GmapAutocomplete 
                 @place_changed="setPlace"
                 id="gmapAdd"
-                class="mr-8 mt-3">
+                class="mr-4 mt-3">
               </GmapAutocomplete>
 
-              <button @click="usePlace" id="search-btn">확인</button>
+              <button @click="usePlace" id="search-btn">선택</button>
             </label>
               </v-col>
             </v-row>
@@ -241,7 +241,7 @@
               <v-col cols="7">
             <v-divider class="mt-12"></v-divider>
                       <v-row class="justify-center mt-2 pt-3" id="signTitle">
-                        <p  class="text-center" id="caution">지원 전 확인 사항</p>
+                        <p  class="text-center" id="caution">신원 확인</p>
                       </v-row>
                       <v-divider class="mb-6"></v-divider>
 
@@ -263,11 +263,6 @@
               </v-col>
             </v-row>
 
-          <v-card>
-          
-          </v-card><br>
-
-            <br>
           <v-row justify="center">
             <h1>{{msg}}</h1>
           <v-btn 
@@ -519,6 +514,11 @@ pre{
   background-color: rgba(170, 172, 154, 0.1);
   box-sizing: border-box;
 
+}
+
+#search-btn{
+  background-color: rgba(170, 172, 154, 0.3);
+  padding: 2px 10px 2px 8px;
 }
 
 </style>

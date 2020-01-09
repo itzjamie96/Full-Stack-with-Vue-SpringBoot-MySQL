@@ -10,44 +10,47 @@
                 <v-btn router :to="{name:'myPetDetail'}"> 반려견 추가하기 </v-btn>
             </v-row>
                 <v-card
-                class="mb-4 mt-2"
-                width="50%"
-                outlined
-                v-for="(userPet,index) in userPetList"
-                :key="index"
+                    class="mb-4 mt-2"
+                    max-width="650px"
+                    outlined
+                    v-for="(userPet,index) in userPetList"
+                    :key="index"
                 >
-                    <v-list-item three-line>
-                    <v-list-item-avatar
-                        tile
-                        size="100"
-                    >
-                        <v-img
-                        :src="tempImg[index]"
-                        > </v-img>
-                    </v-list-item-avatar>
-                    <v-list-item-content class="mx-auto">
-                        <p class="font-weight-bold">{{userPet.petName}}</p>
-                        <br><br>
-                        <p class="font-weigth-bold"
-                            v-if="userPet.petGender === '1'"
-                        > 
-                        ( {{userPet.dogBreed}},수컷,만{{userPet.petAge}}살 ) 
-                        </p>
-                        <p v-else>
-                          ( {{userPet.dogBreed}}, 암컷 ,만{{userPet.petAge}}살 ) 
-                        </p>
-                        <v-col class="text-left">
-                        <v-btn large color
-                        @click="itemView(userPet,index)"
-                        >상세보기</v-btn>
+                    <v-row class="justify-center">
+                        <v-col cols="4" class="text-center">
+                            <v-list-item-avatar
+                                class="ml-4"
+                                size="150"
+                            >
+                                <v-img
+                                :src="tempImg[index]"
+                                > </v-img>
+                            </v-list-item-avatar>
+
                         </v-col>
-                    </v-list-item-content>
+                        <v-col cols="5">
+                            <p class="font-weight-bold mt-12 mb-3">{{userPet.petName}}</p>
+                            
+                            <p class="font-weigth-bold"
+                                v-if="userPet.petGender === '1'"
+                            > 
+                            ( {{userPet.dogBreed}},수컷,만{{userPet.petAge}}살 ) 
+                            </p>
+                            <p v-else>
+                            ( {{userPet.dogBreed}}, 암컷 ,만{{userPet.petAge}}살 ) 
+                            </p>
 
-                    <v-spacer></v-spacer>
+                        </v-col>
 
+                        <v-col cols="2" class="text-center">
+                            <v-btn 
+                            class="mt-12"
+                            @click="itemView(userPet,index)"
+                            >상세보기</v-btn>
+                        </v-col>
                     <!-- <v-btn> 수정 </v-btn>
                     <v-btn> 삭제 </v-btn> -->
-                </v-list-item>
+                </v-row>
                 </v-card>
                
 
