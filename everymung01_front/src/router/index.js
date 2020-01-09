@@ -6,7 +6,7 @@ import MypagePetInfo from '../views/Mypage/User/MyPagePetInfo'
 import MyPagePetInfoNew from '../views/Mypage/User/MyPagePetInfoNew'
 import MyPageSetting from '../views/Mypage/User/MyPageSetting'
 import MyPageLiveCare from '../views/Mypage/User/MyPageLiveCare'
-import UserPetDetail from '../views/Mypage/User/UserPetDetail'
+/* import UserPetDetail from '../views/Mypage/User/UserPetDetail' */
 
 Vue.use(VueRouter)
     //어드민 라우터 가드
@@ -312,8 +312,21 @@ const routes = [{
         name: 'sitterLive',
         component: () =>
             import ( /* webpackChunkName: "UserReservationList" */ '../views/Mypage/Sitter/sitterLive.vue'),
-            beforeEnter:SitterMyPageG
     },
+    // 마이페이지 / 실시간 케어보기 
+    {
+        path: '/uMyPage/uLiveCare',
+        name: 'MyPageLiveCare',
+        component: MyPageLiveCare
+
+    },
+    // 마이페이지 / 반려견정보관리 / 상세보기 
+    /* {
+        path: '/uMyPage/uPetDetailView',
+        name: 'UserPetDetail',
+        component: UserPetDetail
+
+    }, */
     { //시터 개인정보 등록, 수정
         path: '/sMyPage/sitterMyPageSetting',
         name: 'SitterMyPageSetting',

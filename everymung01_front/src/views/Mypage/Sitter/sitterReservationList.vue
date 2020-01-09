@@ -1,17 +1,17 @@
 <template>
 <div>
 <div v-if="this.userInfo.sittingType==='daycare'">
-  <v-container fluid="" class="fill-height">
-    <v-row class="fill-height">
-        <v-col cols="3">
+  <v-container class="pt-12 px-0">
+    <v-row class="justify-center">
+        <v-col cols="3"> 
           <side-bar/>   
         </v-col>
 
-        <v-col cols="9">
+        <v-col cols="9" class="">
           <v-data-table
-          :headers="headers"
-          :items="paylist"
-          class="elevation-1"
+            :headers="headers"
+            :items="paylist"
+            class="elevation-1"
         >
 
         <template v-slot:top>
@@ -49,80 +49,75 @@
 </div>
 
 <div v-if="this.userInfo.sittingType==='home'">
-<v-container fluid="" class="fill-height">
-    <v-row class="fill-height">
-        <v-col cols="3">
+  <v-container class="pt-12 px-0">
+    <v-row class="justify-center">
+        <v-col cols="3"> 
           <side-bar/>   
         </v-col>
-        <v-col cols="9">
-          <v-data-table
-          :headers="headers"
-          :items="paylist"
-          class="elevation-1"
-        >
 
+        <v-col cols="9" class="">
+          <v-data-table
+            :headers="headers"
+            :items="paylist"
+            class="elevation-1"
+        >
         <template v-slot:top>
             <v-toolbar flat color="white">
-              <v-toolbar-title>예약 내역</v-toolbar-title>
+              <p id="reserveTitle" class="mt-3">예약 내역</p>
               <v-divider
                 class="mx-4"
                 inset
                 vertical
               ></v-divider>
-              <router-link :to="{path:'/sMyPage/calendar'}" exact><h3>캘린더보기</h3></router-link>
-              <h3 @click="$router.push({path: '/sMyPage/calendar'})">캘린더보기</h3>
-              <v-btn @click="$router.push({path: '/sMyPage/calendar'})">캘린더보기</v-btn>
+              <span id="calendar-btn" @click="$router.push({path: '/sMyPage/calendar'})">캘린더보기</span>
               <v-spacer></v-spacer>
             </v-toolbar>
           </template>
-          <template v-slot:item.action="{ item }">
+          <template v-slot:item.action="{ item }" class="text-center">
 
-            
-            <v-icon
+            <!-- 유저가 환불 했을 때 예약 취소된 상태-->
+            <!-- 상태 메세지 -->
+            <span
+              v-if="item.paymentStatus==true && item.refundStatus==true"
+              id="statusMsg"
+            >
+              예약 취소
+            </span>
+            <span
+              v-if="item.paymentStatus==true && item.refundStatus==false"
+              id="statusMsg"              
+            >
+              승인 완료
+            </span>
+            <span
+              v-if="item.paymentStatus==false && item.refundStatus==true"
+              id="statusMsg" 
+            >
+              환불 완료
+            </span>
+            <!-- 버튼 -->
+            <button
+              @click="showDetail(item)"
+              type="button"
+              id="click"
+            >
+              상세 보기
+            </button>
+            <span
               v-if="item.paymentStatus==false && item.refundStatus==false"
-              small
-              class="mr-2"
+              id="click"
               @click="approval(item)"
             >
-              [승인]
-            </v-icon>
-            <v-icon
+              승인
+            </span>
+            <span
               v-if="item.paymentStatus==false && item.refundStatus==false"
-              small
-              class="mr-2"
+              id="click"
               @click="refund(item)"
             >
               [거절]
-            </v-icon>
-            <v-icon
-              v-if="item.paymentStatus==true && item.refundStatus==false"
-              small
-              class="mr-2"
-            >
-              [승인완료]
-            </v-icon>
-            <v-icon
-              v-if="item.paymentStatus==false && item.refundStatus==true"
-              small
-              class="mr-2"
-            >
-              [환불완료]
-            </v-icon>
-            <!-- 유저가 환불 했을 때 예약 취소된 상태-->
-            <v-icon
-              v-if="item.paymentStatus==true && item.refundStatus==true"
-              small
-              class="mr-2"
-            >
-              [예약취소]
-            </v-icon>
-            <v-icon
-              small
-              class="mr-2"
-              @click="showDetail(item)"
-            >
-              search
-            </v-icon>
+            </span>
+
           </template>
         </v-data-table>
         </v-col>
@@ -226,3 +221,55 @@ import NavBar from '@/components/sitterNavigation.vue'
 
   
 </script>
+
+<style>
+
+#reserveTitle{
+    font-size: 19pt;
+    font-weight: bold;
+    color: rgb(239, 83, 80);
+    font-family: 'HangeulNuri-Bold';  
+}
+#calendar-btn{
+  background-color: rgba(0,0,0,0);
+  color: black;
+  padding: 1px 0 1px 0;
+  font-size: 15pt;
+  /* font-family: 'HangeulNuri-Bold';  */
+  cursor: pointer;
+  transition-duration: 0.4s;
+  border-radius: 4px;
+}
+#calendar-btn:hover{
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.19),0 17px 50px 0 rgba(0,0,0,0.1);
+
+}
+.v-data-table th{
+  font-size: 0.9em;
+}
+
+#click{
+  font-size: 10.5pt;
+  padding: 3px 8px 3px 8px;
+  transition-duration: 0.4s;
+  border-radius: 4px;
+  font-weight: bold;
+  margin: 0 6px 0 6px;
+  cursor: pointer;
+  background-color: rgba(0,0,0,0.05);
+
+}
+#click:hover{
+  box-shadow: 0 12px 16px 0 rgba(0,0,0,0.23),0 17px 50px 0 rgba(0,0,0,0.19);
+
+}
+
+#statusMsg{
+    color: rgb(239, 83, 80);
+    font-weight: bold;
+    margin-right: 6px;
+}
+
+
+
+</style>

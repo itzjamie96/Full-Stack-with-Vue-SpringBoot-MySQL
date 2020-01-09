@@ -1,7 +1,6 @@
 <template>
-  <v-container fluid>
-      <v-row>
-      
+  <v-container class="pt-12 px-0">
+    <v-row class="justify-center">
         <v-col cols="6">
           <payment-detail/>
         </v-col>

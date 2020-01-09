@@ -17,7 +17,7 @@
 <script>
 import PaymentDetail from '@/components/PaymentDetail/paymentDetailTry.vue'
 import PaymentDetailHome from '@/components/PaymentDetail/homePaymentDetailTry.vue'
-import PaymentReceipt from '@/components/PaymentDetail/paymentReceipt.vue'
+import PaymentReceipt from '@/components/PaymentDetail/paymentReceiptHome.vue'
 
 // {{$store.state.reservationList[0]}}
 

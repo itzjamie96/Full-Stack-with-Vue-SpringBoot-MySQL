@@ -12,21 +12,26 @@
                             <div>
                                 
                                  <!-- 맨처음 보일  일반유저 프로필 사진 추가   -->
-                                <v-row justify="center">
-                                    <v-col cols="3">
-                                         <div class="image-preview"  v-if="trig" >
-                                            <v-img :src="lsm"
-                                            height="100" width="100" class="preview"  >
-                                            </v-img>
+                                <v-row class="justify-center">
+                                    <v-col cols="9" class="text-center" > 
+                                         <div class="image-preview "  v-if="trig" >
+                                             <v-list-item-avatar size="200">
+                                                <v-img :src="lsm"
+                                                class="preview"  >
+                                                </v-img>
+
+                                             </v-list-item-avatar>
                                         </div>
                                  <!-- 일반유저 프로필 사진 수정  -->     
                                         <div v-else >
+                                            <v-list-item-avatar size="200">
                                             <v-img
-                                            height="100" width="100"
+                                            
                                             :src="previewUserImg"
                                             class="image-preview"
                                             >
                                             </v-img>
+                                            </v-list-item-avatar>
                                         </div>
                                         <!-- 이미지 미리 보기 -->
                                         <div class="file-upload-form" >
@@ -37,10 +42,11 @@
                                         </div>
                                     </v-col>
                                 </v-row>
+                                <v-divider class="mx-12 my-6"></v-divider>
                             </div>
                             <!--  유저 이름 -->
-                            <v-row justify="center">
-                                <v-col cols="3"> 
+                            <v-row class="justify-center">
+                                <v-col cols="4" > 
                                 <!-- :value="userInfo.userName"
                                  @input="userInfoReading" -->
                                  <v-text-field
@@ -55,8 +61,8 @@
                                 </v-col>
                             </v-row>
         
-                            <v-row justify="center">
-                                <v-col cols="3">
+                            <v-row class="justify-center">
+                                <v-col cols="4">
                                      <!-- :value="userInfo.userEmail" -->
                                      <!-- @input="userInfoReading" -->
                                     <v-text-field
@@ -67,8 +73,8 @@
                                 </v-col>
                             </v-row>
 
-                            <v-row justify="center">
-                                <v-col cols="3">
+                            <v-row class="justify-center">
+                                <v-col cols="4">
                                     <!-- :value="userInfo.userPw" -->
                                     <v-text-field
                                     :disabled="userInfo.userPw==='구글'||userInfo.userPw==='카카오'"
@@ -85,8 +91,8 @@
                                 </v-col>
                             </v-row>
           
-                            <v-row justify="center">
-                                <v-col cols="3">
+                            <v-row class="justify-center">
+                                <v-col cols="4">
                                       <!-- :value="userInfo.userPhone" -->
                                     <v-text-field
                                     v-model="userInfo.userPhone"
@@ -95,8 +101,8 @@
                                 </v-col>
                             </v-row>
 
-                            <v-row justify="center">
-                                <v-col cols="3">
+                            <v-row class="justify-center">
+                                <v-col cols="4">
                                    <!-- :value="userInfo.userAddress" -->
                                     <!-- v-model="userVo.userAddress" -->
                                     <v-text-field
@@ -107,24 +113,26 @@
                                 </v-col>
                             </v-row>
          
-                            <v-row justify="center">
-                                <v-btn text color="primary" dark
+                            <v-row class="justify-center">
+                                <v-btn 
                                 @click="updateUserInfo"
+                                class="mr-12"
                                 >수정완료</v-btn>
-                                <v-btn text color="primary"
+                                <v-btn 
                                 @click.stop="checkDelete= true"
                                 >회원탈퇴</v-btn>
                             </v-row>
+                            <v-row><v-col></v-col></v-row>
                             <v-row>
-                                <v-dialog v-model="checkDelete" max-width="290">
+                                <v-dialog v-model="checkDelete" max-width="400">
                                     <v-card>
                                         <v-card-title>
                                             정말로 회원을 탈퇴 하시 겠습니까? 
                                         </v-card-title>
                                         <v-card-actions>
                                             <v-spacer></v-spacer>
-                                            <v-btn color="green darken-1" text @click="checkDelete=false" > 아니오 </v-btn>
-                                            <v-btn color="green darken-1" text @click="deleteUser"> 예 </v-btn>
+                                            <v-btn text @click="checkDelete=false" > 아니오 </v-btn>
+                                            <v-btn text @click="deleteUser"> 예 </v-btn>
                                         </v-card-actions>
                                     </v-card>
                                 </v-dialog>

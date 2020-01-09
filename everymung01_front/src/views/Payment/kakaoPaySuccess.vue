@@ -1,21 +1,25 @@
 <template>
-<div>
+<v-container>
     <!-- 카카오 페이 성공 시 넘어오는 페이지 -->
+    <v-row><v-col></v-col></v-row>
+    <v-row><v-col></v-col></v-row>
+    <v-row><v-col></v-col></v-row>
+    <v-row><v-col></v-col></v-row>
     <v-card
-        class="mx-auto"
+        class="mx-auto mt-12 pa-3"
         max-width="400px">
 
-    <v-row justify="center">
+    <v-row class="justify-center mb-5">
         <h1>결제가 완료되었습니다</h1>
     </v-row>
 
-    <v-row justify="center">
+    <v-row class="justify-center pb-3">
         <router-link :to="{name:'UserReservationList'}" exact>예약 내역에서 확인하기</router-link>
     </v-row>
     </v-card>
         <!-- kakao pay success 컨트롤러에서 넘어오는 리턴 값--> 
         <!-- <h2>{{this.kakao}}</h2> -->
-</div>
+</v-container>
 </template>
 
 <script>

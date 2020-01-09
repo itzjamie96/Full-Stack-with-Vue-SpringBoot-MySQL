@@ -6,7 +6,7 @@
             <side-bar></side-bar>
             </v-col>
             
-                <v-col>
+                <v-col cols="9">
                     <v-card>
                         <form>
                             <v-row justify="center">

@@ -30,7 +30,6 @@
                 <v-text-field label="Title" v-model="board.title" readonly></v-text-field>
               </v-col>
               <v-col cols="12">
-              </v-col>
               <v-textarea
                 cols="12"
                 outlined
@@ -39,6 +38,8 @@
                 readonly
               >
               </v-textarea>
+              </v-col>
+
               <v-col cols="12">
                 <v-text-field label="Date" v-model="board.boardDate" disabled ></v-text-field>
               </v-col>
@@ -86,9 +87,10 @@ import { mapState, mapActions } from 'vuex';
 
 export default {
     components: {
-  VueGoodTable,
+      VueGoodTable
 
-},data(){
+},
+data(){
     return {
        content:'',
        dialog: false,

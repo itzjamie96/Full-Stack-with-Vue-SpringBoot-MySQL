@@ -1,5 +1,5 @@
 <template>
-    <div height="100%">
+    <div>
         <v-navigation-drawer
           left
           width="300px"
@@ -68,3 +68,4 @@ import {mapState,mapActions} from "vuex"
 
   }
 </script>
+

@@ -194,6 +194,8 @@ export default {
      this.sitter.sitterPhone = params.row.sitterPhone
      this.sitter.sitterAddress = params.row.sitterAddress
      this.sitter.approvalDate = params.row.approvalDate
+     this.sitter.lat = params.row.lat
+     this.sitter.lng = params.row.lng
   },
   selectAll(){
       this.$http.get(`http://localhost:1234/showAllSitters`)

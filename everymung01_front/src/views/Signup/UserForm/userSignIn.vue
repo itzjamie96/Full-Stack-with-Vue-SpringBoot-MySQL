@@ -1,5 +1,5 @@
 <template>
-<v-app>
+
     <v-container fill-height style="max-width:450px;">
         <v-layout align-center row wrap>
             <v-flex xs12>
@@ -189,7 +189,7 @@
         </v-layout>
         
     </v-container>
-    </v-app>
+
 </template>
 
 <script>
