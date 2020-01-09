@@ -35,8 +35,24 @@
                 <v-text-field label="Phone" v-model="user.userPhone" :rules="PhoneRules" ></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="Address" v-model="user.userAddress" ></v-text-field>
+                <VueDaumPostcode
+                  style="overflow: scroll; height: 300px"
+                  @complete="user.userAddress = $event.roadAddress"
+                />
               </v-col>
+              <v-col cols="12">
+                <v-text-field
+                  :disabled="user.userAddress === null"
+                  v-model="user.userAddress"
+                  label="상세주소(건물명,층)"
+                  required
+                  color="black"
+                >
+                </v-text-field>
+              </v-col>
+              <!-- <v-col cols="12">
+                <v-text-field label="Address" v-model="user.userAddress" ></v-text-field>
+              </v-col -->
               <v-col cols="12">
                 <v-text-field label="Date" v-model="user.userDate" disabled></v-text-field>
               </v-col>
@@ -74,10 +90,12 @@
 <script>
 import 'vue-good-table/dist/vue-good-table.css'
 import { VueGoodTable } from 'vue-good-table'
+import { VueDaumPostcode } from "vue-daum-postcode"
 
 export default {
     components: {
-  VueGoodTable,
+      VueGoodTable,
+      VueDaumPostcode,
 },data(){
     return {
        dialog: false,

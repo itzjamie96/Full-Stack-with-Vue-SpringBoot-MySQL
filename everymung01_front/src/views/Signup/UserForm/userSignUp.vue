@@ -63,11 +63,11 @@
                       v-model="userAddress"
                       label="상세주소(건물명,층)"
                       required
-          color="black"
+                      color="black"
                     ></v-text-field>
-
                   </v-col>
                 </v-row>
+                
                 <v-row class="justify-center">
                   <v-col cols="8">
                     <v-text-field

@@ -35,8 +35,34 @@
                 <v-text-field label="Phone" v-model="sitter.sitterPhone" :rules="PhoneRules" ></v-text-field>
               </v-col>
               <v-col cols="12">
-                <v-text-field label="Address" v-model="sitter.sitterAddress" ></v-text-field>
+                <label id="adInput">
+                시/구/동 입력 :
+                <GmapAutocomplete class="mx-4" id="gmap"
+                @place_changed="setPlace">
+                </GmapAutocomplete>
+                <v-btn text @click="usePlace">확인</v-btn>
+                </label>
               </v-col>
+          
+              <GmapMap style="width: 800px; height: 400px;" :zoom="14" :center="{lat:sitter.lat,lng:sitter.lng}">
+                <gmap-circle ref="circle" :radius="1000" :center='{lat:sitter.lat,lng:sitter.lng}' :draggable='true' :editable='true' >
+                </gmap-circle>
+              </GmapMap>
+
+              <v-col cols="12">
+                <v-text-field
+                :disabled="sitter.sitterAddress === null"
+                v-model="sitter.sitterAddress"
+                label="상세주소(건물명,층)"
+                required
+                >
+                </v-text-field>
+              </v-col>
+
+              <!-- <v-col cols="12">
+                <v-text-field label="Address" v-model="sitter.sitterAddress" ></v-text-field>
+              </v-col> -->
+              
               <v-col cols="12">
                 <v-text-field label="Type" v-model="sitter.sittingType" ></v-text-field>
               </v-col>
@@ -77,15 +103,18 @@
 <script>
 import 'vue-good-table/dist/vue-good-table.css'
 import { VueGoodTable } from 'vue-good-table'
+import { VueDaumPostcode } from "vue-daum-postcode"
 
 export default {
     components: {
-  VueGoodTable,
+      VueGoodTable,
+      VueDaumPostcode,
 },data(){
     return {
        dialog: false,
        deleteAlert: false,
        updateAlert: false,
+       place: null, // 구글 api
        sitter:{
        sitterNo :'',
        sitterAge:'',
@@ -97,6 +126,8 @@ export default {
        sitterAddress:'',
        approvalDate:'',
        approvalStatus:true,
+       lat:0,
+       lng:0,
        },
       columns: [
         {
@@ -193,6 +224,7 @@ export default {
   update(){
      this.dialog=false
      this.updateAlert=false
+     
      this.$http.post('http://localhost:1234/updateSitter',this.sitter) 
               .then(res => { 
                 this.selectAll();
@@ -202,8 +234,29 @@ export default {
 
               });
   },
+  setPlace(place) { // 구글 api
+      this.place=place
+      
+  },
+  usePlace(place) { // 구글 api
+      this.sitter.sitterAddress = this.place.formatted_address
+      if (this.place) {
+        this.sitter.lat=this.place.geometry.location.lat()
+        this.sitter.lng=this.place.geometry.location.lng()
+        this.place = null;
+      }
     },
+  },
 
  
 }
 </script>
+<style>
+#adInput{
+  font-size: 12pt;
+}
+#gmap{
+  width: 300px;
+  height: 30px;
+}
+</style>

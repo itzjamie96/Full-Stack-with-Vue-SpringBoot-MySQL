@@ -25,7 +25,7 @@ public interface SitterMapper {
    @Delete("delete from sitter where sitterNo=#{sitterNo}")
    public int deleteSitter(int sitterNo);
    
-   @Update("update sitter set sitterName=#{sitterName},sitterEmail=#{sitterEmail},sitterPw=#{sitterPw},sitterPhone=#{sitterPhone},sitterAddress=#{sitterAddress},approvalStatus=#{approvalStatus} where sitterNo=#{sitterNo}")
+   @Update("update sitter set sitterName=#{sitterName},sitterEmail=#{sitterEmail},sitterPw=#{sitterPw},sitterPhone=#{sitterPhone},sitterAddress=#{sitterAddress},approvalStatus=#{approvalStatus}, lat=#{lat}, lng=#{lng} where sitterNo=#{sitterNo}")
    public int updateSitter(SitterVO sitterVo);
 
    @Select("select * from sitter JOIN sitting_type AS type ON (sitter.sittingNo = type.sittingNo) where sitterEmail=#{sitterEmail}") //시터 로긴 & 새로고침 관련

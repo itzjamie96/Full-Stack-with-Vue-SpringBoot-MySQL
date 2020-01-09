@@ -296,6 +296,7 @@ import axios from 'axios'
 import * as FormData from 'form-data'
 import { VueDaumPostcode } from "vue-daum-postcode"
 import {mapState} from "vuex"
+
 const baseURL = 'http://localhost:1234'
 export default {
   components: {
@@ -342,7 +343,7 @@ export default {
         possibleDay:'',
         profile:'',
         lat:37.496361445796694,
-        lng: 127.05750504049766,
+        lng:127.05750504049766,
       },
       //자기소개
       //
