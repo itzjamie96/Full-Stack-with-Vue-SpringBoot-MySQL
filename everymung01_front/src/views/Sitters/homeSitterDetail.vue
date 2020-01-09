@@ -14,10 +14,13 @@
                 <v-col cols="1"></v-col>
                 <v-col cols="5 justify-center">
                     <new-reservation/>
-                    <GmapMap style="width: 600px; height: 300px;" :zoom="14" :center="lsm">
-                        <gmap-circle ref="circle" :radius="1000" :center='lsm' :draggable='true' :editable='true' >
+                    
+                    <div class="ml-9 mt-8" >
+                    <GmapMap style="width: 421.75px; height: 300px;" :zoom="13" :center="lsm">
+                        <gmap-circle ref="circle" :radius="800" :center='lsm' :draggable='false' :editable='false' >
                             </gmap-circle>
                         </GmapMap>
+                    </div>
                 </v-col>
             </v-row>
             
@@ -73,4 +76,5 @@ export default {
 #img{
     padding-top: 0;
 }
+
 </style>

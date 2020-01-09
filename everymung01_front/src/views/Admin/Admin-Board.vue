@@ -87,11 +87,9 @@ import { mapState, mapActions } from 'vuex';
 export default {
     components: {
   VueGoodTable,
-    'editor': Editor,
-    'viewer': Viewer
+
 },data(){
     return {
-       editorText: '',
        content:'',
        dialog: false,
        deleteAlert: false,
