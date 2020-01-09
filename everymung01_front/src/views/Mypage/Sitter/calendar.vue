@@ -1,19 +1,27 @@
 <template>
 <div v-if="this.userInfo.sittingType==='home'">
-<v-container fluid="" class="fill-height">
-  <v-row class="fill-height">
-    <v-col cols="3">
-      <side-bar/>   
-    </v-col>
+  <v-container class="pt-12 px-0">
+    <v-row class="justify-center">
+        <v-col cols="3"> 
+          <side-bar/>   
+        </v-col>
 
-    <v-col cols="9">
-      <router-link :to="{path:'/sMyPage/sitterReservationList'}" exact><h3>리스트보기</h3></router-link>
-      <h3 @click="$router.push({path: '/sMyPage/sitterReservationList'})">리스트보기</h3>
-      <v-btn @click="$router.push({path: '/sMyPage/sitterReservationList'})">리스트보기</v-btn>
-      <full-calendar :events="schedule" locale="ko"
-        @eventClick="showDetail"
-      >
-      </full-calendar> 
+    <v-col cols="9" >
+      <v-card id="cal"
+        tile
+        elevation="1"
+        > 
+        <span id="list-btn" @click="$router.push({path: '/sMyPage/sitterReservationList'})">리스트보기</span>
+        <full-calendar :events="schedule" locale="ko"
+          @eventClick="showDetail"
+          id="calendar"
+        >
+        </full-calendar> 
+        <v-row>
+          <v-col cols="12"></v-col>
+        </v-row>
+
+      </v-card>
     </v-col>
   </v-row>
 
@@ -89,3 +97,43 @@ export default {
   },
 }
 </script>
+<style>
+#list-btn{
+  background-color: rgba(0,0,0,0);
+  color: black;
+  padding: 1px 0 1px 0;
+  font-size: 15pt;
+  /* font-family: 'HangeulNuri-Bold';  */
+  cursor: pointer;
+  transition-duration: 0.4s;
+  border-radius: 4px;
+  margin-left: 36em;
+}
+#list-btn:hover{
+  box-shadow: 0 6px 10px 0 rgba(0,0,0,0.19),0 17px 50px 0 rgba(0,0,0,0.1);
+
+}
+#cal{
+  background-color: white;
+  margin-top: 0px;
+}
+.comp-full-calendar {
+    padding: 0 20px;
+    background: #fff;
+    max-width: 800px;
+    margin: 0 auto;
+}
+.full-calendar-body {
+    margin-top: 0px;
+}
+.full-calendar-body .dates .dates-events .events-week .events-day {
+    cursor: unset;
+}
+.full-calendar-body .dates .dates-events .events-week .events-day .event-box .event-item {
+
+    background-color: rgb(253, 231, 169,0.8);
+
+    color: rgba(0, 0, 0);
+
+}
+</style>

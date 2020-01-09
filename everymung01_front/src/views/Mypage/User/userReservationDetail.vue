@@ -1,92 +1,108 @@
 <template>
-    <div>
-        <v-card
-            class="mx-auto"
-            max-width="500"
-        >
-            <v-card-text>
-            <p class="headline text--primary">예약 상세 정보</p>
+  <v-container class="pt-12 px-0">
+    <v-row class="justify-center">
+        <v-col cols="3"> 
+          <side-bar/>   
+        </v-col>
 
-            <v-row justify="left">
-                <v-col cols="6">
-                    <p class="text--primary">맡기실 반려동물</p>
-                </v-col>
-                <v-col
-                    v-for="pets in paymentObj.petDetailList"
-                    :key="pets.petNo"
-                    cols="2"
+        <v-col cols="9" class="">
+            <div>
+                <v-card
+                    class="mx-auto"
+                    max-width="100%"
+                    tile=""
                 >
-                    <p>{{pets.petName}}</p>
-                </v-col>
-            </v-row>
-            <v-row justify="center">
-                <v-col>
-                    <p class="text--primary">예약 날짜</p>
-                </v-col>
-                <v-col>
-                    <p>{{paymentObj.startTime | formatDate}}</p>
-                </v-col>
-            </v-row>
-            <v-row justify="center">
-                <v-col>
-                    <p class="text--primary">예약 시간</p>
-                </v-col>
-                <v-col>
-                    <p>{{paymentObj.startTime | formatTime}} - {{paymentObj.endTime | formatTime}}</p>
-                </v-col>
-            </v-row>
-            <v-row justify="center">
-                <v-col>
-                    <p class="text--primary">방문 주소</p>
-                </v-col>
-                <v-col>
-                    <p>{{paymentObj.userAddress}}</p>
-                </v-col>
-            </v-row>
-            <v-row justify="center">
-                <v-col>
-                    <p class="text--primary">시터 타입</p>
-                </v-col>
-                <v-col>
-                    <p>{{paymentObj.sittingType}}</p>
-                </v-col>
-            </v-row>
-            <v-row justify="center">
-                <v-col>
-                    <p class="text--primary">펫시터</p>
-                </v-col>
-                <v-col>
-                    <p>{{paymentObj.sitterName}}</p>
-                </v-col>
-            </v-row>
-            <v-row justify="center">
-                <v-col>
-                    <p class="text--primary">요청사항</p>
+                    <v-card-text>
+                    <p id="detailTitle" class="text-center">예약 상세 정보</p>
 
-                </v-col>
-                <v-col>
-                    <p>{{paymentObj.request}}</p>
-                </v-col>
-            </v-row>
-            <v-row justify="center">
-                <v-col>
-                    <p class="text--primary">결제금액</p>
+                    <v-divider class="my-4"></v-divider>
 
-                </v-col>
-                <v-col>
-                    <p>{{paymentObj.amount}}</p>
-                </v-col>
-            </v-row>
+                    <v-row class="justify-left pl-9">
+                        <v-col cols="5">
+                            <p id="context">맡기실 반려동물</p>
+                        </v-col>
+                        <v-col
+                            v-for="pets in paymentObj.petDetailList"
+                            :key="pets.petNo"
+                            cols="2"
+                            class="pl-4"
+                        >
+                            <p id="request">{{pets.petName}}</p>
+                        </v-col>
+                    </v-row>
+                    <v-row class="justify-center">
+                        <v-col cols="5">
+                            <p id="context">예약 날짜</p>
+                        </v-col>
+                        <v-col cols="6">
+                            <p id="request">{{paymentObj.startTime | formatDate}}</p>
+                        </v-col>
+                    </v-row>
+                    <v-row class="justify-center">
+                        <v-col cols="5">
+                            <p id="context">예약 시간</p>
+                        </v-col>
+                        <v-col cols="6">
+                            <p id="request">{{paymentObj.startTime | formatTime}} - {{paymentObj.endTime | formatTime}}</p>
+                        </v-col>
+                    </v-row>
+                    <v-row class="justify-center">
+                        <v-col cols="5">
+                            <p id="context">방문 주소</p>
+                        </v-col>
+                        <v-col cols="6">
+                            <p id="request">{{paymentObj.userAddress}}</p>
+                        </v-col>
+                    </v-row>
+                    <v-row class="justify-center">
+                        <v-col cols="5">
+                            <p id="context">시터 타입</p>
+                        </v-col>
+                        <v-col cols="6">
+                            <p id="request">{{paymentObj.sittingType}}</p>
+                        </v-col>
+                    </v-row>
+                    <v-row class="justify-center">
+                        <v-col cols="5">
+                            <p id="context">펫시터</p>
+                        </v-col>
+                        <v-col cols="6">
+                            <p id="request">{{paymentObj.sitterName}}</p>
+                        </v-col>
+                    </v-row>
+                    <v-row class="justify-center">
+                        <v-col cols="5">
+                            <p id="context">요청사항</p>
 
-            </v-card-text>
-            
-        </v-card>
-    </div>
+                        </v-col>
+                        <v-col cols="6">
+                            <p id="request">{{paymentObj.request}}</p>
+                        </v-col>
+                    </v-row>
+                    <v-row class="justify-center">
+                        <v-col cols="5">
+                            <p id="context">결제금액</p>
+
+                        </v-col>
+                        <v-col cols="6">
+                            <p id="request">{{paymentObj.amount}} 원</p>
+                        </v-col>
+                    </v-row>
+
+                    </v-card-text>
+                    
+                </v-card>
+            </div>
+
+        </v-col>
+    </v-row>
+
+</v-container>
 </template>
 
 
 <script>
-
+import NavBar from '@/components/userNavigation.vue'
 import Axios from 'axios'
 
 export default {
@@ -119,9 +135,10 @@ export default {
        this.initialize()
    },
 
-   computed: {
+    components: {
+    'side-bar' : NavBar
+    },
 
-   },
    methods: {
        initialize() {
            
@@ -145,3 +162,26 @@ export default {
    }
 }
 </script>
+
+<style>
+
+#detailTitle{
+    font-size: 19pt;
+    font-weight: bold;
+    color: rgb(239, 83, 80);
+    font-family: 'HangeulNuri-Bold';  
+}
+
+#context{
+    font-size: 13pt;
+    font-family: 'Noto Sans KR', sans-serif;
+    /* font-weight: bold; */
+    color: black;
+}
+#request{
+    font-size: 13pt;
+    font-family: 'Noto Sans KR', sans-serif;
+    /* font-weight: bold; */
+    /* color: black; */
+}
+</style>

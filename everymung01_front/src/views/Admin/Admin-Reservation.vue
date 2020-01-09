@@ -1,11 +1,11 @@
 <template>
     <v-app>
-        <v-container>
+        <v-container class="ml-12">
         <br><br><br><br><br>
         <v-row>
-            <v-col>
+            <v-col class="ml-12">
   <v-card
-    class="left-auto"
+    class="ml-12"
     max-width="300"
   >
    <v-card-text class="pt-12">

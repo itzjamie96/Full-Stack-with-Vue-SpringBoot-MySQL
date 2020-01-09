@@ -87,8 +87,10 @@ import { mapState, mapActions } from 'vuex';
 
 export default {
     components: {
-  VueGoodTable,
-},data(){
+      VueGoodTable
+
+},
+data(){
     return {
        content:'',
        dialog: false,

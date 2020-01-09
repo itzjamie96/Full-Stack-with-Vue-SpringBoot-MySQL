@@ -1,45 +1,55 @@
 <template>
 <v-container>
-  <v-col cols="12" sm="6">
-    <v-row class="mb-3" justify="center">
-      <v-col cols="10">
-      <v-menu
-       v-model="menu1"
-       :close-on-content-click="false"
-       transition="scale-transition"
-       offset-y
-       min-width="290px"
-      >
-      <template v-slot:activator="{ on }">
-        <v-text-field
-         v-model="date"
-         label="날짜를 선택하세요"
-         readonly
-         v-on="on"
-        ></v-text-field>
-      </template>
-       <v-date-picker v-model="date" @input="menu1 = false" :min="today" @change="searchDate"></v-date-picker>
-      </v-menu>
-      </v-col>
-    </v-row>
+<v-row class="justify-center my-5">
+  <v-col cols="5">
+    <div class="pr-5">
+      <v-card outlined>
+        <div class="px-6 pt-3">
+          <v-menu
+          v-model="menu1"
+          :close-on-content-click="false"
+          transition="scale-transition"
+          offset-y
+          min-width="290px"
+          >
+          <template v-slot:activator="{ on }">
+            <v-text-field
+            v-model="date"
+            label="날짜를 선택하세요"
+            prepend-icon="event"
+            readonly
+            v-on="on"
+            color="black"
+            ></v-text-field>
+          </template>
+          <v-date-picker v-model="date" @input="menu1 = false" :min="today" @change="searchDate" no-title="" color="red lighten-1"></v-date-picker>
+          </v-menu>
+        </div>
+      </v-card>
 
-    <v-row justify="center">
-      <v-col cols="12" sm="10">
+    </div>
+  </v-col>
+
+  <v-col cols="5">
+    <v-card outlined>
+      <div class="px-6 pt-3">
         <v-select 
             v-model="area"
             v-bind:items="areaList"
             item-text="name"
             item-value="name"
-            attach
+            attach     
             label="지역을 선택해주세요"
             prepend-icon="place"
             id="area"
+            color="black"
         ></v-select>
-      </v-col>
-    </v-row>
-
-
+        
+      </div>
+    </v-card>
   </v-col>
+
+</v-row>
   <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="5">
     <v-card
       class="mb-4 mt-2 mx-auto"
@@ -62,7 +72,7 @@
       <v-list-item-content class="mx-auto">
         <p class="body-2">{{sitter.sittingType}} SITTER / {{sitter.sitterNo}}</p>
         <p class="font-weight-bold ">{{sitter.sitterName}}</p> 
-        <p>{{sitter.sitterAddress.slice(4,15)}}</p>
+        <p>{{sitter.sitterAddress.slice(5,15)}}</p>
         <p class="headline">{{sitter.profileTitle}}</p>
       </v-list-item-content>
 
@@ -160,3 +170,8 @@ export default {
 }
 
 </script>
+<style>
+.col, .col-5{
+  padding: 0;
+}
+</style>

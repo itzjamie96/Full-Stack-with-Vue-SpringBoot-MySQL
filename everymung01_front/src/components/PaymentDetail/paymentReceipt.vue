@@ -1,51 +1,29 @@
 <template>
     <div>
         <v-card
-            class="mx-auto"
-            max-width="500px"
+            class="mx-auto mt-12"
+            max-width="90%"
         >
             <v-card-text>
-            <p class="headline text--primary">결제 정보 확인</p>
-
-            <v-row justify="center">
-                <v-col>
-                    <p class="text--primary">기본 금액</p>
-                </v-col>
-                <v-col>
-                    <p>15,000 원</p>
-                </v-col>
-            </v-row>
-            <v-divider></v-divider>
+            <p id="detailTitle" class="text-center py-3">결제 정보 확인</p>
+            <v-divider class="my-4 mx-8"></v-divider>
             
-             <v-row justify="center"
+            <v-row class="justify-center"
                 v-for="pets in paymentVO.petDetailList"
                 :key="pets.petNo">
-                <v-col>
-                    <p class="text--primary"></p>
-                </v-col>
-                <v-col>
-                    <p>{{pets.size}} X {{pets.dayPrice}} 원</p>
-                </v-col>
+                
+            <p id="request">{{pets.size}} X {{pets.dayPrice}} 원</p>
+                
             </v-row>
 
-            <v-divider></v-divider>
-            <v-row justify="center">
-                <v-col>
-                    <p class="text--primary">예약 시간</p>
+            <v-divider class="my-4 mx-12"></v-divider>
+            <v-row class="justify-center">                
+            <p id="request">{{paymentVO.startTime | formatTime}} - {{paymentVO.endTime | formatTime}} : 총 {{lsm}}시간</p>
 
-                </v-col>
-                <v-col>
-                    <p>{{paymentVO.startTime | formatTime}} - {{paymentVO.endTime | formatTime}} : 총 {{lsm}}시간</p>
-                </v-col>
             </v-row>
-            <v-divider></v-divider>
-            <v-row justify="center">
-                <v-col>
-                    <p class="text--primary">결제 금액</p>
-                </v-col>
-                <v-col>
-                    <p>{{total}} 원</p>
-                </v-col>
+            <v-divider class="my-4 mx-8"></v-divider>
+            <v-row class="justify-center"> 
+                    <p id="request"> 결제 금액: {{total}} 원</p>
             </v-row>
             <v-row justify="center" class="mt-3">
                 <v-card-actions>
@@ -144,3 +122,25 @@ export default {
    }
 }
 </script>
+<style>
+
+#detailTitle{
+    font-size: 19pt;
+    font-weight: bold;
+    color: rgb(239, 83, 80);
+    font-family: 'HangeulNuri-Bold';  
+}
+
+#context{
+    font-size: 13pt;
+    font-family: 'Noto Sans KR', sans-serif;
+    /* font-weight: bold; */
+    color: black;
+}
+#request{
+    font-size: 13pt;
+    font-family: 'Noto Sans KR', sans-serif;
+    /* font-weight: bold; */
+    /* color: black; */
+}
+</style>

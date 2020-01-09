@@ -1,40 +1,49 @@
 <template>
-   <v-container fluid="">
-      <v-row class="fill-height">
-         <v-col cols="3">
-            <side-bar/>   
-         </v-col>
+  <v-container class="pt-12 px-0">
+    <v-row class="justify-center">
+        <v-col cols="3"> 
+          <side-bar/>   
+        </v-col>
          <v-col cols="9">
             <v-card>
                <form>
             <!-- 프로필사진 -->
-                  <div>
-                     <v-row justify="center">
-                        <v-col cols="3" > 
-                           <div class="file-upload-form" >
-                           소개사진 1 :
+
+                     <v-row class="justify-center">
+                        <v-col cols="9" class="text-center" > 
+                           <div class="file-upload-form">
+                              <p id="profileTitle">펫시터 소개 사진</p>
                            <v-list-item-avatar
-                             tile
-                             size="100"
+                             size="200"
+                             tile=""
                             >
                              <v-img :src="this.img2"> </v-img>
                             </v-list-item-avatar>
+                            <div>
                               <input 
                               type="file" 
                               @change="previewImage2" 
-                              accept="image/*">
+                              accept="image/*"
+                              class="ml-12 pl-12">
+
+                            </div>
                             </div>
                      <div class="image-preview" v-if="imageData2.length > 0">
                         <img class="preview" :src="imageData2">
                      </div>
                         </v-col>
                      </v-row>   
-                  </div>
+                     <v-divider class="mx-12 my-6"></v-divider>
+                     <!-- <v-row class="justify-center">
+                        <p id="profileTitle">소개용 배경 사진</p>
+
+                     </v-row> -->
+
                   <div>
-                     <v-row justify="center">
-                        <v-col cols="3" > 
+
+                     <v-row class="justify-center mb-4">
+                        <v-col cols="4" class="text-center" > 
                            <div class="file-upload-form" >
-                           소개사진 2 :
                            <v-list-item-avatar
                              tile
                              size="100"
@@ -44,19 +53,17 @@
                               <input 
                               type="file" 
                               @change="previewImage3" 
-                              accept="image/*">
+                              accept="image/*"
+                              class="ml-12"
+                              >
                             </div>
                      <div class="image-preview" v-if="imageData3.length > 0">
                         <img class="preview" :src="imageData3">
                      </div>
                         </v-col>
-                     </v-row>   
-                  </div>
-                  <div>
-                     <v-row justify="center">
-                        <v-col cols="3" > 
+
+                        <v-col cols="4" class="text-center"> 
                            <div class="file-upload-form" >
-                           소개사진 3 :
                            <v-list-item-avatar
                              tile
                              size="100"
@@ -66,19 +73,17 @@
                               <input 
                               type="file" 
                               @change="previewImage4" 
+                              class="ml-12"
                               accept="image/*">
                             </div>
                      <div class="image-preview" v-if="imageData4.length > 0">
                         <img class="preview" :src="imageData4">
                      </div>
                         </v-col>
-                     </v-row>   
-                  </div>
-                  <div>
-                     <v-row justify="center">
-                        <v-col cols="3" > 
+
+                        <v-col cols="4" class="text-center"> 
                            <div class="file-upload-form" >
-                           소개사진 4 :
+                           
                            <v-list-item-avatar
                              tile
                              size="100"
@@ -87,7 +92,8 @@
                             </v-list-item-avatar>
                               <input 
                               type="file" 
-                              @change="previewImage5" 
+                              @change="previewImage5"
+                              class="ml-12" 
                               accept="image/*">
                             </div>
                      <div class="image-preview" v-if="imageData5.length > 0">
@@ -96,9 +102,11 @@
                         </v-col>
                      </v-row>   
                   </div>
+
+                  <v-divider class="mx-12 my-6 pb-6"></v-divider>
             
-                     <v-row justify="center" class="ml-12">
-                        <v-col cols="5"> 
+                     <v-row class="justify-center">
+                        <v-col cols="5" class="text-center"> 
                            <v-text-field
                            v-model="sitterProfile.profileTitle"
                            :counter="15"
@@ -108,12 +116,11 @@
                            required
                            ></v-text-field>
                         </v-col>
-                        <v-col cols="1"></v-col>
                      </v-row>
       
-                     <v-row justify="center" class="ml-12">
-                           <v-col cols="5">
-                              <p>자기소개</p>
+                     <v-row class="justify-center">
+                           <v-col cols="8" class="text-center">
+                              <p id="intro">자기소개</p>
                                  <v-textarea
                                  filled
                                  auto-grow
@@ -125,27 +132,27 @@
                                  ></v-textarea>
                            </v-col>
                      </v-row>
-                     <v-row justify="center" class="ml-12">
-                           <v-col cols="5">
-                              <p>펫소개</p>
+                     <v-row class="justify-center">
+                           <v-col cols="8" class="text-center">
+                              <p id="intro">반려동물 소개</p>
                                  <v-textarea
                                  filled
                                  auto-grow
                                  rows="4"
-                                 placeholder="펫소개를 입력해주세요"
+                                 placeholder="반려동물의 소개를 입력해주세요"
                                  value="answer4"
                                  row-height="30" 
                                  v-model="sitterProfile.petProfile"
                                  ></v-textarea>
                            </v-col>
                      </v-row>
-
-                        <v-row justify="center" class="ml-12">
-                           <v-col cols="3">
+                     <v-row class="justify-center">
+                           <v-col cols="8" class="text-center">
                               <v-btn @click="updateSitterProfile" 
                               >저장하기</v-btn>
                            </v-col>
-                        </v-row>
+                     </v-row>
+                     <v-row><v-col></v-col></v-row>
                </form>
             </v-card>
          </v-col>
@@ -338,14 +345,19 @@ export default {
 </script>
 
 <style  scoped>
-  .file-upload-form, .image-preview {
-    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-    padding: 20px;
+.file-upload-form, .image-preview {
+    font-family: 'Noto Sans KR', sans-serif;
+    /* padding: 20px; */
    }
-    img.preview {
-    width: 200px;
+.img-preview {
+    width: 400px;
     background-color: white;
     border: 1px solid #DDD;
     padding: 5px;
+}
+
+#profileTitle{
+    font-size: 18pt;
+    font-family: 'HangeulNuri-Bold'; 
 }
 </style>

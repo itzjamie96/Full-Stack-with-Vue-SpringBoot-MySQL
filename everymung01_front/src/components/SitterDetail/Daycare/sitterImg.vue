@@ -1,15 +1,9 @@
 <template>
-    <div>
-        <v-card-title>
-            <h4>{{sitterObj.sitterNo}} (PK) :</h4>
-            <h4> {{sitterObj.sittingType}} (Sitter Type)</h4>
-        </v-card-title>
-
+    <div class="px-3">
         <v-carousel
             :show-arrows="false"
             :continuous="true"
-            height="300"
-             cycle
+            height="400"
         >
             <v-carousel-item
                 v-for="sitterImg in sitterImgs"

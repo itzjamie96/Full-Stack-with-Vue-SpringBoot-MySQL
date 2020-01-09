@@ -1,34 +1,35 @@
 <template>
     <div>
-        <div class="headline mx-6">펫시터 후기 {{reviewList.length}} 개</div>
+      <v-divider class="mx-6"></v-divider>
+        <div class="ml-9 mt-2" id="review">펫시터 후기 {{reviewList.length}} 개</div>
         <v-card
             class="mx-auto mb-10"
-            max-width="92%"   
-            elevation="1"
+            max-width="91%"   
+            elevation="0"
         >
         <v-container>
             <v-card
-                class="mb-4 mt-2 mx-auto"
-                max-width="85%"
+                class="mb-4 mt-2"
+                max-width="100%"
                 outlined
                 v-for="review in reviews"
                 :key="review.id"
             >
-            <v-list-item three-line>
-
-            <v-list-item-content class="mx-auto">
-                <p class="font-weight-bold">{{review.userName}}</p>
-                <p class="subtitle-1 ">{{review.reviewDate| formatDate}}</p> 
+            <div>
+              <div class="d-inline font-weight-bold mr-12 ml-2">{{review.userName}}</div>
+              <div class="d-inline">{{review.reviewDate| formatDate}}</div>
+            </div>
+            <div class="ml-2">
                 <v-rating
                       v-model="review.stars"
                       background-color="orange lighten-3"
                       color="orange"
                       readonly
+                      small
+                      dense
                 ></v-rating>
-                <p class="subtitle-1 ">{{review.reviewContent}}</p>
-            </v-list-item-content>
-
-            </v-list-item>
+            </div>
+            <div class="ml-3 mt-2">{{review.reviewContent}}</div>
             </v-card>
               <v-btn 
                 @click="appendReviews()"
@@ -185,3 +186,16 @@ export default {
 }
 
 </script>
+<style>
+@font-face { 
+  font-family: 'HangeulNuri-Bold'; 
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_three@1.0/HangeulNuri-Bold.woff') format('woff'); 
+  font-weight: normal; 
+  font-style: normal; }
+#review{
+    font-size: 19pt;
+    font-weight: bold;
+    color: rgb(239, 83, 80);
+    font-family: 'HangeulNuri-Bold'; 
+}
+</style>

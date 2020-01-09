@@ -1,9 +1,9 @@
 <template>
     <div>
         <v-card
-            class="mx-auto mb-10"
-            max-width="95%"   
-            
+            class="ml-3 mb-10"
+            max-width="96%"   
+            elevation="0"
         >
             <v-list>
                 <v-list-item>
@@ -91,7 +91,7 @@ export default {
            return this.$route.params.sitterNo
        },
         SitterAdd(){
-            let lsm = String(this.sitterObj.sitterAddress).slice(0,7)
+            let lsm = String(this.sitterObj.sitterAddress).slice(5,15)
             return lsm
         }
    },

@@ -1,5 +1,5 @@
 <template>
-<v-app>
+
     <v-container fill-height style="max-width:450px;">
         <v-layout align-center row wrap>
             <v-flex xs12>
@@ -189,7 +189,7 @@
         </v-layout>
         
     </v-container>
-    </v-app>
+
 </template>
 
 <script>
@@ -310,10 +310,10 @@ export default {
        success: function(res) {
          UsersVO.userEmail=res.kaccount_email
          UsersVO.userName="카카오:"+res.properties.nickname
-         console.log(res); //<---- kakao.api.request 에서 불러온 결과값 json형태로 출력
+         
             
           axios.post(`${baseURL}/signup`,UsersVO).then(resp => {
-            console.log(resp)
+          
           this_.login({email:UsersVO.userEmail,password:UsersVO.userPw})
            
           })
@@ -329,7 +329,7 @@ export default {
 
       },
     onFailure(data){
-      console.log(data)
+      
   console.log("failure")
     }
       

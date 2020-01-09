@@ -1,25 +1,27 @@
 <template>
-    <v-container fluid>
+    <v-container >
         <v-card>
-            <v-row>
-                <v-col cols="12">
+            <v-row class="justify-center">
+                <v-col cols="12" id="img">
                     <sitter-img/>         
                 </v-col>
             </v-row>
-            <v-row>
-                <v-col cols="6">
+            <v-row class="mt-9 justify-center">
+                <v-col cols="5">
                     <sitter-profile/> 
                 </v-col>
-                
-                <v-col cols="6">
+                <v-col cols="1"></v-col>
+                <v-col cols="5 justify-center">
                     <new-reservation/>
                 </v-col>
             </v-row>
             
-            <v-row>
-                <v-col cols="6">
+            <v-row class="justify-center">
+                <v-col cols="5">
                     <review/>
                 </v-col>
+                <v-col cols="1"></v-col>
+                <v-col cols="5"></v-col>
             </v-row>
         </v-card>
     
@@ -45,3 +47,9 @@ export default {
 }
 
 </script>
+
+<style>
+#img{
+    padding-top: 0;
+}
+</style>

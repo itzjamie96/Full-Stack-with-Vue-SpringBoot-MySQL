@@ -39,6 +39,21 @@ export default {
 <style>
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap');
 
+@import url('https://fonts.googleapis.com/css?family=Gugi|Jua|Single+Day&display=swap');
+
+@font-face { 
+  font-family: 'HangeulNuri-Bold'; 
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_three@1.0/HangeulNuri-Bold.woff') format('woff'); 
+  font-weight: normal; 
+  font-style: normal; }
+
+
+@font-face { 
+  font-family: 'ON-IGothic'; 
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_eleven@1.0/ON-IGothic.woff') format('woff'); 
+  font-weight: normal; 
+  font-style: normal; }
+
 #app {
   font-family: 'Noto Sans KR', sans-serif;
 }

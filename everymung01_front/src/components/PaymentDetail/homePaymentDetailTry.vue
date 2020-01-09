@@ -1,79 +1,69 @@
 <template>
     <div>
-        <v-card
-            class="mx-auto"
-            max-width="500px"
-        >
-            <v-card-text>
+                <v-card
+                    class="mx-auto mt-12"
+                    max-width="90%"
+                >
+                    <v-card-text>
+                    <p id="detailTitle" class="text-center py-3">예약 정보 확인</p>
+                    <v-divider class="my-4 mx-8"></v-divider>
 
-
-            <p class="headline text--primary">예약 정보 확인</p>
-
-            <v-row justify="left">
+            <v-row class="justify-left pl-6">
                 <v-col cols="6">
-                    <p class="text--primary">맡기실 반려동물</p>
+                    <p id="context">맡기실 반려동물</p>
 
                 </v-col>
                 <v-col
                     v-for="pets in paymentVO.petDetailList"
                     :key="pets.petNo"
                     cols="2"
+                    class=""
                 >
-                    <p>{{pets.petName}}</p>
-                </v-col>
-            </v-row>
-            <v-row justify="left">
-                <v-col>
-                    <p class="text--primary">예약 날짜</p>
+                <p id="request">{{pets.petName}}</p>
 
                 </v-col>
-                <v-col>
-                   <p>{{paymentVO.startDate}} ~ {{paymentVO.endDate}}</p>
+            </v-row>
+                    <v-row class="justify-center">
+                        <v-col cols="5">
+                            <p id="context">체크인</p>
+                        </v-col>
+                        <v-col cols="6">
+                   <p id="request">{{paymentVO.startTime | formatDate}} / {{paymentVO.startTime | formatTime}}</p>
                 </v-col>
             </v-row>
-            <v-row justify="left">
-                <v-col>
-                    <p class="text--primary">체크인 시간</p>
+                    <v-row class="justify-center">
+                        <v-col cols="5">
+                            <p id="context">체크아웃</p>
+                        </v-col>
+                        <v-col cols="6">
+                   <p id="request">{{paymentVO.endTime | formatDate}} / {{paymentVO.endTime | formatTime}}</p>
                 </v-col>
-                <v-col>
-                    <p>{{paymentVO.startTime| formatTime}}</p>
-                </v-col>
-               
             </v-row>
-            <v-row justify="left">
-                <v-col>
-                    <p class="text--primary">체크아웃 시간</p>
-                </v-col>
-                <v-col>
-                    <p>{{paymentVO.endTime| formatTime}}</p>
-                </v-col>
-               
-            </v-row>
-            <v-row justify="left">
-                <v-col>
-                    <p class="text--primary">방문 주소</p>
-
-                </v-col>
-                <v-col>
-                    <p>{{paymentVO.userAddress}}</p>
+                    <v-row class="justify-center">
+                        <v-col cols="5">
+                            <p id="context">위탁 주소</p>
+                        </v-col>
+                        <v-col cols="6">
+                    <p id="request">{{paymentVO.sitterAddress}}</p>
                 </v-col>
 
             </v-row>
-            <v-row justify="left">
-                <v-col>
-                    <p class="text--primary">펫시터</p>
-                </v-col>
-                <v-col>
-                    <p>{{paymentVO.sitterName}}</p>
+                    <v-row class="justify-center">
+                        <v-col cols="5">
+                            <p id="context">펫시터</p>
+                        </v-col>
+                        <v-col cols="6">
+                    <p id="request">{{paymentVO.sitterName}}</p>
                 </v-col>
 
             </v-row>
-            <v-row justify="left">
-                <v-col>
-                    <p class="text--primary">요청사항</p>
-                </v-col>
-                <v-col>
-                   <p>{{paymentVO.request}}</p>
+                    <v-row class="justify-center">
+                        <v-col cols="5">
+                            <p id="context">요청사항</p>
+
+                        </v-col>
+                        <v-col cols="6">
+                   <p id="request">{{paymentVO.request}}</p>
                 </v-col>
             </v-row>
 
