@@ -79,7 +79,7 @@
             <span
               @click="writeReview(item)"
               id="click"
-              v-if="(canWrite > calEndTime(item.startTime) && item.refundStatus == false)"
+              v-if="(canWrite > calEndTime(item.endTime) && item.reviewStatus == false)"
             >
               후기 쓰기
             </span>  

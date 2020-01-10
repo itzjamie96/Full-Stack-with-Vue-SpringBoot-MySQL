@@ -27,6 +27,7 @@
             <v-btn
               color="deep-purple accent-4"
               text
+              @click="$router.push({name : 'DaySitterList'})"
             >
               예약하기
             </v-btn>
@@ -56,6 +57,7 @@
             <v-btn
               color="deep-purple accent-4"
               text
+              @click="$router.push({name : 'HomeSitterList'})"
             >
               예약하기
             </v-btn>
@@ -84,6 +86,7 @@
             <v-btn
               color="deep-purple accent-4"
               text
+              @click="$router.push({name : 'sitterSignUp'})"
             >
               지원하기
             </v-btn>

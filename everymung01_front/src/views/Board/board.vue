@@ -15,7 +15,7 @@
       :pagination-options="{
           enabled: true,
           mode: 'records',
-          perPage: 9,
+          perPage: 7,
           position: 'bottom',
           perPageDropdown: [3, 7, 9],
           dropdownAllowAll: false,
@@ -231,7 +231,7 @@
        {
            label: '작성자',
            field: 'userName',
-           width: '100px',
+           width: '120px',
        },       
        {
            label: '조회수',
@@ -423,7 +423,7 @@
                 this.BoardVO = res.data
            })
        
-          this.BoardVO.title= "ㄴRE "+this.BoardVO.title
+          this.BoardVO.title= "\0 \0 ㄴRE:\t "+this.BoardVO.title
           window.location.href="http://localhost:8080/board"
        },
 

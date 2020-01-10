@@ -263,8 +263,10 @@ import * as FormData from 'form-data'
                   
                     if(start !==undefined && end !==undefined){
                       let dddate = new Date(start)
-                      let ddate =new Date(end) 
-                      
+                      let ddate =new Date(end)
+                      /* function chartsort(a,b){
+                        a.date >b.date ? 1 :-1;
+                      } */
                       this.chartData.rows = [];
                       for(let i=lsm.length-1 ; i>=0;i--){
                       let ppp = new Date(lsm[i].paymentDate.substr(0,7))
@@ -277,6 +279,16 @@ import * as FormData from 'form-data'
                       this.chartData.rows.push({'date':lsm[i].paymentDate.substr(0,7),'sales':lsm[i].amount})
                     }
                         }
+                    this.chartData.rows.sort(function(a,b){
+                    let dateA =new Date(a.date)
+                    let dateB =new Date(b.date)
+                    if(dateA<dateB){
+                      return -1;
+                    }
+                    if(dateA>dateB){
+                      return 1;
+                    }
+              })
               })
               
       },

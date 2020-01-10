@@ -224,7 +224,7 @@ data(){
     },
     reply(content){
       let cnt = this.boardcount
-      this.board.title = "ㄴRE:  "+this.board.title
+      this.board.title = "\0 \0 ㄴRE:\t "+this.board.title
       this.board.status = true
       this.board.content = content
       this.$http.post('http://localhost:1234/insertReply',this.board) 

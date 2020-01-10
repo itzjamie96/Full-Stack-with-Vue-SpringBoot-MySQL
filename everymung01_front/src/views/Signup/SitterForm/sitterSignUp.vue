@@ -217,7 +217,7 @@
             <v-row class="justify-center">
               <v-col cols="7">
 
-            <GmapMap style="width: 550px; height: 400px;" :zoom="13" :center="{lat:SitterVO.lat,lng:SitterVO.lng}">
+            <GmapMap class="ml-10" style="width: 550px; height: 400px;" :zoom="13" :center="{lat:SitterVO.lat,lng:SitterVO.lng}">
               <gmap-circle ref="circle" 
                 :radius="1000" 
                 :center='{lat:SitterVO.lat,lng:SitterVO.lng}' 

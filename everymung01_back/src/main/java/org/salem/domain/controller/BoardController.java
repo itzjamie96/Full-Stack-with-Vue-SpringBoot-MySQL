@@ -111,7 +111,7 @@ public class BoardController {
 	//조회수 처리
 	@PostMapping("/updateHits")
 	public int updateHits(@RequestBody BoardVO boardVo) {		
-		System.out.println("BoardController_updateHits()_boardNo값 확인하기"+boardVo.getBoardNo());	
+		System.out.println(boardVo);	
 		int addHits;
 		addHits = mapper.selectOriHits(boardVo);
 		boardVo.setHits(addHits);		

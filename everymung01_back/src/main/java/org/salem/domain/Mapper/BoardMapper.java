@@ -27,7 +27,7 @@ public interface BoardMapper {
 	public int deleteBoardByUser(int groupNo);
 	
 	//조회수_Select_메커니즘_기존 클릭된 조회수 총합(0<=n) + 현재 나의 클릭(+1)
-	@Select("select hits + 1 as AddHits from board where boardNo = #{boardNo}")
+	@Select("select ifnull(hits+1,1) as AddHits from board where boardNo = #{boardNo}")
 	public int selectOriHits(BoardVO boardVo);
 	
 	//조회수_Update
