@@ -20,5 +20,6 @@ public class TestVO {
 	private String sitterName;
 	private String sitterPhone;
 	private String sittingType;
+	private String sitterEmail;
 	
 }

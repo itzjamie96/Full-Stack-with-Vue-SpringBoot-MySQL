@@ -68,7 +68,6 @@ export default {
   created(){
     this.$http.get(`http://localhost:1234/test`)
         .then(res => { 
-                this.data=res.data
                 for(let sitterT in res.data){
                   if(res.data[sitterT].sittingType==="home"){
                     this.home.push(res.data[sitterT])

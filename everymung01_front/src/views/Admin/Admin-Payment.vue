@@ -280,23 +280,26 @@ export default {
        },
       columns: [
         {
-          label: '주문일',
+          label: '결재일',
           field: 'paymentDate',
+        
         },
         {
-          label: '주문번호',
+          label: '결재번호',
           field: 'paymentNo',
+          width: '110px',
+          
         },
         {
-          label: '주문자명',
+          label: '결재인',
           field: 'userName',
         },
         {
-          label: '주문방법',
+          label: '결재방법',
           field: 'paymentMethod',
         },
         {
-          label: '주문금액',
+          label: '결재금액',
           field: 'amount',
         },
         {
@@ -304,8 +307,9 @@ export default {
           field: 'sittingType',
         },
         {
-          label: '주문상태',
+          label: '결재상태',
           field: 'paymentStatus',
+          width: '110px',
         },
         
       ],
