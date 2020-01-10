@@ -11,7 +11,7 @@ import org.salem.domain.service.PaymentService;
 import org.salem.domain.vo.KakaoPayApprovalVO;
 import org.salem.domain.vo.PaymentVO;
 import org.salem.domain.vo.PetInfoVO;
-import org.salem.domain.vo.TestVO;
+import org.salem.domain.vo.CountPayVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,9 +53,9 @@ public class PaymentController {
 		return (List<PaymentVO>)paymentMapper.showAllPayment();
 	}
 	
-	@GetMapping("/test")
-	public List<TestVO> test(){
-		return paymentMapper.test1();
+	@GetMapping("/countPay")
+	public List<CountPayVO> countPay(){
+		return paymentMapper.countPay();
 	}
 	
 	

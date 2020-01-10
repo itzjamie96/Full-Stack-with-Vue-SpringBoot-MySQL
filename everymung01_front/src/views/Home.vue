@@ -1,7 +1,7 @@
 <template>
   <v-container class="mx-0" fluid>
     <v-row>
-      <v-carousel height="500px" >
+      <v-carousel height="500px" class="mx-4">
         <v-carousel-item
           v-for="pics in pics"
           :src="pics.imageUrl" 

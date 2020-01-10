@@ -154,7 +154,7 @@ export default {
   },
   created() {
 
-    this.$http.get(`http://localhost:1234/test`)
+    this.$http.get(`http://localhost:1234/countPay`)
         .then(res => {
           let lsm='' //endTime
           let timeG=''

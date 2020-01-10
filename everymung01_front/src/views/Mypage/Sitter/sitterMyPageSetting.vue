@@ -80,22 +80,27 @@
                                 </v-col>
                             </v-row>
 
-                            <v-row class="justify-center">
-                                <v-col cols="4">
+                            <v-row class="justify-left">
+                                <v-col cols="4"></v-col>
+                                <v-col cols="4" >
                                     <v-text-field
+                                    class=""
                                     :disabled="userInfo.sittingNo===2"
                                     v-model="sitterInfo.sitterAddress"
                                     label=" 주소 "
                                     ></v-text-field>
-                                <v-btn
-                                v-if="userInfo.sittingNo===2"
-                                @click="upHomeAdd"
-                                >주소 수정</v-btn>
+                                </v-col>
+                                <v-col cols="1">
+                                    <v-btn
+                                    v-if="userInfo.sittingNo===2"
+                                    @click="upHomeAdd"
+                                    class="mt-3"
+                                    >주소 수정</v-btn>
                                 </v-col>
                             </v-row>
          
                             <v-row class="justify-center">
-                                <v-btn @click="updateSitterInfo">수정</v-btn>
+                                <v-btn @click="updateSitterInfo">수정 완료</v-btn>
                             </v-row>
                             <v-row><v-col></v-col></v-row>
                         </form>

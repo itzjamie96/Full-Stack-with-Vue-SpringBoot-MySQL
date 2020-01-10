@@ -142,7 +142,7 @@
               <div v-if="role !=='Admin'">
                 <v-row class="mb-3">
                   <KakaoLogin
-                    api-key="f64eb8bdf0d591a97100dd290c91ee26"
+                    api-key=""
                     :on-success=onSuccess
                     :on-failure=onFailure
                     />
@@ -186,7 +186,7 @@ export default {
     data() {
         return {
            params: {
-                    client_id: "850641622081-mcbv8nhhuue0gae6d23jsujgs0drijrn.apps.googleusercontent.com"
+                    client_id: ""
                 },
                 // only needed if you want to render the button with the google ui
                 renderParams: {

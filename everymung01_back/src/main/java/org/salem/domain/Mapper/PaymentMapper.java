@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.salem.domain.vo.PaymentVO;
-import org.salem.domain.vo.TestVO;
+import org.salem.domain.vo.CountPayVO;
 
 @Mapper
 public interface PaymentMapper {
@@ -28,7 +28,7 @@ public interface PaymentMapper {
 
 	public List<PaymentVO> showAllPayment(); 
 
-	public List<TestVO> test1(); 
+	public List<CountPayVO> countPay(); 
 	
 	//sitter에게 예약된 리스트 출력
 	public List<PaymentVO> showSitterPayment(int sitterNo);

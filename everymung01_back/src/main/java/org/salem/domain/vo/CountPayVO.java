@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class TestVO {
+public class CountPayVO {
 
 	private int count;
 	private String userName;

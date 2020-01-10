@@ -40,7 +40,7 @@
         <!-- 예약한 사람만 후기 작성창 볼 수 있음 -->
          <v-card 
                 v-if="canWrite"
-                color="green"
+               
                 height="100%"
                 class="mb-5"
         >

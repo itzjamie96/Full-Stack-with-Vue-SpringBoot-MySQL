@@ -56,7 +56,7 @@
             <i class="fas fa-times"></i>
           </v-btn>
          
-          <v-toolbar-title>Settings</v-toolbar-title>
+          <v-toolbar-title>결재내역</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
             <!-- <v-btn dark text @click.native="deleteAlert=true">거절</v-btn>

@@ -175,7 +175,7 @@ export default {
   },
   created() {
 
-    this.$http.get(`http://localhost:1234/test`)
+    this.$http.get(`http://localhost:1234/countPay`)
         .then(res => {
                 console.log(res.data)
                 for(let sitterT in res.data){
@@ -206,32 +206,7 @@ export default {
      this.day.sittingType = params.row.sittingType
 
   },
-  /* delet(userNo){
-     this.dialog=false
-     this.deleteAlert=false
-     const No = userNo
-     
-      this.$http.post(`http://localhost:1234/deleteUser/${No}`).then(res =>{
-        const idx = this.rows.findIndex(x => x.userNo === userNo)
-              this.dialog=false
-              this.rows.splice(idx, 1)
-      }).catch(err =>{
-        alert(err+"\n"+"Daycare(delet) 에러")
-      })
-
-  },
-  update(){
-     this.dialog=false
-     this.updateAlert=false
-     this.$http.post('http://localhost:1234/updateUser',this.user) 
-              .then(res => { 
-                this.selectAll();
-              }) 
-              .catch(err => { 
-                alert(err+"\n"+"Daycare(update) 에러")
-
-              });
-  }, */
+  
     },
 
  

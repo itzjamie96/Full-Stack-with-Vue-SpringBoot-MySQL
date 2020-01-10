@@ -55,7 +55,7 @@
 		GROUP BY pay.paymentNo
 	</select>
 	
-	<select id="test1" resultType="TestVO" parameterType="string">
+	<select id="countPay" resultType="CountPayVO" parameterType="string">
 		select u.userName, u.userEmail, u.userPhone, u.userAddress, pay.paymentNo, pay.startTime, pay.endTime, s.sitterName, s.sitterPhone, 
 		st.sittingType, s.sitterEmail
         from users u 

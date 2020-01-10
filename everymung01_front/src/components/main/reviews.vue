@@ -1,11 +1,16 @@
 <template>
     <div>
-        <v-row>
+      <v-divider class="mx-12 mt-8"></v-divider>
+        <v-row class="justify-center mt-12 pt-6">  
             <v-col
             v-for="reviews in reviews.slice(0,4)"
-            :key="reviews.reviewNo">
+            :key="reviews.reviewNo"
+            cols="2"
+            class="mx-12"
+            >
             
                 <v-card
+                  class="px-0"
                     outlined>
                 <v-list-item three-line>
                 <v-list-item-content class="text-center">

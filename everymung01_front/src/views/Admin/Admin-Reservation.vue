@@ -66,7 +66,7 @@ export default {
     }
   },
   created(){
-    this.$http.get(`http://localhost:1234/test`)
+    this.$http.get(`http://localhost:1234/countPay`)
         .then(res => { 
                 for(let sitterT in res.data){
                   if(res.data[sitterT].sittingType==="home"){

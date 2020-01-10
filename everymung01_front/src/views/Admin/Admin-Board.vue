@@ -174,7 +174,6 @@ data(){
       if(status === false) { // 게시판 원글만 삭제
         this.$http.post(`http://localhost:1234/deleteBoardByMngr`,this.board)
               .then(res =>{
-                console.log(trig)
                   const idx = this.rows.findIndex(x => x.boardNo === boardNo)
                   this.dialog=false
                   this.deleteAlert=false

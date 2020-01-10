@@ -20,7 +20,7 @@ Vue.component('viewer', Viewer)
 
 Vue.use(VueGoogleMaps, {
   load: {
-    key: "AIzaSyAJ9a1JG4Adnk_2xnf51QdCx_JKi_5L60g",
+    key: "",
     libraries: "places" // necessary for places input
   }
 });
@@ -29,8 +29,8 @@ Vue.component('full-calendar', fullCalendar)
 var infiniteScroll = require('vue-infinite-scroll'); 
 Vue.use(infiniteScroll)
 
-const publish_Key = 'pub-c-c191e7ba-affc-4757-a3be-82fc09a96c50';
-const subscribe_Key = 'sub-c-04c7ffc2-2b82-11ea-a5fd-f6d34a0dd71d';
+const publish_Key = '';
+const subscribe_Key = '';
 
 const myUuid = fourCharID();
 const me = {
@@ -65,7 +65,7 @@ function created() {
 
 function fourCharID() {
     const maxLength = 4;
-    const possible = 'abcdef0123456789';
+    const possible = '';
     let text = '';
 
     for (let i = 0; i < maxLength; i++) {

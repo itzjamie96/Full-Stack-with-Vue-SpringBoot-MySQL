@@ -59,7 +59,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue darken-1" text @click="dialog = false">확인</v-btn>
-          <v-btn color="blue darken-1" text @click.native="deleteAlert=true">거절</v-btn>
+          <!-- <v-btn color="blue darken-1" text @click.native="deleteAlert=true">거절</v-btn> -->
           <v-btn color="blue darken-1"  text @click="dialog2 = true">지원서보기</v-btn>
           <v-dialog v-model="dialog2" fullscreen hide-overlay transition="dialog-bottom-transition">
           <v-card>
@@ -68,7 +68,7 @@
             <v-icon>mdi-close</v-icon>
           </v-btn>
          
-          <v-toolbar-title>Settings</v-toolbar-title>
+          <v-toolbar-title>지원서</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-items>
             <v-btn dark text @click.native="deleteAlert=true">거절</v-btn>
@@ -225,10 +225,13 @@ export default {
         {
           label: '이름',
           field: 'sitterName',
+          width: '80px',
+          
         },
         {
           label: '나이',
           field: 'sitterAge',
+          width: '80px',
         },
         {
           label: '이메일',
@@ -249,10 +252,12 @@ export default {
         {
           label: '시타종류',
           field: 'sittingType',
+          width: '110px',
         },
         {
           label: '가입상태',
           field: 'approvalStatus',
+          width: '110px',
         },
         
       ],
